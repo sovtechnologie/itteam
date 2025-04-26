@@ -1,0 +1,170 @@
+1. 9879879870 Hardik Pandya
+
+
+
+
+
+
+ {/* <div className="content-boxes">
+                    <div className="content-boxes-head">
+                      <h2>Experience</h2>
+                      <button onClick={toggleExperiencePopup}>
+                        <FaPlus size={20} className="aboutAddBtn" />
+                      </button>
+                    </div>
+                    {showExperience && (
+                      <Experience onClose={toggleExperiencePopup} />
+                    )}
+                    <div className="exp-card-box-details">
+                      <div>
+                        {userData.workExperiences.map((item, index) => (
+                          <ProfExperience
+                            key={index}
+                            image={item.image}
+                            expRole={item.title}
+                            expCompany={item.company_Name}
+                            expLocation={item.location}
+                            expDuration={`${new Date(
+                              item.startDate
+                            ).toLocaleDateString()} - ${
+                              item.endDate
+                                ? new Date(item.endDate).toLocaleDateString()
+                                : "Present"
+                            }`}
+                            expDesc={item.description}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div> */}
+
+                  {/* <div className="content-boxes">
+                    <div className="content-boxes-head">
+                      <h2>Projects</h2>
+                      <button onClick={toggleProjectsPopup}>
+                        <FaPlus size={20} className="aboutAddBtn" />
+                      </button>
+                    </div>
+                    {showProjects && <Projects onClose={toggleProjectsPopup} />}
+                    <div className="proj-card-box-details">
+                      <div>
+                        {userData.projectmodels.map((item, index) => (
+                          <ProfProject
+                            key={index}
+                            projRole={item.title}
+                            projDuration={`${new Date(
+                              item.startDate
+                            ).toLocaleDateString()} - ${
+                              item.endDate
+                                ? new Date(item.endDate).toLocaleDateString()
+                                : "Ongoing"
+                            }`}
+                            projOrg={item.associated}
+                            projDesc={item.projectDescription}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div> */}
+
+                  {/* <div className="content-boxes">
+                    <div className="content-boxes-head">
+                      <h2>Skills</h2>
+                      <button onClick={toggleSkillsPopup}>
+                        <FaPlus size={20} className="aboutAddBtn" />
+                      </button>
+                    </div>
+                    <div>
+                      {showSkills && <Skills onClose={toggleSkillsPopup} />}
+                      <div className="skills-card-box-details">
+                        <div className="skillsbox-card">
+                          {userData.skillmodels.map((item, index) => (
+                            <ProfSkills
+                              key={index}
+                              skillListOne={item.skillsName}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div> */}
+
+                  {/* <div className="content-boxes">
+                    <div className="content-boxes-head">
+                      <h2>Education</h2>
+                      <button onClick={toggleEducationPopup}>
+                        <FaPlus size={20} className="aboutAddBtn" />
+                      </button>
+                    </div>
+                    {showEducation && (
+                      <Education onClose={toggleEducationPopup} />
+                    )}
+                    <div>
+                      {userData.education_details.map((item, index) => (
+                        <ProfEducation
+                          key={index}
+                          eduImg={item.eduImg}
+                          instituteName={item.college}
+                          graduation={item.degree}
+                          eduLocation={item.location}
+                          eduYear={`${new Date(
+                            item.startDate
+                          ).getFullYear()} - ${new Date(
+                            item.endDate
+                          ).getFullYear()}`}
+                          eduCgpa={item.grade}
+                        />
+                      ))}
+                    </div>
+                  </div> */}
+
+                  {/* <div className="content-boxes">
+                    <div className="content-boxes-head">
+                      <h2>Licenses & Certifications</h2>
+                      <button onClick={toggleLicensCertificatesPopup}>
+                        <FaPlus size={20} className="aboutAddBtn" />
+                      </button>
+                    </div>
+                    {showLicensCertificates && (
+                      <LicensCertificates
+                        onClose={toggleLicensCertificatesPopup}
+                      />
+                    )}
+                    <div>
+                      {userData.lic_certis.map((item, index) => (
+                        <ProfCertiCard
+                          key={index}
+                          certName={item.courses}
+                          certOrg={item.company_Name}
+                          certIssueDate={new Date(
+                            item.issued_Date
+                          ).toLocaleDateString()}
+                        />
+                      ))}
+                    </div>
+                  </div> */}
+
+                  {/* <div className="content-boxes">
+                    <div className="content-boxes-head">
+                      <h2>Honors & Awards</h2>
+                      <button onClick={toggleAwadsPopup}>
+                        <FaPlus size={20} className="aboutAddBtn" />
+                      </button>
+                    </div>
+                    {showAwads && <Awads onClose={toggleAwadsPopup} />}
+                    <div className="award-card-box-details">
+                      <div>
+                        {userData.awards.map((item, index) => (
+                          <ProfAwardCard
+                            key={index}
+                            awardName={item.title}
+                            awardIssuedBy={item.issuedBy}
+                            awardIssueDate={new Date(
+                              item.issuedDate
+                            ).toLocaleDateString()}
+                            assosiate={item.assosiatedWith}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div> */}

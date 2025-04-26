@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 // Components
 import Header from "./components/Header";
@@ -23,51 +24,55 @@ import ScrollToTop from "./components/ScrollToTop";
 import EmployeeProfile from "./components/EmployeeProfile";
 import EmployerProfile from "./components/EmployerProfile";
 import EmployeePage from "./components/EmployeePage";
+import EmpProfPage from "./components/empProfileCom/EmpProfPage";
+
+
+
 
 const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <ScrollToTop />
-        <Header />
-
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/contactus" element={<ContactUs />} />
-
-          <Route path="/empfilter" element={<EmpFilter />} />
-
-          {/* Policy & Terms Routes */}
-          <Route path="/privacy&policy" element={<Privacy />} />
-          <Route path="/terms&condition" element={<Terms />} />
-
-          {/* Profile Pages */}
-          <Route path="/employer" element={<Employer />} />
-          <Route path="/employee-page" element={<EmployeePage />} />
-          
-          <Route path="/employee-profile/:id" element={<EmployeeProfile />} />
-          <Route path="/employer-profile/:id" element={<EmployerProfile />} />
-          
-          <Route path="/active-joiner-profile/:id" element={<EmployeeProfile />} />
-          {/* <Route path="/employer-profile/:id" element={<EmployerProfile />} /> */}
-
-          {/* <Route path="/employeesprofile" element={<EmpProfileShow />} /> */}
-          <Route path="/user-details/:userId" element={<UserDetails />} />
-
-          {/* Authentication Routes */}
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
-
-        <Footer />
-        <ScrollToTop />
+        <AppContent />
       </Router>
     </AuthProvider>
   );
 };
 
+const AppContent = () => {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/" || location.pathname === "/home" || location.pathname === "/aboutus"|| location.pathname === "/contactus";
+
+  return (
+    <>
+      <ScrollToTop />
+      <Header isHomePage={isHomePage} />
+
+      <Routes>
+        {/* Your Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/empfilter" element={<EmpFilter />} />
+        <Route path="/privacy&policy" element={<Privacy />} />
+        <Route path="/terms&condition" element={<Terms />} />
+        <Route path="/employer" element={<Employer />} />
+        <Route path="/employee-page" element={<EmpProfPage />} />
+        <Route path="/employee-profile/:id" element={<EmployeeProfile />} />
+        <Route path="/employer-profile/:id" element={<EmployerProfile />} />
+        <Route path="/active-joiner-profile/:id" element={<EmployeeProfile />} />
+        <Route path="/user-details/:userId" element={<UserDetails />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+
+      <Footer />
+    </>
+  );
+};
+
 export default App;
+
+

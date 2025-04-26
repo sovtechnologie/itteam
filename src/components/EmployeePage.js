@@ -94,11 +94,11 @@ const EmployeePage = () => {
     fetchUserData();
   }, [authToken, userId, navigate]);
 
-  const handleLogout = () => {
-    Cookies.remove("authToken");
-    Cookies.remove("userId");
-    navigate("/signin");
-  };
+  // const handleLogout = () => {
+  //   Cookies.remove("authToken");
+  //   Cookies.remove("userId");
+  //   navigate("/signin");
+  // };
 
   if (!authToken || !userId) {
     return <p>Please log in to view your profile.</p>;

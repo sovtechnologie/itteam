@@ -1,5 +1,9 @@
+
+
+
+
 .signup-box {
-  margin-top: 75px;
+  margin-top: 20px;
   /* padding-bottom: 40px; */
   height: 100%;
   display: flex;
@@ -20,7 +24,7 @@
 
 .leftBox {
   /* margin-top: 15vh; */
-  background-color: #ea4232;
+  background-color: #0073e6;
   height: 100%;
   width: 40%;
   display: flex;
@@ -28,6 +32,9 @@
   flex-direction: column;
   align-items: center;
   color: #ffffff;
+  padding-left: 30px;  /* Increased left padding */
+  padding-top: 40px;   /* Added top padding */
+  box-sizing: border-box;
 }
 
 .signup-left {
@@ -35,13 +42,107 @@
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
-  padding-left: 60px;
+  
+}
+.signup-left p {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.benefits-section {
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.benefits-section h1 {
+  font-size: 30px;
+  color: #fff;
+  margin-bottom: 15px;
+  margin-left: -20px;
+}
+
+.benefits-section ul {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.benefits-section li {
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 10px;
+  font-size: 20px;
+}
+
+.benefits-section li:before {
+  content: "✓";
+  color: #00e61f;
+  font-size: 20px;
+  position: absolute;
+  left: -20px;
+  font-weight: bold;
 }
 
 .signup-left img {
   width: 75%;
   height: auto;
 }
+
+.subtitle {
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.login-prompt {
+  text-align: center;
+  margin: 25px 0;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 30px;
+  padding: 12px 25px;
+  font-size: 18px;
+  color: white;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+}
+
+.login-prompt:hover {
+  border-color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.login-prompt a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-block;
+  padding: 0 5px;
+}
+
+.login-prompt a:hover {
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .login-prompt {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 20px auto;
+    display: block;
+    width: fit-content;
+  }
+}
+
+
 
 .signup-left h3 {
   font-size: 1.4rem;
@@ -115,12 +216,14 @@
 
 .rightForm {
   /* background-color: #b5dcc4; */
-  height: 100%;
+  height: 100vh;
   width: 60%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+  padding-bottom:120px;
+  
 }
 
 .empyr-loca {
@@ -131,6 +234,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-bottom: 20px;
 }
 
 .signUpform h2 {
@@ -188,7 +292,7 @@
   right: 0;
   height: 100%;
   padding: 5px 7px;
-  color: #ea4232;
+  color: #0073e6;
   border: none;
   font-size: 0.7rem;
   background: transparent;
@@ -198,9 +302,9 @@
 }
 
 .send-otp button:hover {
-  background-color: #ea4232;
+  background-color: #0073e6;
   color: #fff;
-  border-color: #c12719;
+  border-color: #0073e6;
 }
 
 .immBtn {
@@ -224,7 +328,7 @@
 }
 
 .immediate-check input[type="radio"]:checked {
-  accent-color: #ea4232;
+  accent-color: #0073e6;
 }
 
 .checkBox {
@@ -234,11 +338,89 @@
 }
 
 .checkBox input[type="checkbox"]:checked {
-  accent-color: #ea4232;
+  accent-color:#0073e6;
 }
 
 .checkBox input:hover {
   cursor: pointer;
+}
+
+
+.upload-section label {
+  display: block;
+  margin-bottom: 8px;
+  
+}
+
+.upload-box {
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  color: #666;
+  position: relative;
+  width: 500px;
+}
+
+.upload-box input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.terms-section {
+  display: flex;
+  align-items: center;
+  margin: 25px 0;
+  gap: 15px;
+  font-size: 20px;
+  color: #333; /* Adjust color as needed */
+}
+
+.terms-section input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #0073e6; /* Blue border */
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.terms-section input[type="checkbox"]:checked {
+  background-color: #0073e6; /* Blue background when checked */
+}
+
+.terms-section input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.terms-section label {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Hover effects */
+.terms-section input[type="checkbox"]:hover {
+  border-color: #005bb5;
+}
+
+.terms-section input[type="checkbox"]:checked:hover {
+  background-color: #005bb5;
 }
 
 .register-btn {
@@ -251,12 +433,13 @@
 
 .register-btn button {
   padding: 15px 50px;
-  background-color: #ea4232;
-  margin-top: 30px;
+  background-color: #0073e6;
+  margin-top: 5px;
   border: none;
   border-radius: 10px;
   color: #fff;
   transition: all 0.3s ease;
+  font-size: 20px;
 }
 
 .register-btn button:hover {

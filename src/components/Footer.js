@@ -155,6 +155,11 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../stylesheets/Footer.css";
+import HeaderLogo from "../images/headerLogo.svg";
+import facebook from "../images/facebook.png";
+import instagram from "../images/instagram.png";
+import Twitter from "../images/twitter.png";
+import linkedin from "../images/linkedin.png";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -226,17 +231,34 @@ const Footer = () => {
         <footer>
           <div className="footer-container">
             <div className="footer-top-content">
+
+
+            <div className="footer-col">
+               <img src={HeaderLogo} alt="Logo" />
+                <h3>Our generator uses cutting-edge technology <br/>to create unique  to history and ..</h3>
+                <ul style={{display: "flex" ,gap: "30px",marginTop:"60px"}}>
+                  <li><img src ={facebook} alt="facebook"/></li>
+                  <li><img src ={instagram} alt="instagram"/></li>
+                  <li><img src ={Twitter} alt="twitter"/></li>
+                  <li><img src ={linkedin} alt="linkedin"/></li>
+                </ul>
+              </div>
+             
               <div className="footer-col">
                 <h3>Company</h3>
                 <ul>
                   <li><a href="/aboutus">About Us</a></li>
-                  <li><a href="/contactus">Contact Us</a></li>
+                  <li><a>Our Team</a></li>
+                  <li><a>Patners</a></li>
+                  <li><a>for Candidates</a></li>
+                  <li><a>for Employers</a></li>
+                  {/* <li><a href="/contactus">Contact Us</a></li>
                   <li><a href="/privacy&policy">Privacy Policy</a></li>
-                  <li><a href="/terms&condition">Terms & Conditions</a></li>
+                  <li><a href="/terms&condition">Terms & Conditions</a></li> */}
                 </ul>
               </div>
 
-              <div className="footer-col">
+              {/* <div className="footer-col">
                 <h3>Hunt By Location</h3>
                 <ul>
                   {locations.length > 0 ? (
@@ -251,7 +273,7 @@ const Footer = () => {
                     <li>Loading locations...</li>
                   )}
                 </ul>
-              </div>
+              </div> */}
 
               <div className="footer-col">
                 <h3>Hunt By Technology Stack</h3>
@@ -279,11 +301,11 @@ const Footer = () => {
                 <h3>Hunt By Experience</h3>
                 <ul>
                   {[
-                    { label: "Fresher (1 year experience)", min: 1, max: 2 },
-                    { label: "Junior (2 year experience)", min: 2, max: 5 },
-                    { label: "Associate (2-5 years experience)", min: 2, max: 5 },
-                    { label: "Mid-Level (5-10 years experience)", min: 5, max: 10 },
-                    { label: "Senior (10+ years experience)", min: 10, max: null },
+                    { label: "Fresher ", min: 1, max: 2 },
+                    { label: "Junior ", min: 2, max: 5 },
+                    { label: "Associate ", min: 2, max: 5 },
+                    { label: "Mid-Level ", min: 5, max: 10 },
+                    { label: "Senior ", min: 10, max: null },
                   ].map(({ label, min, max }) => (
                     <li key={label}>
                       <Link onClick={() => handleExpTechClick("experience", `${min}-${max ? max : "above"}`)}>{label}</Link>
@@ -292,7 +314,7 @@ const Footer = () => {
                 </ul>
               </div>
 
-              <div className="footer-col">
+              {/* <div className="footer-col">
                 <h3>Contact Us</h3>
                 <ul>
                   <li><a href="tel:+917738311925">+91 77383 11925</a></li>
@@ -305,7 +327,7 @@ const Footer = () => {
                   </li>
                   <li>Open hours: 8.00-18.00 Mon-Fri</li>
                 </ul>
-              </div>
+              </div> */}
             </div>
 
             <div className="footer-bottom">

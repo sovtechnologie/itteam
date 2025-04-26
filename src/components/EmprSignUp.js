@@ -198,7 +198,7 @@ const EmprSignUp = () => {
     <>
       <div className="signUpform">
         <div className="formCols">
-          <div className="formColOne">
+          <div className="formColOne">  
             <div className="signUpform-emp">
               <div className="signUpform-group">
                 <label htmlFor="fullname">Full Name</label>
@@ -246,7 +246,7 @@ const EmprSignUp = () => {
                 </div>
               </div>
 
-              <div className="signUpform-group">
+              {/* <div className="signUpform-group">
                 <label htmlFor="currentrole">Your Current Role</label>
                 <input
                   type="text"
@@ -256,7 +256,7 @@ const EmprSignUp = () => {
                   value={formData.currentRole}
                   onChange={handleChange}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -298,7 +298,7 @@ const EmprSignUp = () => {
                 />
               </div>
 
-              <div className="signUpform-group">
+              {/* <div className="signUpform-group">
                 <label htmlFor="companysize">Company Size</label>
                 <input
                   type="text"
@@ -308,11 +308,14 @@ const EmprSignUp = () => {
                   value={formData.companySize}
                   onChange={handleChange}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
-
+        <div className="terms-section">
+          <input type="checkbox" id="terms" />
+          <label htmlFor="terms">I accept all <span className="highlight">terms and condition</span> </label>
+        </div>
         <div className="register-btn">
           <div className="register-btns">
             <button type="submit" onClick={handleSubmit} >

@@ -4,13 +4,16 @@
 }
 
 .footer-container {
-  background-color: #ea4232;
+  background-color: #007bdb;
   padding: 0 70px;
-  height: 80vh;
+  height: 70vh;
 }
 
 .footer-col {
   margin: 50px 0 10px 0;
+}
+.footer-col  img{
+  width: 150px;
 }
 
 .footer-col h3 {
@@ -40,6 +43,9 @@
   color: #fff;
   text-decoration: none;
   transition: color 0.3s ease;
+}
+.footer-col ul li img {
+ width: 60px;
 }
 
 .footer-col ul li a::after {
@@ -125,3 +131,13 @@
   color: #ea4232;
   width: 100%;
 } */
+
+
+
+
+
+
+
+
+
+

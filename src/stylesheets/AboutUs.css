@@ -1,3 +1,85 @@
+.about-us-section {
+  /* background: url('../images/teamMemberTwo.jpg') #1182d1; 
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  color: white;
+  text-align: center;
+  padding: 100px 20px 60px; */
+  width: 100%;
+  height: 100vh;
+  /* Takes full viewport height */
+  /* background-image: url('../images/teamMemberTwo.jpg'); update with correct path */
+  background: url('../images/teamMemberTwo.jpg') #1182d1;
+  background-blend-mode: overlay;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  text-align: center;
+  padding-top: 100px;
+}
+
+/* .overlay {
+  background-color:#1182d1; Blue overlay
+  padding: 60px 20px;
+  border-radius: 10px;
+} */
+
+.about-title {
+  font-size: 60px;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.about-subtext {
+  font-size: 25px;
+  max-width: 800px;
+  margin: 0 auto 50px;
+  line-height: 1.6;
+}
+
+.about-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  background-color: white;
+  padding: 30px 20px;
+  border-radius: 50px;
+  max-width: 1000px;
+  margin: 0 auto;
+  color: black;
+
+}
+
+.stat {
+  text-align: center;
+  flex: 1;
+  min-width: 180px;
+}
+
+.stat-value {
+  font-size: 30px;
+  font-weight: 700;
+  color: #0078d7;
+}
+
+.stat-label {
+  font-size: 18px;
+  color: #333;
+}
+
+
+
+
+
+
+
 .aboutus-top {
   margin-top: 10vh;
   height: 35vh;
@@ -133,4 +215,129 @@
 
     background-color: green;
   }
+}
+
+
+.company-about {
+  
+  height: 70vh;
+  /* Takes full viewport height */
+  /* background-image: url('../images/teamMemberTwo.jpg'); update with correct path */
+  background: url('../images/teamMemberTwo.jpg');
+  background-blend-mode: overlay;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  text-align: center;
+  padding-top: 100px; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 80px;
+  flex-wrap: wrap;
+}
+
+.company-text {
+  max-width: 55%;
+}
+
+.company-text h1 {
+  font-size: 50px;
+  font-weight: bold;
+  color: #333;
+}
+
+.company-text .highlight {
+  color: #0078d7;
+}
+
+.company-text p {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.contact-btn {
+  margin-top: 50px;
+  padding: 12px 24px;
+  background-color: #0078d7;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.contact-btn:hover {
+  background-color: #005fa3;
+}
+
+.company-image {
+  max-width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.company-image img {
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+}
+
+
+.enterprise-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 80px 60px;
+  background-color: #f8f9fa;
+  flex-wrap: wrap;
+}
+
+.text-logos {
+  max-width: 700px;
+}
+
+.text-logos h2 {
+  font-size: 45px;
+  color: #333;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.text-logos .highlight {
+  color: #0078d7;
+}
+
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.logo-grid img {
+  width: 150px;
+  height: 35px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+  border: 2px solid white;
+}
+
+.logo-grid img:hover {
+  transform: scale(1.05);
+}
+
+.partner-image img {
+  max-width: 400px;
+  height: auto;
 }

@@ -15,23 +15,40 @@ const SignUp = () => {
             {isLogin ? (
               <>
                 <div className="signup-left">
+                  <h1>Finding top talent from India is like finding a needle in a haystack</h1>
+                  <p>We're excited to introduce and show you how <br/>our platform simplifies hiring</p>
+                  <p className="login-prompt"style={{marginTop:"70px"}}>Already Registered? <a href="#">Login here</a></p>
+
+                  {/* <div className="toggle-buttons">
+                    <button className="active">Login</button>
+                    <button>Register</button>
+                  </div> */}
+          
                   <img src={signUpEmp} alt="" />
-                  <h3>Find Immediate Joiners for You</h3>
-                  <p>
-                    you will never know everything <br />
-                    But you will Konw more
-                  </p>
                 </div>
               </>
             ) : (
               <>
                 <div className="signup-left">
+                  <div className="benefits-section">
+                    <h1>On registering, you can</h1>
+                    <ul>
+                      <li>Build your profile and let recruiters find you</li>
+                      <li>Get job postings delivered right to your email</li>
+                      <li>Find a job and grow your career</li>
+                    </ul>
+                  </div>
+                  <h1>Let Job Find You</h1>
+                  <p className="subtitle">you will never know everything But you will <strong>Know more.</strong></p>
+
+                  <p className="login-prompt">Already Registered? <a href="#">Login here</a></p>
+
+                  {/* <div className="toggle-buttons">
+                    <button className="active">Login</button>
+                    <button>Register</button>
+                  </div> */}
+          
                   <img src={signUpEmp} alt="" />
-                  <h3>Let Job Find You</h3>
-                  <p>
-                    you will never know everything <br />
-                    But you will Konw more
-                  </p>
                 </div>
               </>
             )}

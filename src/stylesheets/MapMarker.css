@@ -1,0 +1,75 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 180px; /* 🔥 increased container width */
+  }
+  
+  /* 🔥 Bigger Blue marker */
+  .marker {
+    width: 120px;   /* was 90px */
+    height: 120px;  /* was 90px */
+    background: #0078d7;
+    border-radius: 50%;
+    position: relative;
+  }
+  
+  /* 🔥 Bigger triangle */
+  .marker::after {
+    content: '';
+    position: absolute;
+    bottom: -32px;  /* adjusted for larger size */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 30px solid transparent;  /* was 22.5px */
+    border-right: 30px solid transparent;
+    border-top: 40px solid #0078d7;       /* was 30px */
+  }
+  
+  /* 🔥 Bigger Inner white circle with 01 */
+  .inner-circle {
+    width: 80px;     /* was 60px */
+    height: 80px;    /* was 60px */
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 20px;       /* adjusted position */
+    left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0078d7;
+    font-size: 32px; /* was 26px */
+    font-weight: 600;
+  }
+  
+  /* Road */
+  .road {
+    width: 100%;
+    height: 100px;
+    background: #555;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8px;
+    margin-top: 30px; /* more spacing for big marker */
+  }
+  
+  .dash {
+    width: 10px;
+    height: 4px;
+    background: white;
+  }
+  
+  /* 🔥 Bigger Shadow */
+  .shadow {
+    width: 50px;   /* was 30px */
+    height: 15px;  /* was 10px */
+    background: #333;
+    border-radius: 50%;
+    opacity: 0.6;
+    margin-top: 15px;
+  }
+  

@@ -1,0 +1,99 @@
+
+
+.job-hunting-container {
+    font-family: 'Arial', sans-serif;
+    max-width: 1300px;
+    margin: 0 auto 50px auto; /* Combined margin declaration */
+    padding: 60px 40px; /* Vertical | Horizontal padding */
+   background-color: #0073e6;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow */
+    color: white;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease; /* Smooth hover transitions */
+  }
+  
+  /* Optional: Add a subtle pattern overlay */
+  .job-hunting-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 70% 30%, rgba(255,255,255,0.1) 0%, transparent 30%);
+    pointer-events: none;
+  }
+  
+  /* Hover effect
+  .job-hunting-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  } */
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .job-hunting-container {
+      padding: 40px 20px;
+      max-width: 95%;
+      border-radius: 15px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .job-hunting-container {
+      padding: 30px 15px;
+      margin-bottom: 20px;
+    }
+  }
+  
+  .job-hunting-title {
+    color: #fff;
+    font-size: 50px;
+    margin-bottom: 20px;
+    font-family: sans-serif;
+  }
+  
+  .job-hunting-subtitle {
+    color:  #fff;
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .job-hunting-form {
+    position: relative;
+    width: 50%;
+    margin: 0 auto;
+  }
+  
+  .job-hunting-input {
+    padding: 15px 120px 12px 20px;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    font-size: 20px;
+    width: 90%;
+    color:  #0073e6;
+    box-sizing: border-box;
+  }
+  .job-hunting-input::placeholder {
+    color:  #0073e6; /* Light gray placeholder text */
+  }
+  
+  .job-hunting-button {
+    position: absolute;
+    right: 40px;
+    top: 5px;
+    padding: 10px 20px;
+    background-color:  #0073e6;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .job-hunting-button:hover {
+    background-color: #005bb5;
+  }

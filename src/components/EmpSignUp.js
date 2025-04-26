@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { FiUpload } from "react-icons/fi"
 
 const BASE_URL = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
@@ -286,6 +287,18 @@ const EmpSignUp = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="upload-section">
+          <label>Upload Resume</label>
+          <div className="upload-box">
+          <FiUpload style={{ marginRight: "10px", fontSize: "20px", color: "#0073e6" }} />
+            <span>Upload your Resume here</span>
+            <input type="file" />
+          </div>
+        </div>
+        <div className="terms-section">
+          <input type="checkbox" id="terms" />
+          <label htmlFor="terms">I accept all <span className="highlight">terms and condition</span> </label>
         </div>
         <div className="register-btn">
           <button onClick={registerUser}>Register Now</button>

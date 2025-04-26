@@ -603,9 +603,6 @@ const Experience = ({ onClose, experienceToEdit, isEditing }) => {
       console.log("🔴 User not found or experience ID missing");
     }
   };
-  
-  
-  
 
   return (
     <div className="popup-overlay">
