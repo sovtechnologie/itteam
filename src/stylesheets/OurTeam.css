@@ -1,0 +1,237 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap'); */
+.leadership-section {
+  background: url('../images/ourTeamImage.png') no-repeat center center;
+  background-size: cover;
+  height: 70vh;
+  display: flex;
+  align-items: stretch;
+  /* Stretch children to match full height */
+  font-family: 'Oswald', sans-serif;
+  color: white;
+  position: relative;
+}
+
+.overlay {
+  background: linear-gradient(to right, #1783d0 70%, rgba(0, 123, 255, 0) 100%);
+  /* Blue overlay */
+  padding: 80px 60px;
+  width: 50%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.leadership-wrapper {
+  font-family: 'Oswald', sans-serif;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title-line {
+  font-size: 54px;
+  font-weight: 600;
+  margin: 0;
+  text-transform: uppercase;
+  font-family: 'Oswald', sans-serif;
+  line-height: 120%;
+  letter-spacing: 0%;
+}
+
+.bar-block {
+  display: flex;
+  align-items: stretch;
+
+}
+
+.bar {
+  width: 3px;
+  background-color: #955B50;
+  margin-right: 20px;
+
+}
+
+.bar-text h1 {
+  font-size: 54px;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: 0%;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.bar-text h1+h1 {
+  margin-top: 4px;
+}
+
+.founder-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 60px 40px;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 120px;
+}
+
+.founder-left,
+.founder-right {
+  flex: 1;
+}
+
+.founder-left {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section-title {
+  font-size: 64px;
+  font-weight: 600;
+  margin: 50px 20px 20px 45px;
+  /* Top Right Bottom Left */
+  line-height: 1.2;
+  font-family: 'Oswald', sans-serif;
+  color: #000;
+  /* optional: default color */
+}
+
+.highlight {
+  color: #1783d0;
+  font-weight: 600;
+}
+
+
+.founder-left p {
+  margin-bottom: 16px;
+  color: #525252;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.4;
+  /* 140% = 1.4 as unitless multiplier */
+  letter-spacing: 0;
+  /* or 'normal' */
+}
+
+.founder-button {
+  align-self: flex-start;
+  border: 1px solid #1783d0;
+  color: #1783d0;
+  padding: 10px 24px;
+  background: transparent;
+  border-radius: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 50px;
+}
+
+.founder-button:hover{
+  background-color: #1783d0;
+  color: white;
+}
+
+.founder-right {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  margin-left: 100px;
+}
+
+/* .image-wrapper {
+    position: relative;
+    border: 1px solid #1783d0;
+    padding: 8px;
+    border-radius: 8px;
+    width: 397px;
+    background: #ffffff;
+    height: 413px;
+  }
+  
+  .image-wrapper img {
+    width: 100%;
+    display: block;
+    border-radius: 4px;
+  } */
+
+.image-wrapper {
+  position: relative;
+  /* border: 2px solid #1783d0; */
+  border-radius: 8px;
+  width: 397px;
+  height: 413px;
+  background: #ffffff;
+
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  /* Ensures image fills container without distortion */
+
+}
+
+
+.dot-pattern {
+  position: absolute;
+  top: 50px;
+  left: -82px;
+  width: auto;
+  height: auto;
+}
+
+.dot-pattern img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.name-tag {
+  position: absolute;
+  bottom: 9%;
+  left: -25%;
+  background: #1783d0;
+  color: white;
+  padding: 8px 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  display: inline-block;
+}
+
+
+
+/* Triangle pointer at the bottom */
+.name-tag::after {
+  content: '';
+  position: absolute;
+  bottom: -62%;
+  left: -1px;
+  width: 101%;
+  height: 40px;
+  background: #7C4B3A;
+  clip-path: polygon(0 0, 100% 0, 75% 100%, 25% 100%);
+}
+
+
+.name-tag strong {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 95%;
+  letter-spacing: 0;
+}
+
+.name-tag span {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 116%; /* Rounded from 115.999...% */
+  letter-spacing: 0;
+}

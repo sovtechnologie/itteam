@@ -2,6 +2,26 @@
 
 // const BASE_URL = process.env.REACT_APP_BASE_URL || "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
+
+
+export const fetchTechStacks = async () => {
+      try {
+        const response = await axios.get(
+          "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com/withOutLogin/tech-stack-list"
+        );
+
+        if (response.data && response.data.result) {
+         return response.data.result
+        } else {
+          console.error("Invalid response format:", response);
+        }
+      } catch (error) {
+        console.error("Error fetching tech stacks:", error);
+      }
+    };
+
+
+
 // export const fetchActiveJoiners = async () => {
 //   try {
 //     const response = await axios.get(`${BASE_URL}/withOutLogin/active-limited-joiner`);
@@ -30,6 +50,9 @@
 //     throw error.response?.data || "Failed to send OTP";
 //   }
 // };
+
+
+
 
 // export const verifyOtp = async (otp, verificationId) => {
 //   try {

@@ -1,7 +1,39 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .signinBox {
-  margin-top: 75px;
   padding-bottom: 0px;
-  height: 90.6vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,13 +45,13 @@
   align-items: center;
   width: 100%;
   margin: 20px 0;
-  height: 90.6vh;
+  height: 100vh;
 }
 
 .signIn-toggle {
   display: flex;
   justify-content: flex-start;
-  gap: 20px;
+  width: 400px;
 }
 
 .signIn-toggle button {
@@ -43,24 +75,24 @@
 
 .signIn-toggle .active {
   border: none;
-  border-bottom: 3px solid #007bdb;
+  border-bottom: 3px solid #1783D0;
   background-color: transparent;
-  color:#007bdb;
+  color: #1783D0;
   text-align: left;
 }
 
 .left-box {
-  background-color: #007bdb;
-  height: 90.6vh;
+  background-color: #1783D0;
+  height: 100vh;
   width: 40%;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   align-items: flex-start;
   color: #ffffff;
-  padding-left: 60px;  /* Increased left padding */
-  padding-top: 40px;   /* Added top padding */
-  box-sizing: border-box
+  padding-left: 60px; /* Increased left padding */
+  padding-top: 40px; /* Added top padding */
+  box-sizing: border-box;
 }
 
 .new-to-it h2,
@@ -68,7 +100,6 @@
   color: #fff;
   font-size: 24px;
   margin-bottom: 20px;
-  
 }
 
 .new-to-it ul {
@@ -108,7 +139,7 @@
   font-size: 18px;
 }
 .register-button {
-  background-color: #007bdb;
+  background-color: #1783D0;
   color: white;
   border: 1px solid white;
   padding: 15px 30px;
@@ -118,7 +149,6 @@
   margin-top: 80px;
   transition: background-color 0.3s;
 }
-
 
 .signin-left img {
   width: 80%;
@@ -130,7 +160,6 @@
   font-size: 1.4rem;
   padding-top: 80px;
   margin-bottom: 15px;
- 
 }
 
 .right-form {
@@ -145,20 +174,22 @@
 
 .right-form-head {
   padding: 30px;
-  width: 60%;
+  width: 52%;
 }
 
 .right-form-head h2 {
   padding: 5px 0 20px 0;
-  color: #007bdb;
+  color: #1783D0;
+  font-size: 30px;
 }
 
 .right-form-head p {
   color: #292731;
+  font-size: 18px;
 }
 
 .right-form-head img {
-  height: 40px;
+  height: 50px;
 }
 
 .form {
@@ -183,7 +214,7 @@
 .form-group input {
   padding: 13px;
   border: 1px solid #ddd;
-  border-radius: 10px;
+  border-radius: 14px;
   outline: none;
   width: 500px;
 }
@@ -220,7 +251,7 @@
   top: 5px;
   padding: 8px 20px;
   background-color: transparent;
-  color: #007bdb;
+  color: #1783D0;
   border: none;
   cursor: pointer;
   border-radius: 10px;
@@ -228,7 +259,7 @@
 }
 
 .input-otp button:hover {
-  background-color: #007bdb;
+  background-color: #1783D0;
   color: #fff;
 }
 
@@ -242,18 +273,19 @@
 
 .login-btn button {
   margin: 20px 0;
-  padding: 12px 50px;
-  background-color: #007bdb;
+  padding: 0px 50px;
+  background-color: #1783D0;
   list-style: none;
   border: none;
-  border-radius: 10px;
+  height: 40px;
+  border-radius: 20px;
   color: #fff;
   transition: all 0.3s ease;
-  font-size: 18px;
+  font-size: smaller;
 }
 
 .login-btn button:hover {
-  background-color: #007bdb;
+  background-color: #1783D0;
   cursor: pointer;
 }
 
@@ -262,6 +294,5 @@
 }
 
 .login-btn a {
-  color: #007bdb;
+  color: #1783D0;
 }
-

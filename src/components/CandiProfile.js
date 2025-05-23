@@ -228,6 +228,7 @@ const CandiProfile = () => {
           ))}
         </div>
       </div>
+     
     </>
   );
 };

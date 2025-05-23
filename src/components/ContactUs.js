@@ -5,6 +5,9 @@ import { TbPhoneCall } from "react-icons/tb";
 import { IoIosMail } from "react-icons/io";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import location from "../images/Location.png";
+import caller from "../images/caller.png";
+import mail from "../images/mail.png";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
@@ -62,70 +65,108 @@ const ContactUs = () => {
   return (
     <>
       <section className="contact-us">
-      <div className="content">
-        <h1>Contact Us</h1>
-        <p>
-          Contact us with any questions or inquiries. Our team is ready to assist
-          and provide the support you need. Reach out today, and let’s discuss
-          how we can work together.
-        </p>
-        <button className="contact-button">Contact Us</button>
-      </div>
-    </section>
+        <div className="content">
+          <h1>Contact Us</h1>
+          <p>
+            Contact us with any questions or inquiries. Our team is ready to assist
+            and provide the support you need. Reach out today, and let’s discuss
+            how we can work together.
+          </p>
+          <button className="contact-button">Contact Us</button>
+        </div>
+      </section>
 
-    <section className="contact-details">
-      <div className="left-side">
-        <h1>Contact <span className="highlight">Us</span></h1>
+      <section className="contact-details">
+        <div className="left-side">
+          <h1>Contact <span className="highlight">Us</span></h1>
 
-        <div className="info-block">
-          <div className="icon">
-            📍
+          <div className="info-block">
+            <div className="icon">
+              <img src={location} style={{ width: "38px", height: "38px" }} />
+            </div>
+            <p>Shop No 2, Veer Sawarkar<br />Nagar Thane west, 400606</p>
           </div>
-          <p>Shop No 2, Veer Sawarkar<br/>Nagar Thane west, 400606</p>
+
+          <div className="info-block">
+            <div className="icon">
+              <img src={caller} style={{ width: "38px", height: "38px" }} />
+            </div>
+            <p>+91 7738311925</p>
+          </div>
+
+          <div className="info-block">
+            <div className="icon">
+              <img src={mail} style={{ width: "38px", height: "38px" }} />
+            </div>
+            <p>info@itteam.com</p>
+          </div>
         </div>
 
-        <div className="info-block">
-          <div className="icon">
-            📞
-          </div>
-          <p>+91 7738311925</p>
+        <div className="map-side">
+          <iframe
+            title="location-map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3782.617132407066!2d73.00378307500443!3d18.547066082551864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bfa727aa2f23%3A0x6cfe8a637f6a8d3e!2sMalpani%20Group!5e0!3m2!1sen!2sin!4v1683189837652!5m2!1sen!2sin"
+            width="100%"
+            height="499"
+            style={{ border: '0', borderRadius: '10px' }}
+            allowFullScreen=""
+            loading="lazy"
+          ></iframe>
         </div>
 
-        <div className="info-block">
-          <div className="icon">
-            ✉️
-          </div>
-          <p>info@itteam.com</p>
+        <div className="form-side">
+          <h3 style={{ color: "white" }}>Enquire Now</h3>
+          <form className="enquire-form" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Your Name"
+              name="cname"
+              value={inputData.cname}
+              onChange={handleChange}
+              required />
+
+            <input
+              type="email"
+              placeholder="Email ID"
+              name="cemail"
+              value={inputData.cemail}
+              onChange={handleChange}
+              required
+            />
+
+            <input
+              type="text"
+              placeholder="Phone number"
+              name="cphoneNumber"
+              value={inputData.cphoneNumber}
+              onChange={handleChange}
+              required
+            />
+            <textarea
+              placeholder="Your Message"
+              name="cmessage"
+              value={inputData.cmessage}
+              onChange={handleChange}
+              required
+              rows={5}
+              cols={33}
+            />
+            <button type="submit">Submit →</button>
+          </form>
+          {showPopup && (
+            <div className="messgPopup">
+              <div className="mesgBox">
+                <h3>Message sent successfully!</h3>
+                <p>We will connect with you very soon</p>
+              </div>
+            </div>
+          )}
         </div>
-      </div>
-
-      <div className="map-side">
-        <iframe
-          title="location-map"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3782.617132407066!2d73.00378307500443!3d18.547066082551864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bfa727aa2f23%3A0x6cfe8a637f6a8d3e!2sMalpani%20Group!5e0!3m2!1sen!2sin!4v1683189837652!5m2!1sen!2sin"
-          width="100%"
-          height="480"
-          style={{ border: '0', borderRadius: '10px' }}
-          allowFullScreen=""
-          loading="lazy"
-        ></iframe>
-      </div>
-
-      <div className="form-side">
-        <h3>Enquire Now</h3>
-        <form className="enquire-form">
-          <input type="text" placeholder="Your Name" />
-          <input type="email" placeholder="Email ID" />
-          <input type="text" placeholder="Phone number" />
-          <textarea placeholder="Message"></textarea>
-          <button type="submit">Submit →</button>
-        </form>
-      </div>
-    </section>
+      </section>
 
 
-    <div className="job-hunting-container">
-        <h1 className="job-hunting-title">A job hunting experience <br/>like no other</h1>
+      <div className="job-hunting-container">
+        <h1 className="job-hunting-title">A job hunting experience <br />like no other</h1>
         <p className="job-hunting-subtitle">Why search when you can discover? Let the right job come to you.</p>
 
         <div className="job-hunting-form">

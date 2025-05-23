@@ -1,51 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FiUpload } from "react-icons/fi"
+import { FiUpload } from "react-icons/fi";
+import "../stylesheets/EmpSignUp.css";
 
 const BASE_URL = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
 const EmpSignUp = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [isOtpReceive, setIsOtpReceive] = useState(false);
+
   const [formData, setFormData] = useState({
     fullName: "",
     mobileNumber: "",
     otp: "",
     email: "",
-    currentPosition: "",
-    specialization: "",
     location: "",
     experience: "",
     gender: "",
-    isImmediateJoiner: "",
+    workStatus: "",
     otpVerified: false,
     userId: "",
-    noticePeriod: "",
+    resume: null,
+    termsAccepted: false,
   });
 
-  const immediate = [
-    { label: "Within 7 Days", value: 1 },
-    { label: "Within 15 Days", value: 2 },
-    { label: "Within 30 Days", value: 3 },
-    { label: "Within 45 Days", value: 4 },
-    { label: "Within 60 Days", value: 5 },
-    { label: "Within 60+ Days", value: 6 },
-  ];
-
   const options = [
-    { label: "Select Gender", value: "" },
-    { label: "Male", value: 1 },
-    { label: "Female", value: 2 },
+    { value: "", label: "Select Gender" },
+    { value: "male", label: "Male" },
+    { value: "female", label: "Female" },
+    { value: "other", label: "Other" },
   ];
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    const { name, value, type, checked, files } = e.target;
+    if (type === "checkbox") {
+      setFormData((prev) => ({ ...prev, [name]: checked }));
+    } else if (type === "file") {
+      setFormData((prev) => ({ ...prev, [name]: files[0] }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
+
 
   const sendOtp = async () => {
     if (!formData.mobileNumber) {
@@ -64,6 +63,7 @@ const EmpSignUp = () => {
 
       if (response.data.status === 200) {
         alert(response.data.message);
+        setIsOtpSent(true)
         setFormData((prev) => ({
           ...prev,
           userId: response.data.result,
@@ -95,6 +95,7 @@ const EmpSignUp = () => {
 
       if (response.data.status === 200) {
         alert("OTP Verified Successfully");
+        setIsOtpReceive(true);
         setFormData((prev) => ({ ...prev, otpVerified: true }));
       }
     } catch (error) {
@@ -105,32 +106,47 @@ const EmpSignUp = () => {
   };
 
   const registerUser = async () => {
+
+    if (!formData.termsAccepted) {
+      alert("Please accept terms and conditions.");
+      return;
+    }
     if (!formData.otpVerified) {
       alert("Please verify OTP first");
       return;
     }
+    if (!formData.fullName || !formData.email || !formData.resume || !formData.gender) {
+      alert("Please fill in all required fields.");
+      return;
+    }
 
     try {
-      const response = await axios.post(`${BASE_URL}/api/register`, {
-        name: formData.fullName,
-        mobileNumber: formData.mobileNumber,
-        email: formData.email,
-        gender: formData.gender,
-        location: formData.location,
-        specialization: formData.specialization,
-        currentPosition: formData.currentPosition,
-        experienceInStack: formData.experience,
-        noticePeriod: formData.isImmediateJoiner,
-        // isImmediateJoiner: formData.isImmediateJoiner,
-        noticePeriod: formData.noticePeriod,
+      const formDataToSend = new FormData();
+      formDataToSend.append("name", formData.fullName);
+      formDataToSend.append("mobileNumber", formData.mobileNumber);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("gender", formData.gender);
+      formDataToSend.append("location", formData.location);
+      formDataToSend.append("experienceInStack", formData.experience);
+      formDataToSend.append("workStatus", formData.workStatus);
+      formDataToSend.append("termsAccepted", formData.termsAccepted);
+
+      if (formData.resume) {
+        formDataToSend.append("resume", formData.resume); // resume must be a File object
+      }
+
+      const response = await axios.post(`${BASE_URL}/api/register`, formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
+
 
       if (response.data.status === 200) {
         alert("Registration successful! You can login now...");
-        navigate("/signin");
+        navigate("/signin?role=candidate");
 
         console.log(response.data.result);
-
       } else {
         alert(`Error: ${response.data.message}`);
       }
@@ -140,31 +156,33 @@ const EmpSignUp = () => {
     }
   };
 
-  const fetchUserData = async (userId) => {
+  const fetchUserData = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/api/getAllUserDetails`, {
-        params: { userId },
+        params: { userId: formData.userId },
       });
 
       if (response.data.status === 200) {
-        console.log("User data:", response.data.result);
-
+        const result = response.data.result;
         setFormData((prev) => ({
           ...prev,
-          fullName: response.data.result.name,
-          email: response.data.result.email,
-          location: response.data.result.location,
-          specialization: response.data.result.specialization,
-          experience: response.data.result.experienceInStack,
+          fullName: result.name,
+          email: result.email,
+          location: result.location,
+          experience: result.experienceInStack,
         }));
-      } else {
-        alert("Failed to fetch user data.");
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
-      alert("Error fetching user data.");
     }
   };
+
+  useEffect(() => {
+    if (formData.userId) {
+      fetchUserData();
+    }
+  }, [formData.userId]);
+
 
   return (
     <>
@@ -187,6 +205,7 @@ const EmpSignUp = () => {
                     name="mobileNumber"
                     placeholder="Mobile Number"
                     onChange={handleChange}
+                    disabled={isOtpSent}
                   />
                   <button onClick={sendOtp}>Send OTP</button>
                 </div>
@@ -198,25 +217,40 @@ const EmpSignUp = () => {
                     name="otp"
                     placeholder="Enter OTP"
                     onChange={handleChange}
+                    disabled={isOtpReceive}
                   />
                   <button onClick={verifyOtp}>Verify OTP</button>
                 </div>
               </div>
               <div className="signUpform-group">
-                <label htmlFor="currentrole">Current Position</label>
-                <input
-                  name="currentPosition"
-                  placeholder="Current Role"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="signUpform-group">
-                <label htmlFor="specialization">Specialization</label>
-                <input
-                  name="specialization"
-                  placeholder="Specialization"
-                  onChange={handleChange}
-                />
+                <label htmlFor="workStatus">Work Status</label>
+                <div className="radio-group" style={{ display: 'flex', gap: '20px', marginTop: '0px' }}>
+                  <div className="radio-option">
+                    <input
+                      type="radio"
+                      id="experience"
+                      name="workStatus"
+                      value="experience"
+                      onChange={handleChange}
+                      checked={formData.workStatus === "experience"}
+                      className="custom-radio"
+
+                    />
+                    <label htmlFor="experience" style={{ marginLeft: '8px' }}>Experience</label>
+                  </div>
+                  <div className="radio-option">
+                    <input
+                      type="radio"
+                      id="fresher"
+                      name="workStatus"
+                      value="fresher"
+                      onChange={handleChange}
+                      checked={formData.workStatus === "fresher"}
+                      className="custom-radio"
+                    />
+                    <label htmlFor="fresher" style={{ marginLeft: '8px' }}>Fresher</label>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -247,7 +281,7 @@ const EmpSignUp = () => {
                 />
               </div>
 
-              <div className="signUpform-emp dropdown-main">
+              {/* <div className="signUpform-emp dropdown-main">
                 <div className="dropdown">
                   <label htmlFor="isImmediateJoiner">
                     How soon can you join
@@ -266,7 +300,7 @@ const EmpSignUp = () => {
                     ))}
                   </select>
                 </div>
-              </div>
+              </div> */}
 
               <div className="signUpform-emp dropdown-main dropdown-optns">
                 <div className="dropdown">
@@ -288,21 +322,68 @@ const EmpSignUp = () => {
             </div>
           </div>
         </div>
-        <div className="upload-section">
+        {/* <div className="upload-section">
           <label>Upload Resume</label>
           <div className="upload-box">
-          <FiUpload style={{ marginRight: "10px", fontSize: "20px", color: "#0073e6" }} />
+            <FiUpload
+              style={{
+                marginRight: "10px",
+                fontSize: "20px",
+                color: "#1783D0",
+              }}
+            />
             <span>Upload your Resume here</span>
-            <input type="file" />
+            <input
+              type="file"
+              name="resume"
+              onChange={(e) => setFormData({ ...formData, resume: e.target.files[0] })}
+            />
+             
           </div>
+        </div> */}
+        <div className="upload-box" onClick={() => document.getElementById("resumeInput").click()}>
+          {!formData.resume && (
+            <FiUpload
+              style={{
+                marginRight: "10px",
+                fontSize: "20px",
+                color: "#1783D0",
+              }}
+            />
+          )}
+          <span>{formData.resume?.name || "Upload your Resume here"}</span>
+          <input
+            id="resumeInput"
+            type="file"
+            name="resume"
+            accept=".pdf,.doc,.docx"
+            style={{ display: "none" }}
+            onChange={(e) => setFormData({ ...formData, resume: e.target.files[0] })}
+          />
         </div>
+
         <div className="terms-section">
-          <input type="checkbox" id="terms" />
-          <label htmlFor="terms">I accept all <span className="highlight">terms and condition</span> </label>
+          <input
+            type="checkbox"
+            id="terms"
+            checked={formData.termsAccepted}
+            onChange={(e) => setFormData({ ...formData, termsAccepted: e.target.checked })}
+          />
+          <label htmlFor="terms">
+            I accept all{" "}
+            <a href="/terms&condition" target="_blank" rel="noopener noreferrer" className="highlight" style={{ textDecorationLine: "none" }}>
+              terms and condition
+            </a>
+          </label>
+
         </div>
         <div className="register-btn">
-          <button onClick={registerUser}>Register Now</button>
+          <button onClick={registerUser} disabled={loading}>
+            {loading ? "Registering..." : "Register Now"}
+          </button>
+          {loading && <p className="loading">Processing...</p>}
         </div>
+
       </div>
     </>
   );

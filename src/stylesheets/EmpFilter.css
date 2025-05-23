@@ -1,3 +1,296 @@
+.job-search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 🆕 Search goes right */
+  border: 1px solid #3399ff;
+  border-radius: 50px;
+  padding: 10px 20px;
+  background-color: white;
+  max-width: 60%;
+  margin: 20px auto;
+}
+
+.search-fields { /* 🆕 New class for inputs only */
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-select {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 10px 30px 10px 10px;
+  background: transparent;
+  color: #333;
+  appearance: none; /* Hide default dropdown arrow */
+  cursor: pointer;
+}
+
+.dropdown-icon {
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+  font-size: 14px;
+  color: #1783d0;
+}
+
+.divider {
+  width: 1px;
+  height: 30px;
+  background-color: #ccc;
+  margin: 0 10px;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 10px;
+  background: transparent;
+  color: #333;
+  width: 250px; /* 🆙 Wider input */
+}
+
+.search-button {
+  background-color: #1783d0;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 30px;
+  margin-left: 20px; /* 🆕 Little space between fields and button */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 16px;
+  flex-shrink: 0; /* 🆕 Prevent button from shrinking */
+}
+
+.search-button:hover {
+  background-color: #1783d0;
+}
+.job-listing-container {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+}
+
+.filter-section {
+  flex: 0 0 250px;
+  background: white;
+  border: 1px solid #3399ff;
+  border-radius: 10px;
+  padding: 20px;
+  height: fit-content;
+}
+
+.job-cards-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  flex: 1;
+}
+.job-card {
+  height: 300px;
+  overflow-y: auto;
+}
+
+/* sider bar filter */
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+ h3{
+  color: #1783d0;
+  font-size: 18px;
+}
+
+.reset-btn {
+  background: none;
+  font-size: 18px;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.filter-group {
+  margin-top: 20px;
+}
+
+.filter-group h4 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.filter-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #555;
+}
+
+/* Style the checkboxes */
+.filter-group input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1.4px solid #ddd;
+  border-radius: 6px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Style for checked checkboxes */
+.filter-group input[type="checkbox"]:checked {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+/* Checkmark inside checkbox */
+.filter-group input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.job-card {
+  border: 1px solid #3399ff;
+  border-radius: 10px;
+  padding: 20px;
+  background: white;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.job-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.bookmark-btn {
+  position: absolute;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: -50px;
+}
+
+.job-desc {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #666;
+  margin-left: 15px;
+  text-align: center;
+}
+.companyname {
+  font-size: small;
+}
+
+.job-infos {
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 16px;
+}
+.job-infos span svg {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  
+  justify-content: center;
+ 
+}
+
+.skills span {
+  background: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 12px;
+  color: #333;
+  border: 1px solid #1783d0;
+}
+
+.view-profile-btn {
+  background: white;
+  color: #1783d0;
+  padding: 10px;
+  border: 1px solid #1783d0;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.view-profile-btn:hover{
+  background: #1783d0;
+  color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .emp-filterBox {
   width: auto;
   margin: 0 50px 100px 50px;
@@ -211,7 +504,7 @@
 
 .sidbar-filter-head button:hover {
   cursor: pointer;
-  color: #ea4232;
+  color: #3399ff;
 }
 
 .salary-filter-container {
@@ -230,16 +523,17 @@
 .thumb {
   height: 15px;
   width: 15px;
-  background: #ea4232;
+  background: white;
   border-radius: 50%;
   cursor: pointer;
   top: -5px;
   position: absolute;
+  border: 1px solid #3399ff;
 }
 
 .track {
   height: 3px;
-  background: #ea4232;
+  background: #3399ff;
   border-radius: 5px;
 }
 
@@ -328,4 +622,44 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  background: white;
+  color: #1783d0;
+  /* border-radius: 4px; */
+  cursor: pointer;
+  min-width: 40px;
+}
+.pagination .dots {
+  padding: 0.5rem;
+  color: #999;
+}
+
+
+.pagination button:hover {
+  background-color: #1783d0;
+  color: white;
+}
+
+.pagination button.active {
+  background-color: #1783d0;
+  color: white;
+  font-weight: bold;
+}
+
+.pagination button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }

@@ -97,11 +97,11 @@ const EmprSignUp = () => {
     mobileNumber: "",
     otp: "1234",
     fullname: "",
-    currentRole: "",
     companyName: "",
     email: "",
     location: "",
-    companySize: "",
+    otpVerified: false,
+    termsAccepted: false,
   });
 
   const [verificationId, setVerificationId] = useState(null);
@@ -126,7 +126,6 @@ const EmprSignUp = () => {
         mobileNumber: formData.mobileNumber,
         isForLogin: 0,
       });
-
       if (response.data.status === 200) {
         setVerificationId(response.data.result);
         alert("OTP sent successfully!");
@@ -153,6 +152,7 @@ const EmprSignUp = () => {
 
       if (response.data.status === 200) {
         alert("Mobile verification successful!");
+        setFormData((prev) => ({ ...prev, otpVerified: true }));
       } else {
         setError(response.data.message);
       }
@@ -168,15 +168,26 @@ const EmprSignUp = () => {
     setLoading(true);
     setError(null);
 
+    if (!formData.termsAccepted) {
+      alert("Please accept terms and conditions.");
+      return;
+    }
+    if (!formData.otpVerified) {
+      alert("Please verify OTP first");
+      return;
+    }
+    if (!formData.fullname || !formData.email || !formData.companyName) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
     try {
       const response = await axios.post(`${baseUrl}/employer/register`, {
         email: formData.email,
         name: formData.fullname,
         contactNumber: formData.mobileNumber,
-        designationName: formData.currentRole,
         companyName: formData.companyName,
         location: formData.location,
-        companySize: formData.companySize,
       });
 
       if (response.data.status === 200) {
@@ -198,7 +209,7 @@ const EmprSignUp = () => {
     <>
       <div className="signUpform">
         <div className="formCols">
-          <div className="formColOne">  
+          <div className="formColOne">
             <div className="signUpform-emp">
               <div className="signUpform-group">
                 <label htmlFor="fullname">Full Name</label>
@@ -313,8 +324,19 @@ const EmprSignUp = () => {
           </div>
         </div>
         <div className="terms-section">
-          <input type="checkbox" id="terms" />
-          <label htmlFor="terms">I accept all <span className="highlight">terms and condition</span> </label>
+          <input
+            type="checkbox"
+            id="terms"
+            checked={formData.termsAccepted}
+            onChange={(e) => setFormData({ ...formData, termsAccepted: e.target.checked })}
+          />
+          <label htmlFor="terms">
+            I accept all{" "}
+            <a href="/terms&condition" target="_blank" rel="noopener noreferrer" className="highlight" style={{ textDecorationLine: "none" }}>
+              terms and condition
+            </a>
+          </label>
+
         </div>
         <div className="register-btn">
           <div className="register-btns">

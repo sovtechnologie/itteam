@@ -40,7 +40,7 @@ const EmprSignIn = () => {
 
       if (response.data.status === 200) {
         setVerificationId(response.data.result);
-        alert("OTP sent successfully!");
+        alert("OTP sent successfully!",response.data.result.OTP);
       } else {
         setError(response.data.message);
       }
@@ -50,6 +50,7 @@ const EmprSignIn = () => {
       );
     } finally {
       setLoading(false);
+     
     }
   };
 
@@ -104,8 +105,8 @@ const EmprSignIn = () => {
               onChange={handleChange}
               name="mobileNumber"
             />
-            <button type="button" onClick={sendOtp} disabled={loading}>
-              Send OTP
+            <button type="button" className="mainfont" onClick={sendOtp} disabled={loading}>
+              <strong>Send OTP</strong>
             </button>
           </div>
         </div>

@@ -10,7 +10,7 @@
   height: 100vh;
   /* Takes full viewport height */
   /* background-image: url('../images/teamMemberTwo.jpg'); update with correct path */
-  background: url('../images/teamMemberTwo.jpg') #1182d1;
+  background: url('../images/aboutusbackgroundImg.png') #1783d0;
   background-blend-mode: overlay;
   background-size: cover;
   background-position: center;
@@ -49,18 +49,28 @@
   gap: 40px;
   flex-wrap: wrap;
   background-color: white;
-  padding: 30px 20px;
+  padding: 20px 20px;
   border-radius: 50px;
   max-width: 1000px;
   margin: 0 auto;
   color: black;
-
+  border: 2px solid #DCDCDC;
 }
 
 .stat {
   text-align: center;
   flex: 1;
   min-width: 180px;
+  position: relative;
+}
+.stat:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 10%;
+  right: -10%;
+  height: 100%;
+  width: 2px;
+  background-color: #DCDCDC;
 }
 
 .stat-value {
@@ -220,10 +230,10 @@
 
 .company-about {
   
-  height: 70vh;
+  height: 100vh;
   /* Takes full viewport height */
   /* background-image: url('../images/teamMemberTwo.jpg'); update with correct path */
-  background: url('../images/teamMemberTwo.jpg');
+  background: url('../images/AboutusImg.png');
   background-blend-mode: overlay;
   background-size: cover;
   background-position: center;
@@ -244,6 +254,7 @@
 
 .company-text {
   max-width: 55%;
+  margin-top: -300px;
 }
 
 .company-text h1 {
@@ -253,20 +264,20 @@
 }
 
 .company-text .highlight {
-  color: #0078d7;
+  color: #1783D0;
 }
 
 .company-text p {
   margin-top: 20px;
-  font-size: 18px;
+  font-size: 20px;
   color: #555;
   line-height: 1.6;
 }
 
 .contact-btn {
-  margin-top: 50px;
-  padding: 12px 24px;
-  background-color: #0078d7;
+  margin-top: 90px;
+  padding: 12px 34px;
+  background-color: #1783D0;
   color: white;
   border: none;
   border-radius: 30px;
@@ -275,7 +286,7 @@
 }
 
 .contact-btn:hover {
-  background-color: #005fa3;
+  background-color: #1783D0;
 }
 
 .company-image {
@@ -299,21 +310,23 @@
   padding: 80px 60px;
   background-color: #f8f9fa;
   flex-wrap: wrap;
+  height: 450px;
+  margin-bottom: 30px;
 }
 
 .text-logos {
   max-width: 700px;
 }
 
-.text-logos h2 {
-  font-size: 45px;
+.text-logos h1 {
+  font-size:50px;
   color: #333;
   margin-bottom: 30px;
   font-weight: bold;
 }
 
 .text-logos .highlight {
-  color: #0078d7;
+  color: #1783D0;
 }
 
 .logo-grid {
@@ -322,22 +335,29 @@
   gap: 20px;
 }
 
-.logo-grid img {
-  width: 150px;
-  height: 35px;
-  padding: 15px;
+.logo-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 2px solid #DCDCDC;
   transition: transform 0.3s;
-  border: 2px solid white;
 }
 
-.logo-grid img:hover {
+.logo-box:hover {
   transform: scale(1.05);
 }
 
+.logo-box img {
+  width: 150px;
+  height: 45px;
+}
+
+
 .partner-image img {
-  max-width: 400px;
+  max-width: 700px;
   height: auto;
 }

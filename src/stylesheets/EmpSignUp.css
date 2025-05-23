@@ -1,0 +1,46 @@
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .radio-option {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 4px 15px;
+  }
+  
+  .radio-option input[type="radio"] {
+    margin: 0;
+    width: 18px;
+    height: 18px;
+    color: blue;
+  }
+  
+  .radio-option label {
+    margin-left: 8px;
+    cursor: pointer;
+  }
+
+  /* Custom radio button styling */
+.custom-radio {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    margin-right: 8px;
+    accent-color: #2563eb; /* Change radio color to blue */
+    cursor: pointer;
+  }
+  
+  /* Optional: Add transition animation */
+  .custom-radio {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  /* Optional: Style labels when radio is checked */
+  .custom-radio:checked  {
+    color: #2563eb;
+    font-weight: 500;
+  }

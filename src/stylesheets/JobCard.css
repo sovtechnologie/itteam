@@ -1,0 +1,106 @@
+.jobcard {
+    width: 260px;
+    border: 1px solid #1783d0;
+    border-radius: 10px;
+    padding: 15px;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+    height:300px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.company-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /* border: 1px solid #1783d0; */
+}
+
+.job-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.company-name {
+    color: #1783d0;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.job-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.job-location {
+    font-size: 12px;
+    color: #777;
+}
+
+
+.bookmark-icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #555;
+    cursor: pointer;
+}
+
+.job-tags {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.job-tags span {
+    border: 1px solid #1783d0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 11px;
+    color: #1783d0;
+    background-color: #f9f9f9;
+}
+
+.job-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.salary,
+.posted {
+    padding: 2px 4px;
+}
+
+
+.view-button {
+    width: 100%;
+    background-color: #1783d0;
+    color:  white;
+    padding: 8px;
+    border: 1px solid #1783d0;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.3s;
+
+}
+
+.view-button:hover {
+    background-color: #1783d0;
+    color: white;
+}

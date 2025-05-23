@@ -6,7 +6,6 @@ import { useLocation } from "react-router-dom";
 // Components
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-
 // Pages
 import Home from "./components/Home";
 import AboutUs from "./components/AboutUs";
@@ -18,16 +17,14 @@ import Terms from "./components/Terms";
 import Privacy from "./components/Privacy";
 import Employer from "./components/Employer";
 import EmpFilter from "./components/cards/EmpFilter";
-import { AuthProvider } from './components/AuthContext';
+import { AuthProvider } from "./components/AuthContext";
 import UserDetails from "./components/UserDetails";
 import ScrollToTop from "./components/ScrollToTop";
 import EmployeeProfile from "./components/EmployeeProfile";
 import EmployerProfile from "./components/EmployerProfile";
-import EmployeePage from "./components/EmployeePage";
 import EmpProfPage from "./components/empProfileCom/EmpProfPage";
-
-
-
+import Companies from "./components/Companies";
+import OurTeam from "./components/OurTeam";
 
 const App = () => {
   return (
@@ -41,13 +38,21 @@ const App = () => {
 
 const AppContent = () => {
   const location = useLocation();
-  const isHomePage = location.pathname === "/" || location.pathname === "/home" || location.pathname === "/aboutus"|| location.pathname === "/contactus";
+  const isHomePage =
+    location.pathname === "/" ||
+    location.pathname === "/home" ||
+    location.pathname === "/aboutus" ||
+    location.pathname === "/privacy&policy" ||
+    location.pathname === "/terms&condition" ||
+    location.pathname === "/contactus";
 
   return (
     <>
       <ScrollToTop />
-      <Header isHomePage={isHomePage} />
 
+      {location.pathname !== "/signin" && location.pathname !== "/signup" && (
+        <Header isHomePage={isHomePage} />
+      )}
       <Routes>
         {/* Your Routes */}
         <Route path="/" element={<Home />} />
@@ -55,6 +60,7 @@ const AppContent = () => {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/contactus" element={<ContactUs />} />
+        <Route path ="/ourTeam" element={<OurTeam />} />
         <Route path="/empfilter" element={<EmpFilter />} />
         <Route path="/privacy&policy" element={<Privacy />} />
         <Route path="/terms&condition" element={<Terms />} />
@@ -62,17 +68,22 @@ const AppContent = () => {
         <Route path="/employee-page" element={<EmpProfPage />} />
         <Route path="/employee-profile/:id" element={<EmployeeProfile />} />
         <Route path="/employer-profile/:id" element={<EmployerProfile />} />
-        <Route path="/active-joiner-profile/:id" element={<EmployeeProfile />} />
+        <Route path="/employee-profile" element={<EmployeeProfile />} />
+        <Route path="companies/:id" element={<Companies />} />
+        <Route
+          path="/active-joiner-profile/:id"
+          element={<EmployeeProfile />}
+        />
         <Route path="/user-details/:userId" element={<UserDetails />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
       </Routes>
 
-      <Footer />
+      {location.pathname !== "/signin" && location.pathname !== "/signup" && (
+        <Footer />
+      )}
     </>
   );
 };
 
 export default App;
-
-

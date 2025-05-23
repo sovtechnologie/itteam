@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import "../stylesheets/Pricing.css";
-import jobhuntingCard from './cards/JobhuntingCard';
+import jobhuntingCard from "./cards/JobhuntingCard";
+import mapcount from "../images/mapcount.png";
 
 const Pricing = () => {
-
   const [activeTab, setActiveTab] = useState("candidate");
 
   const roadmapDataCandidate = [
@@ -15,12 +15,10 @@ const Pricing = () => {
 
   const roadmapDataCompany = [
     { number: "01", label: "Free" },
-    { number: "02", label: "Get To Reveal",comingSoon: true },
-    { number: "03", label: "Get To Reveal",comingSoon: true },
-    { number: "04", label: "Get To Reveal", comingSoon: true }
+    { number: "02", label: "Get To Reveal", comingSoon: true },
+    { number: "03", label: "Get To Reveal", comingSoon: true },
+    { number: "04", label: "Get To Reveal", comingSoon: true },
   ];
-
-
 
   const heading =
     activeTab === "candidate"
@@ -30,39 +28,33 @@ const Pricing = () => {
   const activeData =
     activeTab === "candidate" ? roadmapDataCandidate : roadmapDataCompany;
 
-  const roadmapData1 = [
-    { number: "01", label: "Life TimeFree", comingSoon: false },
-    { number: "02", label: "Apply On Job", comingSoon: true },
-    { number: "03", label: "ATS Resume", comingSoon: true },
-    { number: "04", label: "Alert On Email", comingSoon: true },
-  ];
-
-
-
   return (
     <>
       <div className="benefits-container">
         <div className="benefits-header">
-          <h1>
-            <span className='no-wrap'>Benefits of <span className='highlight'>Paid Services</span></span>
+          <h1 className="oswald">
+            <span className="no-wrap">
+              Benefits of <span className="highlight">Paid Services</span>
+            </span>
           </h1>
           <p className="header-subtext">
-            With quick and easy plans on India's leading job site Find,
-            attract and hire talent with IT Team
+            With quick and easy plans on India's leading job site Find, attract
+            and hire talent with IT Team
           </p>
         </div>
-
-        <div className="divider"></div>
+a
 
         <div className="benefits-tabs">
           <button
-            className={`tab-button ${activeTab === "candidate" ? "active" : ""}`}
+            className={`tab-button ${
+              activeTab === "candidate" ? "active" : ""
+            } oswald`}
             onClick={() => setActiveTab("candidate")}
           >
             As a Candidate
           </button>
           <button
-            className={`tab-button ${activeTab === "company" ? "active" : ""}`}
+            className={`tab-button ${activeTab === "company" ? "active" : ""} oswald`}
             onClick={() => setActiveTab("company")}
           >
             As a Company
@@ -78,43 +70,41 @@ const Pricing = () => {
                 justifyContent: "center",
                 marginBottom: "20px",
               }}
+              className="oswald"
             >
-              Attract <span style={{ color: "#0078d7", marginLeft: "8px" }}>Candidates</span>
+              Attract{" "}
+              <span style={{ color: "#0078d7", marginLeft: "8px" }}>
+                Candidates
+              </span>
             </h1>
           )}
 
-
           <h2>{heading}</h2>
         </div>
-
       </div>
       <div className="roadmap-wrapper">
-        <div className="road">
-          {activeData.map((item, index) => (
-            <div
-              className={`marker ${index % 2 === 0 ? "blue" : "brown"}`}
-              key={index}
-            >
-              <div className="marker-circle">{item.number}</div>
-              <div className="shadow" />
-            </div>
-          ))}
-        </div>
+        <img src={mapcount} alt="" style={{width : "-webkit-fill-available"}} />
 
         <div className="labels">
-          {activeData.map((item, index) => (
+        {/* <img src={mapcount} alt="" style={{width : "-webkit-fill-available"}} /> */}
+        {activeData.map((item, index) => (
             <div className="label" key={index}>
               <p className="label-title">{item.label}</p>
               {item.comingSoon && (
                 <p className="coming-soon">(Coming Soon)</p>
               )}
-            </div>
+               </div>
           ))}
         </div>
       </div>
       <div className="job-hunting-container">
-        <h1 className="job-hunting-title">A job hunting experience <br/>like no other</h1>
-        <p className="job-hunting-subtitle">Why search when you can discover? Let the right job come to you.</p>
+        <h1 className="job-hunting-title">
+          A job hunting experience <br />
+          like no other
+        </h1>
+        <p className="job-hunting-subtitle">
+          Why search when you can discover? Let the right job come to you.
+        </p>
 
         <div className="job-hunting-form">
           <input
@@ -126,7 +116,7 @@ const Pricing = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Pricing
+export default Pricing;

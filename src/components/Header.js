@@ -140,6 +140,7 @@ const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 const Header = ({ isHomePage }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [employerName, setEmployerName] = useState(null);
+  const [image,setImage] = useState(null);
   const navigate = useNavigate();
   const authToken = Cookies.get("authToken");
   const userId = Cookies.get("userId");
@@ -164,6 +165,7 @@ const Header = ({ isHomePage }) => {
         const data = await response.json();
         if (data.status === 200) {
           setEmployerName(data.result[0]?.name || "Employer");
+          setImage(data.result[0]?.image || "Employer")
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -176,7 +178,7 @@ const Header = ({ isHomePage }) => {
   const handleLogout = () => {
     Cookies.remove("authToken");
     Cookies.remove("userId");
-    navigate("/signin");
+    navigate("/");
   };
 
   return (
@@ -191,8 +193,8 @@ const Header = ({ isHomePage }) => {
             <li><Link to="/">Home</Link></li>
             {/* <li><Link to="/aboutus">About Us</Link></li>
             <li><Link to="/contactus">Contact Us</Link></li> */}
-            <li><Link to="/companies">Companies</Link></li>
-            <li><Link to="/services">Services</Link></li>
+            <li><Link to="/aboutus">About us</Link></li>
+            <li><Link to="/ourTeam">Our Team</Link></li>
             <li><Link to="/pricing">Pricing</Link></li>
 
           </ul>
@@ -204,8 +206,8 @@ const Header = ({ isHomePage }) => {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
-                <p>{employerName || "Employer Name"}</p>
-                <img src={defaultLogo} alt="profile" height={25} />
+                {/* <p>{employerName || "Employer Name"}</p> */}
+                <img src={image || defaultLogo} alt="profile" height={50}  width={50}/>
                 {menuOpen && (
                   <div className="headerProfDropdown">
                     <Link to="/employee-page">View Profile</Link>
@@ -218,9 +220,21 @@ const Header = ({ isHomePage }) => {
             ) : (
               <>
                 <div className="header-buttons">
-                  <Link to="/signin" className="sign-btn">Login</Link>
-                  <Link to="/signup" className="signup-btn">Sign Up</Link>
+                  <button
+                    onClick={() => window.location.href = "/signin?role=candidate"}
+                    className="sign-btn"
+                  >
+                    Join as Jobseeker
+                  </button>
+
+                  <button
+                    onClick={() => window.location.href = "/signin?role=company"}
+                    className="signup-btn"
+                  >
+                    Join as Company
+                  </button>
                 </div>
+
 
               </>
             )}

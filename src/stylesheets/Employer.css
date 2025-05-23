@@ -244,6 +244,7 @@
   border-radius: 10px;
   border: none;
   background-color: #ea4232;
+  font-family: "Poppins", sans-serif !important;
   color: #fff;
   padding: 10px 15px;
   transition: all .3s ease;

@@ -6,26 +6,134 @@ import "../stylesheets/EmpProfile.css";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaLaptopCode } from "react-icons/fa";
 import { MdOutlineCurrencyRupee } from "react-icons/md";
+import { FiPlus } from "react-icons/fi";
 import { FaBusinessTime } from "react-icons/fa6";
 import { IoCallSharp } from "react-icons/io5";
 import { IoIosMail } from "react-icons/io";
-import { FiDownload } from "react-icons/fi";
-import { IoEyeOutline } from "react-icons/io5";
-import ProfAbout from "./cards/ProfAbout";
-import ProfExperience from "./cards/ProfExperience";
-import ProfProject from "./cards/ProfProject";
-import ProfSkills from "./cards/ProfSkills";
-import ProfEducation from "./cards/ProfEducation";
-import ProfCertiCard from "./cards/ProfCertiCard";
-import ProfAwardCard from "./cards/ProfAwardCard";
-import amitabhbachchan from "../images/employeeDefaultProfile.jpg";
+import { FiShare2 } from "react-icons/fi";
+import Profile from "../images/UserProfile.png";
+import Company from "../images/Profile/Campanyname.png";
+import School from "../images/Profile/Schoolname.png";
+import Course from "../images/Profile/Course.png";
+import resumelogo from "../images/resumelogo.png";
+
+
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
+
+
+const dummyEmploymentData = [
+  {
+    companyLogo: Company,
+    position: "UI UX DESIGN & PRODUCT DESIGN",
+    companyName: "SOV Technologies · Freelance",
+    timeline: "Nov 2022 – Present",
+    duration: "1mo",
+    description:
+      "SOV Technologies will provide Freelance Work for Product Design. I solve user problems via user experience (UX) & interaction design and add more value to them with minimalistic UI design.",
+  },
+  {
+    companyLogo: Company,
+    position: "UI UX DESIGN & PRODUCT DESIGN",
+    companyName: "SOV Technologies · Freelance",
+    timeline: "Nov 2022 – Present",
+    duration: "1mo",
+    description:
+      "SOV Technologies will provide Freelance Work for Product Design. I solve user problems via user experience (UX) & interaction design and add more value to them with minimalistic UI design.",
+  },
+];
+
+
+
+// Dummy Education Data
+const dummyEducationData = [
+  {
+    id: 1,
+    logo: School, // replace with import or static image path
+    college: "BHAGWAN MAHAVIR COLLEGE OF ENGG. AND TECH.",
+    degree: "Diploma of Education ・ Computer Engineering",
+    location: "Surat, Gujarat, India",
+    duration: "Mar 2020 – Aug 2023",
+    grade: "Grade A+"
+  }
+];
+
 
 const EmployeeProfile = () => {
   const { id } = useParams();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [employmentList, setEmploymentList] = useState(dummyEmploymentData);
+
+  const [formData, setFormData] = useState({
+    name: "Sayali Sarkar",
+    designation: "JS Developer",
+    company: "Arnnima Solution",
+    location: "Ghaziabad",
+    experience: "2 Year Exp",
+    salary: "2000000 /-Year",
+    notice: "20 Days (Notice period)",
+    phone: "+91 939387736",
+    email: "mnmnsjjn@gmail.com",
+    profileImg: Profile,
+  });
+
+
+
+
+
+  const [aboutText, setAboutText] = useState(userData?.about || "");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [resumeFile, setResumeFile] = useState(null);
+  const [resumeURL, setResumeURL] = useState(null);
+  const [selectedSkills, setSelectedSkills] = useState([]);
+  const [educationList, setEducationList] = useState(dummyEducationData);
+
+
+
+
+
+  const [projects, setProjects] = useState([
+    {
+      title: "JOB PORTAL MOBILE APP DESIGN",
+      date: "Sep 2022 – Present",
+      associated: "BHAGWAN MAHAVIR COLLEGE OF ENGG. AND TECH, SURAT 006",
+      description:
+        "As one of the very few profitable pure play internet companies in the country, Info Edge is India's premier online classifieds company in recruitment, matrimony, real estate, education and related services. Provide Job and Amazing Courses For FREE.",
+      image: School,
+    },
+    {
+      title: "JOB PORTAL MOBILE APP DESIGN",
+      date: "Sep 2022 – Present",
+      associated: "BHAGWAN MAHAVIR COLLEGE OF ENGG. AND TECH, SURAT 006",
+      description:
+        "As one of the very few profitable pure play internet companies in the country, Info Edge is India's premier online classifieds company in recruitment, matrimony, real estate, education and related services. Provide Job and Amazing Courses For FREE.",
+      image: School,
+    },
+  ]);
+
+
+
+  const [certifications, setCertifications] = useState([
+    {
+      title: "UI/UX DESIGN MASTER PROGRAM",
+      issuer: "Simplilearn",
+      issuedDate: "Issued Nov 2022 · No Expiration Date",
+      image: Course,
+    },
+    {
+      title: "UI/UX DESIGN MASTER PROGRAM",
+      issuer: "Simplilearn",
+      issuedDate: "Issued Nov 2022 · No Expiration Date",
+      image: Course,
+    },
+  ]);
+
+
+
+
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -51,7 +159,7 @@ const EmployeeProfile = () => {
             skillmodels: userData.skillmodels,
             education_details: userData.education_details,
             lic_certis: userData.lic_certis,
-            awards: userData.awards,
+            awards: userData?.awards,
           });
         } else {
           console.error("User data not found");
@@ -68,6 +176,65 @@ const EmployeeProfile = () => {
     fetchUserData();
   }, [id]);
 
+  useEffect(() => {
+    if (userData) {
+      setFormData({
+        name: userData.name || "Anjali Sharma",
+        designation: userData.currentPosition || "JS Developer",
+        company: userData.company || "Arnnima Solution",
+        location: userData.location || "Ghaziabad",
+        experience: userData.experienceInStack ? `${userData.experienceInStack} Year Exp` : "2 Year Exp",
+        salary: userData.salary ? `${userData.salary} /-Year` : "2000000 /-Year",
+        notice: userData.noticePeriod ? `${userData.noticePeriod} Days (Notice period)` : "20 Days (Notice period)",
+        phone: userData.mobileNumber ? `+91 ${userData.mobileNumber}` : "+91 939387736",
+        email: userData.email || "xyz@gmail.com",
+        profileImg: userData.image || Profile,
+      });
+
+
+      // Optional: Set other related states
+      setAboutText(userData.about || "");
+      setSelectedSkills(
+        (userData.skillmodels || []).map(skill => ({
+          tecStackName: skill.skillsName,
+          techStacklogo: skill.image
+        }))
+      );
+      setEmploymentList(userData.workExperiences || []);
+      setEducationList(userData.education_details || []);
+      setProjects(userData.projectmodels || []);
+      setCertifications(userData.lic_certis || []);
+      setResumeFile(userData.resume ? userData.resume.split("/").pop() : "Algebra.pdf");
+      setResumeURL(userData.resume);
+
+    }
+  }, [userData]);
+
+
+  function formatDateRange(start, end) {
+    if (!start) return "";
+    const options = { year: "numeric", month: "short" };
+    const startDate = new Date(start);
+    const formattedStart = startDate.toLocaleString("en-US", options);
+
+    if (!end) return `${formattedStart} – Present`;
+
+    const endDate = new Date(end);
+    const formattedEnd = endDate.toLocaleString("en-US", options);
+
+    return `${formattedStart} – ${formattedEnd}`;
+  }
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return null;
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+    });
+  };
+
+
   if (loading) {
     return <h2>Loading...</h2>;
   }
@@ -75,221 +242,320 @@ const EmployeeProfile = () => {
   if (!userData) {
     return <h2>User data not found</h2>;
   }
-  
+
   return (
-    <div>
+    <>
+
+
+
       <div className="empprofile-card">
         <div className="profileCard-box">
+
+          {/* main Profile section */}
           <div className="profile-secOne">
             <div className="profileCardHead">
-              <img src={userData.image} alt="" />
+              <img src={formData.profileImg || Profile} alt="Profile" />
+
               <div className="cadidate-basicInfo">
-                <h3>{userData.name}</h3>
-                <p>{userData.currentPosition}</p>
-                <p>Arnnima Solution</p>
+                <div className="profile-header-top">
+                  <div>
+                    <h3>{formData.name}</h3>
+                    <p>{formData.designation}</p>
+                    <p>{formData.company}</p>
+                  </div>
+                  <div className="profile-actions">
+                    <button className="action-btn">
+                      <FiShare2 size={30} />
+                    </button>
+                  </div>
+                </div>
+
                 <div className="colOneInfoTwo">
                   <div className="candi-personalInfo">
                     <div className="personalInfo-colOne">
                       <div className="colOne-details">
                         <FaLocationDot size={20} />
-                        <p>{userData.location}</p>
+                        <p>{formData.location}</p>
                       </div>
                       <div className="colOne-details">
-                        <FaLaptopCode size={20} />
-                        <p>{userData.experienceInStack} Year Exp</p>
+                        <FaLaptopCode size={25} />
+                        <p>{formData.experience}</p>
                       </div>
                       <div className="colOne-details">
-                        <MdOutlineCurrencyRupee size={20} />
-                        <p>{userData.salary} /-Year</p>
+                        <MdOutlineCurrencyRupee size={25} />
+                        <p>{formData.salary}</p>
                       </div>
                     </div>
                     <div className="personalInfo-colTwo">
                       <div className="colTwo-details">
-                        <FaBusinessTime size={20} />
-                        <p>{userData.noticePeriod} Days (Notice period)</p>
+                        <FaBusinessTime size={25} />
+                        <p>{formData.notice}</p>
                       </div>
                       <div className="colTwo-details">
-                        <IoCallSharp size={20} />
-                        <p>+91 {userData.mobileNumber}</p>
+                        <IoCallSharp size={25} />
+                        <p>{formData.phone}</p>
                       </div>
                       <div className="colTwo-details">
-                        <IoIosMail size={20} />
-                        <p>{userData.email}</p>
+                        <IoIosMail size={25} />
+                        <p>{formData.email}</p>
                       </div>
-                    </div>
-                  </div>
-                  <div className="dropdown-container">
-                    <button className="dropdown-button">Rusume</button>
-                    <div className="dropdown-menu">
-                      <ul>
-                        <li className="resume-action-btn">
-                          <FiDownload />
-                          Download
-                        </li>
-                        <li className="resume-action-btn">
-                          <IoEyeOutline />
-                          View
-                        </li>
-                      </ul>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
+
+
+
           </div>
 
           <div className="profile-secTwo">
             <div className="profile-contentBox">
+
+
+              {/* Link section */}
+              <div className="main-wrapper">
+                <div className="quick-links">
+                  <div className="content-boxes-head"><h2>Quick Links</h2></div>
+                  <ul>
+                    <li>About Me </li>
+                    <li>Resume </li>
+                    <li>Key skills </li>
+                    <li>Employment </li>
+                    <li>Education </li>
+                    <li>Projects </li>
+                    <li>Licenses & certifications </li>
+                    <li>Accomplishments </li>
+                  </ul>
+                </div>
+
+
+                <div className="content-boxes">
+                  <div className="content-boxes-head">
+                    <h2>About Me</h2>
+                    <button className="aboutMe-editBtn" >
+                      <FiPlus size={30} className="plus-icon" />
+                    </button>
+                  </div>
+
+                  <div className="about-card-box-details">
+                    <div>
+                      <div>
+                        <p>
+                          {aboutText || (
+                            `I am ${userData?.name}, a professional UI/UX, Graphics & Web Designer. ` +
+                            `I'm keen to provide top-notch professional & creative design. ` +
+                            `I'm here to share my work with the world. I solve user problems ` +
+                            `via user experience (UX) & interaction design and add more value ` +
+                            `to them with minimalistic UI design.`
+                          )}
+                        </p>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+              {/* Resume section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
-                  <h2>About Me</h2>
+                  <h2>Upload Resume</h2>
+                  <button className="aboutMe-editBtn" >
+                    <FiPlus size={30} className="plus-icon" />
+                  </button>
                 </div>
-                <div className="about-card-box-details">
-                  <div>
+
+                <div className="resume-card-box-details">
+                  {!resumeFile ? (
                     <div>
-                      {userData && userData.about ? (
-                        <ProfAbout aboutText={userData.about} />
-                      ) : (
-                        <p></p>
-                      )}
+                      <img src={resumelogo} className="upload-icon" />
+                      <p>Upload your Resume here</p>
                     </div>
+                  ) : (
+                    <div className="resume-info">
+                      <p><strong>Uploaded:</strong> {resumeFile}</p>
+                      <a href={resumeURL} target="_blank" rel="noopener noreferrer" className="resume-link">
+                        View / Download Resume
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+
+
+              {/* Skill Section */}
+              <div className="content-boxes">
+                <div className="content-boxes-head">
+                  <h2>Key Skills</h2>
+                  <button className="aboutMe-editBtn">
+                    <FiPlus size={30} className="plus-icon" />
+                  </button>
+                </div>
+
+                <div className="skills-card-box-details">
+                  <div className="skillsbox-card">
+                    {selectedSkills.map((skill, index) => (
+                      <div className="skill-badge" key={index}>
+                        <span className="skill-icon"><img
+                          src={skill.techStacklogo}
+                          // alt={skill.tecStackName}
+                          style={{ width: "20px", height: "20px", marginRight: "8px" }}
+                        /></span>
+                        <span>{skill.tecStackName}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
 
+
+              {/* Employement Scetion */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
-                  <h2>Experience</h2>
+                  <h2>Employment</h2>
+                  <button className="aboutMe-editBtn" >
+                    <FiPlus size={30} className="plus-icon" />
+                  </button>
                 </div>
                 <div className="exp-card-box-details">
-                  <div>
-                    {userData.workExperiences.map((item, index) => (
-                      <ProfExperience
-                        key={index}
-                        image={item.image}
-                        expRole={item.title}
-                        expCompany={item.company_Name}
-                        expLocation={item.location}
-                        expDuration={`${new Date(
-                          item.startDate
-                        ).toLocaleDateString()} - ${
-                          item.endDate
-                            ? new Date(item.endDate).toLocaleDateString()
-                            : "Present"
-                        }`}
-                        expDesc={item.description}
-                      />
-                    ))}
+                  <div className="employment-list">
+                    {employmentList.map((job, index) => {
+                      const duration = formatDateRange(job.startDate, job.endDate);
+                      return (
+                        <div className="employment-card" key={index}>
+                          <div className="employment-logo"><img src={job.companyLogo} /></div>
+                          <div className="employment-content">
+                            <div className="employment-header">
+                              <h3>{job.title}</h3>
+                              <div className="employment-timeline">
+                                <span>{duration}</span>
+                              </div>
+                            </div>
+                            <p className="company-name">{job.company_Name}</p>
+                            <p className="company-add">{job.location}</p>
+                            <p className="employment-description">{job.description}</p>
+                          </div>
+                        </div>
+                      )
+                    })}
                   </div>
                 </div>
               </div>
 
-              <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Projects</h2>
-                </div>
-                <div className="proj-card-box-details">
-                  <div>
-                    {userData.projectmodels.map((item, index) => (
-                      <ProfProject
-                        key={index}
-                        projRole={item.title}
-                        projDuration={`${new Date(
-                          item.startDate
-                        ).toLocaleDateString()} - ${
-                          item.endDate
-                            ? new Date(item.endDate).toLocaleDateString()
-                            : "Ongoing"
-                        }`}
-                        projOrg={item.associated}
-                        projDesc={item.projectDescription}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
 
-              <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Skills</h2>
-                </div>
-                <div>
-                  <div className="skills-card-box-details">
-                    <div className="skillsbox-card">
-                      {userData.skillmodels.map((item, index) => (
-                        <ProfSkills
-                          key={index}
-                          skillListOne={item.skillsName}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+              {/* Education Section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Education</h2>
+                  <button className="aboutMe-editBtn" >
+                    <FiPlus size={30} className="plus-icon" />
+                  </button>
                 </div>
-                {userData.education_details.map((item, index) => (
-                  <ProfEducation
-                    key={index}
-                    eduImg={item.eduImg}
-                    instituteName={item.college}
-                    graduation={item.degree}
-                    eduLocation={item.location}
-                    eduYear={`${new Date(
-                      item.startDate
-                    ).getFullYear()} - ${new Date(item.endDate).getFullYear()}`}
-                    eduCgpa={item.grade}
-                  />
-                ))}
+
+                <div className="education-cards">
+                  {educationList.map((edu) => {
+                    const duration = formatDateRange(edu.startDate, edu.endDate);
+                    return (
+                      <div className="education-card" key={edu.id}>
+                        <img src={edu.logo} alt="Logo" className="college-logo" />
+                        <div className="education-info">
+                          <h3>{edu.college}</h3>
+                          <p>{edu.degree}</p>
+                          <p className="location">{edu.location}</p>
+                        </div>
+                        <div className="education-details">
+                          <div className="duration">{duration}</div>
+                          <div className="grade">Grade {edu?.grade ?? "Not specified"}</div>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+
               </div>
 
+
+              {/* Project Section */}
+              <div className="content-boxes">
+                <div className="content-boxes-head">
+                  <h2>Projects</h2>
+                  <button className="aboutMe-editBtn" >
+                    <FiPlus size={30} className="plus-icon" />
+                  </button>
+                </div>
+                <div className="education-cards">
+                  {projects.map((proj, index) => {
+                    const duration = formatDateRange(proj.startDate, proj.endDate);
+
+                    return (
+                      <div className="project-card" key={index}>
+                        <img src={proj.image} alt="Project Logo" className="project-logo" />
+                        <div className="project-info">
+                          <h3>{proj.title}</h3>
+                          <p className="project-date">{duration}</p>
+                          <p className="project-associated">{proj.associated}</p>
+                          <p className="project-description">{proj.projectDescription}</p>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+
+              {/* Licence & Certificate */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Licenses & Certifications</h2>
+                  <button className="aboutMe-editBtn">
+                    <FiPlus size={30} className="plus-icon" />
+                  </button>
                 </div>
-                <div>
-                  {userData.lic_certis.map((item, index) => (
-                    <ProfCertiCard
-                      key={index}
-                      certName={item.courses}
-                      certOrg={item.company_Name}
-                      certIssueDate={new Date(
-                        item.issued_Date
-                      ).toLocaleDateString()}
-                    />
-                  ))}
-                </div>
-              </div>
+                <div className="education-cards">
+                {certifications.map((cert, index) => (
+                  <div className="license-card" key={index}>
+                    <img src={cert.image} alt="Certification Logo" className="license-logo" />
+                    <div className="license-info">
+                      <h3>{cert.courses}</h3>
+                      <p className="issuer">{cert.company_Name}</p>
+                      <p className="issued">
+                        Issued {formatDate(cert.issued_Date)}
+                        {cert.endDate
+                          ? ` · Expires ${formatDate(cert.endDate)}`
+                          : " · No Expiration Date"}
+                      </p>
 
-              <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Honors & Awards</h2>
-                </div>
-                <div className="award-card-box-details">
-                  <div>
-                    {userData.awards.map((item, index) => (
-                      <ProfAwardCard
-                        key={index}
-                        awardName={item.title}
-                        awardIssuedBy={item.issuedBy}
-                        awardIssueDate={new Date(
-                          item.issuedDate
-                        ).toLocaleDateString()}
-                        assosiate={item.assosiatedWith}
-                      />
-                    ))}
+                    </div>
+                    <a
+                      href={cert.certificateUrl}  // Replace with your actual URL variable
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="show-credential-button"
+                    >
+                      Show credential
+                    </a>
                   </div>
+                ))}
                 </div>
               </div>
+              
+
+
+              
+
+
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 export default EmployeeProfile;
+

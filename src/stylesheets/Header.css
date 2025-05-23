@@ -256,23 +256,6 @@ nav {
 
  */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* General */
 .main-header {
   background-color: white;
@@ -296,8 +279,8 @@ nav {
 .home-header {
   background-color: #ffffff;
   border-radius: 12px;
-  max-width: 1200px;       /* Controls the centered width */
-  margin: 20px auto 50px;  /* Centered horizontally */
+  max-width: 1200px; /* Controls the centered width */
+  margin: 20px auto 50px; /* Centered horizontally */
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
@@ -309,26 +292,33 @@ nav {
 }
 
 
-.header {
-  /* background-color: #ffffff;;
-  color: white;
-  font-family: 'Segoe UI', sans-serif;
-  padding: 12px 0;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  height: 9vh;
+/* .home-header {
+  background-color: #ffffff;
+  border-radius: 12px;
+  max-width: 1200px;
+  margin: 20px auto 50px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 1rem;
-  position: fixed;
-  top: 0;
+  padding: 1rem 2rem; 
+  position: absolute;
   left: 0;
-  width: 100%;
-  background-color: #ffffff;
-  z-index: 1000;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); */
-  
-}
+  right: 0;
+  z-index: 10;
+  flex-wrap: wrap; 
+  gap: 1rem;        
+} */
+
+/* ✅ Responsive adjustments */
+/* @media (max-width: 768px) {
+  .home-header {
+    flex-direction: column;   
+    align-items: flex-start;  
+    padding: 1rem;            
+  }
+} */
+
 
 .header-container {
   max-width: 1200px;
@@ -358,7 +348,7 @@ nav {
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 50px;
+  gap: 40px;
   margin-right: 20px;
 }
 
@@ -371,7 +361,7 @@ nav {
   color: #555;
   font-weight: 500;
   font-size: 20px;
-  transition: 0.2s
+  transition: 0.2s;
 }
 
 .nav-links li a:hover {
@@ -402,26 +392,29 @@ nav {
 .sign-btn {
   padding: 9px 30px;
   border-radius: 20px;
-  border: 1px solid #007bdb;
+  border: 1px solid #1783d0;
   background-color: white;
   color: #333;
+  width: 190px;
+  text-align: center;
   text-decoration: none;
   margin-left: 10px;
-  font-weight: 400;
-  font-size: 18px;
-  
+  /* font-weight: 400; */
+  height: 40px;
 }
 
 .signup-btn {
   padding: 9px 30px;
   border-radius: 20px;
-  border: 1px solid #007bdb;
+  border: 1px solid #1783d0;
   background-color: white;
   color: #333;
+  width: 180px;
+  text-align: center;
   text-decoration: none;
-  font-weight: 400;
-  font-size: 18px;
-  
+  margin-left: 10px;
+  /* font-weight: 400; */
+  height: 40px;
 }
 
 .sign-btn:hover,
@@ -443,6 +436,7 @@ nav {
   padding: 6px 12px;
   border-radius: 20px;
   font-weight: 600;
+  margin-left: 60px;
 }
 
 .headerLoginProfile img {
@@ -458,7 +452,7 @@ nav {
   border: 1px solid #ccc;
   border-radius: 6px;
   min-width: 150px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   z-index: 10;
   display: flex;
   flex-direction: column;

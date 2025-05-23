@@ -1,33 +1,33 @@
 .benefits-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 40px;
-    font-family: 'Arial', sans-serif;
-    color: #333;
-  }
-  
-  .benefits-header h1 {
-    font-size: 50px; /* Large headline size */
-    color: #333;
-    margin-bottom: 15px;
-    text-align: center;
-    font-weight: 700; /* Bold weight */
-    line-height: 1.2; /* Better spacing */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    margin-top: 20px; /* Added top margin */
-  }
-  
-  /* If you want to highlight specific words within the heading */
-  .benefits-header h1 .highlight {
-    color: #0073e6; /* Darker blue for contrast */
-    background: linear-gradient(to bottom, #0073e6, #00a0e9);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
-    padding: 0 5px;
-  }
-  .no-wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+}
+
+.benefits-header h1 {
+  font-size: 50px; /* Large headline size */
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 700; /* Bold weight */
+  line-height: 1.2; /* Better spacing */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin-top: 20px; /* Added top margin */
+}
+
+/* If you want to highlight specific words within the heading */
+.benefits-header h1 .highlight {
+  color: #1783d0; /* Darker blue for contrast */
+  background: linear-gradient(to bottom, #1783d0, #00a0e9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  padding: 0 5px;
+}
+.no-wrap {
   white-space: nowrap;
 }
 
@@ -40,61 +40,54 @@
   color: #555;
 }
 
-  .divider {
-    height: 1px;
-    background-color: #ddd;
-    margin: 30px 0;
-  }
-  
-  .benefits-tabs {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 40px auto; /* Centering magic */
-    gap: 20px;
-    border: 2px solid #f5f5f5;
-    border-radius: 20px;
-    padding: 10px;
-    background: white;
-    box-shadow: 0 4px 12px rgba(0, 115, 230, 0.15),
-                0 2px 6px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    width: 450px;
-  }
-  
- 
- 
-  
-  
-  .tab-button {
-    padding: 18px 35px;
-    background-color: white;
-    border: 2px solid #0073e6;
-    color: #333;
-    font-size: 20px;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 20px;
-    transition: all 0.3s ease;
-  }
-  
-  .tab-button.active {
-    background-color: #0073e6;
-    color: white;
-  }
-  
-  .goal-section h2 {
-    font-size: 25px;
-    color: #333;
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  
-  /* .benefits-container {
+.divider {
+  height: 1px;
+  background-color: #ddd;
+  margin: 30px 0;
+}
+
+.benefits-tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 40px auto; /* Centering magic */
+  gap: 10px; 
+  border-radius: 20px;
+  padding: 5px; 
+  box-shadow: 0 4px 12px rgba(0, 115, 230, 0.15), 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  width: 379px;
+}
+
+.tab-button {
+  padding: 18px 35px;
+  background-color: #EAEAFF;
+  border: none;
+  color: #333;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.tab-button.active {
+  background-color: #1783d0;
+  color: white;
+}
+
+.goal-section h2 {
+  font-size: 25px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* .benefits-container {
     max-width: 600px;
     margin: 0 auto;
     padding: 30px;
-    font-family: 'Arial', sans-serif;
+    font-family: "Poppins", sans-serif;
   }
   
   .benefits-grid {
@@ -107,7 +100,7 @@
   .benefit-number {
     font-size: 32px;
     font-weight: bold;
-    color: #0073e6;
+    color: #1783D0;
     text-align: center;
     padding: 15px;
     background-color: #f5f5f5;
@@ -144,13 +137,13 @@
   .footer-text {
     text-align: center;
     font-size: 20px;
-    color: #0073e6;
+    color: #1783D0;
     margin-top: 30px;
     font-weight: 500;
   } */
-  
-  /* Responsive adjustments */
-  /* @media (max-width: 768px) {
+
+/* Responsive adjustments */
+/* @media (max-width: 768px) {
     .benefits-grid {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -164,140 +157,136 @@
     }
   } */
 
-  .roadmap-wrapper {
-    width: 97%;
-    padding: 40px 20px;
-    background: white;
-    text-align: center;
-    margin-top: 90px;
-  }
-  .road {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end; /* ✅ Put children at bottom of the road area */
-    width: 100%;
-    background-color: #5a5a5a;
-    height: 120px;
-    position: relative;
-    border-top: 6px solid white;
-    position: relative;
-    gap: 300px;
-  }
-  
-  .road::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: -10px;
-    width: 100%;
-    height: 6px;
-    background-image: repeating-linear-gradient(
-      to right,
-      white,
-      white 20px,
-      transparent 20px,
-      transparent 40px
-    );
-    transform: translateY(-50%);
-    z-index: 1;
-    
-  }
-  
-  /* 🔧 Marker sits fully above the road */
-  .marker {
-    width: 120px;
-    height: 120px;
-    background-color: currentColor;
-    border-radius: 50%;
-    position: relative;
-    transform: translateY(-100%); /* ✅ Pulls marker above road */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-  }
-   /* Color modifiers */
-   .marker.blue {
-    color: #0078d7;
-  }
-  
-  .marker.brown {
-    color: #8b4c39;
-  }
-  
-  .marker::after {
-    content: '';
-    position: absolute;
-    bottom: -32px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 30px solid transparent;
-    border-right: 30px solid transparent;
-    border-top: 40px solid currentColor;
-  }
-  
-  .marker-circle {
-    width: 80px;
-    height: 80px;
-    background: white;
-    border-radius: 50%;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: currentColor;
-    font-size: 32px;
-    font-weight: 600;
-  }
-  
- 
-  
-  /* ✅ Shadow now appears below the road level */
-  .shadow {
-    width: 30px;
-    height: 10px;
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 50%;
-    margin-top: 20px;
-  }
-  
-  
-  .labels {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-    gap: 20px;
-  }
-  
-  .label {
-    text-align: center;
-    width: 25%;
-  }
-  
-  .label-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #0073e6;
-  }
-  
-  .coming-soon {
-    font-size:15px;
-    color: gray;
-  }
-  
-  /* .roadmap-container {
+.roadmap-wrapper {
+  width: 97%;
+  padding: 40px 20px;
+  background: white;
+  text-align: center;
+  margin-top: 90px;
+}
+.road {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* ✅ Put children at bottom of the road area */
+  width: 100%;
+  background-color: #5a5a5a;
+  height: 120px;
+  position: relative;
+  border-top: 6px solid white;
+  position: relative;
+  gap: 300px;
+}
+
+.road::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  width: 100%;
+  height: 6px;
+  background-image: repeating-linear-gradient(
+    to right,
+    white,
+    white 20px,
+    transparent 20px,
+    transparent 40px
+  );
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+/* 🔧 Marker sits fully above the road */
+.marker {
+  width: 120px;
+  height: 120px;
+  background-color: currentColor;
+  border-radius: 50%;
+  position: relative;
+  transform: translateY(-100%); /* ✅ Pulls marker above road */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+/* Color modifiers */
+.marker.blue {
+  color: #0078d7;
+}
+
+.marker.brown {
+  color: #8b4c39;
+}
+
+.marker::after {
+  content: "";
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-top: 40px solid currentColor;
+}
+
+.marker-circle {
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: currentColor;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+/* ✅ Shadow now appears below the road level */
+.shadow {
+  width: 30px;
+  height: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  margin-top: 20px;
+}
+
+.labels {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.label {
+  text-align: center;
+  width: 25%;
+}
+
+.label-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1783d0;
+}
+
+.coming-soon {
+  font-size: 15px;
+  color: gray;
+}
+
+/* .roadmap-container {
     width: 100%;
     padding: 40px 0;
     background-color: white;
     display: flex;
     justify-content: center;
   } */
-  
-  /* .road {
+
+/* .road {
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
@@ -307,8 +296,8 @@
     position: relative;
     border-top: 6px solid white;
   } */
-  
-  /* .road::before {
+
+/* .road::before {
     content: "";
     position: absolute;
     top: 50%;
@@ -325,8 +314,8 @@
     transform: translateY(-50%);
     z-index: 1;
   } */
-  
-  /* .pin {
+
+/* .pin {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -358,7 +347,7 @@
   }
   
   .pin.blue {
-    color: #0073e6;
+    color: #1783D0;
   }
   
   .pin.brown {
@@ -374,14 +363,12 @@
   }
    */
 
-   
-
 .job-hunting-container {
-  font-family: 'Arial', sans-serif;
+  font-family: "Poppins", sans-serif;
   max-width: 1300px;
   margin: 0 auto 50px auto; /* Combined margin declaration */
   padding: 60px 40px; /* Vertical | Horizontal padding */
- background-color: #0073e6;
+  background-color: #1783d0;
   border-radius: 20px;
   text-align: center;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow */
@@ -393,13 +380,17 @@
 
 /* Optional: Add a subtle pattern overlay */
 .job-hunting-container::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 70% 30%, rgba(255,255,255,0.1) 0%, transparent 30%);
+  background: radial-gradient(
+    circle at 70% 30%,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 30%
+  );
   pointer-events: none;
 }
 
@@ -428,12 +419,11 @@
 .job-hunting-title {
   color: #fff;
   font-size: 50px;
-  margin-bottom: 20px;
-  font-family: sans-serif;
+  margin-bottom: 20px; 
 }
 
 .job-hunting-subtitle {
-  color:  #fff;
+  color: #fff;
   font-size: 20px;
   margin-bottom: 30px;
 }
@@ -450,21 +440,25 @@
   border-radius: 30px;
   font-size: 20px;
   width: 90%;
-  color:  #0073e6;
+  font-family: "Poppins", sans-serif !important;
+  height: 60px;
+  color: #1783d0;
   box-sizing: border-box;
 }
 .job-hunting-input::placeholder {
-  color:  #0073e6; /* Light gray placeholder text */
+  color: #1783d0; /* Light gray placeholder text */
 }
 
 .job-hunting-button {
   position: absolute;
   right: 40px;
   top: 5px;
+  width: 200px;
   padding: 10px 20px;
-  background-color:  #0073e6;
+  background-color: #1783d0;
   color: white;
   border: none;
+  font-weight: 400;
   border-radius: 30px;
   font-size: 20px;
   cursor: pointer;

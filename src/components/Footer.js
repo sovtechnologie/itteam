@@ -1,165 +1,12 @@
-// import React, { useState, useEffect } from "react";
-// import "../stylesheets/Footer.css";
-
-// const Footer = () => {
-//   const [users, setUsers] = useState([]);
-
-//   return (
-//     <>
-//       <div className="footer">
-//         <div className="footerBox">
-//           <footer>
-//             <div className="footer-container">
-//               <div className="footer-top-content">
-//                 <div className="footer-col">
-//                   <h3>Company</h3>
-//                   <ul>
-//                     <li>
-//                       <a href="/aboutus">About Us</a>
-//                     </li>
-//                     <li>
-//                       <a href="/contactus">Contact Us</a>
-//                     </li>
-//                     <li>
-//                       <a href="/privacy&policy">Privacy Policy</a>
-//                     </li>
-//                     <li>
-//                       <a href="/terms&condition">Terms & Conditions</a>
-//                     </li>
-//                   </ul>
-//                 </div>
-//                 <div className="footer-col">
-//                   <h3>Hunt By Location</h3>
-//                   <ul>
-//                     <li>
-//                       <a href="">Mumbai</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Pune</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Noida</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Delhi</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Bengaluru</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Hyderabad</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Ahmedabad</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Indore</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Chennai</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Surat</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Mohali</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Kochi</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Jaipur</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Kolkata</a>
-//                     </li>
-//                   </ul>
-//                 </div>
-
-//                 <div className="footer-col">
-//                   <h3>Hunt By Technology Stack</h3>
-//                   <ul>
-//                     <li>
-//                       <a href="">ReactJs</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Java</a>
-//                     </li>
-//                     <li>
-//                       <a href="">JavaScript</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Angular</a>
-//                     </li>
-//                     <li>
-//                       <a href="">TypeScript</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Python</a>
-//                     </li>
-//                     <li>
-//                       <a href="">MySQL</a>
-//                     </li>
-//                     <li>
-//                       <a href="">MongoDB</a>
-//                     </li>
-//                     <li>
-//                       <a href="">NodeJs</a>
-//                     </li>
-//                     <li>
-//                       <a href="">Flutter</a>
-//                     </li>
-//                   </ul>
-//                 </div>
-
-//                 <div className="footer-col">
-//                   <h3>Contact Us</h3>
-//                   <ul>
-//                     <li>
-//                       <a href="tel:+917738311925">+91 77383 11925</a>
-//                     </li>
-//                     <li>
-//                       <a href="tel:+919717569519">+91 9717569519</a>
-//                     </li>
-//                     <li>
-//                       <a href="#">
-//                         Shop No 2, <br />
-//                         Opposite Om Surya apartment, <br />
-//                         Sawarkar Nagar Thane, <br />
-//                         Maharashtra, 410206 India
-//                       </a>
-//                     </li>
-//                     <li>
-//                       <a href="#">Open hours: 8.00-18.00 Mon-Fri</a>
-//                     </li>
-//                   </ul>
-//                 </div>
-//               </div>
-
-//               <div className="footer-bottom">
-//                 <div className="fbottom-left">
-//                   <p>Copyright's &copy; 2025 IT Team</p>
-//                 </div>
-//               </div>
-//             </div>
-//           </footer>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default Footer;
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../stylesheets/Footer.css";
-import HeaderLogo from "../images/headerLogo.svg";
-import facebook from "../images/facebook.png";
-import instagram from "../images/instagram.png";
-import Twitter from "../images/twitter.png";
-import linkedin from "../images/linkedin.png";
+import logowhite from "../images/logowhite.svg";
+import instagram from "../images/Footer/Instagram.png";
+import Twitter from "../images/Footer/Twitter.png";
+import linkedin from "../images/Footer/Linkdin.png";
+import facebook from "../images/Footer/Facebook.png";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -222,7 +69,9 @@ const Footer = () => {
     navigate(`/empfilter?expertTecStack=${encodeURIComponent(techStack)}`);
   };
   const handleExpTechClick = (experienceInStack) => {
-    navigate(`/empfilter?experienceInStack=${encodeURIComponent(experienceInStack)}`);
+    navigate(
+      `/empfilter?experienceInStack=${encodeURIComponent(experienceInStack)}`
+    );
   };
 
   return (
@@ -231,57 +80,69 @@ const Footer = () => {
         <footer>
           <div className="footer-container">
             <div className="footer-top-content">
+              <div className="footer-col">
+                <img src={logowhite} alt="Logo" />
+                <br />
+                <p>
+                  Our generator uses cutting-edge technology <br />
+                  to create unique to history and ..
+                </p>
+                <div className="footer-social-icon">
+                  <ul style={{ display: "flex", gap: "30px", marginTop: "60px" }}>
+                    <li>
+                      <img src={facebook} alt="facebook" />
+                    </li>
+                    <li>
+                      <img src={instagram} alt="instagram" />
+                    </li>
+                    <li>
+                      <img src={linkedin} alt="linkedin" />
+                    </li>
+                    <li>
+                      <img src={Twitter} alt="twitter" />
+                    </li>
 
-
-            <div className="footer-col">
-               <img src={HeaderLogo} alt="Logo" />
-                <h3>Our generator uses cutting-edge technology <br/>to create unique  to history and ..</h3>
-                <ul style={{display: "flex" ,gap: "30px",marginTop:"60px"}}>
-                  <li><img src ={facebook} alt="facebook"/></li>
-                  <li><img src ={instagram} alt="instagram"/></li>
-                  <li><img src ={Twitter} alt="twitter"/></li>
-                  <li><img src ={linkedin} alt="linkedin"/></li>
-                </ul>
+                  </ul>
+                </div>
               </div>
-             
+
               <div className="footer-col">
                 <h3>Company</h3>
                 <ul>
-                  <li><a href="/aboutus">About Us</a></li>
-                  <li><a>Our Team</a></li>
-                  <li><a>Patners</a></li>
-                  <li><a>for Candidates</a></li>
-                  <li><a>for Employers</a></li>
-                  {/* <li><a href="/contactus">Contact Us</a></li>
-                  <li><a href="/privacy&policy">Privacy Policy</a></li>
-                  <li><a href="/terms&condition">Terms & Conditions</a></li> */}
+                  <li>
+                    <a href="/aboutus">About Us</a>
+                  </li>
+                  <li>
+                    <a href="/ourTeam">Our Team</a>
+                  </li>
+                  <li>
+                    <a href="/signin?role=candidate">Join as Jobseeker</a>
+                  </li>
+                  <li>
+                    <a href="/signin?role=company">Join as Company</a>
+                  </li>
+                  <li>
+                    <a href="/contactus">Contact Us</a>
+                  </li>
+                  <li>
+                    <a href="/privacy&policy">Privacy Policy</a>
+                  </li>
+                  <li>
+                    <a href="/terms&condition">Terms & Conditions</a>
+                  </li>
                 </ul>
               </div>
-
-              {/* <div className="footer-col">
-                <h3>Hunt By Location</h3>
-                <ul>
-                  {locations.length > 0 ? (
-                    locations.map((location) => (
-                      <li key={location._id}>
-                        <a onClick={() => handleLocationClick(location.name)}>
-                          {location.name}
-                        </a>
-                      </li>
-                    ))
-                  ) : (
-                    <li>Loading locations...</li>
-                  )}
-                </ul>
-              </div> */}
-
               <div className="footer-col">
                 <h3>Hunt By Technology Stack</h3>
                 <ul>
                   {techStacks.length > 0 ? (
                     techStacks.map((stack) => (
                       <li key={stack._id}>
-                        <a onClick={() => handleTechStackClick(stack.tecStackName)}>
+                        <a
+                          onClick={() =>
+                            handleTechStackClick(stack.tecStackName)
+                          }
+                        >
                           {/* <img 
                             src={stack.techStacklogo} 
                             alt={stack.tecStackName} 
@@ -301,33 +162,23 @@ const Footer = () => {
                 <h3>Hunt By Experience</h3>
                 <ul>
                   {[
-                    { label: "Fresher ", min: 1, max: 2 },
-                    { label: "Junior ", min: 2, max: 5 },
-                    { label: "Associate ", min: 2, max: 5 },
-                    { label: "Mid-Level ", min: 5, max: 10 },
-                    { label: "Senior ", min: 10, max: null },
-                  ].map(({ label, min, max }) => (
+                    { label: "Fresher", min: 1, max: 2 },
+                    { label: "Junior", min: 2, max: 5 },
+                    { label: "Associate", min: 2, max: 5 },
+                    { label: "Mid-Level", min: 5, max: 10 }, // No trailing space here
+                    { label: "Senior", min: 10, max: null },
+                  ].map(({ label }) => (
                     <li key={label}>
-                      <Link onClick={() => handleExpTechClick("experience", `${min}-${max ? max : "above"}`)}>{label}</Link>
+                      <a onClick={() => handleExpTechClick(label)} style={{ cursor: "pointer" }}>
+                        {label}
+                      </a>
                     </li>
                   ))}
+
                 </ul>
               </div>
 
-              {/* <div className="footer-col">
-                <h3>Contact Us</h3>
-                <ul>
-                  <li><a href="tel:+917738311925">+91 77383 11925</a></li>
-                  <li><a href="tel:+919717569519">+91 9717569519</a></li>
-                  <li>
-                    <p>
-                      Shop No 2, Opposite Om Surya Apartment,<br />
-                      Sawarkar Nagar Thane, Maharashtra, 410206 India
-                    </p>
-                  </li>
-                  <li>Open hours: 8.00-18.00 Mon-Fri</li>
-                </ul>
-              </div> */}
+
             </div>
 
             <div className="footer-bottom">

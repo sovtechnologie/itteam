@@ -13,6 +13,9 @@ const EmpSignIn = () => {
   const [verificationId, setVerificationId] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isOtpSent, setIsOtpSent] = useState(false);
+
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -33,6 +36,8 @@ const EmpSignIn = () => {
       if (data.status === 200) {
         setVerificationId(data.result);
         alert("OTP Sent Successfully");
+        setIsOtpSent(true);
+        setTimeout(() => setIsOtpSent(false), 10000); // Enable after 30 seconds
       } else {
         setError(data.message);
       }
@@ -40,6 +45,7 @@ const EmpSignIn = () => {
       setError(error.message || "Something went wrong");
     } finally {
       setLoading(false);
+
     }
   };
 
@@ -82,6 +88,7 @@ const EmpSignIn = () => {
             value={formData.mobileNumber}
             onChange={handleChange}
             name="mobileNumber"
+            disabled={isOtpSent}
           />
           <button type="button" onClick={sendOtp} disabled={loading}>
             Send OTP
@@ -93,7 +100,7 @@ const EmpSignIn = () => {
         <input
           type="password"
           placeholder="Enter OTP"
-          maxLength={4}
+          maxLength={8}
           value={formData.otp}
           onChange={handleChange}
           name="otp"
