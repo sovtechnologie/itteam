@@ -35,7 +35,7 @@ const EmpSignIn = () => {
       const data = await response.json();
       if (data.status === 200) {
         setVerificationId(data.result);
-        alert("OTP Sent Successfully");
+        // alert("OTP Sent Successfully");
         setIsOtpSent(true);
         setTimeout(() => setIsOtpSent(false), 10000); // Enable after 30 seconds
       } else {
@@ -60,7 +60,7 @@ const EmpSignIn = () => {
       });
       const data = await response.json();
       if (data.status === 200) {
-        alert("OTP Verification Successful!");
+        // alert("OTP Verification Successful!");
         if (data.token) {
           Cookies.set("authToken", data.token, { expires: 1 });
           Cookies.set("userId", data.result._id);

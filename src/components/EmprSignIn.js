@@ -40,7 +40,7 @@ const EmprSignIn = () => {
 
       if (response.data.status === 200) {
         setVerificationId(response.data.result);
-        alert("OTP sent successfully!",response.data.result.OTP);
+        // alert("OTP sent successfully!",response.data.result.OTP);
       } else {
         setError(response.data.message);
       }
@@ -68,7 +68,7 @@ const EmprSignIn = () => {
       );
 
       if (response.data.status === 200) {
-        alert("OTP Verification Successful!");
+        // alert("OTP Verification Successful!");
 
         if (response.data.token) {
           Cookies.set("authToken", response.data.token, { expires: 1 });

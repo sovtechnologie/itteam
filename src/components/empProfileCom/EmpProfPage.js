@@ -215,7 +215,7 @@ import "../../stylesheets/EmpProfile.css";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaLaptopCode } from "react-icons/fa";
 import { MdOutlineCurrencyRupee } from "react-icons/md";
-import { FiPlus, FiUpload, FiX } from "react-icons/fi";
+import { FiPlus, FiX } from "react-icons/fi";
 import { FaBusinessTime } from "react-icons/fa6";
 import { IoCallSharp } from "react-icons/io5";
 import { IoIosMail } from "react-icons/io";
@@ -231,37 +231,6 @@ import resumelogo from "../../images/resumelogo.png";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
-
-const dummyEmploymentData = [
-  {
-    companyLogo: Company,
-    position: "UI UX DESIGN & PRODUCT DESIGN",
-    companyName: "SOV Technologies · Freelance",
-    timeline: "Nov 2022 – Present",
-    duration: "1mo",
-    description:
-      "SOV Technologies will provide Freelance Work for Product Design. I solve user problems via user experience (UX) & interaction design and add more value to them with minimalistic UI design.",
-  },
-  {
-    companyLogo: Company,
-    position: "UI UX DESIGN & PRODUCT DESIGN",
-    companyName: "SOV Technologies · Freelance",
-    timeline: "Nov 2022 – Present",
-    duration: "1mo",
-    description:
-      "SOV Technologies will provide Freelance Work for Product Design. I solve user problems via user experience (UX) & interaction design and add more value to them with minimalistic UI design.",
-  },
-];
-
-const allSkillsList = [
-  { skillsName: "WordPress", icon: "🌐" },
-  { skillsName: "Elementor", icon: "🎨" },
-  { skillsName: "Shopify", icon: "🛒" },
-  { skillsName: "CSS", icon: "🎯" },
-  { skillsName: "HTML", icon: "📄" },
-  { skillsName: "JavaScript", icon: "⚡" },
-  { skillsName: "React.js", icon: "⚛️" },
-];
 
 // Dummy Education Data
 const dummyEducationData = [
@@ -285,7 +254,7 @@ const EmployeeProfile = () => {
   const userId = Cookies.get("userId"); // Get user ID from cookieshe
   const navigate = useNavigate();
 
-  const [employmentList, setEmploymentList] = useState(dummyEmploymentData);
+  const [employmentList, setEmploymentList] = useState([]);
 
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -319,9 +288,9 @@ const EmployeeProfile = () => {
     form.append("mobileNumber", formData.phone.replace("+91", "").trim());
     form.append("email", formData.email);
 
-    // if (formData.profileImgFile) {
-    //   form.append("profileImg", formData.profileImgFile);
-    // }
+    if (formData.profileImgFile) {
+      form.append("image", formData.profileImgFile);
+    }
 
     try {
       const response = await axios.put(`${baseUrl}/api/editProfile`, form, {
@@ -370,25 +339,51 @@ const EmployeeProfile = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [resumeFile, setResumeFile] = useState(null);
-  const [resumeURL, setResumeURL] = useState();
+  const [resumeFile, setResumeFile] = useState(null);     // holds File object or file name
+  const [resumeURL, setResumeURL] = useState("");         // for full backend resume URL
+  const [newResume, setNewResume] = useState(null);       // File for new upload
+
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setResumeFile(file);
-      setResumeURL(URL.createObjectURL(file)); // temporary URL to view
+      setNewResume(file);
+      setResumeFile(file.name); // Show new name immediately
+      setResumeURL(URL.createObjectURL(file)); // Temporary preview
     }
   };
 
 
-  const handleUpload = () => {
-    if (resumeFile) {
-      // You can handle real file upload here
-      console.log("Resume uploaded:", resumeFile.name);
-      setIsModalOpen(false);
+
+  // HANDLE upload to backend
+  const handleUpload = async () => {
+    if (!newResume) return alert("Please select a resume to upload.");
+
+    const formData = new FormData();
+    formData.append("resume", newResume);
+    formData.append("userId", userId); // Ensure userId is passed if needed
+
+    try {
+      const res = await axios.put(`${baseUrl}/api/editProfile`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (data.status === 200) {
+        setResumeURL(data.result.resume); // Update backend link
+        setIsModalOpen(false);
+      } else {
+        setError(error.response?.data?.message || "Error uploading resume.");
+      }
+    } catch (err) {
+      setError(error.response?.data?.message || "Error uploading resume.");
     }
   };
+
 
   const [isSkillModalOpen, setIsSkillModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -420,7 +415,7 @@ const EmployeeProfile = () => {
       skill.tecStackName.toLowerCase().includes(searchTerm.toLowerCase()) &&
       !selectedSkills.find((s) => s.tecStackName === skill.tecStackName)
   );
-  console.log("Filtered Skills:", filteredSkills);
+
 
 
   const handleAddSkill = async (skill) => {
@@ -432,16 +427,29 @@ const EmployeeProfile = () => {
 
     // Prevent duplicates
     const alreadyExists = selectedSkills.some(
-      (s) => s.tecStackName.toLowerCase() === skill.tecStackName.toLowerCase()
+      (s) =>
+        s.tecStackName &&
+        skill.tecStackName &&
+        s.tecStackName.toLowerCase() === skill.tecStackName.toLowerCase() &&
+        ((s.id && skill.id && s.id === skill.id) || (s._id && skill._id && s._id === skill._id))
     );
     if (alreadyExists) return;
+
+    // Use _id if available, else id
+    const techStackId = skill._id || skill.id;
+    if (!techStackId) {
+      setError("Skill ID missing. Cannot add this skill.");
+      return;
+    }
 
     try {
       const response = await axios.post(
         `${baseUrl}/api/addSkill`,
         {
           userId,
-          skillsName: skill.tecStackName
+          skillsName: skill.tecStackName,
+          skillLogo: skill.techStacklogo,
+          techStackId: techStackId,
         },
         {
           headers: {
@@ -458,11 +466,12 @@ const EmployeeProfile = () => {
       ) {
         const newSkill = {
           tecStackName: response.data.result.skillsName,
-          techStacklogo: skill.techStacklogo || "/images/default-skill-icon.svg",
-          _id: response.data.result._id, // ✅ Include the _id here
+          techStacklogo: response.data.result.skillLogo || response.data.result.skilllogo, // handle both cases
+          _id: response.data.result.techStackId, // ✅ Include the _id here
         };
 
         setSelectedSkills((prev) => [...prev, newSkill]);
+        console.log("Skill added:",selectedSkills);
         setSuccess("Skill added successfully!");
       } else {
         setError(response.data.message || "Failed to add skill.");
@@ -519,49 +528,136 @@ const EmployeeProfile = () => {
   const [editingIndex, setEditingIndex] = useState(null);
 
   const [newJob, setNewJob] = useState({
-    companyLogo: Company,
-    companyName: "",
-    position: "",
-    timeline: "",
-    duration: "",
+    company_Name: "",
+    title: "",
+    JoiningDate: "",
+    endDate: "",
+    location: "",
     description: "",
+    isCurrentEmployment: "false"
   });
 
-  const handleOpenModal = (index = null) => {
+  const handleOpenModal = (index = null, _id = null) => {
     if (index !== null) {
-      setNewJob(employmentList[index]);
+      setNewJob(employmentList[_id]);
       setEditingIndex(index);
     } else {
       setNewJob({
-        companyLogo: Company,
-        companyName: "",
-        position: "",
-        timeline: "",
-        duration: "",
+        company_Name: "",
+        title: "",
+        JoiningDate: "",
+        endDate: "",
+        location: "",
         description: "",
+        isCurrentEmployment: "false"
       });
       setEditingIndex(null);
     }
     setIsExperienceModalOpen(true);
   };
 
-  const handleSave = () => {
-    if (editingIndex !== null) {
-      const updatedList = [...employmentList];
-      updatedList[editingIndex] = newJob;
-      setEmploymentList(updatedList);
-    } else {
-      setEmploymentList([...employmentList, newJob]);
+  const saveEmployment = async (userId, jobData, isEdit) => {
+
+    const url = isEdit
+      ? `${baseUrl}/api/editWorkExprience`
+      : `${baseUrl}/api/addExperience`;
+
+    try {
+      const response = await axios.post(
+        url,
+        {
+          userId,
+          ...(isEdit
+            ? {
+              _id: jobData._id,
+              ...jobData,
+            }
+            : { ...jobData }),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      if (response.data.status === 200) {
+        console.log(`${isEdit ? "Edited" : "Added"} experience successfully.`);
+      } else {
+        alert("API Error: " + response.data.message);
+      }
+    } catch (error) {
+      alert("Network error: " + error.message);
     }
-    setIsExperienceModalOpen(false);
-    setEditingIndex(null);
   };
 
-  // const handleDelete = (index) => {
-  //   const updated = [...employmentList];
-  //   updated.splice(index, 1);
-  //   setEmploymentList(updated);
-  // };
+
+  const handleSave = async () => {
+    const { company_Name, title, startDate, endDate, location, description } = newJob;
+
+    // if (
+    //   !company_Name?.trim() ||
+    //   !title?.trim() ||
+    //   !startDate?.trim() ||
+    //   !endDate?.trim() ||
+    //   !location?.trim() ||
+    //   !description?.trim()
+    // ) {
+    //   alert("Please fill in all required fields.");
+    //   return;
+    // }
+
+    const updatedList = [...employmentList];
+
+    if (editingIndex !== null) {
+      updatedList[editingIndex] = newJob;
+    } else {
+      updatedList.push(newJob);
+    }
+
+    // Optimistically update local state first
+    setEmploymentList(updatedList);
+    setIsExperienceModalOpen(false);
+    setEditingIndex(null);
+
+    // Then call API to save on backend
+    await saveEmployment(userId, newJob, editingIndex !== null);
+  };
+
+
+  const handleDeleteExperience = async (job_id) => {
+    console.log("jobId:", job_id);
+    try {
+      const response = await axios.post(
+        `${baseUrl}/api/deletedExperience`,
+        {
+          _id: job_id, // ✅ request body
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`, // ✅ token in correct place
+          },
+        }
+      );
+
+
+      if (response.data.status === 200) {
+        // Remove the deleted job from the local state
+        const updatedList = employmentList.filter((job) => job._id !== job_id);
+        setEmploymentList(updatedList);
+        setIsExperienceModalOpen(false);
+        setEditingIndex(null);
+      } else {
+        console.error("Error deleting experience:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
+  };
+
+
 
   const [educationList, setEducationList] = useState(dummyEducationData);
   const [isEduModalOpen, setIsEduModalOpen] = useState(false);
@@ -791,7 +887,7 @@ const EmployeeProfile = () => {
       setSelectedSkills(
         (userData.skillmodels || []).map(skill => ({
           tecStackName: skill.skillsName,
-          techStacklogo: skill.image,
+          techStacklogo: skill.skillLogo,
           _id: skill._id
         }))
       );
@@ -799,7 +895,7 @@ const EmployeeProfile = () => {
       setEducationList(userData.education_details || []);
       setProjects(userData.projectmodels || []);
       setCertifications(userData.lic_certis || []);
-      setResumeFile(userData.resume ? userData.resume.split("/").pop() : "Algebra.pdf");
+      setResumeFile(userData.resume.split("/").pop());
       setResumeURL(userData.resume);
 
     }
@@ -882,9 +978,9 @@ const EmployeeProfile = () => {
     return <h2>Loading...</h2>;
   }
 
-  // if (!userData) {
-  //   return <h2>User data not found</h2>;
-  // }
+  if (!userData) {
+    return <h2>User data not found</h2>;
+  }
 
   return (
     <>
@@ -893,9 +989,11 @@ const EmployeeProfile = () => {
 
       <div className="empprofile-card">
         <div className="profileCard-box">
+
+
           <div className="profile-secOne">
 
-
+            {/* Profile section */}
             <div className="profileCardHead">
               <img src={formData.profileImg || Profile} alt="Profile" />
 
@@ -951,7 +1049,7 @@ const EmployeeProfile = () => {
               </div>
             </div>
 
-            {/* Modal for Editing */}
+            {/* Modal for profile Editing */}
             {isEditOpen && (
               <div className="modal-overlay">
                 <div className="edit-modal-horizontal">
@@ -1058,13 +1156,14 @@ const EmployeeProfile = () => {
               </div>
             )}
 
-
           </div>
 
           <div className="profile-secTwo">
             <div className="profile-contentBox">
 
               <div className="main-wrapper">
+
+                {/* siderbar Link section */}
                 <div className="quick-links">
                   <div className="content-boxes-head"><h2>Quick Links</h2></div>
                   <ul>
@@ -1079,7 +1178,7 @@ const EmployeeProfile = () => {
                   </ul>
                 </div>
 
-
+                {/* AboutMe Section */}
                 <div className="content-boxes">
                   <div className="content-boxes-head">
                     <h2>About Me</h2>
@@ -1110,6 +1209,7 @@ const EmployeeProfile = () => {
                   </div>
                 </div>
 
+                {/* Modal for AboutMe Editing */}
                 {isAboutEditOpen && (
                   <div className="modal-overlay">
                     <div className="edit-modal">
@@ -1138,6 +1238,7 @@ const EmployeeProfile = () => {
                 )}
               </div>
 
+              {/* Resume section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Upload Resume</h2>
@@ -1163,7 +1264,7 @@ const EmployeeProfile = () => {
                 </div>
               </div>
 
-              {/* Upload Modal */}
+              {/* Modal for Upload Resume */}
               {isModalOpen && (
                 <div className="modal-overlay">
                   <div className="modal-box">
@@ -1177,6 +1278,7 @@ const EmployeeProfile = () => {
                 </div>
               )}
 
+              {/* Skills section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Key Skills</h2>
@@ -1199,62 +1301,64 @@ const EmployeeProfile = () => {
                     ))}
                   </div>
                 </div>
-              </div>
+                {/* Modal for Skill editing */}
+                {isSkillModalOpen && (
+                  <div className="modal-overlay">
+                    <div className="modal-box">
+                      <h3>Edit Skills</h3>
 
-              {/* Modal */}
-              {isSkillModalOpen && (
-                <div className="modal-overlay">
-                  <div className="modal-box">
-                    <h3>Edit Skills</h3>
+                      <input
+                        type="text"
+                        placeholder="Search new skill..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="skill-search"
+                      />
 
-                    <input
-                      type="text"
-                      placeholder="Search new skill..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="skill-search"
-                    />
+                      <div className="selected-skills">
+                        {selectedSkills.map((skill, i) => (
+                          <div key={i} className="selected-skill">
+                            <span className="skill-icon"><img
+                              src={skill.techStacklogo}
+                              alt={skill.tecStackName}
+                              style={{ width: "20px", height: "20px", marginRight: "8px" }}
+                            /></span>
+                            {skill.tecStackName}
+                            <FiX onClick={() => handleRemoveSkill(skill.tecStackName, skill._id)} />
+                          </div>
+                        ))}
+                      </div>
 
-                    <div className="selected-skills">
-                      {selectedSkills.map((skill, i) => (
-                        <div key={i} className="selected-skill">
-                          <span className="skill-icon"><img
-                            src={skill.techStacklogo}
-                            alt={skill.tecStackName}
-                            style={{ width: "20px", height: "20px", marginRight: "8px" }}
-                          /></span>
-                          {skill.tecStackName}
-                          <FiX onClick={() => handleRemoveSkill(skill.tecStackName, skill._id)} />
-                        </div>
-                      ))}
-                    </div>
+                      <div className="skill-list">
+                        {filteredSkills.map((skill, i) => (
+                          <div
+                            key={i}
+                            className="skill-option"
+                            onClick={() => handleAddSkill(skill)}
+                          >
+                            <span className="skill-icon"><img
+                              src={skill.techStacklogo}
+                              alt={skill.tecStackName}
+                              style={{ width: "20px", height: "20px", marginRight: "8px" }}
+                            /></span>
+                            {skill.tecStackName}
+                          </div>
+                        ))}
+                      </div>
 
-                    <div className="skill-list">
-                      {filteredSkills.map((skill, i) => (
-                        <div
-                          key={i}
-                          className="skill-option"
-                          onClick={() => handleAddSkill(skill)}
-                        >
-                          <span className="skill-icon"><img
-                            src={skill.techStacklogo}
-                            alt={skill.tecStackName}
-                            style={{ width: "20px", height: "20px", marginRight: "8px" }}
-                          /></span>
-                          {skill.tecStackName}
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="modal-buttons">
-                      <button onClick={() => setIsSkillModalOpen(false)}>Done</button>
-                      <button type="button" onClick={() => setIsSkillModalOpen(false)}>Cancel</button>
+                      <div className="modal-buttons">
+                        <button onClick={() => setIsSkillModalOpen(false)}>Done</button>
+                        <button type="button" onClick={() => setIsSkillModalOpen(false)}>Cancel</button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
 
 
+
+
+              {/* Experience section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Employment</h2>
@@ -1268,7 +1372,7 @@ const EmployeeProfile = () => {
                       const duration = formatDateRange(job.startDate, job.endDate);
                       return (
                         <div className="employment-card" key={index}>
-                          <div className="employment-logo"><img src={job.companyLogo} /></div>
+                          <div className="employment-logo"><img /></div>
                           <div className="employment-content">
                             <div className="employment-header">
                               <h3>{job.title}</h3>
@@ -1278,7 +1382,7 @@ const EmployeeProfile = () => {
                               <div style={{ display: "flex", gap: "8px" }}>
                                 <button
                                   className="employee-editBtn"
-                                  onClick={() => handleOpenModal(index)}
+                                  onClick={() => handleOpenModal(job._id, index)}
                                 >
                                   <MdOutlineEdit size={25} />
                                 </button>
@@ -1301,14 +1405,15 @@ const EmployeeProfile = () => {
                 </div>
               </div>
 
+              {/* Modal for Experience Editing */}
               {isExperienceModalOpen && (
                 <div className="modal-overlay">
                   <div className="modal-box">
                     <h3>{editingIndex !== null ? "Edit Employment" : "Add New Employment"}</h3>
-                    {newJob.companyLogo && (
+                    {/* {newJob.companyLogo && (
                       <img src={newJob.companyLogo} alt="Preview" style={{ width: "10%", height: "auto", borderRadius: "8px", marginTop: "10px" }} />
-                    )}
-                    <input
+                    )} */}
+                    {/* <input
                       type="file"
                       accept="image/*"
                       onChange={(e) => {
@@ -1321,35 +1426,41 @@ const EmployeeProfile = () => {
                           reader.readAsDataURL(file);
                         }
                       }}
-                    />
+                    /> */}
                     <input
                       type="text"
                       placeholder="Company Name"
-                      value={newJob.companyName}
-                      onChange={(e) => setNewJob({ ...newJob, companyName: e.target.value })}
+                      value={newJob?.company_Name}
+                      onChange={(e) => setNewJob({ ...newJob, company_Name: e.target.value })}
                     />
                     <input
                       type="text"
                       placeholder="Position"
-                      value={newJob.position}
-                      onChange={(e) => setNewJob({ ...newJob, position: e.target.value })}
+                      value={newJob?.title}
+                      onChange={(e) => setNewJob({ ...newJob, title: e.target.value })}
+                    />
+                    <input
+                      type="date"
+                      placeholder="Enter a Start Date"
+                      value={newJob?.JoiningDate}
+                      onChange={(e) => setNewJob({ ...newJob, JoiningDate: e.target.value })}
+                    />
+                    <input
+                      type="date"
+                      placeholder="Enter a End Date"
+                      value={newJob?.endDate}
+                      onChange={(e) => setNewJob({ ...newJob, endDate: e.target.value })}
                     />
                     <input
                       type="text"
-                      placeholder="Timeline (e.g., Jan 2022 - Present)"
-                      value={newJob.timeline}
-                      onChange={(e) => setNewJob({ ...newJob, timeline: e.target.value })}
-                    />
-                    <input
-                      type="text"
-                      placeholder="Duration (e.g., 2 Years)"
-                      value={newJob.duration}
-                      onChange={(e) => setNewJob({ ...newJob, duration: e.target.value })}
+                      placeholder="Location"
+                      value={newJob?.location}
+                      onChange={(e) => setNewJob({ ...newJob, location: e.target.value })}
                     />
                     <textarea
                       placeholder="Description"
                       rows={3}
-                      value={newJob.description}
+                      value={newJob?.description}
                       onChange={(e) => setNewJob({ ...newJob, description: e.target.value })}
                     />
 
@@ -1358,15 +1469,20 @@ const EmployeeProfile = () => {
                       <button onClick={handleSave}>
                         {editingIndex !== null ? "Update" : "Add"}
                       </button>
-                      <button type="button" onClick={() => setIsExperienceModalOpen(false)}>Cancel</button>
+                      <button style={{ backgroundColor: "#333" }} onClick={() => setIsExperienceModalOpen(false)}>Cancel</button>
+                      {editingIndex !== null && (
+                        <button type="button" onClick={() => handleDeleteExperience(newJob._id)}>
+                          Delete
+                        </button>
+                      )}
+
                     </div>
                   </div>
                 </div>
               )}
 
 
-
-
+              {/* Education section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Education</h2>
@@ -1406,6 +1522,8 @@ const EmployeeProfile = () => {
                 </div>
 
               </div>
+
+              {/* Modal for Education Editing */}
               {isEduModalOpen && (
                 <div className="modal-overlay">
                   <div className="modal-content">
@@ -1517,7 +1635,7 @@ const EmployeeProfile = () => {
 
 
 
-
+              {/* Project section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Projects</h2>
@@ -1616,7 +1734,7 @@ const EmployeeProfile = () => {
 
 
 
-
+              {/* Certificate and lincences section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Licenses & Certifications</h2>
@@ -1625,37 +1743,37 @@ const EmployeeProfile = () => {
                   </button>
                 </div>
                 <div className="education-cards">
-                {certifications.map((cert, index) => (
-                  <div className="license-card" key={index}>
-                    <img src={cert.image} alt="Certification Logo" className="license-logo" />
-                    <div className="license-info">
-                      <h3>{cert.courses}</h3>
-                      <p className="issuer">{cert.company_Name}</p>
-                      <p className="issued">
-                        Issued {formatDate(cert.issued_Date)}
-                        {cert.endDate
-                          ? ` · Expires ${formatDate(cert.endDate)}`
-                          : " · No Expiration Date"}
-                      </p>
-                    </div>
-                    <a
-                      href={cert.certificateUrl}  // Replace with your actual URL variable
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="show-credential-button"
-                    >
-                      Show credential
-                    </a>
+                  {certifications.map((cert, index) => (
+                    <div className="license-card" key={index}>
+                      <img src={cert.image} alt="Certification Logo" className="license-logo" />
+                      <div className="license-info">
+                        <h3>{cert.courses}</h3>
+                        <p className="issuer">{cert.company_Name}</p>
+                        <p className="issued">
+                          Issued {formatDate(cert.issued_Date)}
+                          {cert.endDate
+                            ? ` · Expires ${formatDate(cert.endDate)}`
+                            : " · No Expiration Date"}
+                        </p>
+                      </div>
+                      <a
+                        href={cert.certificateUrl}  // Replace with your actual URL variable
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="show-credential-button"
+                      >
+                        Show credential
+                      </a>
 
-                    <div className="project-actions">
-                      <button onClick={() => handleAddEditLicensesClick(cert, index)}>
-                        <MdOutlineEdit size={25} />
-                      </button>
-                      {/* <button onClick={() => handleLicensesDelete(index)}>Delete</button> */}
+                      <div className="project-actions">
+                        <button onClick={() => handleAddEditLicensesClick(cert, index)}>
+                          <MdOutlineEdit size={25} />
+                        </button>
+                        {/* <button onClick={() => handleLicensesDelete(index)}>Delete</button> */}
+                      </div>
                     </div>
-                  </div>
-                ))}
-               </div>
+                  ))}
+                </div>
                 {showLicensesModal && (
                   <div className="modal">
                     <form className="modal-form" onSubmit={handleFormLicensesSubmit}>
@@ -1728,213 +1846,3 @@ const EmployeeProfile = () => {
 
 export default EmployeeProfile;
 
-
-{/* <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Honors & Awards</h2>
-                </div>
-                <div className="award-card-box-details">
-                  <div>
-                    {userData.awards.map((item, index) => (
-                      <ProfAwardCard
-                        key={index}
-                        awardName={item.title}
-                        awardIssuedBy={item.issuedBy}
-                        awardIssueDate={new Date(
-                          item.issuedDate
-                        ).toLocaleDateString()}
-                        assosiate={item.assosiatedWith}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>  */}
-
-
-{/* <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Licenses & Certifications</h2>
-                  <button className="aboutMe-editBtn">
-                    <FiPlus size={30} className="plus-icon" />
-                  </button>
-                </div>
-                <div className="license-card">
-                  <img
-                    src={Course}
-                    alt="Certification Logo"
-                    className="license-logo"
-                  />
-                  <div className="license-info">
-                    <h3>UI/UX DESIGN MASTER PROGRAM</h3>
-                    <p className="issuer">Simplilearn</p>
-                    <p className="issued">Issued Nov 2022 · No Expiration Date</p>
-                  </div>
-                  <button className="show-credential-button">Show credential</button>
-                </div>
-
-                <div className="license-card">
-                  <img
-                    src={Course}
-                    alt="Certification Logo"
-                    className="license-logo"
-                  />
-                  <div className="license-info">
-                    <h3>UI/UX DESIGN MASTER PROGRAM</h3>
-                    <p className="issuer">Simplilearn</p>
-                    <p className="issued">Issued Nov 2022 · No Expiration Date</p>
-                  </div>
-                  <button className="show-credential-button">Show credential</button>
-                </div>
-                <div>
-                 
-                </div>
-              </div> */}
-{/* <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Projects</h2>
-                  <button className="aboutMe-editBtn">
-                    <FiPlus size={30} className="plus-icon" />
-                  </button>
-                </div>
-                <div className="proj-card-box-details">
-                  <div className="project-card">
-                    <img
-                      src={School}
-                      alt="Project Logo"
-                      className="project-logo"
-                    />
-                    <div className="project-info">
-                      <h3>JOB POARTAL MOBILE APP DESIGN</h3>
-                      <p className="project-date">Sep 2022 – Present</p>
-                      <p className="project-associated">
-                        Associated with BHAGWAN MAHAVIR COLLEGE OF ENGG. AND TECH, SURAT 006
-                      </p>
-                      <p className="project-description">
-                        As one of the very few profitable pure play internet companies in the country, Info
-                        Edge is India's premier online classifieds company in recruitment, matrimony, real estate,
-                        education and related services. Provide Job and Amazing Courses For FREE.
-                      </p>
-                    </div>
-                  </div>
-                  <div>
-                    
-                  </div>
-                </div>
-              </div> */}
-{/* <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Education</h2>
-                  <button className="aboutMe-editBtn">
-                    <FiPlus size={30} className="plus-icon" />
-                  </button>
-                </div>
-                <div className="education-cards">
-                  {[1, 2].map((item) => (
-                    <div className="education-card" key={item}>
-                      <img
-                        src={School}
-                        alt="BMU Logo"
-                        className="college-logo"
-                      />
-                      <div className="education-info">
-                        <h3>BHAGWAN MAHAVIR COLLEGE OF ENGG. AND TECH.</h3>
-                        <p>Diploma of Education ・ Computer Engineering</p>
-                        <p className="location">Surat, Gujarat, India</p>
-                      </div>
-                      <div className="education-details">
-                        <div className="duration">Mar 2020 – Aug 2023</div>
-                        <div className="grade">Grade A+</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-               
-              </div> */}
-
-{/* <div className="content-boxes">
-                  <div className="content-boxes-head">
-                    <h2>About Me</h2>
-                    <button className="aboutMe-editBtn">
-                      <FiPlus size={30} className="plus-icon" />
-                    </button>
-                  </div>
-                  <div className="about-card-box-details">
-                    <div>
-                      <div>
-                        {userData && userData.about ? (
-                          <ProfAbout aboutText={userData.about} />
-                        ) : (
-                          <p> I am Sayali Sarkar a professional Ui/Ux, Graphics & Web Designer. I'm keen to
-                            provide top-notch professional & creative design. I'm here to share my work
-                            with the world. I solve user problems via user experience (UX) & interaction
-                            design and add more value to them with minimalistic UI design.</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
-
-{/* <div className="profileCardHead">
-              <img
-                src={Profile}
-                alt="Profile"
-
-              />
-              <div className="cadidate-basicInfo">
-                <div className="profile-header-top">
-                  <div>
-                    <h3>Sayali Sarkar</h3>
-                    <p>JS Developer</p>
-                    <p>Arnnima Solution</p>
-                  </div>
-
-                  
-                  <div className="profile-actions">
-                    <button className="action-btn">
-                      <MdOutlineEdit size={30} />
-                    </button>
-                    <button className="action-btn">
-                      <FiShare2 size={30} />
-                    </button>
-                  </div>
-                </div>
-
-
-
-                <div className="colOneInfoTwo">
-                  <div className="candi-personalInfo">
-                    <div className="personalInfo-colOne">
-                      <div className="colOne-details">
-                        <FaLocationDot size={20} />
-                        <p>Ghaziabad</p>
-                      </div>
-                      <div className="colOne-details">
-                        <FaLaptopCode size={25} />
-                        <p>2 Year Exp</p>
-                      </div>
-                      <div className="colOne-details">
-                        <MdOutlineCurrencyRupee size={25} />
-                        <p>2000000 /-Year</p>
-                      </div>
-                    </div>
-                    <div className="personalInfo-colTwo">
-                      <div className="colTwo-details">
-                        <FaBusinessTime size={25} />
-                        <p>20 Days (Notice period)</p>
-                      </div>
-                      <div className="colTwo-details">
-                        <IoCallSharp size={25} />
-                        <p>+91 939387736</p>
-                      </div>
-                      <div className="colTwo-details">
-                        <IoIosMail size={25} />
-                        <p>mnmnsjjn@gmail.com</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  
-                </div>
-              </div>
-            </div> */}
