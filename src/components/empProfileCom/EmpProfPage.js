@@ -277,7 +277,7 @@ const EmployeeProfile = () => {
     form.append("userId", userId);
     form.append("name", formData.name);
     form.append("currentPosition", formData.designation);
-    form.append("company", formData.company);
+    form.append("currentCompany", formData.company);
     form.append("location", formData.location);
     const expRaw = formData.experience.split(" ")[0];
     form.append("experienceInStack", expRaw);
@@ -471,7 +471,6 @@ const EmployeeProfile = () => {
         };
 
         setSelectedSkills((prev) => [...prev, newSkill]);
-        console.log("Skill added:",selectedSkills);
         setSuccess("Skill added successfully!");
       } else {
         setError(response.data.message || "Failed to add skill.");
@@ -488,7 +487,7 @@ const EmployeeProfile = () => {
   const handleRemoveSkill = async (tecStackName, _id) => {
     if (!authToken || !userId) {
       setError("Session expired. Please log in again.");
-      console.log("expire token");
+
       return;
     }
 
@@ -627,7 +626,7 @@ const EmployeeProfile = () => {
 
 
   const handleDeleteExperience = async (job_id) => {
-    console.log("jobId:", job_id);
+
     try {
       const response = await axios.post(
         `${baseUrl}/api/deletedExperience`,
@@ -673,24 +672,92 @@ const EmployeeProfile = () => {
     logo: School,
   });
 
+  const addEducation = async (education) => {
+    const formData = new FormData();
+
+    for (let key in education) {
+      if (education[key]) {
+        formData.append(key, education[key]);
+      }
+    }
+
+    return await axios.post(`${baseUrl}/api/addEducation`, formData, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  };
+
+  const updateEducation = async (education) => {
+    try {
+      const response = await axios.post(
+        `${baseUrl}/api/editEducation`,
+        {
+          id: education._id, // Your backend expects 'id', not '_id'
+          college: education.college,
+          degree: education.degree,
+          startDate: education.startDate,
+          endDate: education.endDate,
+          location: education.location,
+          grade: education.grade,
+          specialization: education.specialization || "", // optional
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      return response;
+    } catch (error) {
+      console.error("Failed to update education:", error);
+      throw error;
+    }
+  };
+
+
+
+
+
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setNewEducation({ ...newEducation, logo: reader.result });
-      };
-      reader.readAsDataURL(file);
+      setNewEducation(prev => ({ ...prev, logo: file }));
     }
   };
-  const handleDelete = (id) => {
-    setEducationList(prev => prev.filter(edu => edu.id !== id));
+
+  const handleDeleteEducation = async (id) => {
+    try {
+      const res = await axios.post(`${baseUrl}/api/deletedEducation`, {
+        id: id, // ✅ request body
+      },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`, // ✅ token in correct place
+          },
+        });
+
+      if (res.data.status === 200) {
+        setEducationList(prev => prev.filter(edu => edu._id !== id));
+
+      } else {
+        alert("Failed to delete education.");
+      }
+    } catch (err) {
+      console.error("Delete education failed:", err);
+      alert("Error deleting education.");
+    }
   };
+
 
   const handleEditClick = (edu) => {
     setNewEducation(edu);
     setIsEditing(true);
-    setEditId(edu.id);
+    setEditId(edu._id);
     setIsEduModalOpen(true);
   };
 
@@ -717,9 +784,10 @@ const EmployeeProfile = () => {
   const [editIndex, setEditIndex] = useState(null);
   const [formProjectData, setFormProjectData] = useState({
     title: "",
-    date: "",
+    startDate: "",
+    endDate: "",
     associated: "",
-    description: "",
+    projectDescription: "",
     image: "",
     file: null,
   });
@@ -732,29 +800,111 @@ const EmployeeProfile = () => {
       });
       setEditIndex(index);
     } else {
-      setFormProjectData({ title: "", date: "", associated: "", description: "", image: "", file: null });
+      setFormProjectData({ title: "", startDate: "", endDate: "", associated: "", ProjectDescription: "", image: "", file: null });
       setEditIndex(null);
     }
     setShowModal(true);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const projectData = { ...formProjectData };
-    if (editIndex !== null) {
-      const updated = [...projects];
-      updated[editIndex] = projectData;
-      setProjects(updated);
-    } else {
-      setProjects([...projects, projectData]);
+    try {
+      const projectPayload = { ...formProjectData };
+      if (editIndex !== null) {
+        projectPayload._id = projects[editIndex]._id;
+        const res = await editProject(projectPayload);
+        const updated = res.data.result;
+
+        setProjects((prev) =>
+          prev.map((proj, idx) => (idx === editIndex ? updated : proj))
+        );
+      } else {
+        const res = await addProject(projectPayload);
+        setProjects((prev) => [...prev, res.data.result]);
+      }
+
+      setShowModal(false);
+      setFormProjectData({
+        title: "",
+        startDate: "",
+        endDate: "",
+        associated: "",
+        projectDescription: "",
+        image: "",
+        file: null,
+      });
+      setEditIndex(null);
+    } catch (err) {
+      console.error("Project submission failed:", err);
+      alert("Error submitting project.");
     }
-    setShowModal(false);
   };
 
-  // const handleDelete = (index) => {
-  //   const updated = projects.filter((_, i) => i !== index);
-  //   setProjects(updated);
-  // };
+
+  const addProject = async (projectData) => {
+    console.log("Adding project:", projectData);
+    // const formData = new FormData();
+
+    // formData.append("title", projectData.title);
+    // formData.append("startDate", projectData.startDate);
+    // formData.append("endDate", projectData.endDate);
+    // formData.append("associated", projectData.associated);
+    // formData.append("projectDescription", projectData.projectDescription);
+
+    // if (projectData.file) {
+    //   formData.append("image", projectData.file); // assuming you will later handle the file
+    // }
+
+    return await axios.post(`${baseUrl}/api/addProjects`, projectData, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+
+  const editProject = async (projectData) => {
+    return await axios.put(`${baseUrl}/api/editProjects`, {
+      id: projectData._id, // backend expects 'id'
+      title: projectData.title,
+      startDate: projectData.startDate,
+      associated: projectData.associated,
+      projectDescription: projectData.projectDescription,
+    }, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+
+
+  const handleDeleteProject = async (projectId) => {
+
+    try {
+      const response = await axios.post(
+        `${baseUrl}/api/deleteProject`,
+        { id: projectId },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.status === 200) {
+        setProjects((prev) => prev.filter((proj) => proj._id !== projectId));
+      } else {
+        alert(response.data.message || "Failed to delete project.");
+      }
+      setShowModal(false)
+    } catch (error) {
+      alert(error.response?.data?.message || "Error deleting project.");
+    }
+  };
 
 
   const [certifications, setCertifications] = useState([
@@ -793,24 +943,104 @@ const EmployeeProfile = () => {
     setShowLicensesModal(true);
   };
 
-  const handleFormLicensesSubmit = (e) => {
+  // const handleFormLicensesSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (editIndexLicenses !== null) {
+  //     const updated = [...certifications];
+  //     updated[editIndexLicenses] = formLicensesData;
+  //     setCertifications(updated);
+  //   } else {
+  //     setCertifications([...certifications, formLicensesData]);
+  //   }
+  //   setShowLicensesModal(false);
+  // };
+  const handleFormLicensesSubmit = async (e) => {
     e.preventDefault();
-    if (editIndexLicenses !== null) {
-      const updated = [...certifications];
-      updated[editIndexLicenses] = formLicensesData;
-      setCertifications(updated);
-    } else {
-      setCertifications([...certifications, formLicensesData]);
+
+    try {
+      let response;
+      if (editIndexLicenses !== null && formLicensesData._id) {
+        // Edit existing license
+        response = await axios.put(
+          `${baseUrl}/api/editCertificate`,
+          {
+            id: formLicensesData._id,
+            courses: formLicensesData.title,
+            company_Name: formLicensesData.issuer,
+            issued_Date: formLicensesData.issuedDate,
+            certificateUrl: formLicensesData.credentialUrl,
+            // image: formLicensesData.image, // send image if needed
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.data.status === 200) {
+          const updated = [...certifications];
+          updated[editIndexLicenses] = response.data.result;
+          setCertifications(updated);
+        }
+      } else {
+        // Add new license
+        response = await axios.post(
+          `${baseUrl}/api/addCertificate`,
+          {
+            userId,
+            courses: formLicensesData.title,
+            company_Name: formLicensesData.issuer,
+            issued_Date: formLicensesData.issuedDate,
+            certificateUrl: formLicensesData.credentialUrl,
+            // image: formLicensesData.image, // send image if needed
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.data.status === 200) {
+          setCertifications([...certifications, response.data.result]);
+        }
+      }
+      setShowLicensesModal(false);
+      setEditIndexLicenses(null);
+    } catch (error) {
+      alert(error.response?.data?.message || "Error saving license/certification.");
     }
-    setShowLicensesModal(false);
   };
 
-  const handleLicensesDelete = (index) => {
-    const updated = certifications.filter((_, i) => i !== index);
-    setCertifications(updated);
-  };
+  // const handleLicensesDelete = (index) => {
+  //   const updated = certifications.filter((_, i) => i !== index);
+  //   setCertifications(updated);
+  // };
 
+  const handleDeleteLicenses = async (certId) => {
+    try {
+      const response = await axios.post(
+        `${baseUrl}/api/deleteCertificate`,
+        { id: certId },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
+      if (response.data.status === 200) {
+        setCertifications((prev) => prev.filter((cert) => cert._id !== certId));
+      } else {
+        alert(response.data.message || "Failed to delete certification.");
+      }
+      setShowLicensesModal(false);
+    } catch (error) {
+      alert(error.response?.data?.message || "Error deleting certification.");
+    }
+  }
 
   useEffect(() => {
     if (!authToken || !userId) {
@@ -820,7 +1050,7 @@ const EmployeeProfile = () => {
 
     const fetchUserData = async () => {
       try {
-        console.log("Fetching user data for ID:", userId);
+
         const response = await axios.post(
           `${baseUrl}/api/getAllUserDetails`,
           { userId: userId },
@@ -832,7 +1062,7 @@ const EmployeeProfile = () => {
           }
         );
 
-        console.log("API Response:", response.data);
+
 
         if (response.data.status === 200 && response.data.result.length > 0) {
           const userData = response.data.result[0];
@@ -871,7 +1101,7 @@ const EmployeeProfile = () => {
       setFormData({
         name: userData.name || "Anjali Sharma",
         designation: userData.currentPosition || "JS Developer",
-        company: userData.company || "Arnnima Solution",
+        company: userData.currentCompany || "Arnnima Solution",
         location: userData.location || "Ghaziabad",
         experience: userData.experienceInStack ? `${userData.experienceInStack} Year Exp` : "2 Year Exp",
         salary: userData.salary ? `${userData.salary} /-Year` : "2000000 /-Year",
@@ -1133,7 +1363,8 @@ const EmployeeProfile = () => {
                       name="phone"
                       placeholder="Phone"
                       value={formData.phone}
-                      onChange={handleInputChange}
+                      // onChange={handleInputChange}
+                      disabled="true"
                     />
                     <input
                       name="email"
@@ -1372,7 +1603,7 @@ const EmployeeProfile = () => {
                       const duration = formatDateRange(job.startDate, job.endDate);
                       return (
                         <div className="employment-card" key={index}>
-                          <div className="employment-logo"><img /></div>
+                          <div className="employment-logo"><img  src={Company}/></div>
                           <div className="employment-content">
                             <div className="employment-header">
                               <h3>{job.title}</h3>
@@ -1493,14 +1724,14 @@ const EmployeeProfile = () => {
 
                 <div className="education-cards">
                   {educationList.map((edu) => {
-                    const duration = formatDateRange(edu.startDate, edu.endDate);
+                    const duration = formatDateRange(edu?.startDate, edu?.endDate);
                     return (
-                      <div className="education-card" key={edu.id}>
-                        <img src={edu.logo} alt="Logo" className="college-logo" />
+                      <div className="education-card" key={edu?._id}>
+                        <img src={School} alt="Logo" className="college-logo" />
                         <div className="education-info">
-                          <h3>{edu.college}</h3>
-                          <p>{edu.degree}</p>
-                          <p className="location">{edu.location}</p>
+                          <h3>{edu?.college}</h3>
+                          <p>{edu?.degree}</p>
+                          <p className="location">{edu?.location}</p>
                         </div>
                         <div className="education-details">
                           <div className="duration">{duration}</div>
@@ -1563,42 +1794,53 @@ const EmployeeProfile = () => {
                     <label>Upload College Logo</label>
                     <input type="file" accept="image/*" onChange={handleLogoChange} />
 
-                    {newEducation.logo && (
-                      <img src={newEducation.logo} alt="Logo Preview" className="logo-preview" />
+                    {newEducation.logo && typeof newEducation.logo !== 'string' && (
+                      <img
+                        src={URL.createObjectURL(newEducation.logo)}
+                        alt="Logo Preview"
+                        className="logo-preview"
+                      />
                     )}
+
 
                     <div className="modal-actions">
                       <button
-                        onClick={() => {
-                          const formattedDuration = formatDateRange(newEducation.startDate, newEducation.endDate);
-
+                        onClick={async () => {
                           const educationData = {
                             ...newEducation,
-                            duration: formattedDuration,
-                            id: isEditing ? editId : Date.now(),
+
                           };
+                          console.log("Education Data:", educationData);
+                          try {
+                            if (isEditing) {
+                              const res = await updateEducation(educationData);
+                              setEducationList(prev =>
+                                prev.map(edu => (edu.id === editId ? res.data.result : edu))
+                              );
+                            } else {
+                              const res = await addEducation(educationData);
+                              setEducationList([...educationList, res.data.result]);
+                            }
 
-                          if (isEditing) {
-                            setEducationList(prev =>
-                              prev.map(edu => (edu.id === editId ? educationData : edu))
-                            );
-                          } else {
-                            setEducationList([...educationList, educationData]);
+                            // Reset modal state
+                            setNewEducation({
+                              college: "",
+                              degree: "",
+                              location: "",
+                              startDate: "",
+                              endDate: "",
+                              grade: "",
+                              logo: School,
+                            });
+                            setIsEditing(false);
+                            setEditId(null);
+                            setIsEduModalOpen(false);
+                          } catch (err) {
+                            console.error("Education save failed:", err);
+                            alert("Error saving education.");
                           }
-
-                          setNewEducation({
-                            college: "",
-                            degree: "",
-                            location: "",
-                            startDate: "",
-                            endDate: "",
-                            grade: "",
-                            logo: School,
-                          });
-                          setIsEditing(false);
-                          setEditId(null);
-                          setIsEduModalOpen(false);
                         }}
+
                       >
                         {isEditing ? "Update" : "Save"}
                       </button>
@@ -1618,7 +1860,7 @@ const EmployeeProfile = () => {
                         <button
                           style={{ backgroundColor: "red", color: "white" }}
                           onClick={() => {
-                            handleDelete(editId);
+                            handleDeleteEducation(editId);
                             setIsEduModalOpen(false);
                             setIsEditing(false);
                             setEditId(null);
@@ -1645,16 +1887,16 @@ const EmployeeProfile = () => {
                 </div>
                 <div className="education-cards">
                   {projects.map((proj, index) => {
-                    const duration = formatDateRange(proj.startDate, proj.endDate);
+                    const duration = formatDateRange(proj?.startDate, proj?.endDate);
 
                     return (
                       <div className="project-card" key={index}>
-                        <img src={proj.image} alt="Project Logo" className="project-logo" />
+                        <img src={proj?.image || School} alt="Project Logo" className="project-logo" />
                         <div className="project-info">
-                          <h3>{proj.title}</h3>
+                          <h3>{proj?.title}</h3>
                           <p className="project-date">{duration}</p>
-                          <p className="project-associated">{proj.associated}</p>
-                          <p className="project-description">{proj.projectDescription}</p>
+                          <p className="project-associated">{proj?.associated}</p>
+                          <p className="project-description">{proj?.projectDescription}</p>
                         </div>
                         <div className="project-actions">
                           <button onClick={() => handleAddEditClick(proj, index)}>
@@ -1678,6 +1920,7 @@ const EmployeeProfile = () => {
                         onChange={(e) => setFormProjectData({ ...formProjectData, title: e.target.value })}
                         required
                       />
+
                       <input
                         type="date"
                         placeholder="startDate"
@@ -1702,7 +1945,7 @@ const EmployeeProfile = () => {
                       <textarea
                         placeholder="Description"
                         value={formProjectData.projectDescription}
-                        onChange={(e) => setFormProjectData({ ...formProjectData, description: e.target.value })}
+                        onChange={(e) => setFormProjectData({ ...formProjectData, projectDescription: e.target.value })}
                         required
                       />
                       <input
@@ -1725,7 +1968,16 @@ const EmployeeProfile = () => {
                       )}
                       <div className="modal-buttons">
                         <button type="submit">{editIndex !== null ? "Update" : "Add"}</button>
-                        <button type="button" onClick={() => setShowModal(false)}>Cancel</button>
+                        <button onClick={() => setShowModal(false)}>Cancel</button>
+                        {editIndex !== null && formProjectData._id && (
+                          <button
+                            type="button"
+                            style={{ backgroundColor: "red", color: "white" }}
+                            onClick={() => handleDeleteProject(formProjectData._id)}
+                          >
+                            Delete
+                          </button>
+                        )}
                       </div>
                     </form>
                   </div>
@@ -1745,19 +1997,19 @@ const EmployeeProfile = () => {
                 <div className="education-cards">
                   {certifications.map((cert, index) => (
                     <div className="license-card" key={index}>
-                      <img src={cert.image} alt="Certification Logo" className="license-logo" />
+                      <img src={cert?.image || Course} alt="Certification Logo" className="license-logo" />
                       <div className="license-info">
-                        <h3>{cert.courses}</h3>
-                        <p className="issuer">{cert.company_Name}</p>
+                        <h3>{cert?.courses}</h3>
+                        <p className="issuer">{cert?.company_Name}</p>
                         <p className="issued">
-                          Issued {formatDate(cert.issued_Date)}
-                          {cert.endDate
+                          Issued {formatDate(cert?.issued_Date)}
+                          {cert?.endDate
                             ? ` · Expires ${formatDate(cert.endDate)}`
                             : " · No Expiration Date"}
                         </p>
                       </div>
                       <a
-                        href={cert.certificateUrl}  // Replace with your actual URL variable
+                        href={cert?.certificateUrl}  // Replace with your actual URL variable
                         target="_blank"
                         rel="noopener noreferrer"
                         className="show-credential-button"
@@ -1793,12 +2045,19 @@ const EmployeeProfile = () => {
                         required
                       />
                       <input
-                        type="text"
+                        type="date"
                         placeholder="Issued Date"
                         value={formLicensesData.issuedDate}
                         onChange={(e) => setFormLicensesData({ ...formLicensesData, issuedDate: e.target.value })}
                         required
                       />
+                       {/* <input
+                        type="date"
+                        placeholder="Issued Date"
+                        value={formLicensesData.issuedDate}
+                        onChange={(e) => setFormLicensesData({ ...formLicensesData, issuedDate: e.target.value })}
+                        required
+                      /> */}
                       <input
                         type="url"
                         placeholder="Credential Link"
@@ -1827,7 +2086,16 @@ const EmployeeProfile = () => {
                       )}
                       <div className="modal-buttons">
                         <button type="submit">{editIndexLicenses !== null ? "Update" : "Add"}</button>
-                        <button type="button" onClick={() => setShowLicensesModal(false)}>Cancel</button>
+                        <button  onClick={() => setShowLicensesModal(false)}>Cancel</button>
+                        {editIndexLicenses !== null && formLicensesData._id && (
+                          <button
+                            type="button"
+                            style={{ backgroundColor: "red", color: "white" }}
+                            onClick={() => handleDeleteLicenses(formLicensesData._id)}
+                          >
+                            Delete
+                          </button>
+                        )}
                       </div>
                     </form>
                   </div>
