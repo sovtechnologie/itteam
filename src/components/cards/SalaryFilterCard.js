@@ -10,9 +10,9 @@ const SalaryFilterCard = ({ salaryRange, onSalaryChange }) => {
         className="slider"
         thumbClassName="thumb"
         trackClassName="track"
-        min={2}
-        max={20}
-        step={0.5}
+        min={0}
+        max={2000000}
+        step={50000}
         value={salaryRange}
         onChange={onSalaryChange}
       />

@@ -326,9 +326,20 @@ a {
   margin-bottom: 24px;
 }
 
-.company-meta div {
+.company-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   margin-bottom: 16px;
+  width: 1450px;         /* Set your desired width */
+  max-width: 100%;      /* Prevent overflow on small screens */
+  margin-left: auto;    /* Center horizontally */
+  margin-right: auto;
 }
+
+/* .company-meta div {
+  margin-bottom: 16px;
+} */
 
 .company-meta strong {
   display: block;

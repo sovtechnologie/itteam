@@ -1,26 +1,162 @@
-// import axios from "axios";
+import axios from "axios";
 
 // const BASE_URL = process.env.REACT_APP_BASE_URL || "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
-
+const BASE_URL = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
 export const fetchTechStacks = async () => {
-      try {
-        const response = await axios.get(
-          "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com/withOutLogin/tech-stack-list"
-        );
+  try {
+    const response = await axios.get(
+      "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com/withOutLogin/tech-stack-list"
+    );
 
-        if (response.data && response.data.result) {
-         return response.data.result
-        } else {
-          console.error("Invalid response format:", response);
-        }
-      } catch (error) {
-        console.error("Error fetching tech stacks:", error);
+    if (response.data && response.data.result) {
+      return response.data.result
+    } else {
+      console.error("Invalid response format:", response);
+    }
+  } catch (error) {
+    console.error("Error fetching tech stacks:", error);
+  }
+};
+
+
+export const fetchEmployment = async ({ authToken }) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/api/getAllExperience`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
       }
-    };
+    }
+    );
+
+    if (response.data && response.data.result) {
+      return response.data.result;
+    } else {
+      console.error("Invalid response format:", response);
+    }
+  } catch (error) {
+    console.error("Error fetching employment types:", error);
+  }
+}
+
+export const fetchEducation = async ({ authToken }) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/api/getAllEducations`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      }
+    }
+    );
+
+    if (response.data && response.data.result) {
+      return response.data.result;
+    } else {
+      console.error("Invalid response format:", response);
+    }
+  } catch (error) {
+    console.error("Error fetching education types:", error);
+  }
+};
 
 
+export const fetchProjects = async ({ authToken }) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/api/getAllProjects`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      }
+    }
+    );
+
+    if (response.data && response.data.result) {
+      return response.data.result;
+    } else {
+      console.error("Invalid response format:", response);
+    }
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+  }
+}
+
+
+export const fetchSkills = async ({ authToken }) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/api/getAllSkills`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      }
+    }
+    );
+
+    if (response.data && response.data.result) {
+      return response.data.result;
+    } else {
+      console.error("Invalid response format:", response);
+    }
+  } catch (error) {
+    console.error("Error fetching skills:", error);
+  }
+}
+
+export const fetchAboutUs = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/getAboutMe`);
+
+    if (response.data && response.data.result) {
+      return response.data.result;
+    } else {
+      console.error("Invalid response format:", response);
+    }
+  } catch (error) {
+    console.error("Error fetching About Us data:", error);
+  }
+}
+
+export const fetchLicenses = async ({ authToken }) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/api/getAllCertificate`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      }
+    }
+    );
+
+    if (response.data && response.data.res) {
+      return response.data.res;
+    } else {
+      console.error("Invalid response format:", response);
+    }
+  } catch (error) {
+    console.error("Error fetching licenses:", error);
+  }
+}
+
+export const fetchtopskillandlocation = async () => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/api/v1/home/getSkillCountAndLocationCount`
+    );
+    if (response.data) {
+      return response.data;
+    } else {
+      console.error('Invalid response format:', response);
+    }
+
+  } catch (error) {
+    console.error("Error fetching topskill and location for job")
+  }
+}
 
 // export const fetchActiveJoiners = async () => {
 //   try {

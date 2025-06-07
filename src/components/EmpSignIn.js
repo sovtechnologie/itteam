@@ -82,8 +82,9 @@ const EmpSignIn = () => {
         <label htmlFor="mobile">Mobile Number</label>
         <div className="input-otp">
           <input
-            type="number"
+            type="tel"
             placeholder="Enter your mobile number"
+            pattern="[0-9]{10}"
             maxLength={10}
             value={formData.mobileNumber}
             onChange={handleChange}

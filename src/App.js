@@ -25,6 +25,7 @@ import EmployerProfile from "./components/EmployerProfile";
 import EmpProfPage from "./components/empProfileCom/EmpProfPage";
 import Companies from "./components/Companies";
 import OurTeam from "./components/OurTeam";
+import CompanyFilter from "./components/cards/CompanyFilter";
 
 const App = () => {
   return (
@@ -60,8 +61,9 @@ const AppContent = () => {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/contactus" element={<ContactUs />} />
-        <Route path ="/ourTeam" element={<OurTeam />} />
+        <Route path="/ourTeam" element={<OurTeam />} />
         <Route path="/empfilter" element={<EmpFilter />} />
+        <Route path="/Compfilter" element={<CompanyFilter />} />
         <Route path="/privacy&policy" element={<Privacy />} />
         <Route path="/terms&condition" element={<Terms />} />
         <Route path="/employer" element={<Employer />} />

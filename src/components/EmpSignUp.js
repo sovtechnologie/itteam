@@ -11,6 +11,11 @@ const EmpSignUp = () => {
   const [loading, setLoading] = useState(false);
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isOtpReceive, setIsOtpReceive] = useState(false);
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedStateCode, setSelectedStateCode] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [statesList, setStatesList] = useState([]);
+  const [citiesList, setCitiesList] = useState([]);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -18,6 +23,7 @@ const EmpSignUp = () => {
     otp: "",
     email: "",
     location: "",
+    state: "",
     experience: "",
     gender: "",
     workStatus: "",
@@ -33,6 +39,8 @@ const EmpSignUp = () => {
     { value: "female", label: "Female" },
     { value: "other", label: "Other" },
   ];
+
+
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
@@ -126,9 +134,10 @@ const EmpSignUp = () => {
       formDataToSend.append("mobileNumber", formData.mobileNumber);
       formDataToSend.append("email", formData.email);
       formDataToSend.append("gender", formData.gender);
+      formDataToSend.append("state", formData.state);
       formDataToSend.append("location", formData.location);
       formDataToSend.append("experienceInStack", formData.experience);
-      formDataToSend.append("workStatus", formData.workStatus);
+      formDataToSend.append("Job_type", Number(formData.workStatus));
       formDataToSend.append("termsAccepted", formData.termsAccepted);
 
       if (formData.resume) {
@@ -178,6 +187,33 @@ const EmpSignUp = () => {
   };
 
   useEffect(() => {
+    axios.get(`${BASE_URL}/withOutLogin/get-state-list`, {
+      params: { countryCode: "IN" },
+    }).then((response) => {
+      if (response.data && response.data.data) {
+        setStatesList(response.data.data);
+        console.log("States List:", response.data.data);
+      }
+    }).catch((error) => console.error("Error fetching states:", error));
+  }, []);
+
+  useEffect(() => {
+    if (selectedStateCode) {
+      axios.post(`${BASE_URL}/withoutLogin/getCityList`, {
+        stateName: selectedStateCode,
+        countryCode: "IN",
+      }).then((response) => {
+        if (response.data && response.data.result) {
+          setCitiesList(response.data.result);
+        }
+      }).catch((error) => console.error("Error fetching cities:", error));
+    } else {
+      setCitiesList([]); // Clear cities if no state selected
+    }
+  }, [selectedStateCode]);
+
+
+  useEffect(() => {
     if (formData.userId) {
       fetchUserData();
     }
@@ -204,54 +240,117 @@ const EmpSignUp = () => {
                   <input
                     name="mobileNumber"
                     placeholder="Mobile Number"
+                    maxLength={10}
+                    minLength={10}
+                    pattern="[0-9]*"
+                    inputMode="numeric"
                     onChange={handleChange}
                     disabled={isOtpSent}
                   />
                   <button onClick={sendOtp}>Send OTP</button>
                 </div>
               </div>
+
               <div className="signUpform-group">
-                <label htmlFor="verify-otp">OTP</label>
-                <div className="send-otp">
-                  <input
-                    name="otp"
-                    placeholder="Enter OTP"
-                    onChange={handleChange}
-                    disabled={isOtpReceive}
-                  />
-                  <button onClick={verifyOtp}>Verify OTP</button>
+                <label htmlFor="state">State</label>
+                <select
+                  name="state"
+                  value={formData.state || ""}
+                  onChange={e => {
+                    const selected = statesList.find(
+                      state => (state.name || state) === e.target.value
+                    );
+                    setFormData(prev => ({ ...prev, state: e.target.value }));
+                    setSelectedState(e.target.value);
+                    setSelectedStateCode(selected?.isoCode || "");// if you want to use for city dropdown
+
+                  }}
+                  className="form-select"
+                >
+                  <option value="">Select State</option>
+                  {statesList.map(state => (
+                    <option key={state._id || state.id || state} value={state.name || state}>
+                      {state.name || state}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="signUpform-group">
+                <label htmlFor="workStatus">Work Mode</label>
+                <div className="radio-group" style={{ display: 'flex', gap: '20px', marginTop: '0px' }}>
+
+
+                  <div className="radio-option">
+                    <input
+                      type="radio"
+                      id="WFO"
+                      name="workStatus"
+                      value="1"
+                      onChange={handleChange}
+                      checked={formData.workStatus === "1"}
+                      className="custom-radio"
+
+                    />
+                    <label htmlFor="W.F.O" style={{ marginLeft: '8px' }}>W.F.O</label>
+                  </div>
+                  <div className="radio-option">
+                    <input
+                      type="radio"
+                      id="Remote"
+                      name="workStatus"
+                      value="2"
+                      onChange={handleChange}
+                      checked={formData.workStatus === "2"}
+                      className="custom-radio"
+                    />
+                    <label htmlFor="Remote" style={{ marginLeft: '8px' }}>Remote</label>
+                  </div>
+                  <div className="radio-option">
+                    <input
+                      type="radio"
+                      id="Hybrid"
+                      name="workStatus"
+                      value="3"
+                      onChange={handleChange}
+                      checked={formData.workStatus === "3"}
+                      className="custom-radio"
+                    />
+                    <label htmlFor="Hybrid" style={{ marginLeft: '8px' }}>Hybrid</label>
+                  </div>
                 </div>
               </div>
+
               <div className="signUpform-group">
-                <label htmlFor="workStatus">Work Status</label>
+                <label htmlFor="gender">Gender</label>
                 <div className="radio-group" style={{ display: 'flex', gap: '20px', marginTop: '0px' }}>
                   <div className="radio-option">
                     <input
                       type="radio"
-                      id="experience"
-                      name="workStatus"
-                      value="experience"
+                      id="male"
+                      name="gender"
+                      value="male"
                       onChange={handleChange}
-                      checked={formData.workStatus === "experience"}
+                      checked={formData.gender === "male"}
                       className="custom-radio"
-
                     />
-                    <label htmlFor="experience" style={{ marginLeft: '8px' }}>Experience</label>
+                    <label htmlFor="male" style={{ marginLeft: '8px' }}>Male</label>
                   </div>
                   <div className="radio-option">
                     <input
                       type="radio"
-                      id="fresher"
-                      name="workStatus"
-                      value="fresher"
+                      id="female"
+                      name="gender"
+                      value="female"
                       onChange={handleChange}
-                      checked={formData.workStatus === "fresher"}
+                      checked={formData.gender === "female"}
                       className="custom-radio"
                     />
-                    <label htmlFor="fresher" style={{ marginLeft: '8px' }}>Fresher</label>
+                    <label htmlFor="female" style={{ marginLeft: '8px' }}>Female</label>
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
           <div className="formColTwo">
@@ -264,21 +363,65 @@ const EmpSignUp = () => {
                   onChange={handleChange}
                 />
               </div>
+
               <div className="signUpform-group">
-                <label htmlFor="location">Location</label>
+                <label htmlFor="verify-otp">OTP</label>
+                <div className="send-otp">
+                  <input
+                    name="otp"
+                    placeholder="Enter OTP"
+                    onChange={handleChange}
+                    disabled={isOtpReceive}
+                  />
+                  <button onClick={verifyOtp}>Verify OTP</button>
+                </div>
+              </div>
+
+
+
+
+              <div className="signUpform-group">
+                <label htmlFor="location">City</label>
+                <select
+                  name="location"
+                  value={formData.location || ""}
+                  onChange={handleChange}
+                  className="form-select"
+                  disabled={!selectedState}
+                >
+                  <option value="">Select City</option>
+                  {citiesList.map(city => (
+                    <option key={city._id || city.id || city.name || city} value={city.name || city}>
+                      {city.name || city}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {/* <div className="signUpform-group">
+                <label htmlFor="location">City</label>
                 <input
                   name="location"
-                  placeholder="Location"
+                  placeholder="Select City"
                   onChange={handleChange}
                 />
-              </div>
+              </div> */}
+
+
+
               <div className="signUpform-group">
                 <label htmlFor="experience">Experience</label>
-                <input
+                <select
                   name="experience"
-                  placeholder="Experience"
+                  value={formData.experience}
                   onChange={handleChange}
-                />
+                  className="form-select"
+                >
+                  <option value="">Select Experience</option>
+                  <option value="1">Fresher</option>
+                  <option value="2">Junior</option>
+                  <option value="3">Mid-level</option>
+                  <option value="4">Senior</option>
+                </select>
               </div>
 
               {/* <div className="signUpform-emp dropdown-main">
@@ -302,7 +445,7 @@ const EmpSignUp = () => {
                 </div>
               </div> */}
 
-              <div className="signUpform-emp dropdown-main dropdown-optns">
+              {/* <div className="signUpform-emp dropdown-main dropdown-optns">
                 <div className="dropdown">
                   <label htmlFor="">Gender</label> <br />
                   <select
@@ -318,7 +461,7 @@ const EmpSignUp = () => {
                     ))}
                   </select>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

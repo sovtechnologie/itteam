@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "../stylesheets/Home.css";
 import axios from "axios";
-import k5Img from "../images/Group 2.png";
+
 import linkedin from "../images/linkedin.png";
 import mostpopular from "../images/mostpopular.png";
 import trustpopular from "../images/trustpopular.png";
 import { IoIosSearch, IoMdTime } from "react-icons/io";
-import honelocationIcon from "../images/honelocationIcons.png";
+
 import api from "../services/api";
 import { Link, useNavigate } from "react-router-dom";
 import seniorExpert from "../images/Roles/expert.png";
 import counseller from "../images/Roles/counselling.png";
 import Hr from "../images/Roles/hr-manager.png";
 import topcompanies from "../images/Companies.png";
-import remote from "../images/HomeIcons/remote.png";
+
 import remote1 from "../images/HomeIcons/Newremote.png";
 import mnc from "../images/HomeIcons/mnc.png";
 import sales from "../images/HomeIcons/sales.png";
@@ -23,16 +23,9 @@ import data from "../images/HomeIcons/dataOperator.png";
 import intership from "../images/HomeIcons/intership.png";
 import analytic from "../images/HomeIcons/analytic.png";
 import next from "../images/next-arrow.png";
-import {
-  FaBuilding,
-  FaChartBar,
-  FaClipboardList,
-  FaDesktop,
-  FaFileAlt,
-  FaMapMarkerAlt,
-  FaUserGraduate,
-  FaClock,
-} from "react-icons/fa";
+
+import {fetchtopskillandlocation} from "../services/apiService";
+
 import { MdOutlineLocationOn } from "react-icons/md";
 
 const BASE_URL = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
@@ -40,22 +33,22 @@ const BASE_URL = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 const Home = () => {
   const navigate = useNavigate();
 
-  const handleLocationClick = (location) => {
-    navigate(`/empfilter?location=${encodeURIComponent(location)}`);
-    window.scrollTo(0, 0);
-  };
+  // const handleLocationClick = (location) => {
+  //   navigate(`/empfilter?location=${encodeURIComponent(location)}`);
+  //   window.scrollTo(0, 0);
+  // };
 
-  const handleTechStackClick = (techStack) => {
-    navigate(`/empfilter?expertTecStack=${encodeURIComponent(techStack)}`);
-    window.scrollTo(0, 0);
-  };
+  // const handleTechStackClick = (techStack) => {
+  //   navigate(`/empfilter?expertTecStack=${encodeURIComponent(techStack)}`);
+  //   window.scrollTo(0, 0);
+  // };
 
-  const handleExpClick = (experienceInStack) => {
-    navigate(
-      `/empfilter?experienceInStack=${encodeURIComponent(experienceInStack)}`
-    );
-    window.scrollTo(0, 0);
-  };
+  // const handleExpClick = (experienceInStack) => {
+  //   navigate(
+  //     `/empfilter?experienceInStack=${encodeURIComponent(experienceInStack)}`
+  //   );
+  //   window.scrollTo(0, 0);
+  // };
 
   const [searchInput, setSearchInput] = useState("");
   const [companies, setCompanies] = useState([]);
@@ -67,6 +60,8 @@ const Home = () => {
   const [users, setUsers] = useState([]);
   const [allJoiners, setAllJoiners] = useState([]);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [topSkills,setTopSkills] = useState([]);
+  const [topLocation,setTopLocation] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -142,6 +137,16 @@ const Home = () => {
       .finally(() => setLoadingStates(false));
   }, []);
 
+// useEffect(async()=>{
+//   try {
+//     const response = await fetchtopskillandlocation();
+//      console.log("topSkill and Location",response);
+//   } catch (error) {
+//     console.error("data not fetching");
+//   }
+// },[]);
+
+
   const handleViewMore = () => {
     setLoadingMore(true);
     api
@@ -159,11 +164,10 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetch(
-      "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com/api/userFilter"
-    )
-      .then((res) => res.json())
-      .then((data) => {
+    axios
+      .post("https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com/api/userFilter")
+      .then((res) => {
+        const data = res.data;
         console.log("filter data", data);
         if (data.status === 200) {
           setUsers(data.result.slice(0, 4));
@@ -183,101 +187,30 @@ const Home = () => {
     );
   };
 
-  const experienceData = [
-    { heading: "Fresher", subheading: "1 year experience", min: 1, max: 2 },
-    { heading: "Junior", subheading: "2 year experience", min: 2, max: 5 },
-    { heading: "Associate", subheading: "2-5 year experience", min: 2, max: 5 },
-    {
-      heading: "Mid-Level",
-      subheading: "5-10 year experience",
-      min: 5,
-      max: 10,
-    },
-    {
-      heading: "Senior",
-      subheading: "10+ year experience",
-      min: 10,
-      max: null,
-    },
-  ];
+  const noticePeriodLabel = (value) => {
+    switch (value) {
+      case "1":
+      case 1:
+        return "Immediate";
+      case "2":
+      case 2:
+        return "7";
+      case "3":
+      case 3:
+        return "15";
+      case "4":
+      case 4:
+        return "30";
+      case "5":
+      case 5:
+        return "45";
+      default:
+        return "Not specified";
+    }
+  };
 
-  const candidates = [
-    {
-      id: 1,
-      name: "Kaya Jons",
-      position: "React.JS Developer",
-      company: "SOV Technology",
-      description:
-        "We are looking for someone with experience using AI software to create realistic product photos.",
-      locations: [{ name: "Noida", noticePeriod: "30 days N.P" }],
-      skills: ["HTML", "CSS", "JAVA", "HTML", "JAVA"],
-    },
-    {
-      id: 2,
-      name: "Keya Jons",
-      position: "React.JS Developer",
-      company: "sov Technology",
-      description:
-        "We are looking for someone with experience using AI software to create realistic product photos.",
-      locations: [{ name: "Noida", noticePeriod: "30 days N.P" }],
-      skills: ["HTML", "CSS", "JAVA", "HTML", "JAVA"],
-    },
-    {
-      id: 3,
-      name: "Keya Jons",
-      position: "React.JS Developer",
-      company: "sov Technology",
-      description:
-        "We are looking for someone with experience using AI software to create realistic product photos.",
-      locations: [{ name: "Noida", noticePeriod: "30 days N.P" }],
-      skills: ["HTML", "CSS", "JAVA", "HTML", "JAVA"],
-    },
-    {
-      id: 4,
-      name: "Keya Jons",
-      position: "React.JS Developer",
-      company: "sov Technology",
-      description:
-        "We are looking for someone with experience using AI software to create realistic product photos.",
-      locations: [{ name: "Noida", noticePeriod: "30 days N.P" }],
-      skills: ["HTML", "CSS", "JAVA", "HTML", "JAVA"],
-    },
-  ];
 
-  const Company = [
-    {
-      id: 1,
-      logo: "https://img.freepik.com/free-photo/asian-woman-posing-looking-camera_23-2148255359.jpg",
-      name: "TechNova",
-      reviews: 120,
-      description: "Innovating AI solutions for the future.",
-      tags: ["AI", "SaaS", "Remote"],
-    },
-    {
-      id: 2,
-      logo: linkedin,
-      name: "GreenLeaf",
-      reviews: 78,
-      description: "Sustainable agriculture and green technology.",
-      tags: ["AgriTech", "Sustainability"],
-    },
-    {
-      id: 3,
-      logo: linkedin,
-      name: "HealthCore",
-      reviews: 95,
-      description: "Transforming healthcare through data analytics.",
-      tags: ["Healthcare", "Big Data"],
-    },
-    {
-      id: 4,
-      logo: linkedin,
-      name: "CyberNest",
-      reviews: 64,
-      description: "Cybersecurity services for enterprises.",
-      tags: ["Cybersecurity", "Cloud"],
-    },
-  ];
+
 
   const roles = [
     { title: "Senior Manager", positions: 210, icon: seniorExpert },
@@ -324,12 +257,12 @@ const Home = () => {
                 width: "28px",
                 height: "28px",
                 padding: "5px"
-              }} />
+              }}  alt="remote"/>
               <span class="button-text">Remote</span>
               <img src={next} alt="Next" />
             </button>
             <button>
-              <img src={mnc} />
+              <img src={mnc} alt="mnc" />
               <span class="button-text">MNC</span>
               <img src={next} alt="Next" />
             </button>
@@ -476,7 +409,12 @@ const Home = () => {
                       <IoMdTime
                         style={{ color: "#1783D0", fontSize: "1.6rem" }}
                       />
-                      <span>{`${candidate.noticePeriod} days N.P`}</span>
+                      <span>
+                        {noticePeriodLabel(candidate.noticePeriod) === "Immediate"
+                          ? "Immediate"
+                          : `${noticePeriodLabel(candidate.noticePeriod)} days N.P`}
+                      </span>
+
                     </div>
                   )}
                 </div>
@@ -484,7 +422,7 @@ const Home = () => {
               </div>
               {candidate.skillName.length > 0 && (
                 <div className="skills-container-exact">
-                  {candidate.skillName.slice(0,4).map((skill, index) => (
+                  {candidate.skillName.slice(0, 4).map((skill, index) => (
                     <span className="skill-tag-exact" key={index}>
                       {skill}
                     </span>
@@ -553,7 +491,7 @@ const Home = () => {
 
         <button className="view-all-btn-exact"
           onClick={() => {
-            window.location.href = "/empfilter?role=Company";
+            window.location.href = "/Compfilter";
           }}>View all Company</button>
       </div>
 
@@ -654,184 +592,7 @@ const Home = () => {
         </div>
       </div>
 
-      {/* <div className="home-sec">
-        <div className="home-box">
-          <div className="main-section">
-            <h4>#1 Job Portal</h4>
-            <h1>Hire The Best Developers <br /> Around the World</h1>
-            <p>
-              World class nearshare talent for technology teams <br />
-              that demand the highest standards
-            </p>
-            <form className="home-search">
-              <div className="input-wrapper">
-                <IoIosSearch className="search-icon" />
-                <input type="text" placeholder="Job title, keyword or Company" />
-                <button type="submit" className="find-now-btn">Find Now</button>
-              </div>
-            </form>
-          </div>
 
-          <div className="home-second-box">
-            <h5>
-              Brands you Admire and Dream of working with are <span>here!</span>
-            </h5>
-            <div className="main-sec-brands">
-              {companies.length > 0 ? (
-                companies.map((company) => (
-                  <EmployerHomeCard
-                    key={company._id}
-                    id={company._id}
-                    companyName={company.companyName}
-                    logo={company.logo}
-                  />
-                ))
-              ) : (
-                <p>Loading companies...</p>
-              )}
-            </div>
-          </div>
-        </div>
-      </div> */}
-
-      {/* <div className="avtivejoinerBox">
-        <div className="active-joiners">
-          <div className="active-head">
-            <h2>
-              Active <span>Joiners</span>
-            </h2>
-            <p>(Can join within 30 days)</p>
-          </div>
-          <div className="active-viewmore">
-            <Link
-              to="/empfilter"
-              onClick={handleViewMore}
-              disabled={loadingMore}
-            >
-              {loadingMore ? "Loading..." : "View More"}
-            </Link>
-          </div>
-        </div>
-
-        <div className="activejoiner-cardbox">
-          {activeJoiners && activeJoiners.length > 0 ? (
-            [...activeJoiners, ...allJoiners].map((item) => (
-              <a
-                href=""
-                key={item._id}
-                onClick={() => navigate(`/active-joiner-profile/${item._id}`)} // Navigate to the new page with user id
-              >
-                <ActiveJoinerCard
-                  image={
-                    item.image
-                      ? item.image
-                      : require("../images/cProfileImg.png")
-                  }
-                  name={item.name ? item.name : "Name NA"}
-                  currentPosition={
-                    item.currentPosition
-                      ? item.currentPosition
-                      : "Not Specified"
-                  }
-                  salary={item.salary}
-                  expYear={item.expYear}
-                />
-              </a>
-            ))
-          ) : (
-            <p>No active joiners available</p>
-          )}
-        </div>
-      </div> */}
-
-      {/* <div className="huntByLocation">
-        <div className="huntHeadBox">
-          <h2>
-            <span>Hunt By</span> Location
-          </h2>
-          <div className="active-viewmore">
-            <a href="/empfilter">View More</a>
-          </div>
-        </div>
-        <div className="huntlocationBox">
-          {loadingStates ? (
-            <p>Loading locations...</p>
-          ) : statesList.length > 0 ? (
-            statesList.slice(0, 10).map((item) => (
-              <a
-                key={item._id}
-                onClick={() => handleLocationClick(item.name)}
-                style={{ cursor: "pointer" }}
-              >
-                <HuntLocationCard
-                  honelocationIcons={honelocationIcon}
-                  name={item.name}
-                />
-              </a>
-            ))
-          ) : (
-            <p>No locations found</p>
-          )}
-        </div>
-      </div> */}
-
-      {/* <div className="huntByLocation">
-        <div className="huntHeadBox">
-          <h2>
-            <span>Hunt By</span> Technology Stack
-          </h2>
-          <div className="active-viewmore">
-            <a href="/empfilter">View More</a>
-          </div>
-        </div>
-        <div className="huntstackBox">
-          {loading ? (
-            <p>Loading tech stacks...</p>
-          ) : techStacks.length > 0 ? (
-            techStacks.slice(0, 10).map((item) => (
-              <a
-                key={item._id}
-                onClick={() => handleTechStackClick(item.tecStackName)}
-                style={{ cursor: "pointer" }}
-              >
-                <StackCard
-                  techStacklogo={
-                    item.techStacklogo ?? "/images/cProfileImg.png"
-                  }
-                  tecStackName={item.tecStackName}
-                />
-              </a>
-            ))
-          ) : (
-            <p>No tech stacks found</p>
-          )}
-        </div>
-      </div> */}
-
-      {/* <div className="huntByExperience">
-        <div className="experienceHeadBox">
-          <h2>
-            <span>Hunt By</span> Experience
-          </h2>
-        </div>
-        <div className="huntExperiemceBox">
-          {experienceData.map((item, index) => (
-            <div
-              key={index}
-              // onClick={() => filterByExperience(item.min, item.max)}
-              onClick={() => handleExpClick(item.experienceInStack)}
-            >
-              <a href="empfilter">
-                <HuntExperience
-                  heading={item.heading}
-                  subheading={item.subheading}
-                />
-              </a>
-            </div>
-          ))}
-        </div>
-      </div> */}
-      {/* <HomeAbout /> */}
     </>
   );
 };

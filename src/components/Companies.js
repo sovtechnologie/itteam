@@ -39,6 +39,8 @@ Outsourcing, Digital, Technology, Strategy, Cloud, Analytics, Artificial Intelli
 
 
 export default function Companies() {
+
+  
   const scrollContainer = (scrollOffset) => {
     const container = document.getElementById("scrollableContainer");
     if (container) {

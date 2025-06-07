@@ -50,7 +50,7 @@ const EmprSignIn = () => {
       );
     } finally {
       setLoading(false);
-     
+
     }
   };
 
@@ -98,8 +98,9 @@ const EmprSignIn = () => {
           <label htmlFor="mobile">Mobile Number</label>
           <div className="input-otp">
             <input
-              type="number"
+              type="tel"
               placeholder="Enter your mobile number"
+              pattern="[0-9]{10}"
               maxLength={10}
               value={formData.mobileNumber}
               onChange={handleChange}
@@ -116,7 +117,7 @@ const EmprSignIn = () => {
           <input
             type="text"
             placeholder="Enter OTP"
-            maxLength={4}
+            maxLength={8}
             value={formData.otp}
             onChange={handleChange}
             name="otp"

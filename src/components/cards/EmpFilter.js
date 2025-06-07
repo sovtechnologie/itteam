@@ -1,22 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import "../../stylesheets/EmpFilter.css";
 import SalaryFilterCard from "./SalaryFilterCard";
-import SelectedProfCard from "../profileCards/SelectedProfCard";
-import { TbMinusVertical } from "react-icons/tb";
-import { FaAngleDown } from "react-icons/fa6";
-import { GoArrowLeft, GoArrowRight } from "react-icons/go";
+
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { IoMdTime } from "react-icons/io";
-import Pagination from "../Pagination";
+
 import vector from "../../images/Vector.png";
 import JobCard from "./JobCard";
-import company from "../../images/CompanyProfilelogo.png";
+
 
 const EmpFilter = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  // const [profiles, setProfiles] = useState([]);
   const [users, setUsers] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,88 +20,75 @@ const EmpFilter = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState("");
   const [searchParams] = useSearchParams();
-  const [locations, setLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState("");
-  const [loading, setLoading] = useState(false);
+
   const [salaryRange, setSalaryRange] = useState([2, 20]);
+  const [cities, setCities] = useState([]);
+  const [loadingCities, setLoadingCities] = useState(false);
 
 
   const BASE_URL = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
-  // const cardsPerPage = 12;
-  // const indexOfLastCard = currentPage * cardsPerPage;
-  // const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-  // const currentCards = profiles.slice(indexOfFirstCard, indexOfLastCard);
-
-
-  const profilesData = Array.from({ length: 120 }, (_, i) => ({
-    id: i + 1,
-    name: "Kaya Jons",
-    designation: "React.JS Developer",
-    company: "SOV Technology",
-    location: "Noida",
-    noticePeriod: "30 days N.P",
-    skills: ["HTML", "CSS", "JAVA"],
-    desc: "We are looking for someone with experience using AI software to create realistic product photos.",
-    img: "https://img.freepik.com/free-photo/asian-woman-posing-looking-camera_23-2148255359.jpg", // dummy image link
-  }));
-
-  const jobs = Array.from({ length: 20 }, (_, i) => ({
-    id: i + 1,
-    companyLogo: company,
-    companyName: `Sov Technologies`,
-    jobTitle: 'React.JS Developer',
-    location: 'Mumbai, India - Onsite',
-    tags: ['Junior', '7 Days N.P', 'Contract'],
-    salary: '₹5 L.P.A',
-    postedAgo: `${i + 1} Day${i === 0 ? '' : 's'} Ago`,
-  }));
-
   const profilesPerPage = 12;
-
-  // Calculate current profiles
-  const filteredProfiles = role === "Company" ? companies : users;
-
-  const indexOfLastProfile = currentPage * profilesPerPage;
-  const indexOfFirstProfile = indexOfLastProfile - profilesPerPage;
-  const currentProfiles = filteredProfiles.slice(indexOfFirstProfile, indexOfLastProfile);
-
-  const totalPages = Math.ceil(filteredProfiles.length / profilesPerPage);
-  const getPaginationRange = (totalPages) => {
-    const startPages = [1, 2, 3];
-    const endPages = [totalPages - 2, totalPages - 1, totalPages];
-
-    const pagination = [...startPages];
-
-    if (totalPages > 6) {
-      pagination.push("...");
-      pagination.push(...endPages);
-    } else {
-      // No need for dots if total pages <= 6
-      for (let i = 4; i <= totalPages; i++) {
-        pagination.push(i);
-      }
-    }
-
-    return pagination;
-  };
-
-  const paginationRange = getPaginationRange(totalPages);
-
-
-
 
   const [filters, setFilters] = useState({
     workMode: [],
     experienceInStack: [],
     activeJoiners: [],
-    location: [],
-    expertTecStack: [],
+    state: "",
+    location: "",
+    currentPosition: "",
+    expertTecStack: "",
     skillName: [],
-    currentPosition: [],
     noticePeriod: [],
-    salary: [2, 20]
+    salary: [0, 2000000]
   });
 
+
+  // const handleCheckboxChange = (category, value) => {
+  //   setFilters((prevFilters) => {
+  //     let updatedValues = [...prevFilters[category]];
+  //     if (updatedValues.includes(value)) {
+  //       updatedValues = updatedValues.filter((v) => v !== value);
+  //     } else {
+  //       updatedValues.push(value);
+  //     }
+
+  //     if (category === "experienceInStack") {
+  //       const labelToYears = {
+  //         Fresher: [1],
+  //         Junior: [2],
+  //         "Mid-Level": [3],
+  //         Senior: [4],
+  //       };
+
+  //       const mappedExperience = updatedValues.map((label) => labelToYears[label] || []).flat();
+
+  //       return {
+  //         ...prevFilters,
+  //         experienceInStack: mappedExperience,
+  //       };
+  //     }
+
+  //     if (category === "activeJoiners") {
+  //       const labelToNotice = {
+  //         "Immediate": [1],
+  //         "Within 7 Days": [2],
+  //         "Within 15 Days": [3],
+  //         "Within 30 Days": [4],
+  //         "Within 45 Days": [5],
+  //       };
+
+  //       const mappedNotice = updatedValues.map((label) => labelToNotice[label] || []).flat();
+
+  //       return {
+  //         ...prevFilters,
+  //         activeJoiners: mappedNotice,
+  //         noticePeriod: mappedNotice,
+  //       };
+  //     }
+
+  //     return { ...prevFilters, [category]: updatedValues };
+  //   });
+  // };
 
   const handleCheckboxChange = (category, value) => {
     setFilters((prevFilters) => {
@@ -115,59 +98,12 @@ const EmpFilter = () => {
       } else {
         updatedValues.push(value);
       }
-
-      // Handle experienceInStack category
-      if (category === "experienceInStack") {
-        const labelToYears = {
-          "Fresher": [1],
-          "Junior": [1, 2],
-          "Associate": [3, 4, 5],
-          "Mid-Level": [6, 7, 8, 9, 10],
-          "Senior": [11, 12, 13],
-        };
-
-        const mappedExperience = updatedValues
-          .map((label) => labelToYears[label] || [])
-          .flat();
-
-        return {
-          ...prevFilters,
-          experienceInStack: updatedValues,
-          mappedExperience: mappedExperience, // Optionally store the mapped values
-        };
-      }
-
-      // Handle activeJoiners and noticePeriod categories
-      if (category === "activeJoiners") {
-        let noticePeriodValues = [];
-        if (updatedValues.includes("Within 7 Days")) {
-          noticePeriodValues.push("0-7");
-        }
-        if (updatedValues.includes("Within 15 Days")) {
-          noticePeriodValues.push("8-15");
-        }
-        if (updatedValues.includes("Within 30 Days")) {
-          noticePeriodValues.push("16-30");
-        }
-        if (updatedValues.includes("Within 45 Days")) {
-          noticePeriodValues.push("31-45");
-        }
-        return {
-          ...prevFilters,
-          activeJoiners: updatedValues,
-          noticePeriod: noticePeriodValues, // Add the corresponding noticePeriod filter
-        };
-      }
-
       return { ...prevFilters, [category]: updatedValues };
     });
   };
 
   const handleLocationChange = (event) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      location: event.target.value,
-    }));
+    setFilters((prevFilters) => ({ ...prevFilters, location: event.target.value }));
   };
 
   const handleStackChange = (event) => {
@@ -177,38 +113,24 @@ const EmpFilter = () => {
       currentPosition: event.target.value,
     }));
   };
+  console.log("Filters:", filters);
 
   const handleResetFilters = () => {
     setFilters({
       workMode: [],
       experienceInStack: [],
       activeJoiners: [],
-      location: [],
-      expertTecStack: [],
+      state: "",
+      location: "",
+      currentPosition: "",
+      expertTecStack: "",
       skillName: [],
-      currentPosition: [],
       noticePeriod: [],
-      salary: [2, 20]
+      salary: [0, 200000],
     });
   };
 
-  // const handleNextClick = () => {
-  //   setCurrentPage((prevPage) => prevPage + 1);
-  // };
-
-  // const handlePreviousClick = () => {
-  //   if (currentPage > 1) {
-  //     setCurrentPage((prevPage) => prevPage - 1);
-  //   }
-  // };
-
   useEffect(() => {
-    // if (searchParams.get("location")) {
-    //   setFilters((prevFilters) => ({
-    //     ...prevFilters,
-    //     location: searchParams.get("location"),
-    //   }));
-    // }
     if (searchParams.get("expertTecStack")) {
       setFilters((prevFilters) => ({
         ...prevFilters,
@@ -228,7 +150,7 @@ const EmpFilter = () => {
       }));
     }
     if (searchParams.get("role")) {
-      setRole(searchParams.get("role"))
+      setRole(searchParams.get("role"));
     }
   }, []);
 
@@ -240,48 +162,20 @@ const EmpFilter = () => {
 
         let validFilters = {};
 
-        if (filters.workMode.length) {
-          validFilters.workMode = filters.workMode.join(",");
-        }
-        if (filters.experienceInStack.length) {
-          validFilters.experienceInStack = filters.experienceInStack.join(",");
-        }
-        if (filters.activeJoiners.length) {
-          validFilters.activeJoiners = filters.activeJoiners.join(",");
-        }
-        if (filters.location) {
-          validFilters.location = filters.location;
-        }
-        if (filters.currentPosition) {
-          validFilters.currentPosition = filters.currentPosition;
-        }
-        if (filters.expertTecStack) {
-          validFilters.expertTecStack = filters.expertTecStack;
-        }
-        if (filters.skillName.length) {
-          validFilters.skillName = filters.skillName.join(",");
-        }
-        if (filters.noticePeriod.length) {
-          validFilters.noticePeriod = filters.noticePeriod.join(",");
-        }
+        if (filters.workMode.length) validFilters.Job_type = filters.workMode;
+        if (filters.experienceInStack.length) validFilters.experienceInStack = filters.experienceInStack;
+        if (filters.activeJoiners.length) validFilters.activeJoiners = filters.activeJoiners;
+        if (filters.state) validFilters.state = filters.state;
+        if (filters.location) validFilters.location = filters.location;
+        if (filters.currentPosition) validFilters.currentPosition = filters.currentPosition;
+        if (filters.expertTecStack) validFilters.expertTecStack = filters.expertTecStack;
+        if (filters.skillName.length) validFilters.skillName = filters.skillName;
+        if (filters.noticePeriod.length) validFilters.noticePeriod = filters.noticePeriod;
 
-        console.log("Filters:", filters);
-        console.log("API Request Params:", validFilters);
 
-        let response;
-
-        if (Object.keys(validFilters).length) {
-          response = await axios.get(`${BASE_URL}/api/userFilter`, {
-            params: validFilters,
-          });
-
-          if (response.data.status === 404) {
-            console.warn("No data found, refetching without filters...");
-            response = await axios.get(`${BASE_URL}/api/userFilter`); // Fallback call
-          }
-        } else {
-          response = await axios.get(`${BASE_URL}/api/userFilter`);
-        }
+        let response = Object.keys(validFilters).length
+          ? await axios.post(`${BASE_URL}/api/userFilter`, validFilters)
+          : await axios.post(`${BASE_URL}/api/userFilter`);
 
         if (response.data.status === 200) {
           setUsers(response.data.result);
@@ -295,94 +189,146 @@ const EmpFilter = () => {
       }
     };
 
-    const timeoutId = setTimeout(() => {
-      fetchProfiles();
-    }, 500);
-
+    const timeoutId = setTimeout(() => fetchProfiles(), 500);
     return () => clearTimeout(timeoutId);
   }, [filters]);
 
   const handleSalaryChange = (range) => {
-    setFilters((prev) => ({
-      ...prev,
-      salary: range,
-    }));
+    setFilters((prev) => ({ ...prev, salary: range }));
   };
 
-
   useEffect(() => {
-    fetch(
-      "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com/api/userFilter"
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("filter data", data);
-        if (data.status === 200) {
-          setUsers(data.result);
-        }
-      })
-      .catch((err) => console.error("API Error:", err));
+    axios.post(`${BASE_URL}/api/userFilter`).then((res) => {
+      if (res.data.status === 200) {
+        setUsers(res.data.result);
+      }
+    }).catch((err) => console.error("API Error:", err));
   }, []);
 
   useEffect(() => {
-    const fetchCompanies = async () => {
+    axios.get(`${BASE_URL}/withOutLogin/getAllCompanyHomePage`).then((response) => {
+      if (response.data.status === 200) {
+        setCompanies(response.data.result);
+      }
+    }).catch((error) => console.error("Error fetching companies:", error));
+  }, []);
+
+  // useEffect(() => {
+  //   axios.get(`${BASE_URL}/withOutLogin/get-state-list`, {
+  //     params: { countryCode: "IN" },
+  //   }).then((response) => {
+  //     if (response.data && response.data.data) {
+  //       setLocations(response.data.data);
+  //     }
+  //   }).catch((error) => console.error("Error fetching locations:", error));
+  // }, []);
+
+  // Fetch states on mount
+
+  // Fetch cities when state changes
+  useEffect(() => {
+    const fetchCities = async () => {
+      setLoadingCities(true);
       try {
-        const response = await axios.get(
-          `${BASE_URL}/withOutLogin/getAllCompanyHomePage`
-        );
-        console.log("filter companies", response);
-        if (response.data.status === 200) {
-          setCompanies(response.data.result);
+        const response = await axios.get(`${BASE_URL}/withoutLogin/getActiveLocation`);
+        if (response.data?.locations) {
+          setCities(response.data.locations);
         }
       } catch (error) {
-        console.error("Error fetching companies:", error);
+        console.error('Error fetching cities:', error);
+      } finally {
+        setLoadingCities(false);
       }
     };
 
-    fetchCompanies();
+    fetchCities();
   }, []);
-  useEffect(() => {
-    const fetchLocations = async () => {
-      try {
-        const response = await axios.get(
-          "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com/withOutLogin/get-state-list",
-          {
-            params: { countryCode: "IN" },
-          }
-        );
 
 
-        console.log("loaction", response);
-        if (response.data && response.data.data) {
-          setLocations(response.data.data);
-        } else {
-          console.error("Invalid response format:", response);
-        }
-      } catch (error) {
-        console.error("Error fetching locations:", error);
+
+  const filteredProfile = useMemo(() => {
+    return users.filter((profile) => {
+      // if (filters.workMode.length > 0 && !filters.workMode.includes(profile.workMode)) return false;
+      // if (filters.location.length > 0 && !filters.location.includes(profile.location)) return false;
+      // if (filters.experienceInStack.length > 0 && !filters.experienceInStack.includes(profile.experienceInStack)) return false;
+      // if (filters.activeJoiners.length > 0 && !filters.activeJoiners.includes(profile.noticePeriod)) return false;
+      if (filters.salary && filters.salary.length === 2) {
+        const expectedSalary = profile.salary || 0;
+        if (expectedSalary < filters.salary[0] || expectedSalary > filters.salary[1]) return false;
       }
-    };
+      return true;
+    });
+  }, [users, filters]);
+  console.log("Filtered Profiles:", filteredProfile);
 
-    fetchLocations();
-  }, []);
+  const filteredProfiles = role === "Company" ? companies : filteredProfile;
 
+  const indexOfLastProfile = currentPage * profilesPerPage;
+  const indexOfFirstProfile = indexOfLastProfile - profilesPerPage;
+  const currentProfiles = filteredProfiles.slice(indexOfFirstProfile, indexOfLastProfile);
 
+  const totalPages = Math.ceil(filteredProfiles.length / profilesPerPage);
+
+  const paginationRange = useMemo(() => {
+    const startPages = [1, 2, 3];
+    const endPages = [totalPages - 2, totalPages - 1, totalPages];
+    const pagination = [...startPages];
+
+    if (totalPages > 6) {
+      pagination.push("...");
+      pagination.push(...endPages);
+    } else {
+      for (let i = 4; i <= totalPages; i++) pagination.push(i);
+    }
+    return pagination;
+  }, [totalPages]);
+
+  useEffect(() => {
+    if (currentPage > totalPages) setCurrentPage(1);
+  }, [totalPages, currentPage]);
+
+  const noticePeriodLabel = (value) => {
+    switch (value) {
+      case "1":
+      case 1:
+        return "Immediate";
+      case "2":
+      case 2:
+        return "7 days N.P";
+      case "3":
+      case 3:
+        return "15 days N.P";
+      case "4":
+      case 4:
+        return "30 days N.P";
+      case "5":
+      case 5:
+        return "45 days N.P";
+      default:
+        return "Not specified";
+    }
+  };
+
+  
   return (
     <>
 
       <div className="job-search-bar">
         <div className="search-fields"> {/* 🆕 Wrap fields separately */}
-          <div className="select-wrapper">
-            <select className="search-select">
+          {/* <div className="select-wrapper">
+            <select className="search-select"
+              value={filters.workMode[0] || ""}
+              onChange={e => setFilters(f => ({ ...f, workMode: [e.target.value] }))}
+            >
               <option value="">Select job type</option>
-              <option value="fulltime">Full Time</option>
-              <option value="parttime">Part Time</option>
-              <option value="freelance">Freelance</option>
+              <option value="W.F.O">Full Time</option>
+              <option value="Remote">Remote</option>
+              <option value="Hybrid">Hybrid</option>
             </select>
             <span className="dropdown-icon">▼</span>
           </div>
 
-          <div className="divider" />
+          <div className="divider" /> */}
 
           <input
             type="text"
@@ -394,12 +340,37 @@ const EmpFilter = () => {
 
           <div className="divider" />
 
-          <div className="select-wrapper">
-            <select className="search-select">
+          {/* <div className="select-wrapper">
+            <select className="search-select"
+              value={filters.experienceInStack[0] || ""}
+              onChange={e => setFilters(f => ({ ...f, experienceInStack: [e.target.value] }))}
+            >
               <option value="">Experience</option>
-              <option value="fresher">Fresher</option>
-              <option value="1year">1 Year</option>
-              <option value="2year">2+ Years</option>
+              <option value="Fresher">Fresher</option>
+              <option value="Junior">Junior</option>
+              <option value="Associate">Associate</option>
+              <option value="Mid-Level">Mid-Level</option>
+              <option value="Senior">Senior</option>
+            </select>
+            <span className="dropdown-icon">▼</span>
+          </div> */}
+          {/* 
+          <div className="select-wrapper">
+            <select
+              className="search-select"
+              value={filters.location[0] || ""}
+              onChange={e => setFilters(f => ({ ...f, location: [e.target.value] }))}
+            >
+              <option value="">Select State</option>
+              {loading ? (
+                <option disabled>Loading...</option>
+              ) : (
+                locations.map((loc) => (
+                  <option key={loc._id} value={loc.name}>
+                    {loc.name}
+                  </option>
+                ))
+              )}
             </select>
             <span className="dropdown-icon">▼</span>
           </div>
@@ -409,8 +380,8 @@ const EmpFilter = () => {
           <div className="select-wrapper">
             <select
               className="search-select"
-              value={filters.location}
-              onChange={handleLocationChange}
+              value={filters.location[0] || ""}
+              onChange={e => setFilters(f => ({ ...f, location: [e.target.value] }))}
             >
               <option value="">Select Location</option>
               {loading ? (
@@ -424,7 +395,46 @@ const EmpFilter = () => {
               )}
             </select>
             <span className="dropdown-icon">▼</span>
+          </div> */}
+
+          {/* <div className="select-wrapper">
+            <select
+              className="search-select"
+              value={filters.state || ""}
+              onChange={e => setFilters(f => ({ ...f, state: e.target.value, location: "" }))}
+            >
+              <option value="">Select State</option>
+              {states.map((state) => (
+                <option key={state._id} value={state.isoCode}>{state.name}</option>
+              ))}
+            </select>
+            <span className="dropdown-icon">▼</span>
+          </div> */}
+
+
+          
+
+          <div className="select-wrapper">
+            <select
+              className="search-select"
+              value={filters.location || ""}
+              onChange={e => setFilters(f => ({ ...f, location: e.target.value }))}
+            >
+              <option value="">Select City</option>
+              {loadingCities ? (
+                <option disabled>Loading...</option>
+              ) : (
+                cities.map((city, index) => (
+                  <option key={city.location} value={city.location}>
+                    {city.location}
+                  </option>
+                ))
+              )
+              }
+            </select>
+            <span className="dropdown-icon">▼</span>
           </div>
+
         </div>
 
         <button className="search-button">
@@ -447,33 +457,43 @@ const EmpFilter = () => {
               salaryRange={filters.salary}
               onSalaryChange={handleSalaryChange}
             />
-
-
           </div>
 
           <div className="filter-group">
             <h3 style={{ marginBottom: "10px" }}>Work mode</h3>
-            <label><input type="checkbox" /> W.F.O</label>
-            <label><input type="checkbox" /> Remote</label>
-            <label><input type="checkbox" /> Hybrid</label>
+            {[
+              { label: "W.F.O", value: 1 },
+              { label: "Remote", value: 2 },
+              { label: "Hybrid", value: 3 },
+            ].map((mode) => (
+              <div key={mode.value}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={filters.workMode.includes(mode.value)}
+                    onChange={() => handleCheckboxChange("workMode", mode.value)}
+                  />
+                  {mode.label}
+                </label>
+              </div>
+            ))}
           </div>
 
           <div className="filter-group">
             <h3 style={{ marginBottom: "10px" }}>Experience level</h3>
 
             {[
-              { label: "Fresher", value: 0 },
-              { label: "Junior", value: 1 },
-              { label: "Associate", value: [2, 5] },
-              { label: "Mid-Level", value: [5, 10] },
-              { label: "Senior", value: [10, 50] },
+              { label: "Fresher", value: 1 },
+              { label: "Junior", value: 2 },
+              { label: "Mid-Level", value: 3 },
+              { label: "Senior", value: 4 },
             ].map((exp) => (
               <div key={exp.label}>
                 <label>
                   <input
                     type="checkbox"
-                    checked={filters.experienceInStack.includes(exp.label)}
-                    onChange={() => handleCheckboxChange("experienceInStack", exp.label)}
+                    checked={filters.experienceInStack.includes(exp.value)}
+                    onChange={() => handleCheckboxChange("experienceInStack", exp.value)}
                   />
                   {exp.label}
                 </label>
@@ -484,18 +504,38 @@ const EmpFilter = () => {
 
           <div className="filter-group">
             <h3 style={{ marginBottom: "10px" }}>Active Joiner</h3>
-            <label><input type="checkbox" /> Immediate</label>
-            <label><input type="checkbox" /> Within 7 Days</label>
-            <label><input type="checkbox" /> Within 15 Days</label>
-            <label><input type="checkbox" /> Within 30 Days</label>
-            <label><input type="checkbox" /> Within 45 Days</label>
+            {[
+              { label: "Immediate", value: 1 },
+              { label: "Within 7 Days", value: 2 },
+              { label: "Within 15 Days", value: 3 },
+              { label: "Within 30 Days", value: 4 },
+              { label: "Within 45 Days", value: 5 },
+            ].map((joiner) => (
+              <label key={joiner.value}>
+                <input
+                  type="checkbox"
+                  checked={filters.activeJoiners.includes(joiner.value)}
+                  onChange={() => handleCheckboxChange("activeJoiners", joiner.value)}
+                />
+                {joiner.label}
+              </label>
+            ))}
           </div>
 
         </div>
 
         <div className="job-cards-section">
 
-          {role == "Company" ? (
+          {/* Show message if no profiles found */}
+          {(!isLoading && (error || filteredProfiles.length === 0)) && (
+            <div
+              className="no-data-message"
+            >
+              {error || "No profiles found for the selected filters."}
+            </div>
+          )}
+
+          {role === "Company" ? (
             currentProfiles.map((job) => (
               <JobCard key={job._id} {...job} />
             ))) : currentProfiles.map((profile) => (
@@ -507,7 +547,7 @@ const EmpFilter = () => {
                     <p>{profile.currentPosition}</p>
                     <p className="companyname">{profile.currentCompanyName}</p>
                   </div>
-                  <button className="bookmark-btn"><img src={vector} /></button>
+                  <button className="bookmark-btn"><img src={vector} alt="bookmark" /></button>
                 </div>
 
                 <p className="job-desc">
@@ -521,15 +561,15 @@ const EmpFilter = () => {
 
                 <div className="job-infos">
                   <span> <MdOutlineLocationOn color="#3399ff" size={25} /> {profile.location}</span>
-                  <span><IoMdTime color="#3399ff" size={25} />  {profile.noticePeriod
-                    ? `${profile.noticePeriod} Days N.P`
-                    : "20 Days N.P"
+                  <span><IoMdTime color="#3399ff" size={25} />  {noticePeriodLabel(profile.noticePeriod) === "Immediate"
+                    ? "Immediate "
+                    : `${noticePeriodLabel(profile.noticePeriod)} `
                   }
                   </span>
                 </div>
 
                 <div className="skills">
-                  {profile.skillName.slice(0, 4).map((skill, index) => (
+                  {profile.skillName.slice(0, 3).map((skill, index) => (
                     <span key={index}>{skill}</span>
                   ))}
 

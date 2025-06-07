@@ -12,9 +12,6 @@ import { IoCallSharp } from "react-icons/io5";
 import { IoIosMail } from "react-icons/io";
 import { FiShare2 } from "react-icons/fi";
 import Profile from "../images/UserProfile.png";
-import Company from "../images/Profile/Campanyname.png";
-import School from "../images/Profile/Schoolname.png";
-import Course from "../images/Profile/Course.png";
 import resumelogo from "../images/resumelogo.png";
 
 
@@ -22,61 +19,13 @@ import resumelogo from "../images/resumelogo.png";
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
 
-const dummyEmploymentData = [
-  {
-    companyLogo: Company,
-    position: "UI UX DESIGN & PRODUCT DESIGN",
-    companyName: "SOV Technologies · Freelance",
-    timeline: "Nov 2022 – Present",
-    duration: "1mo",
-    description:
-      "SOV Technologies will provide Freelance Work for Product Design. I solve user problems via user experience (UX) & interaction design and add more value to them with minimalistic UI design.",
-  },
-  {
-    companyLogo: Company,
-    position: "UI UX DESIGN & PRODUCT DESIGN",
-    companyName: "SOV Technologies · Freelance",
-    timeline: "Nov 2022 – Present",
-    duration: "1mo",
-    description:
-      "SOV Technologies will provide Freelance Work for Product Design. I solve user problems via user experience (UX) & interaction design and add more value to them with minimalistic UI design.",
-  },
-];
-
-
-
-// Dummy Education Data
-const dummyEducationData = [
-  {
-    id: 1,
-    logo: School, // replace with import or static image path
-    college: "BHAGWAN MAHAVIR COLLEGE OF ENGG. AND TECH.",
-    degree: "Diploma of Education ・ Computer Engineering",
-    location: "Surat, Gujarat, India",
-    duration: "Mar 2020 – Aug 2023",
-    grade: "Grade A+"
-  }
-];
-
-
 const EmployeeProfile = () => {
   const { id } = useParams();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [employmentList, setEmploymentList] = useState(dummyEmploymentData);
+  const [employmentList, setEmploymentList] = useState([]);
 
-  const [formData, setFormData] = useState({
-    name: "Sayali Sarkar",
-    designation: "JS Developer",
-    company: "Arnnima Solution",
-    location: "Ghaziabad",
-    experience: "2 Year Exp",
-    salary: "2000000 /-Year",
-    notice: "20 Days (Notice period)",
-    phone: "+91 939387736",
-    email: "mnmnsjjn@gmail.com",
-    profileImg: Profile,
-  });
+  const [formData, setFormData] = useState({});
 
 
 
@@ -88,47 +37,15 @@ const EmployeeProfile = () => {
   const [resumeFile, setResumeFile] = useState(null);
   const [resumeURL, setResumeURL] = useState(null);
   const [selectedSkills, setSelectedSkills] = useState([]);
-  const [educationList, setEducationList] = useState(dummyEducationData);
+  const [educationList, setEducationList] = useState([]);
 
 
 
 
 
-  const [projects, setProjects] = useState([
-    {
-      title: "JOB PORTAL MOBILE APP DESIGN",
-      date: "Sep 2022 – Present",
-      associated: "BHAGWAN MAHAVIR COLLEGE OF ENGG. AND TECH, SURAT 006",
-      description:
-        "As one of the very few profitable pure play internet companies in the country, Info Edge is India's premier online classifieds company in recruitment, matrimony, real estate, education and related services. Provide Job and Amazing Courses For FREE.",
-      image: School,
-    },
-    {
-      title: "JOB PORTAL MOBILE APP DESIGN",
-      date: "Sep 2022 – Present",
-      associated: "BHAGWAN MAHAVIR COLLEGE OF ENGG. AND TECH, SURAT 006",
-      description:
-        "As one of the very few profitable pure play internet companies in the country, Info Edge is India's premier online classifieds company in recruitment, matrimony, real estate, education and related services. Provide Job and Amazing Courses For FREE.",
-      image: School,
-    },
-  ]);
+  const [projects, setProjects] = useState([]);
 
-
-
-  const [certifications, setCertifications] = useState([
-    {
-      title: "UI/UX DESIGN MASTER PROGRAM",
-      issuer: "Simplilearn",
-      issuedDate: "Issued Nov 2022 · No Expiration Date",
-      image: Course,
-    },
-    {
-      title: "UI/UX DESIGN MASTER PROGRAM",
-      issuer: "Simplilearn",
-      issuedDate: "Issued Nov 2022 · No Expiration Date",
-      image: Course,
-    },
-  ]);
+  const [certifications, setCertifications] = useState([]);
 
 
 
@@ -179,32 +96,33 @@ const EmployeeProfile = () => {
   useEffect(() => {
     if (userData) {
       setFormData({
-        name: userData.name || "Anjali Sharma",
-        designation: userData.currentPosition || "JS Developer",
-        company: userData.company || "Arnnima Solution",
-        location: userData.location || "Ghaziabad",
-        experience: userData.experienceInStack ? `${userData.experienceInStack} Year Exp` : "2 Year Exp",
-        salary: userData.salary ? `${userData.salary} /-Year` : "2000000 /-Year",
-        notice: userData.noticePeriod ? `${userData.noticePeriod} Days (Notice period)` : "20 Days (Notice period)",
-        phone: userData.mobileNumber ? `+91 ${userData.mobileNumber}` : "+91 939387736",
-        email: userData.email || "xyz@gmail.com",
-        profileImg: userData.image || Profile,
+        name: userData.name,
+        designation: userData.currentPosition,
+        company: userData.currentCompany,
+        location: userData.location ,
+        experience: userData.experienceInStack ? `${userData.experienceInStack} Year Exp` : "",
+        salary: userData.salary ? `${userData.salary} /-Year` : "",
+        notice: userData.noticePeriod ? `${userData.noticePeriod} Days (Notice period)` : "",
+        phone: userData.mobileNumber ? `+91 ${userData.mobileNumber}` : "",
+        email: userData.email,
+        profileImg: userData.image,
       });
 
 
       // Optional: Set other related states
       setAboutText(userData.about || "");
-      setSelectedSkills(
+     setSelectedSkills(
         (userData.skillmodels || []).map(skill => ({
           tecStackName: skill.skillsName,
-          techStacklogo: skill.image
+          techStacklogo: skill.skillLogo,
+          _id: skill._id
         }))
       );
       setEmploymentList(userData.workExperiences || []);
       setEducationList(userData.education_details || []);
       setProjects(userData.projectmodels || []);
       setCertifications(userData.lic_certis || []);
-      setResumeFile(userData.resume ? userData.resume.split("/").pop() : "Algebra.pdf");
+      setResumeFile(userData.resume ? userData.resume.split("/").pop() : "");
       setResumeURL(userData.resume);
 
     }
@@ -334,22 +252,13 @@ const EmployeeProfile = () => {
                 <div className="content-boxes">
                   <div className="content-boxes-head">
                     <h2>About Me</h2>
-                    <button className="aboutMe-editBtn" >
-                      <FiPlus size={30} className="plus-icon" />
-                    </button>
                   </div>
 
                   <div className="about-card-box-details">
                     <div>
                       <div>
                         <p>
-                          {aboutText || (
-                            `I am ${userData?.name}, a professional UI/UX, Graphics & Web Designer. ` +
-                            `I'm keen to provide top-notch professional & creative design. ` +
-                            `I'm here to share my work with the world. I solve user problems ` +
-                            `via user experience (UX) & interaction design and add more value ` +
-                            `to them with minimalistic UI design.`
-                          )}
+                          {aboutText}
                         </p>
                       </div>
 
@@ -364,9 +273,6 @@ const EmployeeProfile = () => {
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Upload Resume</h2>
-                  <button className="aboutMe-editBtn" >
-                    <FiPlus size={30} className="plus-icon" />
-                  </button>
                 </div>
 
                 <div className="resume-card-box-details">
@@ -391,10 +297,7 @@ const EmployeeProfile = () => {
               {/* Skill Section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
-                  <h2>Key Skills</h2>
-                  <button className="aboutMe-editBtn">
-                    <FiPlus size={30} className="plus-icon" />
-                  </button>
+                  <h2>Key Skills</h2>           
                 </div>
 
                 <div className="skills-card-box-details">
@@ -418,9 +321,7 @@ const EmployeeProfile = () => {
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Employment</h2>
-                  <button className="aboutMe-editBtn" >
-                    <FiPlus size={30} className="plus-icon" />
-                  </button>
+                  
                 </div>
                 <div className="exp-card-box-details">
                   <div className="employment-list">
@@ -452,9 +353,7 @@ const EmployeeProfile = () => {
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Education</h2>
-                  <button className="aboutMe-editBtn" >
-                    <FiPlus size={30} className="plus-icon" />
-                  </button>
+                 
                 </div>
 
                 <div className="education-cards">
@@ -484,9 +383,7 @@ const EmployeeProfile = () => {
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Projects</h2>
-                  <button className="aboutMe-editBtn" >
-                    <FiPlus size={30} className="plus-icon" />
-                  </button>
+                 
                 </div>
                 <div className="education-cards">
                   {projects.map((proj, index) => {
@@ -512,9 +409,7 @@ const EmployeeProfile = () => {
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Licenses & Certifications</h2>
-                  <button className="aboutMe-editBtn">
-                    <FiPlus size={30} className="plus-icon" />
-                  </button>
+                  
                 </div>
                 <div className="education-cards">
                 {certifications.map((cert, index) => (
