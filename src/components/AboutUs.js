@@ -9,6 +9,7 @@ import company3 from "../images/campanieslogo/company3.png";
 import company4 from "../images/campanieslogo/company4.png";
 import company5 from "../images/campanieslogo/company5.png";
 import company6 from "../images/campanieslogo/company6.png";
+
 const AboutUs = () => {
   return (
     <>

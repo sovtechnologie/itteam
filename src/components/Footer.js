@@ -142,6 +142,7 @@ const Footer = () => {
                           onClick={() =>
                             handleTechStackClick(stack.tecStackName)
                           }
+                          style={{ cursor: "pointer" }}
                         >
                           {/* <img 
                             src={stack.techStacklogo} 

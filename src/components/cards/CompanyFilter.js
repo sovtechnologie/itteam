@@ -106,56 +106,56 @@ const CompanyFilter = () => {
         }
     }, []);
 
-    useEffect(() => {
-        const fetchProfiles = async () => {
-            try {
-                setIsLoading(true);
-                setError(null);
+    // useEffect(() => {
+    //     const fetchProfiles = async () => {
+    //         try {
+    //             setIsLoading(true);
+    //             setError(null);
 
-                let validFilters = {};
+    //             let validFilters = {};
 
-                if (filters.workMode.length) validFilters.Job_type = filters.workMode;
-                if (filters.experienceInStack.length) validFilters.experienceInStack = filters.experienceInStack;
-                if (filters.activeJoiners.length) validFilters.activeJoiners = filters.activeJoiners;
-                if (filters.state) validFilters.state = filters.state;
-                if (filters.location) validFilters.location = filters.location;
-                if (filters.currentPosition) validFilters.currentPosition = filters.currentPosition;
-                if (filters.expertTecStack) validFilters.expertTecStack = filters.expertTecStack;
-                if (filters.skillName.length) validFilters.skillName = filters.skillName;
-                if (filters.noticePeriod.length) validFilters.noticePeriod = filters.noticePeriod;
+    //             if (filters.workMode.length) validFilters.Job_type = filters.workMode;
+    //             if (filters.experienceInStack.length) validFilters.experienceInStack = filters.experienceInStack;
+    //             if (filters.activeJoiners.length) validFilters.activeJoiners = filters.activeJoiners;
+    //             if (filters.state) validFilters.state = filters.state;
+    //             if (filters.location) validFilters.location = filters.location;
+    //             if (filters.currentPosition) validFilters.currentPosition = filters.currentPosition;
+    //             if (filters.expertTecStack) validFilters.expertTecStack = filters.expertTecStack;
+    //             if (filters.skillName.length) validFilters.skillName = filters.skillName;
+    //             if (filters.noticePeriod.length) validFilters.noticePeriod = filters.noticePeriod;
 
 
-                let response = Object.keys(validFilters).length
-                    ? await axios.post(`${BASE_URL}/api/userFilter`, validFilters)
-                    : await axios.post(`${BASE_URL}/api/userFilter`);
+    //             let response = Object.keys(validFilters).length
+    //                 ? await axios.post(`${BASE_URL}/api/userFilter`, validFilters)
+    //                 : await axios.post(`${BASE_URL}/api/userFilter`);
 
-                if (response.data.status === 200) {
-                    setUsers(response.data.result);
-                } else {
-                    setError("No profiles found");
-                }
-            } catch (err) {
-                setError("Error fetching profile data");
-            } finally {
-                setIsLoading(false);
-            }
-        };
+    //             if (response.data.status === 200) {
+    //                 setUsers(response.data.result);
+    //             } else {
+    //                 setError("No profiles found");
+    //             }
+    //         } catch (err) {
+    //             setError("Error fetching profile data");
+    //         } finally {
+    //             setIsLoading(false);
+    //         }
+    //     };
 
-        const timeoutId = setTimeout(() => fetchProfiles(), 500);
-        return () => clearTimeout(timeoutId);
-    }, [filters]);
+    //     const timeoutId = setTimeout(() => fetchProfiles(), 500);
+    //     return () => clearTimeout(timeoutId);
+    // }, [filters]);
 
     const handleSalaryChange = (range) => {
         setFilters((prev) => ({ ...prev, salary: range }));
     };
 
-    useEffect(() => {
-        axios.post(`${BASE_URL}/api/userFilter`).then((res) => {
-            if (res.data.status === 200) {
-                setUsers(res.data.result);
-            }
-        }).catch((err) => console.error("API Error:", err));
-    }, []);
+    // useEffect(() => {
+    //     axios.post(`${BASE_URL}/api/userFilter`).then((res) => {
+    //         if (res.data.status === 200) {
+    //             setUsers(res.data.result);
+    //         }
+    //     }).catch((err) => console.error("API Error:", err));
+    // }, []);
 
     useEffect(() => {
         axios.get(`${BASE_URL}/withOutLogin/getAllCompanyHomePage`).then((response) => {
@@ -212,27 +212,7 @@ const CompanyFilter = () => {
         if (currentPage > totalPages) setCurrentPage(1);
     }, [totalPages, currentPage]);
 
-    const noticePeriodLabel = (value) => {
-        switch (value) {
-            case "1":
-            case 1:
-                return "Immediate";
-            case "2":
-            case 2:
-                return "7 days N.P";
-            case "3":
-            case 3:
-                return "15 days N.P";
-            case "4":
-            case 4:
-                return "30 days N.P";
-            case "5":
-            case 5:
-                return "45 days N.P";
-            default:
-                return "Not specified";
-        }
-    };
+   
 
 
     return (

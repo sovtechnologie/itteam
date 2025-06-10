@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../stylesheets/JobCard.css';
 import vector from "../../images/Vector.png";
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import coin from "../../images/coins.png";
 import company from "../../images/CompanyProfilelogo.png";
 
@@ -9,12 +9,12 @@ import company from "../../images/CompanyProfilelogo.png";
 
 const JobCard = ({
     _id,
-    companyLogo,
+    logo,
     companyName,
     jobTitle,
     location,
-    about,
-    tags,
+    description,
+    industry,
     salary,
     postedAgo,
 }) => {
@@ -22,7 +22,7 @@ const JobCard = ({
     return (
         <div className="jobcard">
             <div className="card-header">
-                <img src={companyLogo || company} alt={companyName} className="company-logo" />
+                <img src={logo || company} alt={companyName} className="company-logo" />
                 <div className="job-info">
                     <div className="company-name">{companyName}</div>
                     <div className="job-title">{jobTitle || "Js Developer "}</div>
@@ -34,14 +34,14 @@ const JobCard = ({
             </div>
            <p className="job-desc">
                   {(() => {
-                    const words = about ? about.split(" ") : [];
-                    if (words.length <= 10) return about;
+                    const words = description ? description.split(" ") : [];
+                    if (words.length <= 10) return description;
                     return words.slice(0, 10).join(" ") + " ...";
                   })() || "We are looking for someone with experience using AI software to create realistic product photos."}
                 </p>
 
             <div className="job-tags">
-                {(tags || ["IT ", "Finance"]).map((tag, index) => (
+                {(industry || ["IT ", "Finance"]).map((tag, index) => (
                     <span key={index}>{tag}</span>
                 ))}
             </div>
