@@ -106,44 +106,44 @@ const CompanyFilter = () => {
         }
     }, []);
 
-    // useEffect(() => {
-    //     const fetchProfiles = async () => {
-    //         try {
-    //             setIsLoading(true);
-    //             setError(null);
+    useEffect(() => {
+        const fetchProfiles = async () => {
+            try {
+                setIsLoading(true);
+                setError(null);
 
-    //             let validFilters = {};
+                let validFilters = {};
 
-    //             if (filters.workMode.length) validFilters.Job_type = filters.workMode;
-    //             if (filters.experienceInStack.length) validFilters.experienceInStack = filters.experienceInStack;
-    //             if (filters.activeJoiners.length) validFilters.activeJoiners = filters.activeJoiners;
-    //             if (filters.state) validFilters.state = filters.state;
-    //             if (filters.location) validFilters.location = filters.location;
-    //             if (filters.currentPosition) validFilters.currentPosition = filters.currentPosition;
-    //             if (filters.expertTecStack) validFilters.expertTecStack = filters.expertTecStack;
-    //             if (filters.skillName.length) validFilters.skillName = filters.skillName;
-    //             if (filters.noticePeriod.length) validFilters.noticePeriod = filters.noticePeriod;
+                // if (filters.workMode.length) validFilters.Job_type = filters.workMode;
+                // if (filters.experienceInStack.length) validFilters.experienceInStack = filters.experienceInStack;
+                // if (filters.activeJoiners.length) validFilters.activeJoiners = filters.activeJoiners;
+                // if (filters.state) validFilters.state = filters.state;
+                if (filters.location) validFilters.location = filters.location;
+                // if (filters.currentPosition) validFilters.currentPosition = filters.currentPosition;
+                // if (filters.expertTecStack) validFilters.expertTecStack = filters.expertTecStack;
+                // if (filters.skillName.length) validFilters.skillName = filters.skillName;
+                // if (filters.noticePeriod.length) validFilters.noticePeriod = filters.noticePeriod;
 
 
-    //             let response = Object.keys(validFilters).length
-    //                 ? await axios.post(`${BASE_URL}/api/userFilter`, validFilters)
-    //                 : await axios.post(`${BASE_URL}/api/userFilter`);
+                let response = Object.keys(validFilters).length
+                    ? await axios.post(`${BASE_URL}/withoutLogin/companyFilterByLocation`, validFilters)
+                    : await axios.post(`${BASE_URL}/withoutLogin/companyFilterByLocation`);
 
-    //             if (response.data.status === 200) {
-    //                 setUsers(response.data.result);
-    //             } else {
-    //                 setError("No profiles found");
-    //             }
-    //         } catch (err) {
-    //             setError("Error fetching profile data");
-    //         } finally {
-    //             setIsLoading(false);
-    //         }
-    //     };
+                if (response.data.status === 200) {
+                    setUsers(response.data.result);
+                } else {
+                    setError("No profiles found");
+                }
+            } catch (err) {
+                setError("Error fetching profile data");
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
-    //     const timeoutId = setTimeout(() => fetchProfiles(), 500);
-    //     return () => clearTimeout(timeoutId);
-    // }, [filters]);
+        const timeoutId = setTimeout(() => fetchProfiles(), 500);
+        return () => clearTimeout(timeoutId);
+    }, [filters]);
 
     const handleSalaryChange = (range) => {
         setFilters((prev) => ({ ...prev, salary: range }));
@@ -172,7 +172,7 @@ const CompanyFilter = () => {
         const fetchCities = async () => {
             setLoadingCities(true);
             try {
-                const response = await axios.get(`${BASE_URL}/withoutLogin/getActiveLocation`);
+                const response = await axios.get(`${BASE_URL}/withoutLogin/getCompanyActiveLocation`);
                 if (response.data?.locations) {
                     setCities(response.data.locations);
                 }

@@ -22,7 +22,7 @@ const JobCard = ({
     return (
         <div className="jobcard">
             <div className="card-header">
-                <img src={logo || company} alt={companyName} className="company-logo" />
+                <img src={logo || company} alt={companyName || "logo"} className="company-logo" />
                 <div className="job-info">
                     <div className="company-name">{companyName}</div>
                     <div className="job-title">{jobTitle || "Js Developer "}</div>
@@ -30,7 +30,7 @@ const JobCard = ({
                 </div>
 
                 {/* <Bookmark size={16} className="bookmark-icon" /> */}
-                <img className='bookmark-icon' src={vector} />
+                <img className='bookmark-icon' src={vector} alt='bookmark-Icon' />
             </div>
            <p className="job-desc">
                   {(() => {
@@ -48,7 +48,7 @@ const JobCard = ({
 
 
             <div className="job-details">
-                <div className="salary"><img src={coin} /> {salary || "22000"}</div>
+                <div className="salary"><img src={coin}  alt='coin-icon'/> {salary || "22000"}</div>
                 <div className="posted">📅 {postedAgo ? postedAgo : "3 days ago"}</div>
             </div>
 

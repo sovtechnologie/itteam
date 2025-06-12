@@ -43,6 +43,7 @@ const AppContent = () => {
     location.pathname === "/" ||
     location.pathname === "/home" ||
     location.pathname === "/aboutus" ||
+    location.pathname === "/ourTeam" ||
     location.pathname === "/privacy&policy" ||
     location.pathname === "/terms&condition" ||
     location.pathname === "/contactus";
