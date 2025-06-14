@@ -278,7 +278,7 @@ const EmpSignUp = () => {
 
               <div className="signUpform-group">
                 <label htmlFor="workStatus">Work Mode</label>
-                <div className="radio-group" style={{ display: 'flex', gap: '20px', marginTop: '0px' }}>
+                <div className="radio-group">
 
 
                   <div className="radio-option">
@@ -292,7 +292,7 @@ const EmpSignUp = () => {
                       className="custom-radio"
 
                     />
-                    <label htmlFor="W.F.O" style={{ marginLeft: '8px' }}>W.F.O</label>
+                    <label htmlFor="W.F.O" style={{ marginLeft: '8px', marginBottom: '0px'}}>W.F.O</label>
                   </div>
                   <div className="radio-option">
                     <input
@@ -323,7 +323,7 @@ const EmpSignUp = () => {
 
               <div className="signUpform-group">
                 <label htmlFor="gender">Gender</label>
-                <div className="radio-group" style={{ display: 'flex', gap: '20px', marginTop: '0px' }}>
+                <div className="radio-group" >
                   <div className="radio-option">
                     <input
                       type="radio"

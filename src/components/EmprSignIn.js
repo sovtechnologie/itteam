@@ -131,7 +131,7 @@ const EmprSignIn = () => {
           </p>
         </div>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p style={{ color: "red" , display: "flex" , justifycontent: "center" , width: "528px" }}>{error}</p>}
       </div>
     </>
   );

@@ -625,12 +625,14 @@
 }
 
 .pagination {
-  display: flex;
-  justify-content: center;
+   display: flex;
+  justify-content: flex-end;
   align-items: center;
   gap: 0.5rem;
   margin-top: 2rem;
   flex-wrap: wrap;
+  margin-bottom: 30px;
+  margin-right: 65px;
 }
 
 .pagination button {

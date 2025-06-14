@@ -20,18 +20,9 @@ const SignUp = () => {
 
   return (
     <div className="signup-box">
-      <div className="signup-container">
+      {/* <div className="signup-container"> */}
         <div className="leftBox">
-          {/* {isLogin ? (
-            <div className="signup-left">
-              <h1>Finding top talent from India is like finding a needle in a haystack</h1>
-              <p>We're excited to introduce and show you how <br />our platform simplifies hiring</p>
-              <p className="login-prompt" style={{ marginTop: "70px" }}>
-                Already Registered? <a href="#">Login here</a>
-              </p>
-              <img src={illustration} alt="Signup" />
-            </div>
-          ) : ( */}
+
           <div className="signup-left">
             {userRole === "company" ? (
               <>
@@ -56,7 +47,7 @@ const SignUp = () => {
             )}
 
             <p className="login-prompt">Already Registered? <a href="#">Login here</a></p>
-            <img src={illustration} alt="Signup" style={{ width: "auto", height: "320px", marginLeft: "90px" , marginTop:"30px"}} />
+            <img src={illustration} alt="Signup" style={{ width: "auto", height: "320px", marginLeft: "90px" , marginTop:"20px"}} />
           </div>
           {/* )} */}
         </div>
@@ -84,12 +75,12 @@ const SignUp = () => {
                   Register
                 </button>
               </div>
-              <h1 style={{marginBottom:"20px",color:"#1783D0"}}>Register As {userRole === "company" ? "Company Employee" : "Job Seeker"}</h1>
+              <h1 style={{color:"#1783D0"}}>Register As {userRole === "company" ? "Company Employee" : "Job Seeker"}</h1>
               {userRole === "company" ? <EmprSignUp /> : <EmpSignUp />}
             </div>
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 };

@@ -15,7 +15,7 @@ const SignIn = () => {
 
   return (
     <div className="signinBox">
-      <div className="signin-container">
+      {/* <div className="signin-container"> */}
         <div className="left-box">
           <div className="signin-left">
             {userRole === "company" ? (
@@ -82,7 +82,7 @@ const SignIn = () => {
           </div>
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 

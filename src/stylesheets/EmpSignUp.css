@@ -1,7 +1,8 @@
 .radio-group {
     display: flex;
     align-items: center;
-    gap: 20px;
+    /* justify-content: space-between; */
+    gap: 9px;
   }
   
   .radio-option {
@@ -9,7 +10,7 @@
     align-items: center;
     border: 1px solid #ddd;
     border-radius: 20px;
-    padding: 4px 15px;
+    padding: 8px 15px;
   }
   
   .radio-option input[type="radio"] {

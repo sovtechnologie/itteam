@@ -17,26 +17,13 @@
   text-align: center;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .signinBox {
-  padding-bottom: 0px;
-  height: 100vh;
+  /* padding-bottom: 0px; */
+  /* height: 100vh; */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  gap: 45px;
+  /* justify-content: center; */
+  /* align-items: center; */
 }
 
 .signin-container {
@@ -50,15 +37,15 @@
 
 .signIn-toggle {
   display: flex;
-  justify-content: flex-start;
-  width: 400px;
+  /* justify-content: flex-start; */
+  /* width: 400px; */
 }
 
 .signIn-toggle button {
   border: none;
   border-bottom: 3px solid #afa9a9;
   padding: 5px 5px 5px 0;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
   background-color: transparent;
   color: #afa9a9;
   transition: all 0.3s ease;
@@ -73,26 +60,35 @@
   text-align: left;
 }
 
+.signInForm {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
 .signIn-toggle .active {
   border: none;
-  border-bottom: 3px solid #1783D0;
+  border-bottom: 3px solid #1783d0;
   background-color: transparent;
-  color: #1783D0;
+  color: #1783d0;
   text-align: left;
 }
 
 .left-box {
-  background-color: #1783D0;
+  background-color: #1783d0;
   height: 100vh;
-  width: 40%;
+  /* width: 40%; */
   display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  align-items: flex-start;
+  /* justify-content: flex-start; */
+  /* flex-direction: column; */
+  /* align-items: flex-start; */
   color: #ffffff;
-  padding-left: 60px; /* Increased left padding */
-  padding-top: 40px; /* Added top padding */
+  /* padding-left: 60px;  */
+  /* padding-top: 40px;  */
+  padding: 40px;
   box-sizing: border-box;
+  /* padding-right: 57px; */
+  max-width: 600px;
 }
 
 .new-to-it h2,
@@ -139,7 +135,7 @@
   font-size: 18px;
 }
 .register-button {
-  background-color: #1783D0;
+  background-color: #1783d0;
   color: white;
   border: 1px solid white;
   padding: 15px 30px;
@@ -163,23 +159,25 @@
 }
 
 .right-form {
-  height: 90.6vh;
-  width: 60%;
+  /* height: 90.6vh; */
+  /* width: 60%; */
   background-color: #fff;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
+  /* align-items: center; */
   flex-direction: column;
+  gap: 45px;
 }
 
-.right-form-head {
+/* .right-form-head {
+  padding-top: 40px;
   padding: 30px;
   width: 52%;
-}
+} */
 
 .right-form-head h2 {
-  padding: 5px 0 20px 0;
-  color: #1783D0;
+  /* padding: 5px 0 20px 0; */
+  color: #1783d0;
   font-size: 30px;
 }
 
@@ -194,15 +192,22 @@
 
 .form {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
+  /* align-items: center; */
   flex-direction: column;
-}
+  gap: 20px;
 
+}
+.form-select {
+  color: grey;
+}
+.signUpform-group {
+  color: red;
+}
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 .form-group label {
@@ -241,17 +246,18 @@
 
 .input-otp {
   display: flex;
-  justify-content: flex-start;
-  position: relative;
+
+  /* justify-content: flex-start; */
+  /* position: relative; */
 }
 
 .input-otp button {
-  position: absolute;
-  right: 5px;
-  top: 5px;
+  position: relative;
+  right: 100px;
+  /* top: 5px; */
   padding: 8px 20px;
   background-color: transparent;
-  color: #1783D0;
+  color: #1783d0;
   border: none;
   cursor: pointer;
   border-radius: 10px;
@@ -259,22 +265,24 @@
 }
 
 .input-otp button:hover {
-  background-color: #1783D0;
+  background-color: #1783d0;
   color: #fff;
 }
 
 .login-btn {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
+  gap: 20px;
   font-size: 20px;
+  width: 528px;
 }
 
 .login-btn button {
-  margin: 20px 0;
+  /* margin: 20px 0; */
   padding: 0px 50px;
-  background-color: #1783D0;
+  background-color: #1783d0;
   list-style: none;
   border: none;
   height: 40px;
@@ -285,7 +293,7 @@
 }
 
 .login-btn button:hover {
-  background-color: #1783D0;
+  background-color: #1783d0;
   cursor: pointer;
 }
 
@@ -294,5 +302,12 @@
 }
 
 .login-btn a {
-  color: #1783D0;
+  color: #1783d0;
+}
+
+.form p{
+  display: flex;
+  justify-content: center;
+  width: 528px;
+  gap: 5px;
 }
