@@ -43,28 +43,25 @@ const Header = ({ isHomePage }) => {
         if (data.status === 200) {
           setEmployerName(data.result[0]?.name || "Employer");
           setImage(data.result[0]?.image || "Employer");
-          return
+          return;
         }
 
+        // If not found, try company API
+        response = await fetch(`${baseUrl}/employer/getEmployerAllDetails`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+          body: JSON.stringify({ employerId: userId }),
+        });
 
-         // If not found, try company API
-      response = await fetch(`${baseUrl}/employer/getEmployerAllDetails`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-        body: JSON.stringify({ employerId: userId }),
-      });
-
-      if (response.status === 401) {
-        Cookies.remove("authToken");
-        Cookies.remove("userId");
-        navigate("/");
-        return;
-      }
-
-      
+        if (response.status === 401) {
+          Cookies.remove("authToken");
+          Cookies.remove("userId");
+          navigate("/");
+          return;
+        }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -80,22 +77,31 @@ const Header = ({ isHomePage }) => {
   };
 
   return (
-    <header className={`header main-header ${isHomePage ? 'home-header' : ''}`}>
-      <div className="header-container">
+    <header className={`header main-header ${isHomePage ? "home-header" : ""}`}>
+      {/* <div className="header-container"> */}
+      <div id="left">
         <Link to="/" className="header-logo">
           <img src={HeaderLogo} alt="Logo" />
         </Link>
-
+      </div>
+      <div className="right-container" id="nav-menu">
         <nav className="nav">
-          <ul className="nav-links">
-            <li><Link to="/">Home</Link></li>
-            {/* <li><Link to="/aboutus">About Us</Link></li>
-            <li><Link to="/contactus">Contact Us</Link></li> */}
-            <li><Link to="/aboutus">About us</Link></li>
-            <li><Link to="/ourTeam">Our Team</Link></li>
-            <li><Link to="/pricing">Pricing</Link></li>
-
-          </ul>
+          <div id="mid">
+            <ul className="nav-links">
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/aboutus">About us</Link>
+              </li>
+              <li>
+                <Link to="/ourTeam">Our Team</Link>
+              </li>
+              <li>
+                <Link to="/pricing">Pricing</Link>
+              </li>
+            </ul>
+          </div>
 
           <div className="nav-btn">
             {authToken ? (
@@ -105,7 +111,12 @@ const Header = ({ isHomePage }) => {
                 onMouseLeave={handleMouseLeave}
               >
                 {/* <p>{employerName || "Employer Name"}</p> */}
-                <img src={image || defaultLogo} alt="profile" height={50} width={50} />
+                <img
+                  src={image || defaultLogo}
+                  alt="profile"
+                  height={50}
+                  width={50}
+                />
                 {menuOpen && (
                   <div className="headerProfDropdown">
                     <Link to="/employee-page">View Profile</Link>
@@ -117,35 +128,37 @@ const Header = ({ isHomePage }) => {
               </div>
             ) : (
               <>
-                <div className="header-buttons">
-                  <button
-                    onClick={() => window.location.href = "/signin?role=candidate"}
-                    className="sign-btn"
-                  >
-                    Join as Jobseeker
-                  </button>
+                  <div className="header-buttons">
+                    <button
+                      onClick={() =>
+                        (window.location.href = "/signin?role=candidate")
+                      }
+                      className="sign-btn"
+                    >
+                      Join as Jobseeker
+                    </button>
 
-                  <button
-                    onClick={() => window.location.href = "/signin?role=company"}
-                    className="signup-btn"
-                  >
-                    Join as Company
-                  </button>
-                </div>
-
-
+                    <button
+                      onClick={() =>
+                        (window.location.href = "/signin?role=company")
+                      }
+                      className="signup-btn"
+                    >
+                      Join as Company
+                    </button>
+                  </div>
+            
               </>
             )}
           </div>
         </nav>
       </div>
+   
     </header>
   );
 };
 
 export default Header;
-
-
 
 // import React, { useState, useEffect } from "react";
 // import { Link, useNavigate } from "react-router-dom";
@@ -223,7 +236,7 @@ export default Header;
 //               onMouseEnter={handleMouseEnter}
 //               onMouseLeave={handleMouseLeave}
 //             >
-//               <p>{employerName || "Employer Name"}</p> 
+//               <p>{employerName || "Employer Name"}</p>
 //               <img src={defaultLogo} alt="" height={25} />
 //               {menuOpen && (
 //                 <div className="headerProfDropdown">
@@ -248,7 +261,7 @@ export default Header;
 //       onMouseEnter={handleMouseEnter}
 //       onMouseLeave={handleMouseLeave}
 //     >
-//       <p>{employerName || "Employer Name"}</p> 
+//       <p>{employerName || "Employer Name"}</p>
 //       <img src={defaultLogo} alt="" height={25} />
 //       {menuOpen && (
 //         <div className="headerProfDropdown">
@@ -266,7 +279,6 @@ export default Header;
 //     </>
 //   )}
 // </div>
-
 
 //       </nav>
 //     </header>

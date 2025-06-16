@@ -30,7 +30,7 @@
   height: 20px;
   background-color: aliceblue;
 } */
-
+/* 
 nav {
   margin: 0 70px;
   display: flex;
@@ -72,7 +72,7 @@ nav {
 
 .nav-list a:hover::after {
   width: 100%;
-}
+} */
 /* 
 .nav-list a:hover {
   color: rgb(241, 97, 0);
@@ -257,10 +257,10 @@ nav {
  */
 
 /* General */
-.main-header {
-  background-color: white;
-  padding: 16px 30px;
-  display: flex;
+/* .main-header { */
+/* background-color: white; */
+/* padding: 16px 30px; */
+/* display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
@@ -273,24 +273,25 @@ nav {
   top: 0;
   left: 0;
   z-index: 1000;
-  width: 100%;
-}
+  width: 100%; */
+/* } */
 
-.home-header {
+/* .home-header {
   background-color: #ffffff;
   border-radius: 12px;
-  max-width: 1200px; /* Controls the centered width */
-  margin: 20px auto 50px; /* Centered horizontally */
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: 10;
-}
-
+  max-width: 1200px;
+  margin-top: 20px; */
+/* margin: 20 auto; */
+/* margin: 20px auto 50px;  */
+/* box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1); */
+/* display: flex; */
+/* justify-content: space-between; */
+/* align-items: center; */
+/* position: absolute; */
+/* left: 0; */
+/* right: 0; */
+/* z-index: 10; */
+/* } */
 
 /* .home-header {
   background-color: #ffffff;
@@ -319,7 +320,7 @@ nav {
   }
 } */
 
-
+/* 
 .header-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -328,43 +329,43 @@ nav {
   flex: 1;
   align-items: center;
   justify-content: space-between;
-}
+} */
 
 /* Logo */
-.header-logo img {
+/* .header-logo img {
   height: 50px;
-}
+} */
 
 /* Navigation links */
-.nav {
-  /* display: flex;
+/* .nav { */
+/* display: flex;
   align-items: center; */
-  display: flex;
-  /* gap: 30px; */
-  /* flex: 1; */
-  justify-content: center;
-}
+/* display: flex; */
+/* gap: 30px; */
+/* flex: 1; */
+/* justify-content: center; */
+/* } */
 
-.nav-links {
+/* .nav-links {
   list-style: none;
   display: flex;
   gap: 40px;
   margin-right: 20px;
-}
+} */
 
-.nav-links li a {
-  /* color: rgb(3, 3, 3);
+/* .nav-links li a { */
+/* color: rgb(3, 3, 3);
   text-decoration: none;
   font-weight: 500;
   transition: opacity 0.3s; */
-  text-decoration: none;
+/* text-decoration: none;
   color: #555;
   font-weight: 500;
   font-size: 20px;
   transition: 0.2s;
-}
+} */
 
-.nav-links li a:hover {
+/* .nav-links li a:hover {
   color: #000;
 }
 
@@ -377,7 +378,7 @@ nav {
   display: flex;
   gap: 15px;
   justify-content: flex-end;
-}
+} */
 
 /* Auth buttons */
 /* .nav-btn a {
@@ -388,7 +389,7 @@ nav {
   text-decoration: none;
   transition: all 0.3s ease;
 } */
-
+/* 
 .sign-btn {
   padding: 9px 30px;
   border-radius: 20px;
@@ -399,7 +400,7 @@ nav {
   text-align: center;
   text-decoration: none;
   margin-left: 10px;
-  /* font-weight: 400; */
+  font-weight: 400;
   height: 40px;
 }
 
@@ -413,7 +414,195 @@ nav {
   text-align: center;
   text-decoration: none;
   margin-left: 10px;
-  /* font-weight: 400; */
+  font-weight: 400;
+  height: 40px;
+}
+
+.sign-btn:hover,
+.signup-btn:hover {
+  background-color: #005fa3;
+  color: white;
+  border-color: #005fa3;
+} */
+
+/* Profile dropdown */
+/* .headerLoginProfile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  background-color: white;
+  color: #0077cc;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  margin-left: 60px;
+}
+
+.headerLoginProfile img {
+  border-radius: 50%;
+}
+
+.headerProfDropdown {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background-color: white;
+  color: #0077cc;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  min-width: 150px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+} */
+/* 
+.headerProfDropdown a,
+.headerProfDropdown button {
+  padding: 10px;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #0077cc;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.headerProfDropdown button:hover,
+.headerProfDropdown a:hover {
+  background-color: #f0f0f0;
+}
+ */
+
+body::before {
+  content: "";
+  width: 100%;
+  height: 900px;
+  position: absolute;
+  display: block;
+  z-index: -1;
+  top: 0px;
+  left: 0px;
+}
+
+.home-header {
+  background-color: white;
+  height: 99px;
+  border-radius: 10px;
+  margin-top: 37px;
+  z-index: 1000;
+  width: calc(100% - 200px);
+  margin-left: 100px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+#left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 2.063rem;
+}
+.nav-btn {
+  display: flex;
+  align-items: center;
+  margin-right:  2.063rem;;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+.nav-links {
+  list-style: none;
+  height: 100%;
+}
+
+
+
+.right-container {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+#mid {
+  width: clamp(475px, 35.7vw, 700px);
+}
+
+#mid ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  list-style: none;
+  height: 100%;
+}
+
+#mid ul li a {
+  text-decoration: none;
+  color: black;
+  position: relative;
+  font-family: "Poppins";
+  font-weight: 400;
+  font-size: clamp(14px, 1.2vw, 18px);
+  line-height: 120%;
+  text-transform: uppercase;
+}
+
+#mid ul li a::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background-color: #1783d0;
+  transition: width 0.4s ease-in-out;
+}
+
+#mid ul li a:hover::after {
+  width: 100%;
+}
+
+#mid ul li a:hover {
+  color: #1783d0;
+}
+
+#mid ul li a.active {
+  color: #1783d0;
+}
+
+#mid ul li a.active::after {
+  width: 100%;
+}
+
+
+
+
+.sign-btn {
+  border-radius: 20px;
+  border: 1px solid #1783d0;
+  background-color: white;
+  color: #333;
+  width: 190px;
+  text-align: center;
+  text-decoration: none;
+  height: 40px;
+}
+
+.signup-btn {
+  border-radius: 20px;
+  border: 1px solid #1783d0;
+  background-color: white;
+  color: #333;
+  width: 190px;
+  text-align: center;
+  text-decoration: none;
+  margin-left: 10px;
   height: 40px;
 }
 
@@ -474,3 +663,4 @@ nav {
 .headerProfDropdown a:hover {
   background-color: #f0f0f0;
 }
+
