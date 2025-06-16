@@ -13,7 +13,8 @@ const EmprSignUp = () => {
     email: "",
     state: "",
     currentRole: "",
-    location: "",
+    city:"",
+    location: [],
     otpVerified: false,
     termsAccepted: false,
   });
@@ -110,7 +111,7 @@ const EmprSignUp = () => {
         location: formData.location,
         state: formData.state,
         city: formData.location, // Assuming location is the city
-        role: formData.currentRole,
+        designationName: formData.currentRole,
       });
 
       if (response.data.status === 200) {

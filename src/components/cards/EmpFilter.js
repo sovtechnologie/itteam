@@ -309,7 +309,7 @@ const EmpFilter = () => {
     }
   };
 
-  
+
   return (
     <>
 
@@ -412,7 +412,7 @@ const EmpFilter = () => {
           </div> */}
 
 
-          
+
 
           <div className="select-wrapper">
             <select
@@ -541,7 +541,7 @@ const EmpFilter = () => {
             ))) : currentProfiles.map((profile) => (
               <div className="job-card" key={profile._id}>
                 <div className="job-card-header">
-                  <img src={profile.image} alt="profile" className="profile-img" />
+                  <img src={profile.image ||  "https://img.freepik.com/free-photo/asian-woman-posing-looking-camera_23-2148255359.jpg"} alt="profile" className="profile-img" />
                   <div>
                     <h3>{profile.name}</h3>
                     <p>{profile.currentPosition}</p>
@@ -621,217 +621,6 @@ const EmpFilter = () => {
           Next &#8250;
         </button>
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      {/* <div className="emp-filterBox">
-        <div className="filter-container">
-          <div className="sidebar">
-            <div className="sidebar-boxOne">
-              <div className="sidbar-filter-head">
-                <p className="sidebar-heading">Filter</p>
-                <button onClick={handleResetFilters}>Reset</button>
-              </div>
-
-              <div className="employment-filter">
-                <p className="sidebar-heading">Work mode</p>
-                {["Work from office", "Remote", "Hybrid"].map((mode) => (
-                  <div className="empTypeOne" key={mode}>
-                    <input
-                      type="checkbox"
-                      checked={filters.workMode.includes(mode)}
-                      onChange={() => handleCheckboxChange("workMode", mode)}
-                    />
-                    <p>{mode}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="salary-range">
-                <p className="sidebar-heading">Salary Range</p>
-                <SalaryFilterCard />
-              </div>
-
-              <div className="employment-filter">
-                <p className="sidebar-heading">Experience Level</p>
-                {[
-                  { label: "Fresher (1 year experience)", value: 1 },
-                  { label: "Junior (2 year experience)", value: 2 },
-                  { label: "Associate (2-5 year experience)", value: "2-5" },
-                  { label: "Mid Level (5-10 year experience)", value: "5-10" },
-                  { label: "Senior (10+ year experience)", value: "10+" },
-                ].map((exp) => (
-                  <div className="empTypeOne" key={exp.value}>
-                    <input
-                      type="checkbox"
-                      checked={filters.experienceInStack.includes(exp.value)}
-                      onChange={() =>
-                        handleCheckboxChange("experienceInStack", exp.value)
-                      }
-                    />
-                    <p>{exp.label}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="sidebar-boxTwo">
-              <div className="employment-filter">
-                <p className="sidebar-heading">Active Joiner</p>
-                {[
-                  "Within 7 Days",
-                  "Within 15 Days",
-                  "Within 30 Days",
-                  "Within 45 Days",
-                ].map((time) => (
-                  <div className="empTypeOne" key={time}>
-                    <input
-                      type="checkbox"
-                      checked={filters.activeJoiners.includes(time)}
-                      onChange={() =>
-                        handleCheckboxChange("activeJoiners", time)
-                      }
-                    />
-                    <p>{time}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="filter-cards">
-            <div className="filter-top">
-              <div className="top-filters">
-                <div className="input-with-icon">
-                  <input
-                    type="text"
-                    name="jobType"
-                    placeholder="Select Job Type"
-                    value={filters.expertTecStack}
-                    onChange={handleStackChange}
-                  />
-                </div>
-                <div className="filter-topverti-icon">
-                  <TbMinusVertical size={30} color="#ddd" />
-                </div>
-                <div className="input-with-icon">
-                  <input
-                    type="text"
-                    name="designation"
-                    value={filters.designation}
-                    placeholder="Enter Keyword/Designation"
-                    onChange={handleStackChange}
-                    onKeyDown={handleStackChange}
-                  />
-                </div>
-                <div className="filter-topverti-icon">
-                  <TbMinusVertical size={30} color="#ddd" />
-                </div>
-                <div className="input-with-icon">
-                  <input
-                    type="text"
-                    name="experience"
-                    value={filters.designation}
-                    placeholder="Experience"
-                    onChange={handleStackChange}
-                    onKeyDown={handleStackChange}
-                  />
-                </div>
-
-                <div className="filter-topverti-icon">
-                  <TbMinusVertical size={30} color="#ddd" />
-                </div>
-                <div className="input-with-icon">
-                  <input
-                    type="text"
-                    name="location"
-                    value={filters.location}
-                    placeholder="Enter location"
-                    onChange={handleLocationChange}
-                    onKeyDown={handleLocationChange}
-                  />
-                </div>
-              </div>
-              <button className="filter-search-btn">Search</button>
-            </div>
-
-            <div className="topfilt-details">
-              <p>{profiles.length} Frontend Developer Candidates</p>
-              <a href="#">Send me jobs like these</a>
-              <p>
-                <span>Sort by:</span> Recommended <FaAngleDown />
-              </p>
-            </div>
-
-            <div className="all-cards">
-              {isLoading ? (
-                <p>Loading...</p>
-              ) : error ? (
-                <p>{error}</p>
-              ) : (
-                currentCards.map((profile) => (
-                  <SelectedProfCard
-                    key={profile._id}
-                    id={profile._id}
-                    selectprof={
-                      profile.image ||
-                      "https://img.freepik.com/free-photo/asian-woman-posing-looking-camera_23-2148255359.jpg"
-                    }
-                    selProfname={profile.name}
-                    role={profile.currentPosition}
-                    companyName={profile.currentCompanyName}
-                    location={profile.location}
-                    noticePeriod={profile.noticePeriod}
-                    gender={profile.gender}
-                    about={profile.about}
-                    skills={profile.skillName}
-                  />
-                ))
-              )}
-            </div>
-          </div>
-        </div>
-        <div className="nextpage-btns">
-          <div className="filtPageBtns">
-            <button
-              className="previousfiltBtn"
-              onClick={handlePreviousClick}
-              disabled={currentPage === 1}
-            >
-              <GoArrowLeft
-                size={22}
-                color="#ea4232"
-                className="nextIconBottom"
-              />{" "}
-              Previous
-            </button>
-
-            <button className="currentpagefiltBtn">{currentPage}</button>
-
-            <button className="nextfiltBtn" onClick={handleNextClick}>
-              Next{" "}
-              <GoArrowRight
-                size={22}
-                color="#ea4232"
-                className="previewIconBottom"
-              />
-            </button>
-          </div>
-        </div>
-      </div> */}
     </>
   );
 };

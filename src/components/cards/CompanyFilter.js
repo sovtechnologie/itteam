@@ -1,29 +1,25 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import axios from "axios";
 import "../../stylesheets/CompFilter.css";
 import SalaryFilterCard from "./SalaryFilterCard";
-
-import { useNavigate, useSearchParams } from "react-router-dom";
-
+import { useSearchParams } from "react-router-dom";
 import JobCard from "./JobCard";
 
+ const BASE_URL = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
 const CompanyFilter = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [users, setUsers] = useState([]);
     const [companies, setCompanies] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
-    const [role, setRole] = useState("");
+    // const [role, setRole] = useState("");
     const [searchParams] = useSearchParams();
-
-    const [salaryRange, setSalaryRange] = useState([2, 20]);
     const [cities, setCities] = useState([]);
     const [loadingCities, setLoadingCities] = useState(false);
 
+    const isResetting = useRef(false);
 
-    const BASE_URL = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
+   
     const profilesPerPage = 12;
 
     const [filters, setFilters] = useState({
@@ -40,7 +36,7 @@ const CompanyFilter = () => {
     });
 
 
- 
+
 
     const handleCheckboxChange = (category, value) => {
         setFilters((prevFilters) => {
@@ -54,9 +50,6 @@ const CompanyFilter = () => {
         });
     };
 
-    const handleLocationChange = (event) => {
-        setFilters((prevFilters) => ({ ...prevFilters, location: event.target.value }));
-    };
 
     const handleStackChange = (event) => {
         setFilters((prevFilters) => ({
@@ -65,9 +58,12 @@ const CompanyFilter = () => {
             currentPosition: event.target.value,
         }));
     };
-    console.log("Filters:", filters);
+   
+
+
 
     const handleResetFilters = () => {
+        isResetting.current = true;
         setFilters({
             workMode: [],
             experienceInStack: [],
@@ -81,6 +77,7 @@ const CompanyFilter = () => {
             salary: [0, 200000],
         });
     };
+
 
     useEffect(() => {
         if (searchParams.get("expertTecStack")) {
@@ -101,10 +98,12 @@ const CompanyFilter = () => {
                 activeJoiners: searchParams.get("activeJoiners"),
             }));
         }
-        if (searchParams.get("role")) {
-            setRole(searchParams.get("role"));
-        }
+        // if (searchParams.get("role")) {
+        //     setRole(searchParams.get("role"));
+        // }
     }, []);
+
+
 
     useEffect(() => {
         const fetchProfiles = async () => {
@@ -112,25 +111,22 @@ const CompanyFilter = () => {
                 setIsLoading(true);
                 setError(null);
 
+                if (isResetting.current) {
+                    const response = await axios.get(`${BASE_URL}/withOutLogin/getAllCompanyHomePage`);
+                    if (response.data?.result) {
+                        setCompanies(response.data.result);
+                    }
+                    isResetting.current = false; // Reset the flag
+                    return;
+                }
+
                 let validFilters = {};
+                if (filters.location) validFilters.city = filters.location;
 
-                if (filters.workMode.length) validFilters.Job_type = filters.workMode;
-                if (filters.experienceInStack.length) validFilters.experienceInStack = filters.experienceInStack;
-                if (filters.activeJoiners.length) validFilters.activeJoiners = filters.activeJoiners;
-                if (filters.state) validFilters.state = filters.state;
-                if (filters.location) validFilters.location = filters.location;
-                if (filters.currentPosition) validFilters.currentPosition = filters.currentPosition;
-                if (filters.expertTecStack) validFilters.expertTecStack = filters.expertTecStack;
-                if (filters.skillName.length) validFilters.skillName = filters.skillName;
-                if (filters.noticePeriod.length) validFilters.noticePeriod = filters.noticePeriod;
-
-
-                let response = Object.keys(validFilters).length
-                    ? await axios.post(`${BASE_URL}/api/userFilter`, validFilters)
-                    : await axios.post(`${BASE_URL}/api/userFilter`);
+                let response = await axios.post(`${BASE_URL}/withoutLogin/companyFilterByLocation`, validFilters);
 
                 if (response.data.status === 200) {
-                    setUsers(response.data.result);
+                    setCompanies(response?.data?.result);
                 } else {
                     setError("No profiles found");
                 }
@@ -141,40 +137,41 @@ const CompanyFilter = () => {
             }
         };
 
-        const timeoutId = setTimeout(() => fetchProfiles(), 500);
+        const timeoutId = setTimeout(fetchProfiles, 500);
         return () => clearTimeout(timeoutId);
     }, [filters]);
+
 
     const handleSalaryChange = (range) => {
         setFilters((prev) => ({ ...prev, salary: range }));
     };
 
     useEffect(() => {
-        axios.post(`${BASE_URL}/api/userFilter`).then((res) => {
-            if (res.data.status === 200) {
-                setUsers(res.data.result);
+        const fetchCompany = async () => {
+
+            try {
+                const response = await axios.get(`${BASE_URL}/withOutLogin/getAllCompanyHomePage`);
+                if (response.data?.result) {
+                    setCompanies(response.data.result);
+                }
+            } catch (error) {
+                console.error('Error fetching company profile', error);
             }
-        }).catch((err) => console.error("API Error:", err));
+        }
+        fetchCompany();
     }, []);
 
-    useEffect(() => {
-        axios.get(`${BASE_URL}/withOutLogin/getAllCompanyHomePage`).then((response) => {
-            if (response.data.status === 200) {
-                setCompanies(response.data.result);
-            }
-        }).catch((error) => console.error("Error fetching companies:", error));
-    }, []);
 
-    
 
     // Fetch cities when state changes
     useEffect(() => {
         const fetchCities = async () => {
             setLoadingCities(true);
             try {
-                const response = await axios.get(`${BASE_URL}/withoutLogin/getActiveLocation`);
-                if (response.data?.locations) {
-                    setCities(response.data.locations);
+                const response = await axios.get(`${BASE_URL}/withoutLogin/getCompanyActiveLocation`);
+                if (response.data?.result) {
+                    console.log("cities", response.data.result)
+                    setCities(response?.data?.result);
                 }
             } catch (error) {
                 console.error('Error fetching cities:', error);
@@ -186,7 +183,7 @@ const CompanyFilter = () => {
         fetchCities();
     }, []);
 
-    
+
 
     const indexOfLastProfile = currentPage * profilesPerPage;
     const indexOfFirstProfile = indexOfLastProfile - profilesPerPage;
@@ -212,27 +209,7 @@ const CompanyFilter = () => {
         if (currentPage > totalPages) setCurrentPage(1);
     }, [totalPages, currentPage]);
 
-    const noticePeriodLabel = (value) => {
-        switch (value) {
-            case "1":
-            case 1:
-                return "Immediate";
-            case "2":
-            case 2:
-                return "7 days N.P";
-            case "3":
-            case 3:
-                return "15 days N.P";
-            case "4":
-            case 4:
-                return "30 days N.P";
-            case "5":
-            case 5:
-                return "45 days N.P";
-            default:
-                return "Not specified";
-        }
-    };
+
 
 
     return (
@@ -240,7 +217,7 @@ const CompanyFilter = () => {
 
             <div className="job-search-bar">
                 <div className="search-fields"> {/* 🆕 Wrap fields separately */}
-                  
+
 
                     <input
                         type="text"
@@ -251,12 +228,6 @@ const CompanyFilter = () => {
                     />
 
                     <div className="divider" />
-
-                   
-                   
-                 
-
-
 
 
                     <div className="select-wrapper">
@@ -380,10 +351,10 @@ const CompanyFilter = () => {
                         </div>
                     )}
 
-                    {   currentProfiles.map((job) => (
-                            <JobCard key={job._id} {...job} />
-                        ))
-                        }
+                    {currentProfiles.map((job) => (
+                        <JobCard key={job._id} {...job} />
+                    ))
+                    }
                 </div>
             </div>
 
@@ -417,21 +388,6 @@ const CompanyFilter = () => {
                     Next &#8250;
                 </button>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         </>
     );

@@ -24,7 +24,7 @@ import intership from "../images/HomeIcons/intership.png";
 import analytic from "../images/HomeIcons/analytic.png";
 import next from "../images/next-arrow.png";
 
-import {fetchtopskillandlocation} from "../services/apiService";
+import { fetchtopskillandlocation } from "../services/apiService";
 
 import { MdOutlineLocationOn } from "react-icons/md";
 
@@ -38,10 +38,10 @@ const Home = () => {
   //   window.scrollTo(0, 0);
   // };
 
-  // const handleTechStackClick = (techStack) => {
-  //   navigate(`/empfilter?expertTecStack=${encodeURIComponent(techStack)}`);
-  //   window.scrollTo(0, 0);
-  // };
+  const handleTechStackClick = (techStack) => {
+    navigate(`/empfilter?expertTecStack=${encodeURIComponent(techStack)}`);
+    window.scrollTo(0, 0);
+  };
 
   // const handleExpClick = (experienceInStack) => {
   //   navigate(
@@ -60,8 +60,8 @@ const Home = () => {
   const [users, setUsers] = useState([]);
   const [allJoiners, setAllJoiners] = useState([]);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [topSkills,setTopSkills] = useState([]);
-  const [topLocation,setTopLocation] = useState([]);
+  const [topSkills, setTopSkills] = useState([]);
+  const [topLocation, setTopLocation] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -137,15 +137,23 @@ const Home = () => {
       .finally(() => setLoadingStates(false));
   }, []);
 
-// useEffect(async()=>{
-//   try {
-//     const response = await fetchtopskillandlocation();
-//      console.log("topSkill and Location",response);
-//   } catch (error) {
-//     console.error("data not fetching");
-//   }
-// },[]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchtopskillandlocation();
+        console.log("topSkill and Location", response);
+        setTopSkills(response.topSkills);
+        setTopLocation(response.topLocations);
+      } catch (error) {
+        console.error("data not fetching", error);
+      }
+    };
 
+    fetchData();
+  }, []);
+
+  console.log("TopSkills", topSkills);
+  console.log("TopLocation", topLocation)
 
   const handleViewMore = () => {
     setLoadingMore(true);
@@ -212,16 +220,6 @@ const Home = () => {
 
 
 
-  const roles = [
-    { title: "Senior Manager", positions: 210, icon: seniorExpert },
-    { title: "Career Advisor", positions: 97, icon: counseller },
-    { title: "HR Manager", positions: 132, icon: Hr },
-    { title: "HR Manager", positions: 132, icon: Hr },
-    { title: "Senior Manager", positions: 210, icon: seniorExpert },
-    { title: "Career Advisor", positions: 97, icon: counseller },
-    { title: "HR Manager", positions: 132, icon: Hr },
-    { title: "HR Manager", positions: 132, icon: Hr },
-  ];
 
   return (
     <>
@@ -249,54 +247,84 @@ const Home = () => {
             </div>
           </form>
 
+          {/* <div className="category-tags">
+          <button>
+            <img src={remote1} style={{
+              backgroundColor: "white",
+              borderRadius: "50%",
+              width: "28px",
+              height: "28px",
+              padding: "5px"
+            }} alt="remote" />
+            <span class="button-text">Remote</span>
+            <img src={next} alt="Next" />
+          </button>
+          <button>
+            <img src={mnc} alt="mnc" />
+            <span class="button-text">MNC</span>
+            <img src={next} alt="Next" />
+          </button>
+          <button>
+            <img src={sales} />
+            <span class="button-text">Sales</span>
+            <img src={next} alt="Next" />
+          </button>
+          <button>
+            <img src={project} />
+            <span class="button-text">Project Management</span>
+            <img src={next} alt="Next" />
+          </button>
+          <button>
+            <img src={development} />
+            <span class="button-text">Development</span>
+            <img src={next} alt="Next" />
+          </button>
+          <button>
+            <img src={data} />
+            <span class="button-text">Data Operator</span>
+            <img src={next} alt="Next" />
+          </button>
+          <button>
+            <img src={intership} />
+            <span class="button-text">Internship</span>
+            <img src={next} alt="Next" />
+          </button>
+          <button>
+            <img src={analytic} />
+            <span class="button-text">Analytics</span>
+            <img src={next} alt="Next" />
+          </button>
+        </div> */}
+
           <div className="category-tags">
-            <button>
-              <img src={remote1} style={{
-                backgroundColor: "white",
-                borderRadius: "50%",
-                width: "28px",
-                height: "28px",
-                padding: "5px"
-              }}  alt="remote"/>
-              <span class="button-text">Remote</span>
-              <img src={next} alt="Next" />
-            </button>
-            <button>
-              <img src={mnc} alt="mnc" />
-              <span class="button-text">MNC</span>
-              <img src={next} alt="Next" />
-            </button>
-            <button>
-              <img src={sales} />
-              <span class="button-text">Sales</span>
-              <img src={next} alt="Next" />
-            </button>
-            <button>
-              <img src={project} />
-              <span class="button-text">Project Management</span>
-              <img src={next} alt="Next" />
-            </button>
-            <button>
-              <img src={development} />
-              <span class="button-text">Development</span>
-              <img src={next} alt="Next" />
-            </button>
-            <button>
-              <img src={data} />
-              <span class="button-text">Data Operator</span>
-              <img src={next} alt="Next" />
-            </button>
-            <button>
-              <img src={intership} />
-              <span class="button-text">Internship</span>
-              <img src={next} alt="Next" />
-            </button>
-            <button>
-              <img src={analytic} />
-              <span class="button-text">Analytics</span>
-              <img src={next} alt="Next" />
-            </button>
+            {[
+              { img: remote1, label: "Remote" },
+              { img: mnc, label: "MNC" },
+              { img: sales, label: "Sales" },
+              { img: project, label: "Project Management" },
+              { img: development, label: "Development" },
+              { img: data, label: "Data Operator" },
+              { img: intership, label: "Internship" },
+              { img: analytic, label: "Analytics" },
+            ].map(({ img, label }) => (
+              <button key={label} onClick={() => handleTechStackClick(label)}>
+                <img src={img} alt={label} style={
+                  label === "Remote"
+                    ? {
+                      backgroundColor: "white",
+                      borderRadius: "50%",
+                      width: "28px",
+                      height: "28px",
+                      padding: "5px",
+                    }
+                    : {}
+                } />
+                <span className="button-text">{label}</span>
+                <img src={next} alt="Next" />
+              </button>
+            ))}
           </div>
+
         </div>
       </div>
 
@@ -522,17 +550,33 @@ const Home = () => {
         <h1 className="section-title oswald">
           Popular <span className="highlight">Role</span>
         </h1>
+
+
         <div className="role-grid">
-          {roles.map((role, index) => (
+          {topSkills.map((role, index) => (
             <div className="role-card" key={index}>
-              <img src={role.icon} alt={role.title} />
+              <img src={role.icon || seniorExpert} alt={role.skillsName} />
               <div className="role-info">
-                <h5>{role.title}</h5>
-                <p>{role.positions} Open Position</p>
+                <h5>{role.skillsName}</h5>
+                <p>{role.count} Total Candidates</p>
               </div>
             </div>
           ))}
         </div>
+        <div className="role-grid" style={{
+          marginTop: "10px"
+        }}>
+          {topLocation.map((role, index) => (
+            <div className="role-card" key={index}>
+              <img src={role.icon || counseller} alt={role.location} />
+              <div className="role-info">
+                <h5>{role.location}</h5>
+                <p>{role.count} Total Candidates</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
       </div>
 
       <div className="why-popular">
