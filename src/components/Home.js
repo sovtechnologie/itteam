@@ -440,7 +440,7 @@ const Home = () => {
                       <span>
                         {noticePeriodLabel(candidate.noticePeriod) === "Immediate"
                           ? "Immediate"
-                          : `${noticePeriodLabel(candidate.noticePeriod)} days N.P`}
+                          : `${noticePeriodLabel(candidate.noticePeriod)} Days N.P`}
                       </span>
 
                     </div>

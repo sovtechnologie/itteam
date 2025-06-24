@@ -128,9 +128,9 @@
   color: #727272;
 }
 
-.project-editBtn {
-  /* background-color: yellow; */
-}
+/* .project-editBtn {
+  background-color: yellow;
+} */
 
 .project-editBtn button {
   background-color: transparent;
@@ -168,7 +168,7 @@
 .expDuration {
   padding: 5px 10px;
   border: 1px solid #ea4232;
-  border-radius: 20px;
+  border-radius: 30px;
   color: #012970;
 }
 
@@ -231,7 +231,7 @@
   justify-content: center;
   align-items: center;
   padding: 8px;
-  border-radius: 20px;
+  border-radius: 30px;
   border: 1px solid #ea4232;
 }
 
@@ -286,14 +286,14 @@
 .edu-year {
   border: 1px solid #ea4232;
   padding: 6px 10px;
-  border-radius: 20px;
+  border-radius: 30px;
 }
 
 .edu-cgpa {
   background-color: #e6ffed;
   color: #23783a;
   padding: 8px 15px;
-  border-radius: 20px;
+  border-radius: 30px;
 }
 /* --------------------------- */
 

@@ -21,10 +21,11 @@ const OurTeam = () => {
                     </div>
                 </div>
             </div>
-
+            <div className="section-title-team">
             <h1 className="section-title">
                 Meet Our <span className="highlight"> Founder</span>
             </h1>
+            </div>
 
             <section className="founder-section">
                 <div className="founder-left">

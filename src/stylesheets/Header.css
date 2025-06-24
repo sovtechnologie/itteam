@@ -359,7 +359,7 @@ nav {
   font-weight: 500;
   transition: opacity 0.3s; */
 /* text-decoration: none;
-  color: #555;
+  color: #525252;
   font-weight: 500;
   font-size: 20px;
   transition: 0.2s;
@@ -384,7 +384,7 @@ nav {
 /* .nav-btn a {
   padding: 8px 18px;
   margin-left: 10px;
-  border-radius: 20px;
+  border-radius: 30px;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -392,7 +392,7 @@ nav {
 /* 
 .sign-btn {
   padding: 9px 30px;
-  border-radius: 20px;
+  border-radius: 30px;
   border: 1px solid #1783d0;
   background-color: white;
   color: #333;
@@ -406,7 +406,7 @@ nav {
 
 .signup-btn {
   padding: 9px 30px;
-  border-radius: 20px;
+  border-radius: 30px;
   border: 1px solid #1783d0;
   background-color: white;
   color: #333;
@@ -435,7 +435,7 @@ nav {
   background-color: white;
   color: #0077cc;
   padding: 6px 12px;
-  border-radius: 20px;
+  border-radius: 30px;
   font-weight: 600;
   margin-left: 60px;
 }
@@ -544,7 +544,8 @@ body::before {
 
 #mid ul li a {
   text-decoration: none;
-  color: black;
+  /* color: black; */
+   color: #525252;
   position: relative;
   font-family: "Poppins";
   font-weight: 400;
@@ -584,19 +585,21 @@ body::before {
 
 
 .sign-btn {
-  border-radius: 20px;
-  border: 1px solid #1783d0;
+  border-radius: 30px;
+  border: 1.5px solid #1783d0;
   background-color: white;
   color: #333;
   width: 190px;
   text-align: center;
   text-decoration: none;
   height: 40px;
+  font-size: 16px;
+  /* color: #1783d0;x */
 }
 
 .signup-btn {
-  border-radius: 20px;
-  border: 1px solid #1783d0;
+  border-radius: 30px;
+  border: 1.5px solid #1783d0;
   background-color: white;
   color: #333;
   width: 190px;
@@ -604,13 +607,15 @@ body::before {
   text-decoration: none;
   margin-left: 10px;
   height: 40px;
+  font-size: 16px;
+  /* color: #1783d0; */
 }
 
 .sign-btn:hover,
 .signup-btn:hover {
-  background-color: #005fa3;
+  background-color: #1783d0;;
   color: white;
-  border-color: #005fa3;
+  border-color: #1783d0;;
 }
 
 /* Profile dropdown */
@@ -623,7 +628,7 @@ body::before {
   background-color: white;
   color: #0077cc;
   padding: 6px 12px;
-  border-radius: 20px;
+  border-radius: 30px;
   font-weight: 600;
   margin-left: 60px;
 }

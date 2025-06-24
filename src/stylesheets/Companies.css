@@ -61,11 +61,6 @@ a {
   color: #1783D0;
 } */
 
-
-
-
-
-
 .pill-container {
   display: flex;
   flex-wrap: wrap;
@@ -75,7 +70,7 @@ a {
 .pill {
   background-color: #e1f5fe;
   padding: 5px 12px;
-  border-radius: 20px;
+  border-radius: 30px;
   font-size: 14px;
 }
 
@@ -83,7 +78,7 @@ a {
   background: none;
   border: none;
   cursor: pointer;
-  color: #1783D0;
+  color: #1783d0;
 }
 
 .modal {
@@ -141,7 +136,6 @@ a {
   background-color: #d1410c;
 }
 
-
 .Employee-Profile-Card {
   width: 90%; /* Reduce width from 100% */
   margin: 100px auto 0 auto;
@@ -149,16 +143,15 @@ a {
   justify-content: center;
 }
 
-
 .profile-head {
   margin: 100px 70px 50px 70px;
   height: 100%;
 }
 
 .Profile-section-one {
-  background-color: #1783D0;
+  background-color: #1783d0;
   color: #fff;
-  border-radius: 20px;
+  border-radius: 30px;
   padding: 40px;
 }
 
@@ -185,9 +178,9 @@ a {
   margin-top: 10px;
   object-fit: cover;
 }
-.edit-button{
+.edit-button {
   background-color: #ffffff;
-  color: #1783D0;
+  color: #1783d0;
   border: none;
 }
 
@@ -216,7 +209,6 @@ a {
   font-size: 28px;
   margin: 0;
   color: white;
-  ;
 }
 
 .Profile-basic-info p {
@@ -228,8 +220,6 @@ a {
   width: 65%;
   display: flex;
   flex-direction: column;
-
-
 }
 
 .Profile-personal-info h3,
@@ -261,7 +251,6 @@ a {
 }
 .Column-Two-Details p {
   margin-left: 15px;
-
 }
 
 .Profile-personal-info-Two {
@@ -280,12 +269,6 @@ a {
   cursor: pointer;
 }
 
-
-
-
-
-
-
 .profile-section-two {
   min-height: 80vh;
   margin: 50px 0;
@@ -300,12 +283,12 @@ a {
 
 .company-card {
   background-color: white;
-  border: 2px solid #1783D0;
+  border: 2px solid #1783d0;
   border-radius: 12px;
   padding: 24px;
   margin: 30px auto;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
   max-width: 100%;
 }
 
@@ -316,7 +299,7 @@ a {
 }
 
 .highlight {
-  color: #1783D0;
+  color: #1783d0;
 }
 
 .company-description {
@@ -331,9 +314,9 @@ a {
   flex-direction: column;
   gap: 16px;
   margin-bottom: 16px;
-  width: 1450px;         /* Set your desired width */
-  max-width: 100%;      /* Prevent overflow on small screens */
-  margin-left: auto;    /* Center horizontally */
+  width: 1450px; /* Set your desired width */
+  max-width: 100%; /* Prevent overflow on small screens */
+  margin-left: auto; /* Center horizontally */
   margin-right: auto;
 }
 
@@ -355,10 +338,9 @@ a {
 }
 
 .link {
-  color: #1783D0;
+  color: #1783d0;
   text-decoration: underline;
   font-size: 18px;
-  
 }
 
 .pill-container {
@@ -369,14 +351,14 @@ a {
 
 .pill {
   padding: 6px 12px;
-  border-radius: 20px;
+  border-radius: 30px;
   font-size: 18px;
   font-weight: 500;
 }
 
 .pill.blue {
   background-color: #dbeafe;
-  color: #1783D0;
+  color: #1783d0;
 }
 
 .pill.green {
@@ -402,11 +384,11 @@ a {
 }
 
 .highlight {
-  color: #1783D0;
+  color: #1783d0;
 }
 
 .show-more {
-  color: #1783D0;
+  color: #1783d0;
   font-size: 20px;
   text-decoration: none;
 }
@@ -462,28 +444,26 @@ a {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .scroll-btn.left {
   left: -20px;
-  color: #1783D0;
+  color: #1783d0;
 }
 
 .scroll-btn.right {
   right: -20px;
-  color: #1783D0;
+  color: #1783d0;
 }
 
 .Card-Container::-webkit-scrollbar {
   display: none;
 }
 .Card-Container {
-  -ms-overflow-style: none;  /* IE/Edge */
-  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
 }
-
-
 
 .card-heading {
   display: flex;
@@ -508,17 +488,17 @@ a {
   cursor: pointer;
 }
 
-.Company-details{
- display: flex;
- justify-content: center;
- align-items: center;
- flex-direction: column;
- margin-top:-80px;
+.Company-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: -80px;
 }
 
 .companyName {
   font-size: 16px;
-  color: #1783D0;
+  color: #1783d0;
   margin-top: 8px;
 }
 
@@ -530,7 +510,7 @@ a {
 
 .jobLocation {
   font-size: 14px;
-  color: #555;
+  color: #525252;
 }
 
 .jobTags {
@@ -540,17 +520,21 @@ a {
 }
 
 .jobTag {
-  border: 1px solid #1783D0;
-  color: #1783D0;
+  border: 1px solid #1783d0;
+  color: #1783d0;
   padding: 4px 10px;
   border-radius: 8px;
   font-size: 13px;
 }
 
-.salary {
-  font-size: 15px;
-  color: #333;
+.salary,
+.posted {
+  font-size: 14px;
+  color: #525252;
   margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-footer {
@@ -560,7 +544,7 @@ a {
 }
 
 .more-details {
-  color: #1783D0;
+  color: #1783d0;
   font-size: 14px;
   text-decoration: none;
   font-weight: 500;

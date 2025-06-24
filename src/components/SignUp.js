@@ -47,7 +47,7 @@ const SignUp = () => {
             )}
 
             <p className="login-prompt">Already Registered? <a href="#">Login here</a></p>
-            <img src={illustration} alt="Signup" style={{ width: "auto", height: "320px", marginLeft: "90px" , marginTop:"20px"}} />
+            <img src={illustration} alt="Signup" style={{ width: "auto", height: "320px", margin: "0 auto" , marginTop:"100px"}} />
           </div>
           {/* )} */}
         </div>

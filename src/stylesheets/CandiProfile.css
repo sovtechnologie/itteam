@@ -333,7 +333,7 @@
   margin-top: 10px;
   font-weight: 500;
   font-size: 14px;
-  color: #555;
+  color: #525252;
   display: block;
 }
 
@@ -491,11 +491,13 @@
   color: #fff;
   border-radius: 20px;
   padding: 40px;
+  max-width: 1240px;
 }
 
 .profileCardHead {
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
 }
 
 .profileCard-box {
@@ -513,7 +515,7 @@
   width: 180px;
   background-color: #fff;
   border-radius: 50%;
-  margin-top: 30px;
+  /* margin-top: 30px; */
   /* border: 5px solid #fff; */
   object-fit: cover;
 }
@@ -620,7 +622,7 @@
   cursor: pointer;
   text-align: center;
   background-color: #fff;
-  color: #555;
+  color: #525252;
 }
 
 .custom-file-input {
@@ -720,13 +722,13 @@
   margin-top: 20px;
 }
 
-.quick-links {
+/* .quick-links {
   flex: 1;
 }
 
 .content-boxes {
   flex: 2;
-}
+} */
 
 .quick-links {
   margin-top: 20px;
@@ -734,6 +736,8 @@
   border: 1px solid #1783D0;
   padding: 15px;
   border-radius: 10px;
+  max-width: 250px;
+  width: 250px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -749,7 +753,7 @@
 .quick-links li {
   display: flex;
   justify-content: space-between;
-  margin: 5px 0;
+  margin: 18px 0;
   gap: 20px
 }
 
@@ -759,6 +763,8 @@
   border-radius: 10px;
   padding: 20px;
   max-width: 900px;
+  width: 900px;
+  min-height: 200px;
   margin: 20px 0px 0px auto;
   /* Top 20px, Right auto, Bottom 0, Left auto */
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
@@ -794,7 +800,7 @@
   margin-top: 30px;
   font-size: 20px;
   width: 900px;
-  color: #555;
+  color: #525252;
 }
 
 .upload-icon {
@@ -823,7 +829,7 @@
   align-items: center;
   border: 1px solid #1783D0;
   padding: 8px 20px;
-  border-radius: 25px;
+  border-radius: 30px;
   font-size: 14px;
   color: #333;
   background: #ffffff;
@@ -836,7 +842,7 @@
   margin-top: 30px;
   font-size: 20px;
   width: 900px;
-  color: #555;
+  color: #525252;
 }
 
 .employment-list {
@@ -903,8 +909,8 @@
 .company-name {
   margin: 5px 0;
   font-weight: 500;
-  font-size: 18px;
-  color: #333;
+  font-size: 20px;
+  color: #525252;
 }
 .company-add {
   margin: 5px 0;
@@ -914,7 +920,7 @@
 
 .employment-description {
   font-size: 16px;
-  color: #555;
+  color: #525252;
   margin-top: 8px;
 }
 
@@ -954,7 +960,7 @@
 
 .education-info p {
   margin: 0;
-  color: #555;
+  color: #525252;
   font-size: 16px;
   font-weight: 700px;
 }
@@ -1024,13 +1030,13 @@
 
 .project-date {
   font-size: 16px;
-  color: #555;
+  color: #525252;
   margin-bottom: 6px;
 }
 
 .project-associated {
   font-size: 16px;
-  color: #555;
+  color: #525252;
   margin-bottom: 10px;
 }
 
@@ -1086,7 +1092,7 @@
 
 .issuer {
   font-size: 16px;
-  color: #555;
+  color: #525252;
   margin-bottom: 2px;
 }
 

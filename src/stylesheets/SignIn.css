@@ -88,6 +88,7 @@
   padding: 40px;
   box-sizing: border-box;
   /* padding-right: 57px; */
+  width: 600px;
   max-width: 600px;
 }
 
@@ -122,32 +123,43 @@
 }
 
 .welcome-message h1 {
-  font-size: 36px;
+  font-size: 32px;
   color: #fff;
-  margin-bottom: 30px;
+  margin-top: 30px;
   line-height: 1.3;
+  font-family: "Poppins";
+  font-weight: 500;
 }
 
 .stats {
   gap: 10px;
   margin-bottom: 40px;
   color: white;
-  font-size: 18px;
+  font-size: 20px;
+  font-family: "Poppins";
+  font-weight: 300;
+  margin-top: 15px;
 }
 .register-button {
   background-color: #1783d0;
   color: white;
   border: 1px solid white;
-  padding: 15px 30px;
+  padding: 0px 30px;
   font-size: 18px;
   cursor: pointer;
   border-radius: 30px;
-  margin-top: 80px;
+  margin-top: 200px;
+  height: 40px;
+  font-weight: 400;
   transition: background-color 0.3s;
 }
-
+.register-button:hover{
+  background-color: white;
+  color: #1783d0;
+  border: 2px solid #1783d0;
+}
 .signin-left img {
-  width: 80%;
+  width: 60%;
   height: auto;
   margin-left: -20px;
 }
@@ -286,14 +298,17 @@
   list-style: none;
   border: none;
   height: 40px;
-  border-radius: 20px;
+  border-radius: 30px;
   color: #fff;
   transition: all 0.3s ease;
-  font-size: smaller;
+  font-size: 20px;
+  width: 204px;
 }
 
 .login-btn button:hover {
-  background-color: #1783d0;
+  background-color: white;
+  color: #1783d0;
+  border: 2px solid #1783d0;
   cursor: pointer;
 }
 

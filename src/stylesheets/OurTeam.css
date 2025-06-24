@@ -1,12 +1,13 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap'); */
 .leadership-section {
-  background: url('../images/ourTeamImage.png') no-repeat center center;
+  background: url("../images/ourTeamImage.png") no-repeat center center;
   background-size: cover;
-  height: 70vh;
+  height: 80vh;
   display: flex;
   align-items: stretch;
   /* Stretch children to match full height */
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald";
+
   color: white;
   position: relative;
 }
@@ -14,7 +15,7 @@
 .overlay {
   background: linear-gradient(to right, #1783d0 70%, rgba(0, 123, 255, 0) 100%);
   /* Blue overlay */
-  padding: 80px 60px;
+  padding: 80px 100px;
   width: 50%;
   max-width: 600px;
   display: flex;
@@ -23,7 +24,8 @@
 }
 
 .leadership-wrapper {
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald";
+
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -35,7 +37,8 @@
   font-weight: 600;
   margin: 0;
   text-transform: uppercase;
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald";
+
   line-height: 120%;
   letter-spacing: 0%;
 }
@@ -43,14 +46,12 @@
 .bar-block {
   display: flex;
   align-items: stretch;
-
 }
 
 .bar {
   width: 3px;
-  background-color: #955B50;
+  background-color: #955b50;
   margin-right: 20px;
-
 }
 
 .bar-text h1 {
@@ -62,7 +63,7 @@
   text-transform: uppercase;
 }
 
-.bar-text h1+h1 {
+.bar-text h1 + h1 {
   margin-top: 4px;
 }
 
@@ -70,8 +71,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 60px 40px;
-  font-family: 'Poppins', sans-serif;
+  padding: 60px 80px;
+  font-family: "Poppins";
   margin-bottom: 120px;
 }
 
@@ -86,15 +87,19 @@
   flex-direction: column;
   gap: 20px;
 }
+.section-title-team {
+  margin: 50px 80px 20px 80px;
+}
 
 .section-title {
   font-size: 64px;
   font-weight: 600;
-  margin: 50px 20px 20px 45px;
+  /* margin: 50px 80px 20px 80px; */
   /* Top Right Bottom Left */
   line-height: 1.2;
-  font-family: 'Oswald', sans-serif;
-  color: #000;
+  font-family: "Oswald";
+
+  color: #525252;
   /* optional: default color */
 }
 
@@ -103,11 +108,10 @@
   font-weight: 600;
 }
 
-
 .founder-left p {
   margin-bottom: 16px;
   color: #525252;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins";
   font-weight: 400;
   font-size: 18px;
   line-height: 1.4;
@@ -122,13 +126,13 @@
   color: #1783d0;
   padding: 10px 24px;
   background: transparent;
-  border-radius: 20px;
+  border-radius: 30px;
   font-weight: 500;
   cursor: pointer;
   margin-top: 50px;
 }
 
-.founder-button:hover{
+.founder-button:hover {
   background-color: #1783d0;
   color: white;
 }
@@ -163,7 +167,6 @@
   width: 397px;
   height: 413px;
   background: #ffffff;
-
 }
 
 .image-wrapper img {
@@ -172,9 +175,7 @@
   display: block;
   object-fit: cover;
   /* Ensures image fills container without distortion */
-
 }
-
 
 .dot-pattern {
   position: absolute;
@@ -197,31 +198,28 @@
   background: #1783d0;
   color: white;
   padding: 8px 16px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins";
   font-size: 14px;
   font-weight: 600;
   line-height: 1.3;
   display: inline-block;
 }
 
-
-
 /* Triangle pointer at the bottom */
 .name-tag::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -62%;
   left: -1px;
   width: 101%;
   height: 40px;
-  background: #7C4B3A;
+  background: #7c4b3a;
   clip-path: polygon(0 0, 100% 0, 75% 100%, 25% 100%);
 }
 
-
 .name-tag strong {
   display: block;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins";
   font-weight: 700;
   font-size: 24px;
   line-height: 95%;
@@ -229,7 +227,7 @@
 }
 
 .name-tag span {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins";
   font-weight: 400;
   font-size: 20px;
   line-height: 116%; /* Rounded from 115.999...% */

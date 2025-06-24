@@ -53,7 +53,8 @@
   border-radius: 50px;
   max-width: 1000px;
   margin: 0 auto;
-  color: black;
+  /* color: black; */
+  color: #525252;
   border: 2px solid #DCDCDC;
 }
 
@@ -270,7 +271,7 @@
 .company-text p {
   margin-top: 20px;
   font-size: 20px;
-  color: #555;
+  color: #525252;
   line-height: 1.6;
 }
 
@@ -352,7 +353,7 @@
 }
 
 .logo-box img {
-  width: 150px;
+  /* width: 150px; */
   height: 45px;
 }
 

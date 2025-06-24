@@ -1,10 +1,10 @@
 .job-hunting-container {
-  font-family: "Poppins", sans-serif;
-  max-width: 1300px;
+  font-family: "Poppins";
+  max-width: 1200px;
   margin: 0 auto 50px auto; /* Combined margin declaration */
-  padding: 60px 40px; /* Vertical | Horizontal padding */
+  /* padding: 60px 40px; */
   background-color: #1783d0;
-  border-radius: 20px;
+  border-radius: 30px;
   text-align: center;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow */
   color: white;
@@ -53,28 +53,32 @@
 
 .job-hunting-title {
   color: #fff;
-  font-size: 50px;
-  margin-bottom: 20px; 
+  font-size: 48px;
+  /* margin-bottom: 20px; */
 }
 
 .job-hunting-subtitle {
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 30px;
 }
 
 .job-hunting-form {
   position: relative;
   width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 0 auto;
 }
 
 .job-hunting-input {
-  padding: 15px 120px 12px 20px;
+  /* padding: 15px 120px 12px 20px; */
+  padding-left: 20px;
   border: 1px solid #ddd;
   border-radius: 30px;
   font-size: 20px;
-  width: 90%;
+  width: 100%;
   font-family: "Poppins", sans-serif !important;
   height: 60px;
   color: #1783d0;
@@ -86,7 +90,7 @@
 
 .job-hunting-button {
   position: absolute;
-  right: 40px;
+  right: 20px;
   top: 5px;
   width: 200px;
   padding: 10px 20px;
@@ -100,5 +104,6 @@
 }
 
 .job-hunting-button:hover {
-  background-color: #005bb5;
+
+  background-color:#086cb4;
 }

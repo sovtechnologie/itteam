@@ -54,7 +54,7 @@
   gap: 10px;
   position: relative;
   overflow: hidden;
-  font-weight: 400px;
+  font-weight: 400;
   line-height: 120%;
 }
 
@@ -69,7 +69,7 @@
 }
 
 .contact-button:hover {
-  background-color: #555;
+  background-color: #525252;
 }
 .contact-details {
   display: flex;
@@ -173,7 +173,7 @@
   padding: 12px 20px;
   font-size: 18px;
   border: none;
-  border-radius: 25px;
+  border-radius: 30px;
   cursor: pointer;
   align-self: flex-start;
   transition: all 0.3s ease;

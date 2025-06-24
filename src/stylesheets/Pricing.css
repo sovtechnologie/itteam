@@ -2,7 +2,7 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 40px;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins";
   color: #333;
 }
 
@@ -37,7 +37,7 @@
   margin: 0 auto;
   line-height: 1.6;
   font-size: 26px;
-  color: #555;
+  color: #525252;
 }
 
 .divider {
@@ -51,9 +51,9 @@
   justify-content: center;
   align-items: center;
   margin: 0 auto 40px auto; /* Centering magic */
-  gap: 10px; 
-  border-radius: 20px;
-  padding: 5px; 
+  gap: 10px;
+  border-radius: 30px;
+  padding: 5px;
   box-shadow: 0 4px 12px rgba(0, 115, 230, 0.15), 0 2px 6px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
   width: 379px;
@@ -61,13 +61,13 @@
 
 .tab-button {
   padding: 18px 35px;
-  background-color: #EAEAFF;
+  background-color: #eaeaff;
   border: none;
   color: #333;
   font-size: 20px;
   font-weight: 600;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 30px;
   transition: all 0.3s ease;
 }
 
@@ -87,7 +87,7 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 30px;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins';
   }
   
   .benefits-grid {
@@ -118,7 +118,7 @@
   .benefit-title {
     font-size: 18px;
     font-weight: bold;
-    color: #333;
+color: #525252;
     margin-bottom: 5px;
   }
   
@@ -364,12 +364,12 @@
    */
 
 .job-hunting-container {
-  font-family: "Poppins", sans-serif;
-  max-width: 1300px;
+  font-family: "Poppins";
+  max-width: 1200px;
   margin: 0 auto 50px auto; /* Combined margin declaration */
-  padding: 60px 40px; /* Vertical | Horizontal padding */
+  /* padding: 60px 40px;  */
   background-color: #1783d0;
-  border-radius: 20px;
+  border-radius: 30px;
   text-align: center;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow */
   color: white;
@@ -418,28 +418,33 @@
 
 .job-hunting-title {
   color: #fff;
-  font-size: 50px;
-  margin-bottom: 20px; 
+  font-size: 48px;
+  /* margin-bottom: 20px; */
 }
 
 .job-hunting-subtitle {
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 30px;
+  font-weight: 400;
 }
 
 .job-hunting-form {
   position: relative;
   width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 0 auto;
 }
 
 .job-hunting-input {
-  padding: 15px 120px 12px 20px;
+  /* padding: 15px 120px 12px 20px; */
+  padding-left: 20px;
   border: 1px solid #ddd;
   border-radius: 30px;
   font-size: 20px;
-  width: 90%;
+  width: 100%;
   font-family: "Poppins", sans-serif !important;
   height: 60px;
   color: #1783d0;
@@ -451,7 +456,7 @@
 
 .job-hunting-button {
   position: absolute;
-  right: 40px;
+  right: 20px;
   top: 5px;
   width: 200px;
   padding: 10px 20px;
@@ -465,5 +470,12 @@
 }
 
 .job-hunting-button:hover {
-  background-color: #005bb5;
+  background-color: #086cb4;
+}
+.main-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
