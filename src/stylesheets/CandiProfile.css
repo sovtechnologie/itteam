@@ -221,7 +221,8 @@
 }
 
 .skill-icon {
-  font-size: 18px;
+  /* font-size: 18px; */
+  display: flex;
 }
 
 .modal-buttons {
@@ -791,6 +792,9 @@
 .about-card-box-details p {
   margin-top: 10px;
   font-size: 20px;
+  font-family: "Poppins";
+  font-weight: 400;
+  color: rgba(82, 82, 82, 1);
 }
 
 .resume-card-box-details {
@@ -830,9 +834,10 @@
   border: 1px solid #1783D0;
   padding: 8px 20px;
   border-radius: 30px;
-  font-size: 14px;
+  font-size: 16px;
   color: #333;
   background: #ffffff;
+  white-space:nowrap ;
 }
 
 .exp-card-box-details {
@@ -853,16 +858,16 @@
 
 .employment-card {
   display: flex;
-  gap: 50px;
+  gap: 20px;
 }
 
 .employment-logo  img {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   object-fit: cover;
-  margin-right: 15px;
-  margin-top: 5px;
+  /* margin-right: 15px; */
+  /* margin-top: 5px; */
 }
 
 .employment-content {
@@ -872,14 +877,16 @@
 .employment-header {
   display: flex;
   align-items: center;
-  gap: 190px;
-  flex-wrap: wrap;
+  /* gap: 190px; */
+  justify-content: space-between;
+  flex-wrap: nowrap;
 }
 
 .employment-header h3 {
   font-size: 20px;
   color: #1783D0;
-  margin: 0;
+  font-weight: 600;
+  /* margin: 0; */
 }
 
 .employment-timeline {
@@ -908,18 +915,18 @@
 
 .company-name {
   margin: 5px 0;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 20px;
   color: #525252;
 }
 .company-add {
   margin: 5px 0;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 18px;
 } 
 
 .employment-description {
-  font-size: 16px;
+  font-size: 20px;
   color: #525252;
   margin-top: 8px;
 }
@@ -930,6 +937,7 @@
   flex-direction: column;
   gap: 15px;
   width: 900px;
+  padding: 15px;
 }
 
 .education-card {
@@ -937,12 +945,12 @@
   align-items: center;
 
   border-radius: 10px;
-  padding: 15px;
+  /* padding: 15px; */
 }
 
 .college-logo {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   object-fit: cover;
   margin-right: 15px;
@@ -961,8 +969,8 @@
 .education-info p {
   margin: 0;
   color: #525252;
-  font-size: 16px;
-  font-weight: 700px;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .location {
@@ -1029,15 +1037,18 @@
 }
 
 .project-date {
-  font-size: 16px;
+  font-size: 18px;
   color: #525252;
   margin-bottom: 6px;
+  font-weight: 600;
 }
 
 .project-associated {
-  font-size: 16px;
+  font-size: 18px;
   color: #525252;
   margin-bottom: 10px;
+  font-weight: 600;
+
 }
 
 .project-description {
@@ -1072,11 +1083,11 @@
 }
 
 .license-logo {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   object-fit: cover;
-  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .license-info {
@@ -1091,7 +1102,8 @@
 }
 
 .issuer {
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 600;
   color: #525252;
   margin-bottom: 2px;
 }
@@ -1107,6 +1119,7 @@
   border: none;
   padding: 6px 12px;
   border-radius: 20px;
+  margin-right: 10px;
   font-size: 16px;
   cursor: pointer;
  text-decoration: none;

@@ -620,7 +620,7 @@ export default function Employer() {
                   <div key={index} className="jobs">
                     <div className="card-heading">
                       <div className="Company-logo">SOV</div>
-                      <img src={vector} style={{ marginTop: "-50px" }} />
+                      <img src={vector} style={{ marginTop: "-40px" }} />
                     </div>
                     <div className='Company-details'>
                       <p className="companyName">Sov Technologies</p>

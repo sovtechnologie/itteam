@@ -205,8 +205,8 @@ export default function Companies() {
                   ))}
                 </div>
               </div>
-              <div>
-                <strong>Contact</strong>
+              <div className='contact-number'>
+                <strong>Contact :</strong>
                 <p>
                   {companyData?.contactNumber
                     ? `+91 ${companyData.contactNumber.replace(/^(\+91|91)?/, "")}`
@@ -240,7 +240,7 @@ export default function Companies() {
                   <div key={index} className="jobs">
                     <div className="card-heading">
                       <div className="Company-logo">SOV</div>
-                      <img src={vector} style={{ marginTop: "-50px" }} />
+                      <img src={vector} style={{ marginTop: "-40px" }} />
                     </div>
                     <div className='Company-details'>
                       <p className="companyName">Sov Technologies</p>

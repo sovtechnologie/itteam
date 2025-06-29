@@ -13,7 +13,7 @@ import { IoIosMail } from "react-icons/io";
 import { FiShare2 } from "react-icons/fi";
 import Profile from "../images/UserProfile.png";
 import resumelogo from "../images/resumelogo.png";
-
+import companyLogo from "../images/CompanyProfilelogo.png"
 
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
@@ -329,7 +329,7 @@ const EmployeeProfile = () => {
                       const duration = formatDateRange(job.startDate, job.endDate);
                       return (
                         <div className="employment-card" key={index}>
-                          <div className="employment-logo"><img src={job.companyLogo} /></div>
+                          <div className="employment-logo"><img src={job.companyLogo || companyLogo} /></div>
                           <div className="employment-content">
                             <div className="employment-header">
                               <h3>{job.title}</h3>
@@ -361,7 +361,9 @@ const EmployeeProfile = () => {
                     const duration = formatDateRange(edu.startDate, edu.endDate);
                     return (
                       <div className="education-card" key={edu.id}>
-                        <img src={edu.logo} alt="Logo" className="college-logo" />
+                        <img src={edu.logo
+                          
+                        } alt="Logo" className="college-logo" />
                         <div className="education-info">
                           <h3>{edu.college}</h3>
                           <p>{edu.degree}</p>

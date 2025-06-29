@@ -320,6 +320,11 @@ a {
   margin-right: auto;
 }
 
+.contact-number{
+  display: flex;
+  gap: 20px;
+}
+
 /* .company-meta div {
   margin-bottom: 16px;
 } */
@@ -424,7 +429,7 @@ a {
 
 .jobs {
   flex: 0 0 auto;
-  width: 300px;
+  width: 370px;
   border-radius: 16px;
   padding: 1rem;
   border: 1px solid white;
@@ -491,9 +496,10 @@ a {
 .Company-details {
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   flex-direction: column;
-  margin-top: -80px;
+  margin-top: -70px;
+  margin-left: 70px;
 }
 
 .companyName {
@@ -506,6 +512,7 @@ a {
   font-size: 18px;
   font-weight: 600;
   color: #333;
+  margin: 5px 0 ;
 }
 
 .jobLocation {
@@ -516,7 +523,7 @@ a {
 .jobTags {
   display: flex;
   gap: 10px;
-  margin: 10px 0;
+  margin-top: 10px;
 }
 
 .jobTag {
@@ -533,14 +540,15 @@ a {
   color: #525252;
   margin: 10px 0;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
 }
 
 .card-footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
+  margin-left: 70px
 }
 
 .more-details {
