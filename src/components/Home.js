@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "../stylesheets/Home.css";
-import axios from "axios";
-
 import linkedin from "../images/linkedin.png";
 import mostpopular from "../images/mostpopular.png";
 import trustpopular from "../images/trustpopular.png";
@@ -28,27 +26,13 @@ import { fetchtopskillandlocation } from "../services/apiService";
 
 import { MdOutlineLocationOn } from "react-icons/md";
 
-const BASE_URL = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
-
 const Home = () => {
   const navigate = useNavigate();
-
-  // const handleLocationClick = (location) => {
-  //   navigate(`/empfilter?location=${encodeURIComponent(location)}`);
-  //   window.scrollTo(0, 0);
-  // };
 
   const handleTechStackClick = (techStack) => {
     navigate(`/empfilter?expertTecStack=${encodeURIComponent(techStack)}`);
     window.scrollTo(0, 0);
   };
-
-  // const handleExpClick = (experienceInStack) => {
-  //   navigate(
-  //     `/empfilter?experienceInStack=${encodeURIComponent(experienceInStack)}`
-  //   );
-  //   window.scrollTo(0, 0);
-  // };
 
   const [searchInput, setSearchInput] = useState("");
   const [companies, setCompanies] = useState([]);
@@ -57,9 +41,6 @@ const Home = () => {
   const [techStacks, setTechStacks] = useState([]);
   const [statesList, setStatesList] = useState([]);
   const [loadingStates, setLoadingStates] = useState(true);
-  const [users, setUsers] = useState([]);
-  const [allJoiners, setAllJoiners] = useState([]);
-  const [loadingMore, setLoadingMore] = useState(false);
   const [topSkills, setTopSkills] = useState([]);
   const [topLocation, setTopLocation] = useState([]);
 
@@ -71,16 +52,12 @@ const Home = () => {
     }
   };
 
-
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/withOutLogin/getAllCompanyHomePage`
-        );
-        console.log("top 4 companies", response);
+        const response = await api.get("/withOutLogin/getAllCompanyHomePage");
         if (response.data.status === 200) {
-          setCompanies(response.data.result.slice(0, 4));
+          setCompanies(response?.data?.result.slice(0, 4));
         }
       } catch (error) {
         console.error("Error fetching companies:", error);
@@ -94,7 +71,6 @@ const Home = () => {
     api
       .get("/withOutLogin/active-limited-joiner")
       .then((res) => {
-        console.log("API Response:", res.data);
         if (res.data && res.data.userData) {
           setActiveJoiners(res.data.userData);
         } else {
@@ -123,25 +99,9 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    api
-      .get("/withOutLogin/get-state-list?countryCode=IN")
-      .then((res) => {
-        console.log("State List API Response:", res.data);
-        if (res.data && res.data.data) {
-          setStatesList(res.data.data);
-        } else {
-          setStatesList([]);
-        }
-      })
-      .catch((err) => console.error("Error fetching states list:", err))
-      .finally(() => setLoadingStates(false));
-  }, []);
-
-  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetchtopskillandlocation();
-        console.log("topSkill and Location", response);
         setTopSkills(response.topSkills);
         setTopLocation(response.topLocations);
       } catch (error) {
@@ -151,49 +111,6 @@ const Home = () => {
 
     fetchData();
   }, []);
-
-  console.log("TopSkills", topSkills);
-  console.log("TopLocation", topLocation)
-
-  const handleViewMore = () => {
-    setLoadingMore(true);
-    api
-      .get("api/withOutLogin/all-active-joiners")
-      .then((res) => {
-        console.log("All Joiners API Response:", res.data);
-        if (res.data && res.data.userData) {
-          setAllJoiners(res.data.userData);
-        } else {
-          setAllJoiners([]);
-        }
-      })
-      .catch((err) => console.error("Error fetching joiners:", err))
-      .finally(() => setLoadingMore(false));
-  };
-
-  useEffect(() => {
-    axios
-      .post("https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com/api/userFilter")
-      .then((res) => {
-        const data = res.data;
-        console.log("filter data", data);
-        if (data.status === 200) {
-          setUsers(data.result.slice(0, 4));
-        }
-      })
-      .catch((err) => console.error("API Error:", err));
-  }, []);
-
-  const filterByExperience = (min, max) => {
-    const filteredUsers = users.filter((user) => {
-      const exp = user.activeJoiners;
-      return max ? exp >= min && exp < max : exp > min;
-    });
-    console.log(
-      `Users with ${min}-${max ? max : "above"} years of experience:`,
-      filteredUsers
-    );
-  };
 
   const noticePeriodLabel = (value) => {
     switch (value) {
@@ -216,10 +133,6 @@ const Home = () => {
         return "Not specified";
     }
   };
-
-
-
-
 
   return (
     <>
@@ -247,55 +160,6 @@ const Home = () => {
             </div>
           </form>
 
-          {/* <div className="category-tags">
-          <button>
-            <img src={remote1} style={{
-              backgroundColor: "white",
-              borderRadius: "50%",
-              width: "28px",
-              height: "28px",
-              padding: "5px"
-            }} alt="remote" />
-            <span class="button-text">Remote</span>
-            <img src={next} alt="Next" />
-          </button>
-          <button>
-            <img src={mnc} alt="mnc" />
-            <span class="button-text">MNC</span>
-            <img src={next} alt="Next" />
-          </button>
-          <button>
-            <img src={sales} />
-            <span class="button-text">Sales</span>
-            <img src={next} alt="Next" />
-          </button>
-          <button>
-            <img src={project} />
-            <span class="button-text">Project Management</span>
-            <img src={next} alt="Next" />
-          </button>
-          <button>
-            <img src={development} />
-            <span class="button-text">Development</span>
-            <img src={next} alt="Next" />
-          </button>
-          <button>
-            <img src={data} />
-            <span class="button-text">Data Operator</span>
-            <img src={next} alt="Next" />
-          </button>
-          <button>
-            <img src={intership} />
-            <span class="button-text">Internship</span>
-            <img src={next} alt="Next" />
-          </button>
-          <button>
-            <img src={analytic} />
-            <span class="button-text">Analytics</span>
-            <img src={next} alt="Next" />
-          </button>
-        </div> */}
-
           <div className="category-tags">
             {[
               { img: remote1, label: "Remote" },
@@ -308,23 +172,26 @@ const Home = () => {
               { img: analytic, label: "Analytics" },
             ].map(({ img, label }) => (
               <button key={label} onClick={() => handleTechStackClick(label)}>
-                <img src={img} alt={label} style={
-                  label === "Remote"
-                    ? {
-                      backgroundColor: "white",
-                      borderRadius: "50%",
-                      width: "28px",
-                      height: "28px",
-                      padding: "5px",
-                    }
-                    : {}
-                } />
+                <img
+                  src={img}
+                  alt={label}
+                  style={
+                    label === "Remote"
+                      ? {
+                          backgroundColor: "white",
+                          borderRadius: "50%",
+                          width: "28px",
+                          height: "28px",
+                          padding: "5px",
+                        }
+                      : {}
+                  }
+                />
                 <span className="button-text">{label}</span>
                 <img src={next} alt="Next" />
               </button>
             ))}
           </div>
-
         </div>
       </div>
 
@@ -402,29 +269,41 @@ const Home = () => {
         </div>
 
         <div className="candidate-grid-exact">
-          {users.map((candidate) => (
+          {activeJoiners.map((candidate) => (
             <div className="candidate-card-exact" key={candidate._id}>
               <div className="candidate-header-exact">
-                <img src={candidate.image || "https://img.freepik.com/free-photo/asian-woman-posing-looking-camera_23-2148255359.jpg"}
-                  alt={`${candidate.name}'s profile`} />
+                <img
+                  src={
+                    candidate.image ||
+                    "https://img.freepik.com/free-photo/asian-woman-posing-looking-camera_23-2148255359.jpg"
+                  }
+                  alt={`${candidate.name}'s profile`}
+                />
                 <div className="candidate-details-exact">
                   <h3 className="candidate-name-exact">{candidate.name}</h3>
                   <p className="candidate-position-exact">
                     {candidate.currentPosition}
                   </p>
-                  <p className="candidate-company-exact">{candidate.currentCompanyName}</p>
+                  <p className="candidate-company-exact">
+                    {candidate.company_Name}
+                  </p>
                 </div>
               </div>
 
-              <p className="job-description-exact"> {(() => {
-                const words = candidate.about ? candidate.about.split(" ") : [];
-                if (words.length <= 10) return candidate.about;
-                return words.slice(0, 10).join(" ") + " ...";
-              })() || "We are looking for someone with experience using AI software to create realistic product photos."}</p>
+              <p className="job-description-exact">
+                {" "}
+                {(() => {
+                  const words = candidate.about
+                    ? candidate.about.split(" ")
+                    : [];
+                  if (words.length <= 10) return candidate.about;
+                  return words.slice(0, 10).join(" ") + " ...";
+                })() ||
+                  "We are looking for someone with experience using AI software to create realistic product photos."}
+              </p>
 
               <div className="location-options-exact">
-
-                <div className="location-option-exact" >
+                <div className="location-option-exact">
                   <div className="location-left">
                     <MdOutlineLocationOn
                       style={{ color: "#1783D0", fontSize: "1.6rem" }}
@@ -438,15 +317,16 @@ const Home = () => {
                         style={{ color: "#1783D0", fontSize: "1.6rem" }}
                       />
                       <span>
-                        {noticePeriodLabel(candidate.noticePeriod) === "Immediate"
+                        {noticePeriodLabel(candidate.noticePeriod) ===
+                        "Immediate"
                           ? "Immediate"
-                          : `${noticePeriodLabel(candidate.noticePeriod)} Days N.P`}
+                          : `${noticePeriodLabel(
+                              candidate.noticePeriod
+                            )} Days N.P`}
                       </span>
-
                     </div>
                   )}
                 </div>
-
               </div>
               {candidate.skillName.length > 0 && (
                 <div className="skills-container-exact">
@@ -464,7 +344,6 @@ const Home = () => {
               >
                 View Profile
               </button>
-
             </div>
           ))}
         </div>
@@ -496,7 +375,10 @@ const Home = () => {
           {companies.map((company) => (
             <div className="company-card-exact" key={company._id}>
               <div className="company-header-exact">
-                <img src={company.logo || linkedin} alt={`${company.companyName} logo`} />
+                <img
+                  src={company.logo || linkedin}
+                  alt={`${company.companyName} logo`}
+                />
                 <div className="company-info-exact">
                   <h3 className="company-name-exact">{company?.companyName}</h3>
                   <p className="company-rating-exact">
@@ -504,7 +386,10 @@ const Home = () => {
                   </p>
                 </div>
               </div>
-              <p className="company-description-exact">{company?.description || "Innovating AI solutions for the future."}</p>
+              <p className="company-description-exact">
+                {company?.description ||
+                  "Innovating AI solutions for the future."}
+              </p>
               <div className="company-tags-exact">
                 {company?.tags?.map((tag, index) => (
                   <span key={index} className="company-tag">
@@ -512,15 +397,24 @@ const Home = () => {
                   </span>
                 ))}
               </div>
-              <button className="view-details-btn-exact" onClick={() => navigate(`/companies/${company._id}`)}>View Details</button>
+              <button
+                className="view-details-btn-exact"
+                onClick={() => navigate(`/companies/${company._id}`)}
+              >
+                View Details
+              </button>
             </div>
           ))}
         </div>
 
-        <button className="view-all-btn-exact"
+        <button
+          className="view-all-btn-exact"
           onClick={() => {
             window.location.href = "/Compfilter";
-          }}>View all Company</button>
+          }}
+        >
+          View all Company
+        </button>
       </div>
 
       <section className="hero-sections">
@@ -539,8 +433,18 @@ const Home = () => {
             business website. Search and find jobs today!
           </p>
           <div className="hero-buttons">
-            <button className="btn-outline" onClick={() => window.location.href = "/signin?role=candidate"}>Join as Jobseeker</button>
-            <button className="btn-filled" onClick={() => window.location.href = "/signin?role=company"}>Join as Company</button>
+            <button
+              className="btn-outline"
+              onClick={() => (window.location.href = "/signin?role=candidate")}
+            >
+              Join as Jobseeker
+            </button>
+            <button
+              className="btn-filled"
+              onClick={() => (window.location.href = "/signin?role=company")}
+            >
+              Join as Company
+            </button>
           </div>
         </div>
       </section>
@@ -550,7 +454,6 @@ const Home = () => {
         <h1 className="section-title oswald">
           Popular <span className="highlight">Role</span>
         </h1>
-
 
         <div className="role-grid">
           {topSkills.map((role, index) => (
@@ -563,9 +466,12 @@ const Home = () => {
             </div>
           ))}
         </div>
-        <div className="role-grid" style={{
-          marginTop: "10px"
-        }}>
+        <div
+          className="role-grid"
+          style={{
+            marginTop: "10px",
+          }}
+        >
           {topLocation.map((role, index) => (
             <div className="role-card" key={index}>
               <img src={role.icon || counseller} alt={role.location} />
@@ -576,7 +482,6 @@ const Home = () => {
             </div>
           ))}
         </div>
-
       </div>
 
       <div className="why-popular">
@@ -595,18 +500,25 @@ const Home = () => {
               .fill(0)
               .map((_, i) => (
                 <div className="popular-item" key={i}>
-                  <img
-                    src={topcompanies}
-                    alt="Icon"
-                  />
+                  <img src={topcompanies} alt="Icon" />
                   <span>Top Companies</span>
                 </div>
               ))}
           </div>
 
           <div className="popular-buttons">
-            <button className="btn-outline" onClick={() => window.location.href = "/signin?role=candidate"}>Join as Jobseeker</button>
-            <button className="btn-primary" onClick={() => window.location.href = "/signin?role=company"}>Join as Company</button>
+            <button
+              className="btn-outline"
+              onClick={() => (window.location.href = "/signin?role=candidate")}
+            >
+              Join as Jobseeker
+            </button>
+            <button
+              className="btn-primary"
+              onClick={() => (window.location.href = "/signin?role=company")}
+            >
+              Join as Company
+            </button>
           </div>
         </div>
 
@@ -635,8 +547,6 @@ const Home = () => {
           <button className="job-hunting-button">Subscribe</button>
         </div>
       </div>
-
-
     </>
   );
 };
