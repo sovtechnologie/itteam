@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { useNavigate, useParams } from "react-router-dom";
@@ -21,11 +20,7 @@ import Course from "../../images/Profile/Course.png";
 import resumelogo from "../../images/resumelogo.png";
 import { fetchProjects } from "../../services/apiService";
 
-
-
-
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
-
 
 // Dummy Education Data
 const dummyEducationData = [
@@ -36,13 +31,11 @@ const dummyEducationData = [
     degree: "Diploma of Education ・ Computer Engineering",
     location: "Surat, Gujarat, India",
     duration: "Mar 2020 – Aug 2023",
-    grade: "Grade A+"
-  }
+    grade: "Grade A+",
+  },
 ];
 
-
 const EmpProfPage = () => {
-
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const authToken = Cookies.get("authToken"); // Get token from cookies
@@ -53,16 +46,16 @@ const EmpProfPage = () => {
 
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [formData, setFormData] = useState({
-    name: "Sayali Sarkar",
-    designation: "JS Developer",
-    company: "Arnnima Solution",
+    name: "",
+    designation: "",
+    company: "",
     state: "",
-    location: "Ghaziabad",
-    experience: "2 Year Exp",
-    salary: "2000000 /-Year",
-    notice: "20 Days (Notice period)",
-    phone: "+91 939387736",
-    email: "mnmnsjjn@gmail.com",
+    location: "",
+    experience: "",
+    salary: "",
+    notice: "",
+    phone: "",
+    email: "",
     profileImg: Profile,
   });
 
@@ -108,8 +101,6 @@ const EmpProfPage = () => {
     }
   };
 
-
-
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
 
@@ -127,19 +118,15 @@ const EmpProfPage = () => {
     }
   };
 
-
-
-
   const [isAboutEditOpen, setIsAboutEditOpen] = useState(false);
   const [aboutText, setAboutText] = useState(userData?.about || "");
   const [aboutInput, setAboutInput] = useState(aboutText);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [resumeFile, setResumeFile] = useState(null);     // holds File object or file name
-  const [resumeURL, setResumeURL] = useState("");         // for full backend resume URL
-  const [newResume, setNewResume] = useState(null);       // File for new upload
-
+  const [resumeFile, setResumeFile] = useState(null); // holds File object or file name
+  const [resumeURL, setResumeURL] = useState(""); // for full backend resume URL
+  const [newResume, setNewResume] = useState(null); // File for new upload
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -149,10 +136,6 @@ const EmpProfPage = () => {
       setResumeURL(URL.createObjectURL(file)); // Temporary preview
     }
   };
-
-
-
-
 
   // HANDLE upload to backend
   const handleUpload = async () => {
@@ -169,7 +152,7 @@ const EmpProfPage = () => {
           Authorization: `Bearer ${authToken}`,
         },
       });
-      console.log("status after upload resume", res.data.status)
+      console.log("status after upload resume", res.data.status);
       // const data = await res.json();
 
       if (res.data.status === 200) {
@@ -183,7 +166,6 @@ const EmpProfPage = () => {
       setError(error.response?.data?.message || "Error uploading resume.");
     }
   };
-
 
   const [isSkillModalOpen, setIsSkillModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -216,10 +198,7 @@ const EmpProfPage = () => {
       !selectedSkills.find((s) => s.tecStackName === skill.tecStackName)
   );
 
-
-
   const handleAddSkill = async (skill) => {
-
     if (!authToken || !userId) {
       setError("Authentication failed. Please login again.");
       return;
@@ -231,7 +210,8 @@ const EmpProfPage = () => {
         s.tecStackName &&
         skill.tecStackName &&
         s.tecStackName.toLowerCase() === skill.tecStackName.toLowerCase() &&
-        ((s.id && skill.id && s.id === skill.id) || (s._id && skill._id && s._id === skill._id))
+        ((s.id && skill.id && s.id === skill.id) ||
+          (s._id && skill._id && s._id === skill._id))
     );
     if (alreadyExists) return;
 
@@ -266,7 +246,8 @@ const EmpProfPage = () => {
       ) {
         const newSkill = {
           tecStackName: response.data.result.skillsName,
-          techStacklogo: response.data.result.skillLogo || response.data.result.skilllogo, // handle both cases
+          techStacklogo:
+            response.data.result.skillLogo || response.data.result.skilllogo, // handle both cases
           _id: response.data.result.techStackId, // ✅ Include the _id here
         };
 
@@ -277,12 +258,11 @@ const EmpProfPage = () => {
       }
     } catch (error) {
       setError(
-        error.response?.data?.message || "Something went wrong while adding skill."
+        error.response?.data?.message ||
+          "Something went wrong while adding skill."
       );
     }
   };
-
-
 
   const handleRemoveSkill = async (tecStackName, _id) => {
     if (!authToken || !userId) {
@@ -297,7 +277,7 @@ const EmpProfPage = () => {
         {
           userId,
           skillsName: tecStackName, // or skill ID, depending on how backend identifies it
-          skillId: _id
+          skillId: _id,
         },
         {
           headers: {
@@ -309,7 +289,9 @@ const EmpProfPage = () => {
 
       if (response.data.status === 200) {
         // Remove from local UI
-        const updated = selectedSkills.filter(skill => skill.tecStackName !== tecStackName);
+        const updated = selectedSkills.filter(
+          (skill) => skill.tecStackName !== tecStackName
+        );
         setSelectedSkills(updated);
         setSuccess("Skill removed successfully.");
       } else {
@@ -317,11 +299,11 @@ const EmpProfPage = () => {
       }
     } catch (error) {
       setError(
-        error.response?.data?.message || "Something went wrong while removing the skill."
+        error.response?.data?.message ||
+          "Something went wrong while removing the skill."
       );
     }
   };
-
 
   const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
@@ -333,7 +315,7 @@ const EmpProfPage = () => {
     endDate: "",
     location: "",
     description: "",
-    isCurrentEmployment: "false"
+    isCurrentEmployment: "false",
   });
 
   const handleOpenModal = (index = null, _id = null) => {
@@ -348,7 +330,7 @@ const EmpProfPage = () => {
         endDate: "",
         location: "",
         description: "",
-        isCurrentEmployment: "false"
+        isCurrentEmployment: "false",
       });
       setEditingIndex(null);
     }
@@ -356,7 +338,6 @@ const EmpProfPage = () => {
   };
 
   const saveEmployment = async (userId, jobData, isEdit) => {
-
     const url = isEdit
       ? `${baseUrl}/api/editWorkExprience`
       : `${baseUrl}/api/addExperience`;
@@ -368,9 +349,9 @@ const EmpProfPage = () => {
           userId,
           ...(isEdit
             ? {
-              _id: jobData._id,
-              ...jobData,
-            }
+                _id: jobData._id,
+                ...jobData,
+              }
             : { ...jobData }),
         },
         {
@@ -388,9 +369,9 @@ const EmpProfPage = () => {
     }
   };
 
-
   const handleSave = async () => {
-    const { company_Name, title, startDate, endDate, location, description } = newJob;
+    const { company_Name, title, startDate, endDate, location, description } =
+      newJob;
 
     // if (
     //   !company_Name?.trim() ||
@@ -413,10 +394,13 @@ const EmpProfPage = () => {
     }
 
     // Optimistically update local state first
-    const response = await saveEmployment(userId, newJob, editingIndex !== null);
+    const response = await saveEmployment(
+      userId,
+      newJob,
+      editingIndex !== null
+    );
 
     if (response && response.data && response.data.status === 200) {
-
       const savedExperience = response.data.result;
       let updatedList;
       if (editingIndex !== null) {
@@ -424,7 +408,6 @@ const EmpProfPage = () => {
         updatedList[editingIndex] = savedExperience;
       } else {
         updatedList = [...employmentList, savedExperience];
-
       }
       setEmploymentList(updatedList);
     }
@@ -432,9 +415,7 @@ const EmpProfPage = () => {
     setEditingIndex(null);
   };
 
-
   const handleDeleteExperience = async (job_id) => {
-
     try {
       const response = await axios.post(
         `${baseUrl}/api/deletedExperience`,
@@ -448,7 +429,6 @@ const EmpProfPage = () => {
           },
         }
       );
-
 
       if (response.data.status === 200) {
         // Remove the deleted job from the local state
@@ -464,8 +444,6 @@ const EmpProfPage = () => {
     }
   };
 
-
-
   const [educationList, setEducationList] = useState(dummyEducationData);
   const [isEduModalOpen, setIsEduModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -477,7 +455,6 @@ const EmpProfPage = () => {
     startDate: "",
     endDate: "",
     grade: "",
-
   });
 
   const addEducation = async (education) => {
@@ -519,7 +496,6 @@ const EmpProfPage = () => {
         }
       );
 
-      ;
       // Always return the updated education object
       console.log("edit education", response.data.res);
       return response.data && response.data.res ? response.data.res : null;
@@ -529,32 +505,30 @@ const EmpProfPage = () => {
     }
   };
 
-
-
-
-
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setNewEducation(prev => ({ ...prev, logo: file }));
+      setNewEducation((prev) => ({ ...prev, logo: file }));
     }
   };
 
   const handleDeleteEducation = async (id) => {
     try {
-      const res = await axios.post(`${baseUrl}/api/deletedEducation`, {
-        id: id, // ✅ request body
-      },
+      const res = await axios.post(
+        `${baseUrl}/api/deletedEducation`,
+        {
+          id: id, // ✅ request body
+        },
         {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${authToken}`, // ✅ token in correct place
           },
-        });
+        }
+      );
 
       if (res.data.status === 200) {
-        setEducationList(prev => prev.filter(edu => edu._id !== id));
-
+        setEducationList((prev) => prev.filter((edu) => edu._id !== id));
       } else {
         alert("Failed to delete education.");
       }
@@ -563,7 +537,6 @@ const EmpProfPage = () => {
       alert("Error deleting education.");
     }
   };
-
 
   const handleEditClick = (edu) => {
     setNewEducation(edu);
@@ -593,7 +566,15 @@ const EmpProfPage = () => {
       });
       setEditIndex(index);
     } else {
-      setFormProjectData({ title: "", startDate: "", endDate: "", associated: "", ProjectDescription: "", image: "", file: null });
+      setFormProjectData({
+        title: "",
+        startDate: "",
+        endDate: "",
+        associated: "",
+        ProjectDescription: "",
+        image: "",
+        file: null,
+      });
       setEditIndex(null);
     }
     setShowModal(true);
@@ -607,12 +588,12 @@ const EmpProfPage = () => {
         projectPayload._id = projects[editIndex]._id;
         const res = await editProject(projectPayload);
         // const updated = res.data.res;
-        const updated = await fetchProjects({ authToken })
+        const updated = await fetchProjects({ authToken });
 
-        setProjects(updated || []); // Update projects with the latest data    
+        setProjects(updated || []); // Update projects with the latest data
       } else {
         const res = await addProject(projectPayload);
-        const projectsData = await fetchProjects({ authToken })
+        const projectsData = await fetchProjects({ authToken });
         console.log("res", await fetchProjects({ authToken }));
         setProjects(projectsData || []);
       }
@@ -633,7 +614,6 @@ const EmpProfPage = () => {
       alert("Error submitting project.");
     }
   };
-
 
   const addProject = async (projectData) => {
     console.log("Adding project:", projectData);
@@ -657,26 +637,26 @@ const EmpProfPage = () => {
     });
   };
 
-
   const editProject = async (projectData) => {
-    return await axios.put(`${baseUrl}/api/editProjects`, {
-      id: projectData._id, // backend expects 'id'
-      title: projectData.title,
-      startDate: projectData.startDate,
-      associated: projectData.associated,
-      projectDescription: projectData.projectDescription,
-    }, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-        "Content-Type": "application/json",
+    return await axios.put(
+      `${baseUrl}/api/editProjects`,
+      {
+        id: projectData._id, // backend expects 'id'
+        title: projectData.title,
+        startDate: projectData.startDate,
+        associated: projectData.associated,
+        projectDescription: projectData.projectDescription,
       },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
   };
 
-
-
   const handleDeleteProject = async (projectId) => {
-
     try {
       const response = await axios.post(
         `${baseUrl}/api/deleteProject`,
@@ -694,12 +674,11 @@ const EmpProfPage = () => {
       } else {
         alert(response.data.message || "Failed to delete project.");
       }
-      setShowModal(false)
+      setShowModal(false);
     } catch (error) {
       alert(error.response?.data?.message || "Error deleting project.");
     }
   };
-
 
   const [certifications, setCertifications] = useState([
     {
@@ -723,7 +702,7 @@ const EmpProfPage = () => {
     issuer: "",
     issuedDate: "",
     image: Course,
-    credentialUrl: '',
+    credentialUrl: "",
   });
 
   const handleAddEditLicensesClick = (cert = null, index = null) => {
@@ -739,7 +718,13 @@ const EmpProfPage = () => {
       });
       setEditIndexLicenses(index);
     } else {
-      setFormLicensesData({ title: "", issuer: "", issuedDate: "", image: Course, credentialUrl: "", });
+      setFormLicensesData({
+        title: "",
+        issuer: "",
+        issuedDate: "",
+        image: Course,
+        credentialUrl: "",
+      });
       setEditIndexLicenses(null);
     }
     setShowLicensesModal(true);
@@ -811,10 +796,11 @@ const EmpProfPage = () => {
       setShowLicensesModal(false);
       setEditIndexLicenses(null);
     } catch (error) {
-      alert(error.response?.data?.message || "Error saving license/certification.");
+      alert(
+        error.response?.data?.message || "Error saving license/certification."
+      );
     }
   };
-
 
   const handleDeleteLicenses = async (certId) => {
     try {
@@ -838,7 +824,7 @@ const EmpProfPage = () => {
     } catch (error) {
       alert(error.response?.data?.message || "Error deleting certification.");
     }
-  }
+  };
 
   useEffect(() => {
     if (!authToken || !userId) {
@@ -848,7 +834,6 @@ const EmpProfPage = () => {
 
     const fetchUserData = async () => {
       try {
-
         const response = await axios.post(
           `${baseUrl}/api/getAllUserDetails`,
           { userId: userId },
@@ -859,8 +844,6 @@ const EmpProfPage = () => {
             },
           }
         );
-
-
 
         if (response.data.status === 200 && response.data.result.length > 0) {
           const userData = response.data.result[0];
@@ -897,7 +880,7 @@ const EmpProfPage = () => {
   const [selectedStateCode, setSelectedStateCode] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [statesList, setStatesList] = useState([]);
-  const [citiesList, setCitiesList] = useState([])
+  const [citiesList, setCitiesList] = useState([]);
 
   const experienceLabel = (value) => {
     switch (value) {
@@ -943,27 +926,28 @@ const EmpProfPage = () => {
   useEffect(() => {
     if (userData) {
       setFormData({
-        name: userData.name || "Anjali Sharma",
-        designation: userData.currentPosition || "JS Developer",
-        company: userData.currentCompany || "Arnnima Solution",
-        location: userData.location || "Ghaziabad",
-        state: userData.state || "",
-        experience: userData.experienceInStack ? String(userData.experienceInStack) : "",
-        salary: userData.salary ? `${userData.salary} /-Year` : "2000000 /-Year",
+        name: userData.name,
+        designation: userData.currentPosition,
+        company: userData.company_Name,
+        location: userData.location,
+        state: userData.state,
+        experience: userData.experienceInStack
+          ? String(userData.experienceInStack)
+          : "",
+        salary: userData.salary ? `${userData.salary} /-Year` : "",
         notice: userData.noticePeriod ? String(userData.noticePeriod) : "",
-        phone: userData.mobileNumber ? `+91 ${userData.mobileNumber}` : "+91 939387736",
-        email: userData.email || "xyz@gmail.com",
+        phone: userData.mobileNumber ? `+91 ${userData.mobileNumber}` : "",
+        email: userData.email,
         profileImg: userData.image || Profile,
       });
-
 
       // Optional: Set other related states
       setAboutText(userData.about || "");
       setSelectedSkills(
-        (userData.skillmodels || []).map(skill => ({
+        (userData.skillmodels || []).map((skill) => ({
           tecStackName: skill.skillsName,
           techStacklogo: skill.skillLogo,
-          _id: skill._id
+          _id: skill._id,
         }))
       );
       setEmploymentList(userData.workExperiences || []);
@@ -972,38 +956,40 @@ const EmpProfPage = () => {
       setCertifications(userData.lic_certis || []);
       setResumeFile(userData.resume.split("/").pop());
       setResumeURL(userData.resume);
-
     }
   }, [userData]);
 
-
   useEffect(() => {
-    axios.get(`${baseUrl}/withOutLogin/get-state-list`, {
-      params: { countryCode: "IN" },
-    }).then((response) => {
-      if (response.data && response.data.data) {
-        setStatesList(response.data.data);
-        console.log("States List:", response.data.data);
-      }
-    }).catch((error) => console.error("Error fetching states:", error));
+    axios
+      .get(`${baseUrl}/withOutLogin/get-state-list`, {
+        params: { countryCode: "IN" },
+      })
+      .then((response) => {
+        if (response.data && response.data.data) {
+          setStatesList(response.data.data);
+          console.log("States List:", response.data.data);
+        }
+      })
+      .catch((error) => console.error("Error fetching states:", error));
   }, []);
 
   useEffect(() => {
     if (selectedStateCode) {
-      axios.post(`${baseUrl}/withoutLogin/getCityList`, {
-        stateName: selectedStateCode, // Use selectedState directly if it's the state name
-        countryCode: "IN",
-      }).then((response) => {
-        if (response.data && response.data.result) {
-          setCitiesList(response.data.result);
-        }
-      }).catch((error) => console.error("Error fetching cities:", error));
+      axios
+        .post(`${baseUrl}/withoutLogin/getCityList`, {
+          stateName: selectedStateCode, // Use selectedState directly if it's the state name
+          countryCode: "IN",
+        })
+        .then((response) => {
+          if (response.data && response.data.result) {
+            setCitiesList(response.data.result);
+          }
+        })
+        .catch((error) => console.error("Error fetching cities:", error));
     } else {
       setCitiesList([]); // Clear cities if no state selected
     }
   }, [selectedStateCode]);
-
-
 
   useEffect(() => {
     if (isAboutEditOpen) {
@@ -1045,15 +1031,12 @@ const EmpProfPage = () => {
       }
     } catch (error) {
       setError(
-        error.response?.data?.message ||
-        "Something went wrong while updating."
+        error.response?.data?.message || "Something went wrong while updating."
       );
     } finally {
       setLoading(false);
     }
   };
-
-
 
   function formatDateRange(start, end) {
     if (!start) return "";
@@ -1078,7 +1061,6 @@ const EmpProfPage = () => {
     });
   };
 
-
   if (loading) {
     return <h2>Loading...</h2>;
   }
@@ -1089,15 +1071,9 @@ const EmpProfPage = () => {
 
   return (
     <>
-
-
-
       <div className="empprofile-card">
         <div className="profileCard-box">
-
-
           <div className="profile-secOne">
-
             {/* Profile section */}
             <div className="profileCardHead">
               <img src={formData.profileImg || Profile} alt="Profile" />
@@ -1113,9 +1089,9 @@ const EmpProfPage = () => {
                     <button className="action-btn" onClick={handleEditToggle}>
                       <MdOutlineEdit size={30} />
                     </button>
-                    <button className="action-btn">
+                    {/* <button className="action-btn">
                       <FiShare2 size={30} />
-                    </button>
+                    </button> */}
                   </div>
                 </div>
 
@@ -1124,7 +1100,9 @@ const EmpProfPage = () => {
                     <div className="personalInfo-colOne">
                       <div className="colOne-details">
                         <FaLocationDot size={20} />
-                      <p>{formData.location}, {formData.state}</p>
+                        <p>
+                          {formData.location},{formData.state}
+                        </p>
                       </div>
                       <div className="colOne-details">
                         <FaLaptopCode size={25} />
@@ -1160,19 +1138,23 @@ const EmpProfPage = () => {
                 <div className="edit-modal-horizontal">
                   <h3>Edit Profile</h3>
                   {formData.profileImg && (
-                    <div style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginTop: "15px"
-                    }}>
-                      <div style={{
-                        borderRadius: "12px",
-                        padding: "10px",
-                        backgroundColor: "#fff",
-                        maxWidth: "100%",
-                        textAlign: "center"
-                      }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: "15px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          borderRadius: "12px",
+                          padding: "10px",
+                          backgroundColor: "#fff",
+                          maxWidth: "100%",
+                          textAlign: "center",
+                        }}
+                      >
                         <img
                           src={formData.profileImg}
                           alt="Preview"
@@ -1181,17 +1163,20 @@ const EmpProfPage = () => {
                             height: "100px",
                             borderRadius: "50%",
                             objectFit: "cover",
-                            transition: "transform 0.3s ease"
+                            transition: "transform 0.3s ease",
                           }}
-                          onMouseOver={e => e.currentTarget.style.transform = "scale(1.05)"}
-                          onMouseOut={e => e.currentTarget.style.transform = "scale(1)"}
+                          onMouseOver={(e) =>
+                            (e.currentTarget.style.transform = "scale(1.05)")
+                          }
+                          onMouseOut={(e) =>
+                            (e.currentTarget.style.transform = "scale(1)")
+                          }
                         />
                       </div>
                     </div>
                   )}
 
                   <div className="form-grid">
-
                     <input
                       name="name"
                       placeholder="Full Name"
@@ -1204,12 +1189,12 @@ const EmpProfPage = () => {
                       value={formData.designation}
                       onChange={handleInputChange}
                     />
-                    <input
+                    {/* <input
                       name="company"
                       placeholder="Company"
                       value={formData.company}
                       onChange={handleInputChange}
-                    />
+                    /> */}
                     <input
                       name="email"
                       placeholder="Email"
@@ -1218,24 +1203,28 @@ const EmpProfPage = () => {
                     />
 
                     <div className="signUpform-group">
-                      
                       <select
                         name="state"
                         value={formData.state || ""}
-                        onChange={e => {
+                        onChange={(e) => {
                           const selected = statesList.find(
-                            state => (state.name || state) === e.target.value
+                            (state) => (state.name || state) === e.target.value
                           );
-                          setFormData(prev => ({ ...prev, state: e.target.value }));
+                          setFormData((prev) => ({
+                            ...prev,
+                            state: e.target.value,
+                          }));
                           setSelectedState(e.target.value);
-                          setSelectedStateCode(selected?.isoCode || "");// if you want to use for city dropdown
-
+                          setSelectedStateCode(selected?.isoCode || ""); // if you want to use for city dropdown
                         }}
                         className="form-select"
                       >
                         <option value="">Select State</option>
-                        {statesList.map(state => (
-                          <option key={state._id || state.id || state} value={state.name || state}>
+                        {statesList.map((state) => (
+                          <option
+                            key={state._id || state.id || state}
+                            value={state.name || state}
+                          >
                             {state.name || state}
                           </option>
                         ))}
@@ -1243,7 +1232,6 @@ const EmpProfPage = () => {
                     </div>
 
                     <div className="signUpform-group">
-                      
                       <select
                         name="location"
                         value={formData.location || ""}
@@ -1252,8 +1240,11 @@ const EmpProfPage = () => {
                         disabled={!selectedState}
                       >
                         <option value="">Select City</option>
-                        {citiesList.map(city => (
-                          <option key={city._id || city.id || city.name || city} value={city.name || city}>
+                        {citiesList.map((city) => (
+                          <option
+                            key={city._id || city.id || city.name || city}
+                            value={city.name || city}
+                          >
                             {city.name || city}
                           </option>
                         ))}
@@ -1308,32 +1299,34 @@ const EmpProfPage = () => {
                       // onChange={handleInputChange}
                       disabled="true"
                     />
-                    
+
                     <input
                       type="file"
                       name="profileImg"
                       onChange={handleInputChange}
                     />
-
                   </div>
                   <div className="modal-buttons">
-                    <button onClick={handleSaveProfileWithImage}>Save & Close</button>
-                    <button type="button" onClick={handleClose}>Cancel</button>
+                    <button onClick={handleSaveProfileWithImage}>
+                      Save & Close
+                    </button>
+                    <button type="button" onClick={handleClose}>
+                      Cancel
+                    </button>
                   </div>
                 </div>
               </div>
             )}
-
           </div>
 
           <div className="profile-secTwo">
             <div className="profile-contentBox">
-
               <div className="main-wrapper">
-
                 {/* siderbar Link section */}
                 <div className="quick-links">
-                  <div className="content-boxes-head"><h2>Quick Links</h2></div>
+                  <div className="content-boxes-head">
+                    <h2>Quick Links</h2>
+                  </div>
                   <ul>
                     <li>About Me </li>
                     <li>Resume </li>
@@ -1350,11 +1343,13 @@ const EmpProfPage = () => {
                 <div className="content-boxes">
                   <div className="content-boxes-head">
                     <h2>About Me</h2>
-                    <button className="aboutMe-editBtn" onClick={() => {
-                      setAboutInput(aboutText || "");
-                      setIsAboutEditOpen(true);
-
-                    }}>
+                    <button
+                      className="aboutMe-editBtn"
+                      onClick={() => {
+                        setAboutInput(aboutText || "");
+                        setIsAboutEditOpen(true);
+                      }}
+                    >
                       <FiPlus size={30} className="plus-icon" />
                     </button>
                   </div>
@@ -1363,10 +1358,10 @@ const EmpProfPage = () => {
                     <div>
                       <div>
                         <p>
-                          {aboutText || "No about me information available. Click the plus icon to add."}
+                          {aboutText ||
+                            "No about me information available. Click the plus icon to add."}
                         </p>
                       </div>
-
                     </div>
                   </div>
                   {/* Modal for AboutMe Editing */}
@@ -1386,7 +1381,10 @@ const EmpProfPage = () => {
                             {loading ? "Saving..." : "Save"}
                           </button>
                           <button
-                            style={{ backgroundColor: "#f44336", color: "white" }}
+                            style={{
+                              backgroundColor: "#f44336",
+                              color: "white",
+                            }}
                             onClick={() => setIsAboutEditOpen(false)}
                             disabled={loading}
                           >
@@ -1397,15 +1395,16 @@ const EmpProfPage = () => {
                     </div>
                   )}
                 </div>
-
-
               </div>
 
               {/* Resume section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Upload Resume</h2>
-                  <button className="aboutMe-editBtn" onClick={() => setIsModalOpen(true)}>
+                  <button
+                    className="aboutMe-editBtn"
+                    onClick={() => setIsModalOpen(true)}
+                  >
                     <FiPlus size={30} className="plus-icon" />
                   </button>
                 </div>
@@ -1418,8 +1417,15 @@ const EmpProfPage = () => {
                     </div>
                   ) : (
                     <div className="resume-info">
-                      <p><strong>Uploaded:</strong> {resumeFile}</p>
-                      <a href={resumeURL} target="_blank" rel="noopener noreferrer" className="resume-link">
+                      <p>
+                        <strong>Uploaded:</strong> {resumeFile}
+                      </p>
+                      <a
+                        href={resumeURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="resume-link"
+                      >
                         View / Download Resume
                       </a>
                     </div>
@@ -1430,24 +1436,33 @@ const EmpProfPage = () => {
                   <div className="modal-overlay">
                     <div className="modal-box">
                       <h3>Select Resume</h3>
-                      <input type="file" accept=".pdf,.doc,.docx" onChange={handleFileChange} />
+                      <input
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        onChange={handleFileChange}
+                      />
                       <div className="modal-buttons">
                         <button onClick={handleUpload}>Upload</button>
-                        <button type="button" onClick={() => setIsModalOpen(false)}>Cancel</button>
+                        <button
+                          type="button"
+                          onClick={() => setIsModalOpen(false)}
+                        >
+                          Cancel
+                        </button>
                       </div>
                     </div>
                   </div>
                 )}
-
               </div>
-
-
 
               {/* Skills section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Key Skills</h2>
-                  <button className="aboutMe-editBtn" onClick={() => setIsSkillModalOpen(true)}>
+                  <button
+                    className="aboutMe-editBtn"
+                    onClick={() => setIsSkillModalOpen(true)}
+                  >
                     <FiPlus size={30} className="plus-icon" />
                   </button>
                 </div>
@@ -1456,11 +1471,17 @@ const EmpProfPage = () => {
                   <div className="skillsbox-card">
                     {selectedSkills.map((skill, index) => (
                       <div className="skill-badge" key={index}>
-                        <span className="skill-icon"><img
-                          src={skill.techStacklogo}
-                          // alt={skill.tecStackName}
-                          style={{ width: "20px", height: "20px", marginRight: "8px" }}
-                        /></span>
+                        <span className="skill-icon">
+                          <img
+                            src={skill.techStacklogo}
+                            // alt={skill.tecStackName}
+                            style={{
+                              width: "20px",
+                              height: "20px",
+                              marginRight: "8px",
+                            }}
+                          />
+                        </span>
                         <span>{skill.tecStackName}</span>
                       </div>
                     ))}
@@ -1483,13 +1504,23 @@ const EmpProfPage = () => {
                       <div className="selected-skills">
                         {selectedSkills.map((skill, i) => (
                           <div key={i} className="selected-skill">
-                            <span className="skill-icon"><img
-                              src={skill.techStacklogo}
-                              alt={skill.tecStackName}
-                              style={{ width: "20px", height: "20px", marginRight: "8px" }}
-                            /></span>
+                            <span className="skill-icon">
+                              <img
+                                src={skill.techStacklogo}
+                                alt={skill.tecStackName}
+                                style={{
+                                  width: "20px",
+                                  height: "20px",
+                                  marginRight: "8px",
+                                }}
+                              />
+                            </span>
                             {skill.tecStackName}
-                            <FiX onClick={() => handleRemoveSkill(skill.tecStackName, skill._id)} />
+                            <FiX
+                              onClick={() =>
+                                handleRemoveSkill(skill.tecStackName, skill._id)
+                              }
+                            />
                           </div>
                         ))}
                       </div>
@@ -1501,41 +1532,61 @@ const EmpProfPage = () => {
                             className="skill-option"
                             onClick={() => handleAddSkill(skill)}
                           >
-                            <span className="skill-icon"><img
-                              src={skill.techStacklogo}
-                              alt={skill.tecStackName}
-                              style={{ width: "20px", height: "20px", marginRight: "8px" }}
-                            /></span>
+                            <span className="skill-icon">
+                              <img
+                                src={skill.techStacklogo}
+                                alt={skill.tecStackName}
+                                style={{
+                                  width: "20px",
+                                  height: "20px",
+                                  marginRight: "8px",
+                                }}
+                              />
+                            </span>
                             {skill.tecStackName}
                           </div>
                         ))}
                       </div>
 
                       <div className="modal-buttons">
-                        <button onClick={() => setIsSkillModalOpen(false)}>Done</button>
-                        <button type="button" onClick={() => setIsSkillModalOpen(false)}>Cancel</button>
+                        <button onClick={() => setIsSkillModalOpen(false)}>
+                          Done
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setIsSkillModalOpen(false)}
+                        >
+                          Cancel
+                        </button>
                       </div>
                     </div>
                   </div>
                 )}
               </div>
 
-
               {/* Experience section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Employment</h2>
-                  <button className="aboutMe-editBtn" onClick={() => handleOpenModal()}>
+                  <button
+                    className="aboutMe-editBtn"
+                    onClick={() => handleOpenModal()}
+                  >
                     <FiPlus size={30} className="plus-icon" />
                   </button>
                 </div>
                 <div className="exp-card-box-details">
                   <div className="employment-list">
                     {employmentList.map((job, index) => {
-                      const duration = formatDateRange(job?.startDate, job?.endDate);
+                      const duration = formatDateRange(
+                        job?.startDate,
+                        job?.endDate
+                      );
                       return (
                         <div className="employment-card" key={index}>
-                          <div className="employment-logo"><img src={Company} /></div>
+                          <div className="employment-logo">
+                            <img src={Company} />
+                          </div>
                           <div className="employment-content">
                             <div className="employment-header">
                               <h3>{job?.title}</h3>
@@ -1545,7 +1596,9 @@ const EmpProfPage = () => {
                               <div style={{ display: "flex", gap: "8px" }}>
                                 <button
                                   className="employee-editBtn"
-                                  onClick={() => handleOpenModal(job._id, index)}
+                                  onClick={() =>
+                                    handleOpenModal(job._id, index)
+                                  }
                                 >
                                   <MdOutlineEdit size={25} />
                                 </button>
@@ -1559,10 +1612,12 @@ const EmpProfPage = () => {
                             </div>
                             <p className="company-name">{job?.company_Name}</p>
                             <p className="company-add">{job?.location}</p>
-                            <p className="employment-description">{job?.description}</p>
+                            <p className="employment-description">
+                              {job?.description}
+                            </p>
                           </div>
                         </div>
-                      )
+                      );
                     })}
                   </div>
                 </div>
@@ -1570,7 +1625,11 @@ const EmpProfPage = () => {
                 {isExperienceModalOpen && (
                   <div className="modal-overlay">
                     <div className="modal-box">
-                      <h3>{editingIndex !== null ? "Edit Employment" : "Add New Employment"}</h3>
+                      <h3>
+                        {editingIndex !== null
+                          ? "Edit Employment"
+                          : "Add New Employment"}
+                      </h3>
                       {/* {newJob.companyLogo && (
                       <img src={newJob.companyLogo} alt="Preview" style={{ width: "10%", height: "auto", borderRadius: "8px", marginTop: "10px" }} />
                     )} */}
@@ -1592,70 +1651,93 @@ const EmpProfPage = () => {
                         type="text"
                         placeholder="Company Name"
                         value={newJob?.company_Name}
-                        onChange={(e) => setNewJob({ ...newJob, company_Name: e.target.value })}
+                        onChange={(e) =>
+                          setNewJob({ ...newJob, company_Name: e.target.value })
+                        }
                       />
                       <input
                         type="text"
                         placeholder="Position"
                         value={newJob?.title}
-                        onChange={(e) => setNewJob({ ...newJob, title: e.target.value })}
+                        onChange={(e) =>
+                          setNewJob({ ...newJob, title: e.target.value })
+                        }
                       />
                       <input
                         type="date"
                         placeholder="Enter a Start Date"
                         value={newJob?.JoiningDate}
-                        onChange={(e) => setNewJob({ ...newJob, JoiningDate: e.target.value })}
+                        onChange={(e) =>
+                          setNewJob({ ...newJob, JoiningDate: e.target.value })
+                        }
                       />
                       <input
                         type="date"
                         placeholder="Enter a End Date"
                         value={newJob?.endDate}
-                        onChange={(e) => setNewJob({ ...newJob, endDate: e.target.value })}
+                        onChange={(e) =>
+                          setNewJob({ ...newJob, endDate: e.target.value })
+                        }
                       />
                       <input
                         type="text"
                         placeholder="Location"
                         value={newJob?.location}
-                        onChange={(e) => setNewJob({ ...newJob, location: e.target.value })}
+                        onChange={(e) =>
+                          setNewJob({ ...newJob, location: e.target.value })
+                        }
                       />
                       <textarea
                         placeholder="Description"
                         rows={3}
                         value={newJob?.description}
-                        onChange={(e) => setNewJob({ ...newJob, description: e.target.value })}
+                        onChange={(e) =>
+                          setNewJob({ ...newJob, description: e.target.value })
+                        }
                       />
-
 
                       <div className="modal-buttons">
                         <button onClick={handleSave}>
                           {editingIndex !== null ? "Update" : "Add"}
                         </button>
-                        <button style={{ backgroundColor: "#333" }} onClick={() => setIsExperienceModalOpen(false)}>Cancel</button>
+                        <button
+                          style={{ backgroundColor: "#333" }}
+                          onClick={() => setIsExperienceModalOpen(false)}
+                        >
+                          Cancel
+                        </button>
                         {editingIndex !== null && (
-                          <button type="button" onClick={() => handleDeleteExperience(newJob._id)}>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteExperience(newJob._id)}
+                          >
                             Delete
                           </button>
                         )}
-
                       </div>
                     </div>
                   </div>
                 )}
               </div>
 
-
               {/* Education section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Education</h2>
-                  <button className="aboutMe-editBtn" onClick={() => setIsEduModalOpen(true)}>
+                  <button
+                    className="aboutMe-editBtn"
+                    onClick={() => setIsEduModalOpen(true)}
+                  >
                     <FiPlus size={30} className="plus-icon" />
                   </button>
                 </div>
 
                 <div className="education-cards">
                   {educationList.map((edu) => {
-                    const duration = formatDateRange(edu?.startDate, edu?.endDate);
+                    const duration = formatDateRange(
+                      edu?.startDate,
+                      edu?.endDate
+                    );
                     return (
                       <div className="education-card" key={edu?._id}>
                         <img src={School} alt="Logo" className="college-logo" />
@@ -1666,7 +1748,9 @@ const EmpProfPage = () => {
                         </div>
                         <div className="education-details">
                           <div className="duration">{duration}</div>
-                          <div className="grade">Grade {edu?.grade ?? "Not specified"}</div>
+                          <div className="grade">
+                            Grade {edu?.grade ?? "Not specified"}
+                          </div>
                         </div>
                         <button
                           className="employee-editBtn"
@@ -1675,11 +1759,8 @@ const EmpProfPage = () => {
                         >
                           <MdOutlineEdit size={25} />
                         </button>
-
-
                       </div>
-
-                    )
+                    );
                   })}
                 </div>
                 {/* Modal for Education Editing */}
@@ -1688,35 +1769,73 @@ const EmpProfPage = () => {
                     <div className="modal-content">
                       <h3>{isEditing ? "Edit Education" : "Add Education"}</h3>
 
-                      <input type="text" placeholder="College Name"
+                      <input
+                        type="text"
+                        placeholder="College Name"
                         value={newEducation.college}
-                        onChange={(e) => setNewEducation({ ...newEducation, college: e.target.value })}
+                        onChange={(e) =>
+                          setNewEducation({
+                            ...newEducation,
+                            college: e.target.value,
+                          })
+                        }
                       />
-                      <input type="text" placeholder="Degree"
+                      <input
+                        type="text"
+                        placeholder="Degree"
                         value={newEducation.degree}
-                        onChange={(e) => setNewEducation({ ...newEducation, degree: e.target.value })}
+                        onChange={(e) =>
+                          setNewEducation({
+                            ...newEducation,
+                            degree: e.target.value,
+                          })
+                        }
                       />
-                      <input type="text" placeholder="Location"
+                      <input
+                        type="text"
+                        placeholder="Location"
                         value={newEducation.location}
-                        onChange={(e) => setNewEducation({ ...newEducation, location: e.target.value })}
+                        onChange={(e) =>
+                          setNewEducation({
+                            ...newEducation,
+                            location: e.target.value,
+                          })
+                        }
                       />
                       <input
                         type="date"
                         placeholder="Start Date"
                         value={newEducation.startDate}
-                        onChange={(e) => setNewEducation({ ...newEducation, startDate: e.target.value })}
+                        onChange={(e) =>
+                          setNewEducation({
+                            ...newEducation,
+                            startDate: e.target.value,
+                          })
+                        }
                       />
 
                       <input
                         type="date"
                         placeholder="End Date"
                         value={newEducation.endDate}
-                        onChange={(e) => setNewEducation({ ...newEducation, endDate: e.target.value })}
+                        onChange={(e) =>
+                          setNewEducation({
+                            ...newEducation,
+                            endDate: e.target.value,
+                          })
+                        }
                       />
 
-                      <input type="text" placeholder="Grade"
+                      <input
+                        type="text"
+                        placeholder="Grade"
                         value={newEducation.grade}
-                        onChange={(e) => setNewEducation({ ...newEducation, grade: e.target.value })}
+                        onChange={(e) =>
+                          setNewEducation({
+                            ...newEducation,
+                            grade: e.target.value,
+                          })
+                        }
                       />
 
                       {/* <label>Upload College Logo</label>
@@ -1730,33 +1849,41 @@ const EmpProfPage = () => {
                       />
                     )} */}
 
-
                       <div className="modal-actions">
                         <button
                           onClick={async () => {
                             const educationData = {
                               ...newEducation,
-
                             };
                             console.log("Education Data:", educationData);
                             try {
                               if (isEditing) {
-                                const res = await updateEducation(educationData);
+                                const res = await updateEducation(
+                                  educationData
+                                );
                                 // Ensure the returned object has _id
                                 console.log("Update education response:", res);
                                 if (!res || (!res._id && !res.id)) {
-                                  alert("Failed to update education. Please try again.");
+                                  alert(
+                                    "Failed to update education. Please try again."
+                                  );
                                   return;
                                 }
-                                const updatedEdu = { ...res, _id: res._id || res.id };
-                                setEducationList(prev =>
-                                  prev.map(edu => (edu._id === editId ? updatedEdu : edu))
-                                )
-
+                                const updatedEdu = {
+                                  ...res,
+                                  _id: res._id || res.id,
+                                };
+                                setEducationList((prev) =>
+                                  prev.map((edu) =>
+                                    edu._id === editId ? updatedEdu : edu
+                                  )
+                                );
                               } else {
                                 const res = await addEducation(educationData);
-                                setEducationList([...educationList, res.data.result]);
-
+                                setEducationList([
+                                  ...educationList,
+                                  res.data.result,
+                                ]);
                               }
 
                               // Reset modal state
@@ -1777,7 +1904,6 @@ const EmpProfPage = () => {
                               alert("Error saving education.");
                             }
                           }}
-
                         >
                           {isEditing ? "Update" : "Save"}
                         </button>
@@ -1816,43 +1942,66 @@ const EmpProfPage = () => {
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Projects</h2>
-                  <button className="aboutMe-editBtn" onClick={() => handleAddEditClick()}>
+                  <button
+                    className="aboutMe-editBtn"
+                    onClick={() => handleAddEditClick()}
+                  >
                     <FiPlus size={30} className="plus-icon" />
                   </button>
                 </div>
                 <div className="education-cards">
                   {projects.map((proj, index) => {
-                    const duration = formatDateRange(proj?.startDate, proj?.endDate);
+                    const duration = formatDateRange(
+                      proj?.startDate,
+                      proj?.endDate
+                    );
 
                     return (
                       <div className="project-card" key={index}>
-                        <img src={proj?.image || School} alt="Project Logo" className="project-logo" />
+                        <img
+                          src={proj?.image || School}
+                          alt="Project Logo"
+                          className="project-logo"
+                        />
                         <div className="project-info">
                           <h3>{proj?.title}</h3>
                           <p className="project-date">{duration}</p>
-                          <p className="project-associated">{proj?.associated}</p>
-                          <p className="project-description">{proj?.projectDescription}</p>
+                          <p className="project-associated">
+                            {proj?.associated}
+                          </p>
+                          <p className="project-description">
+                            {proj?.projectDescription}
+                          </p>
                         </div>
                         <div className="project-actions">
-                          <button onClick={() => handleAddEditClick(proj, index)}>
+                          <button
+                            onClick={() => handleAddEditClick(proj, index)}
+                          >
                             <MdOutlineEdit size={25} />
                           </button>
                           {/* <button onClick={() => handleDelete(index)}>Delete</button> */}
                         </div>
                       </div>
-                    )
+                    );
                   })}
                 </div>
 
                 {showModal && (
                   <div className="modal-overlay">
                     <form className="modal-content" onSubmit={handleFormSubmit}>
-                      <h3>{editIndex !== null ? "Edit Project" : "Add Project"}</h3>
+                      <h3>
+                        {editIndex !== null ? "Edit Project" : "Add Project"}
+                      </h3>
                       <input
                         type="text"
                         placeholder="Title"
                         value={formProjectData.title}
-                        onChange={(e) => setFormProjectData({ ...formProjectData, title: e.target.value })}
+                        onChange={(e) =>
+                          setFormProjectData({
+                            ...formProjectData,
+                            title: e.target.value,
+                          })
+                        }
                         required
                       />
 
@@ -1860,27 +2009,45 @@ const EmpProfPage = () => {
                         type="date"
                         placeholder="startDate"
                         value={formProjectData.startDate}
-                        onChange={(e) => setFormProjectData({ ...formProjectData, startDate: e.target.value })}
-
+                        onChange={(e) =>
+                          setFormProjectData({
+                            ...formProjectData,
+                            startDate: e.target.value,
+                          })
+                        }
                       />
                       <input
                         type="date"
                         placeholder="EndDate"
                         value={formProjectData.endDate}
-                        onChange={(e) => setFormProjectData({ ...formProjectData, endDate: e.target.value })}
-
+                        onChange={(e) =>
+                          setFormProjectData({
+                            ...formProjectData,
+                            endDate: e.target.value,
+                          })
+                        }
                       />
                       <input
                         type="text"
                         placeholder="Associated With"
                         value={formProjectData.associated}
-                        onChange={(e) => setFormProjectData({ ...formProjectData, associated: e.target.value })}
+                        onChange={(e) =>
+                          setFormProjectData({
+                            ...formProjectData,
+                            associated: e.target.value,
+                          })
+                        }
                         required
                       />
                       <textarea
                         placeholder="Description"
                         value={formProjectData.projectDescription}
-                        onChange={(e) => setFormProjectData({ ...formProjectData, projectDescription: e.target.value })}
+                        onChange={(e) =>
+                          setFormProjectData({
+                            ...formProjectData,
+                            projectDescription: e.target.value,
+                          })
+                        }
                         required
                       />
                       {/* <input
@@ -1902,13 +2069,19 @@ const EmpProfPage = () => {
                         />
                       )} */}
                       <div className="modal-buttons">
-                        <button type="submit">{editIndex !== null ? "Update" : "Add"}</button>
-                        <button onClick={() => setShowModal(false)}>Cancel</button>
+                        <button type="submit">
+                          {editIndex !== null ? "Update" : "Add"}
+                        </button>
+                        <button onClick={() => setShowModal(false)}>
+                          Cancel
+                        </button>
                         {editIndex !== null && formProjectData._id && (
                           <button
                             type="button"
                             style={{ backgroundColor: "red", color: "white" }}
-                            onClick={() => handleDeleteProject(formProjectData._id)}
+                            onClick={() =>
+                              handleDeleteProject(formProjectData._id)
+                            }
                           >
                             Delete
                           </button>
@@ -1923,14 +2096,21 @@ const EmpProfPage = () => {
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Licenses & Certifications</h2>
-                  <button className="aboutMe-editBtn" onClick={() => handleAddEditLicensesClick()}>
+                  <button
+                    className="aboutMe-editBtn"
+                    onClick={() => handleAddEditLicensesClick()}
+                  >
                     <FiPlus size={30} className="plus-icon" />
                   </button>
                 </div>
                 <div className="education-cards">
                   {certifications.map((cert, index) => (
                     <div className="license-card" key={index}>
-                      <img src={cert?.image || Course} alt="Certification Logo" className="license-logo" />
+                      <img
+                        src={cert?.image || Course}
+                        alt="Certification Logo"
+                        className="license-logo"
+                      />
                       <div className="license-info">
                         <h3>{cert?.courses}</h3>
                         <p className="issuer">{cert?.company_Name}</p>
@@ -1942,7 +2122,7 @@ const EmpProfPage = () => {
                         </p>
                       </div>
                       <a
-                        href={cert?.certificateUrl}  // Replace with your actual URL variable
+                        href={cert?.certificateUrl} // Replace with your actual URL variable
                         target="_blank"
                         rel="noopener noreferrer"
                         className="show-credential-button"
@@ -1951,7 +2131,11 @@ const EmpProfPage = () => {
                       </a>
 
                       <div className="project-actions">
-                        <button onClick={() => handleAddEditLicensesClick(cert, index)}>
+                        <button
+                          onClick={() =>
+                            handleAddEditLicensesClick(cert, index)
+                          }
+                        >
                           <MdOutlineEdit size={25} />
                         </button>
                         {/* <button onClick={() => handleLicensesDelete(index)}>Delete</button> */}
@@ -1961,27 +2145,49 @@ const EmpProfPage = () => {
                 </div>
                 {showLicensesModal && (
                   <div className="modal">
-                    <form className="modal-form" onSubmit={handleFormLicensesSubmit}>
-                      <h3>{editIndex !== null ? "Edit Certification" : "Add Certification"}</h3>
+                    <form
+                      className="modal-form"
+                      onSubmit={handleFormLicensesSubmit}
+                    >
+                      <h3>
+                        {editIndex !== null
+                          ? "Edit Certification"
+                          : "Add Certification"}
+                      </h3>
                       <input
                         type="text"
                         placeholder="Certification Title"
                         value={formLicensesData.title}
-                        onChange={(e) => setFormLicensesData({ ...formLicensesData, title: e.target.value })}
+                        onChange={(e) =>
+                          setFormLicensesData({
+                            ...formLicensesData,
+                            title: e.target.value,
+                          })
+                        }
                         required
                       />
                       <input
                         type="text"
                         placeholder="Issuer"
                         value={formLicensesData.issuer}
-                        onChange={(e) => setFormLicensesData({ ...formLicensesData, issuer: e.target.value })}
+                        onChange={(e) =>
+                          setFormLicensesData({
+                            ...formLicensesData,
+                            issuer: e.target.value,
+                          })
+                        }
                         required
                       />
                       <input
                         type="date"
                         placeholder="Issued Date"
                         value={formLicensesData.issuedDate}
-                        onChange={(e) => setFormLicensesData({ ...formLicensesData, issuedDate: e.target.value })}
+                        onChange={(e) =>
+                          setFormLicensesData({
+                            ...formLicensesData,
+                            issuedDate: e.target.value,
+                          })
+                        }
                         required
                       />
                       {/* <input
@@ -1996,7 +2202,10 @@ const EmpProfPage = () => {
                         placeholder="Credential Link"
                         value={formLicensesData.credentialUrl}
                         onChange={(e) =>
-                          setFormLicensesData({ ...formLicensesData, credentialUrl: e.target.value })
+                          setFormLicensesData({
+                            ...formLicensesData,
+                            credentialUrl: e.target.value,
+                          })
                         }
                       />
 
@@ -2018,13 +2227,19 @@ const EmpProfPage = () => {
                         <img src={formLicensesData.image} alt="Preview" style={{ width: "10%", height: "auto", borderRadius: "8px", marginTop: "10px" }} />
                       )} */}
                       <div className="modal-buttons">
-                        <button type="submit">{editIndexLicenses !== null ? "Update" : "Add"}</button>
-                        <button onClick={() => setShowLicensesModal(false)}>Cancel</button>
+                        <button type="submit">
+                          {editIndexLicenses !== null ? "Update" : "Add"}
+                        </button>
+                        <button onClick={() => setShowLicensesModal(false)}>
+                          Cancel
+                        </button>
                         {editIndexLicenses !== null && formLicensesData._id && (
                           <button
                             type="button"
                             style={{ backgroundColor: "red", color: "white" }}
-                            onClick={() => handleDeleteLicenses(formLicensesData._id)}
+                            onClick={() =>
+                              handleDeleteLicenses(formLicensesData._id)
+                            }
                           >
                             Delete
                           </button>
@@ -2034,9 +2249,6 @@ const EmpProfPage = () => {
                   </div>
                 )}
               </div>
-
-
-
             </div>
           </div>
         </div>
@@ -2046,10 +2258,6 @@ const EmpProfPage = () => {
 };
 
 export default EmpProfPage;
-
-
-
-
 
 // import React, { useEffect, useState } from "react";
 // import Cookies from "js-cookie";

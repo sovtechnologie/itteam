@@ -11,12 +11,11 @@ const JobCard = ({
     _id,
     logo,
     companyName,
-    jobTitle,
-    location,
+    designationName,
+    city,
     description,
     industry,
-    salary,
-    postedAgo,
+    website,
 }) => {
     const navigate = useNavigate();
     return (
@@ -25,32 +24,32 @@ const JobCard = ({
                 <img src={logo || company} alt={companyName || "logo"} className="company-logo" />
                 <div className="job-info">
                     <div className="company-name">{companyName}</div>
-                    <div className="job-title">{jobTitle || "Js Developer "}</div>
-                    <div className="job-location">{location || "Noida"}</div>
+                    <div className="job-title">{designationName}</div>
+                    <div className="job-location">{city}</div>
                 </div>
 
                 {/* <Bookmark size={16} className="bookmark-icon" /> */}
                 <img className='bookmark-icon' src={vector} alt='bookmark-Icon' />
             </div>
-           <p className="job-desc">
-                  {(() => {
+            <p className="job-desc">
+                {(() => {
                     const words = description ? description.split(" ") : [];
                     if (words.length <= 10) return description;
                     return words.slice(0, 10).join(" ") + " ...";
-                  })() || "We are looking for someone with experience using AI software to create realistic product photos."}
-                </p>
+                })()}
+            </p>
 
             <div className="job-tags">
                 {(industry || ["IT ", "Finance"]).map((tag, index) => (
                     <span key={index}>{tag}</span>
                 ))}
             </div>
+            <div className="job-webisteurl"> <a href={website}>{website}</a></div>
 
-
-            <div className="job-details">
-                <div className="salary"><img src={coin}  alt='coin-icon'/> {salary || "22000"}</div>
+            {/* <div className="job-details">
+                <div className="salary"><img src={coin} alt='coin-icon' /> {salary || "22000"}</div>
                 <div className="posted">📅 {postedAgo ? postedAgo : "3 days ago"}</div>
-            </div>
+            </div> */}
 
             <button className="view-button" onClick={() => navigate(`/companies/${_id}`)}>View Details</button>
         </div>
