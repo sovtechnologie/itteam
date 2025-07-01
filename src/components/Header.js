@@ -7,6 +7,16 @@ import defaultLogo from "../images/defaultImg.png";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
+const isTokenExpired = (token) => {
+  if (!token) return true;
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return payload.exp * 1000 < Date.now();
+  } catch {
+    return true;
+  }
+};
+
 const Header = ({ isHomePage }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [userName, setUserName] = useState("User");
@@ -92,6 +102,12 @@ const Header = ({ isHomePage }) => {
 
     fetchUserDetails();
   }, [authToken, userId, role]);
+
+  useEffect(() => {
+    if (authToken && isTokenExpired(authToken)) {
+      handleLogout();
+    }
+  }, [authToken]);
 
   return (
     <header className={`header main-header ${isHomePage ? "home-header" : ""}`}>

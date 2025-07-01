@@ -22,19 +22,6 @@ import { fetchProjects } from "../../services/apiService";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
-// Dummy Education Data
-const dummyEducationData = [
-  {
-    id: 1,
-    logo: School, // replace with import or static image path
-    college: "BHAGWAN MAHAVIR COLLEGE OF ENGG. AND TECH.",
-    degree: "Diploma of Education ・ Computer Engineering",
-    location: "Surat, Gujarat, India",
-    duration: "Mar 2020 – Aug 2023",
-    grade: "Grade A+",
-  },
-];
-
 const MAX_WORDS = 200;
 const MIN_WORDS = 100;
 
@@ -689,20 +676,7 @@ const EmpProfPage = () => {
     }
   };
 
-  const [certifications, setCertifications] = useState([
-    {
-      title: "UI/UX DESIGN MASTER PROGRAM",
-      issuer: "Simplilearn",
-      issuedDate: "Issued Nov 2022 · No Expiration Date",
-      image: Course,
-    },
-    {
-      title: "UI/UX DESIGN MASTER PROGRAM",
-      issuer: "Simplilearn",
-      issuedDate: "Issued Nov 2022 · No Expiration Date",
-      image: Course,
-    },
-  ]);
+  const [certifications, setCertifications] = useState([]);
 
   const [showLicensesModal, setShowLicensesModal] = useState(false);
   const [editIndexLicenses, setEditIndexLicenses] = useState(null);
@@ -1243,7 +1217,7 @@ const EmpProfPage = () => {
                     <div className="signUpform-group">
                       <select
                         name="location"
-                        value={formData.location || ""}
+                        value={formData.location}
                         onChange={handleInputChange}
                         className="form-select"
                         disabled={!selectedState}

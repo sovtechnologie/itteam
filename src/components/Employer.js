@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import "../stylesheets/Companies.css";
-import { FaMapMarkerAlt, FaPhoneAlt, FaBuilding, FaEnvelope, FaEdit, FaShareAlt } from 'react-icons/fa';
-import { MdOutlineCurrencyRupee, MdOutlineEdit } from 'react-icons/md';
+import {
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+  FaBuilding,
+  FaEnvelope,
+  FaEdit,
+  FaShareAlt,
+} from "react-icons/fa";
+import { MdOutlineCurrencyRupee, MdOutlineEdit } from "react-icons/md";
 import { FiPlus, FiUpload, FiX } from "react-icons/fi";
-import { FiShare2 } from 'react-icons/fi';
-import { FaBusinessTime, FaLaptopCode, FaLocationDot } from 'react-icons/fa6';
-import { IoCallSharp } from 'react-icons/io5';
-import { IoIosMail } from 'react-icons/io';
+import { FiShare2 } from "react-icons/fi";
+import { FaBusinessTime, FaLaptopCode, FaLocationDot } from "react-icons/fa6";
+import { IoCallSharp } from "react-icons/io5";
+import { IoIosMail } from "react-icons/io";
 // import { Bookmark } from 'lucide-react';
 import CompanyLogo from "../images/CompanyProfilelogo.png";
 import vector from "../images/Vector.png";
@@ -18,17 +25,11 @@ import { useAuth } from "../components/AuthContext";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
-
-
-
-
 export default function Employer() {
-
   const [companyData, setCompanyData] = useState(null);
   const navigate = useNavigate();
   const { token } = useParams();
   const { login } = useAuth();
-
 
   const normalizeCompanyData = (data) => ({
     _id: data._id,
@@ -43,7 +44,9 @@ export default function Employer() {
     industry: data.industry || [],
     companySize: data.company_SizeMin?.toString() || "",
     founded: data.founded || "",
-    location: Array.isArray(data.location) ? data.location[0] : data.location || "",
+    location: Array.isArray(data.location)
+      ? data.location[0]
+      : data.location || "",
     logo: data.logo || "",
     profileImg: data.logo || "",
     companyFullAddress: data.companyFullAddress || "",
@@ -231,7 +234,6 @@ export default function Employer() {
     }
   };
 
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newIndustry, setNewIndustry] = useState("");
   const [formState, setFormState] = useState(companyData);
@@ -296,16 +298,14 @@ export default function Employer() {
         <div className="Profile-Wrapper">
           <div className="Profile-section-one">
             <div className="Profile-head">
-              <img
-                src={formData?.profileImg}
-                alt="Profile"
-
-              />
+              <img src={formData?.profileImg} alt="Profile" />
               <div className="Profile-basic-info">
                 <div className="Profile-top">
                   <div>
                     <h3>{formData?.companyName}</h3>
-                    <p>{formData?.contactName} | {formData?.designation}</p>
+                    <p>
+                      {formData?.contactName} | {formData?.designation}
+                    </p>
                   </div>
 
                   {/* Edit and Share Buttons */}
@@ -351,19 +351,23 @@ export default function Employer() {
                 <div className="edit-modal-horizontal">
                   <h3>Edit Profile</h3>
                   {formData.profileImg && (
-                    <div style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginTop: "15px"
-                    }}>
-                      <div style={{
-                        borderRadius: "12px",
-                        padding: "10px",
-                        backgroundColor: "#fff",
-                        maxWidth: "100%",
-                        textAlign: "center"
-                      }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: "15px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          borderRadius: "12px",
+                          padding: "10px",
+                          backgroundColor: "#fff",
+                          maxWidth: "100%",
+                          textAlign: "center",
+                        }}
+                      >
                         <img
                           src={formData.profileImg}
                           alt="Preview"
@@ -372,17 +376,20 @@ export default function Employer() {
                             height: "100px",
                             borderRadius: "50%",
                             objectFit: "cover",
-                            transition: "transform 0.3s ease"
+                            transition: "transform 0.3s ease",
                           }}
-                          onMouseOver={e => e.currentTarget.style.transform = "scale(1.05)"}
-                          onMouseOut={e => e.currentTarget.style.transform = "scale(1)"}
+                          onMouseOver={(e) =>
+                            (e.currentTarget.style.transform = "scale(1.05)")
+                          }
+                          onMouseOut={(e) =>
+                            (e.currentTarget.style.transform = "scale(1)")
+                          }
                         />
                       </div>
                     </div>
                   )}
 
                   <div className="form-grid">
-
                     <input
                       name="contactName"
                       placeholder="Full Name"
@@ -409,9 +416,10 @@ export default function Employer() {
                     />
                     <input
                       name="companySize"
-                      placeholder='size like 0-13 Employee'
+                      placeholder="size like 0-13 Employee"
                       value={formData.companySize}
-                      onChange={handleInput} />
+                      onChange={handleInput}
+                    />
                     <input
                       name="phone"
                       placeholder="Phone"
@@ -429,11 +437,12 @@ export default function Employer() {
                       name="profileImg"
                       onChange={handleInput}
                     />
-
                   </div>
                   <div className="modal-buttons">
                     <button onClick={handleProfileSave}>Save & Close</button>
-                    <button type='button' onClick={handleClose}>Cancel</button>
+                    <button type="button" onClick={handleClose}>
+                      Cancel
+                    </button>
                   </div>
                 </div>
               </div>
@@ -441,7 +450,13 @@ export default function Employer() {
           </div>
 
           <div className="company-card">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
               <h2 className="company-heading">
                 About the <span className="highlight">Company</span>
               </h2>
@@ -450,12 +465,8 @@ export default function Employer() {
               </button>
             </div>
 
-
-
-
             <p className="company-description">{companyData?.description}</p>
             <div className="company-meta">
-
               <div>
                 <strong>Website</strong>
                 <div className="link">{companyData?.website}</div>
@@ -464,7 +475,9 @@ export default function Employer() {
                 <strong>Industry</strong>
                 <div className="pill-container">
                   {companyData?.industry.map((item, idx) => (
-                    <span className="pill" key={idx}>{item}</span>
+                    <span className="pill" key={idx}>
+                      {item}
+                    </span>
                   ))}
                 </div>
               </div>
@@ -472,9 +485,13 @@ export default function Employer() {
                 <strong>Contact</strong>
                 <p>
                   {companyData?.contactNumber
-                    ? `+91 ${companyData.contactNumber.replace(/^(\+91|91)?/, "")}`
+                    ? `+91 ${companyData.contactNumber.replace(
+                        /^(\+91|91)?/,
+                        ""
+                      )}`
                     : "No contact number provided"}
-                </p>              </div>
+                </p>{" "}
+              </div>
               <div>
                 <strong>Address</strong>
                 <p>{companyData?.address}</p>
@@ -523,7 +540,14 @@ export default function Employer() {
                     required
                   />
                   <label>Industries</label>
-                  <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "10px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "10px",
+                      flexWrap: "wrap",
+                      marginBottom: "10px",
+                    }}
+                  >
                     {formState.industry.map((item, idx) => (
                       <span
                         key={idx}
@@ -542,10 +566,17 @@ export default function Employer() {
                           onClick={() =>
                             setFormState((prev) => ({
                               ...prev,
-                              industry: prev.industry.filter((_, i) => i !== idx),
+                              industry: prev.industry.filter(
+                                (_, i) => i !== idx
+                              ),
                             }))
                           }
-                          style={{ background: "none", border: "20px", fontWeight: "bold", cursor: "pointer" }}
+                          style={{
+                            background: "none",
+                            border: "20px",
+                            fontWeight: "bold",
+                            cursor: "pointer",
+                          }}
                         >
                           ×
                         </button>
@@ -553,7 +584,13 @@ export default function Employer() {
                     ))}
                   </div>
 
-                  <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "10px",
+                      marginBottom: "20px",
+                    }}
+                  >
                     <input
                       type="text"
                       placeholder="Add Industry"
@@ -584,7 +621,14 @@ export default function Employer() {
                         }
                       }}
                     >
-                      <FiPlus size={30} style={{ backgroundColor: "#ffffff", color: "#1783D0", border: "none" }} />
+                      <FiPlus
+                        size={30}
+                        style={{
+                          backgroundColor: "#ffffff",
+                          color: "#1783D0",
+                          border: "none",
+                        }}
+                      />
                     </button>
                   </div>
                   <input
@@ -597,14 +641,16 @@ export default function Employer() {
                   />
                   <div className="modal-buttons">
                     <button type="submit">Save</button>
-                    <button type="button" onClick={() => setIsModalOpen(false)}>Cancel</button>
+                    <button type="button" onClick={() => setIsModalOpen(false)}>
+                      Cancel
+                    </button>
                   </div>
                 </form>
               </div>
             )}
           </div>
 
-          <div className="announcement-section">
+          {/* <div className="announcement-section">
             <div className="announcement-header">
               <h2>
                 Recent <span className="highlight">Announcements</span>
@@ -647,15 +693,12 @@ export default function Employer() {
               <button className="scroll-btn right" onClick={() => scrollContainer(300)}>&#8250;</button>
             </div>
 
-          </div>
+          </div> */}
         </div>
       </div>
     </>
-  )
+  );
 }
-
-
-
 
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
