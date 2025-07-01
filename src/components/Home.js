@@ -387,8 +387,7 @@ const Home = () => {
                 </div>
               </div>
               <p className="company-description-exact">
-                {company?.description ||
-                  "Innovating AI solutions for the future."}
+                {company?.description}
               </p>
               <div className="company-tags-exact">
                 {company?.tags?.map((tag, index) => (

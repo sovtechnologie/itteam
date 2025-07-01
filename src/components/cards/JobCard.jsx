@@ -40,7 +40,7 @@ const JobCard = ({
             </p>
 
             <div className="job-tags">
-                {(industry || ["IT ", "Finance"]).map((tag, index) => (
+                {(industry).map((tag, index) => (
                     <span key={index}>{tag}</span>
                 ))}
             </div>

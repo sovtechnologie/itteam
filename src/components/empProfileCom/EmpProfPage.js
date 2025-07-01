@@ -36,6 +36,7 @@ const dummyEducationData = [
 ];
 
 const MAX_WORDS = 200;
+const MIN_WORDS = 100;
 
 const countWords = (text) => {
   return text
@@ -50,9 +51,7 @@ const EmpProfPage = () => {
   const authToken = Cookies.get("authToken"); // Get token from cookies
   const userId = Cookies.get("userId"); // Get user ID from cookieshe
   const navigate = useNavigate();
-
   const [employmentList, setEmploymentList] = useState([]);
-
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -130,6 +129,7 @@ const EmpProfPage = () => {
   const [isAboutEditOpen, setIsAboutEditOpen] = useState(false);
   const [aboutText, setAboutText] = useState(userData?.about || "");
   const [aboutInput, setAboutInput] = useState(aboutText);
+  const [minWordsReached, setMinWordsReached] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -1383,7 +1383,12 @@ const EmpProfPage = () => {
                           value={aboutInput}
                           onChange={(e) => {
                             const text = e.target.value;
-                            const words = text.trim().split(/\s+/);
+                            const words = text
+                              .trim()
+                              .split(/\s+/)
+                              .filter(Boolean);
+
+                            // truncate above max
                             if (words.length > MAX_WORDS) {
                               const trimmed = words
                                 .slice(0, MAX_WORDS)
@@ -1392,17 +1397,31 @@ const EmpProfPage = () => {
                             } else {
                               setAboutInput(text);
                             }
+
+                            // update minWordsReached flag
+                            setMinWordsReached(words.length >= MIN_WORDS);
                           }}
                         />
                         <br />
                         <small>
-                          {countWords(aboutInput)} / {MAX_WORDS} words
+                          {countWords(aboutInput)} / {MAX_WORDS} words (min{" "}
+                          {MIN_WORDS})
                         </small>
                         <br />
+                        {!minWordsReached && (
+                          <p style={{ color: "red" }}>
+                            Please write at least {MIN_WORDS} words. You have
+                            only {countWords(aboutInput)}.
+                          </p>
+                        )}
+
                         {error && <p style={{ color: "red" }}>{error}</p>}
                         {success && <p style={{ color: "green" }}>{success}</p>}
                         <div className="modal-actions">
-                          <button onClick={handleEditAbout} disabled={loading}>
+                          <button
+                            onClick={handleEditAbout}
+                            disabled={loading || !minWordsReached}
+                          >
                             {loading ? "Saving..." : "Save"}
                           </button>
                           <button
