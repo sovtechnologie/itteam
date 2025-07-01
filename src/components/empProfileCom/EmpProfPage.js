@@ -35,6 +35,15 @@ const dummyEducationData = [
   },
 ];
 
+const MAX_WORDS = 200;
+
+const countWords = (text) => {
+  return text
+    .trim()
+    .split(/\s+/)
+    .filter((w) => w.length > 0).length;
+};
+
 const EmpProfPage = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -444,7 +453,7 @@ const EmpProfPage = () => {
     }
   };
 
-  const [educationList, setEducationList] = useState(dummyEducationData);
+  const [educationList, setEducationList] = useState([]);
   const [isEduModalOpen, setIsEduModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
@@ -1372,8 +1381,24 @@ const EmpProfPage = () => {
                         <textarea
                           rows={6}
                           value={aboutInput}
-                          onChange={(e) => setAboutInput(e.target.value)}
+                          onChange={(e) => {
+                            const text = e.target.value;
+                            const words = text.trim().split(/\s+/);
+                            if (words.length > MAX_WORDS) {
+                              const trimmed = words
+                                .slice(0, MAX_WORDS)
+                                .join(" ");
+                              setAboutInput(trimmed + " ");
+                            } else {
+                              setAboutInput(text);
+                            }
+                          }}
                         />
+                        <br />
+                        <small>
+                          {countWords(aboutInput)} / {MAX_WORDS} words
+                        </small>
+                        <br />
                         {error && <p style={{ color: "red" }}>{error}</p>}
                         {success && <p style={{ color: "green" }}>{success}</p>}
                         <div className="modal-actions">
