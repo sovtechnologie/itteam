@@ -1630,7 +1630,7 @@ const EmpProfPage = () => {
                         <button onClick={handleSave}>
                           {editingIndex !== null ? "Update" : "Add"}
                         </button>
-                        <button style={{ backgroundColor: "#333" }} onClick={() => setIsExperienceModalOpen(false)}>Cancel</button>
+                        <button className="update-add" onClick={() => setIsExperienceModalOpen(false)}>Cancel</button>
                         {editingIndex !== null && (
                           <button type="button" onClick={() => handleDeleteExperience(newJob._id)}>
                             Delete
@@ -1783,7 +1783,7 @@ const EmpProfPage = () => {
                         </button>
 
                         <button
-                          type="button"
+ style={{ backgroundColor: "red", color: "white" }}
                           onClick={() => {
                             setIsEduModalOpen(false);
                             setIsEditing(false);
@@ -1903,7 +1903,7 @@ const EmpProfPage = () => {
                       )} */}
                       <div className="modal-buttons">
                         <button type="submit">{editIndex !== null ? "Update" : "Add"}</button>
-                        <button onClick={() => setShowModal(false)}>Cancel</button>
+                        <button type="button" onClick={() => setShowModal(false)}>Cancel</button>
                         {editIndex !== null && formProjectData._id && (
                           <button
                             type="button"
@@ -2019,7 +2019,7 @@ const EmpProfPage = () => {
                       )} */}
                       <div className="modal-buttons">
                         <button type="submit">{editIndexLicenses !== null ? "Update" : "Add"}</button>
-                        <button onClick={() => setShowLicensesModal(false)}>Cancel</button>
+                        <button type="button" onClick={() => setShowLicensesModal(false)}>Cancel</button>
                         {editIndexLicenses !== null && formLicensesData._id && (
                           <button
                             type="button"

@@ -133,7 +133,7 @@ a {
 }
 
 .modal-buttons button[type="button"] {
-  background-color: #d1410c;
+  background-color: #d1410c !important;
 }
 
 .Employee-Profile-Card {
