@@ -1,29 +1,31 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import "../stylesheets/Companies.css";
-import { FaMapMarkerAlt, FaPhoneAlt, FaBuilding, FaEnvelope, FaEdit, FaShareAlt } from 'react-icons/fa';
-import { MdOutlineCurrencyRupee, MdOutlineEdit } from 'react-icons/md';
+import {
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+  FaBuilding,
+  FaEnvelope,
+  FaEdit,
+  FaShareAlt,
+} from "react-icons/fa";
+import { MdOutlineCurrencyRupee, MdOutlineEdit } from "react-icons/md";
 import { FiPlus, FiUpload, FiX } from "react-icons/fi";
-import { FiShare2 } from 'react-icons/fi';
-import { FaBusinessTime, FaLaptopCode, FaLocationDot } from 'react-icons/fa6';
-import { IoCallSharp } from 'react-icons/io5';
-import { IoIosMail } from 'react-icons/io';
+import { FiShare2 } from "react-icons/fi";
+import { FaBusinessTime, FaLaptopCode, FaLocationDot } from "react-icons/fa6";
+import { IoCallSharp } from "react-icons/io5";
+import { IoIosMail } from "react-icons/io";
 // import { Bookmark } from 'lucide-react';
 import CompanyLogo from "../images/CompanyProfilelogo.png";
 import vector from "../images/Vector.png";
 import coin from "../images/coins.png";
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const BASE_URL = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
-
-
-
-
-
 export default function Companies() {
   const { id } = useParams();
-  
+
   const scrollContainer = (scrollOffset) => {
     const container = document.getElementById("scrollableContainer");
     if (container) {
@@ -31,7 +33,7 @@ export default function Companies() {
     }
   };
 
-   const normalizeCompanyData = (data) => ({
+  const normalizeCompanyData = (data) => ({
     _id: data._id,
     name: data.name,
     contactNumber: data.contactNumber?.toString() || "",
@@ -60,52 +62,47 @@ export default function Companies() {
     phone: "+91-7979931234",
     companySize: "11-50 Employees",
     email: "Komal.nikam@sovtechnologies.com",
-    profileImg:CompanyLogo
-  })
- 
+    profileImg: CompanyLogo,
+  });
+
   const [companyData, setCompanyData] = useState(null);
   const [loading, setLoading] = useState(true);
-   const [error, setError] = useState(null);
+  const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newIndustry, setNewIndustry] = useState("");
   const [formState, setFormState] = useState(companyData);
 
- 
+  useEffect(() => {
+    const fetchEmployerData = async () => {
+      try {
+        const response = await axios.post(
+          `${BASE_URL}/withOutLogin/getSingleCompanyData`,
+          { id: id },
+          { headers: { "Content-Type": "application/json" } }
+        );
 
+        console.log("API Response:", response.data);
 
-
-    useEffect(() => {
-      const fetchEmployerData = async () => {
-        try {
-          const response = await axios.post(
-            `${BASE_URL}/withOutLogin/getSingleCompanyData`,
-            { id: id },
-            { headers: { "Content-Type": "application/json" } }
-          );
-  
-          console.log("API Response:", response.data);
-  
-          if (response.data.status === 200 && response.data.result) {
-            setCompanyData(normalizeCompanyData(response.data.result));
-          } else {
-            console.log("No employer data found for this ID.");
-            setError("Employer data not found for the provided ID.");
-          }
-        } catch (err) {
-          console.error(
-            "Request Error:",
-            err.response ? err.response.data : err.message
-          );
-          setError("Error fetching employer details.");
-        } finally {
-          setLoading(false);
+        if (response.data.status === 200 && response.data.result) {
+          setCompanyData(normalizeCompanyData(response.data.result));
+        } else {
+          console.log("No employer data found for this ID.");
+          setError("Employer data not found for the provided ID.");
         }
-      };
-  
-      fetchEmployerData();
-    }, [id]);
+      } catch (err) {
+        console.error(
+          "Request Error:",
+          err.response ? err.response.data : err.message
+        );
+        setError("Error fetching employer details.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    
+    fetchEmployerData();
+  }, [id]);
+
   useEffect(() => {
     if (companyData) {
       setFormData({
@@ -132,16 +129,14 @@ export default function Companies() {
         <div className="Profile-Wrapper">
           <div className="Profile-section-one">
             <div className="Profile-head">
-              <img
-                src={formData?.profileImg}
-                alt="Profile"
-
-              />
+              <img src={formData?.profileImg} alt="Profile" />
               <div className="Profile-basic-info">
                 <div className="Profile-top">
                   <div>
                     <h3>{formData?.companyName}</h3>
-                    <p>{formData?.contactName} | {formData?.designation}</p>
+                    <p>
+                      {formData?.contactName} | {formData?.designation}
+                    </p>
                   </div>
 
                   {/* Edit and Share Buttons */}
@@ -180,20 +175,21 @@ export default function Companies() {
           </div>
 
           <div className="company-card">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
               <h2 className="company-heading">
                 About the <span className="highlight">Company</span>
               </h2>
-              
             </div>
-
-
-
 
             <p className="company-description">{companyData?.description}</p>
             <div className="company-meta">
-
-              <div className='contact-number'>
+              <div>
                 <strong>Website</strong>
                 <div className="link">{companyData?.website}</div>
               </div>
@@ -201,18 +197,24 @@ export default function Companies() {
                 <strong>Industry</strong>
                 <div className="pill-container">
                   {companyData?.industry.map((item, idx) => (
-                    <span className="pill" key={idx}>{item}</span>
+                    <span className="pill" key={idx}>
+                      {item}
+                    </span>
                   ))}
                 </div>
               </div>
-              <div className='contact-number'>
+              <div className="contact-number">
                 <strong>Contact :</strong>
                 <p>
                   {companyData?.contactNumber
-                    ? `+91 ${companyData.contactNumber.replace(/^(\+91|91)?/, "")}`
+                    ? `+91 ${companyData.contactNumber.replace(
+                        /^(\+91|91)?/,
+                        ""
+                      )}`
                     : "No contact number provided"}
-                </p>              </div>
-              <div className='contact-number'>
+                </p>{" "}
+              </div>
+              <div>
                 <strong>Address</strong>
                 <p>{companyData?.address}</p>
               </div>
@@ -221,10 +223,9 @@ export default function Companies() {
                 <p>{companyData?.founded}</p>
               </div>
             </div>
-
           </div>
 
-          <div className="announcement-section">
+          {/* <div className="announcement-section">
             <div className="announcement-header">
               <h2>
                 Recent <span className="highlight">Announcements</span>
@@ -240,7 +241,7 @@ export default function Companies() {
                   <div key={index} className="jobs">
                     <div className="card-heading">
                       <div className="Company-logo">SOV</div>
-                      {/* <img src={vector} style={{ marginTop: "-40px" }} /> */}
+                      {/* <img src={vector} style={{ marginTop: "-40px" }} /> 
                     </div>
                     <div className='Company-details'>
                       <p className="companyName">Sov Technologies</p>
@@ -267,9 +268,9 @@ export default function Companies() {
               <button className="scroll-btn right" onClick={() => scrollContainer(300)}>&#8250;</button>
             </div>
 
-          </div>
+          </div> */}
         </div>
       </div>
     </>
-  )
+  );
 }

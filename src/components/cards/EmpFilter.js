@@ -10,7 +10,6 @@ import { IoMdTime } from "react-icons/io";
 import vector from "../../images/Vector.png";
 import JobCard from "./JobCard";
 
-
 const EmpFilter = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [users, setUsers] = useState([]);
@@ -25,7 +24,6 @@ const EmpFilter = () => {
   const [cities, setCities] = useState([]);
   const [loadingCities, setLoadingCities] = useState(false);
 
-
   const BASE_URL = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
   const profilesPerPage = 12;
 
@@ -39,56 +37,8 @@ const EmpFilter = () => {
     expertTecStack: "",
     skillName: [],
     noticePeriod: [],
-    salary: [0, 2000000]
+    salary: [0, 2000000],
   });
-
-
-  // const handleCheckboxChange = (category, value) => {
-  //   setFilters((prevFilters) => {
-  //     let updatedValues = [...prevFilters[category]];
-  //     if (updatedValues.includes(value)) {
-  //       updatedValues = updatedValues.filter((v) => v !== value);
-  //     } else {
-  //       updatedValues.push(value);
-  //     }
-
-  //     if (category === "experienceInStack") {
-  //       const labelToYears = {
-  //         Fresher: [1],
-  //         Junior: [2],
-  //         "Mid-Level": [3],
-  //         Senior: [4],
-  //       };
-
-  //       const mappedExperience = updatedValues.map((label) => labelToYears[label] || []).flat();
-
-  //       return {
-  //         ...prevFilters,
-  //         experienceInStack: mappedExperience,
-  //       };
-  //     }
-
-  //     if (category === "activeJoiners") {
-  //       const labelToNotice = {
-  //         "Immediate": [1],
-  //         "Within 7 Days": [2],
-  //         "Within 15 Days": [3],
-  //         "Within 30 Days": [4],
-  //         "Within 45 Days": [5],
-  //       };
-
-  //       const mappedNotice = updatedValues.map((label) => labelToNotice[label] || []).flat();
-
-  //       return {
-  //         ...prevFilters,
-  //         activeJoiners: mappedNotice,
-  //         noticePeriod: mappedNotice,
-  //       };
-  //     }
-
-  //     return { ...prevFilters, [category]: updatedValues };
-  //   });
-  // };
 
   const handleCheckboxChange = (category, value) => {
     setFilters((prevFilters) => {
@@ -103,7 +53,10 @@ const EmpFilter = () => {
   };
 
   const handleLocationChange = (event) => {
-    setFilters((prevFilters) => ({ ...prevFilters, location: event.target.value }));
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      location: event.target.value,
+    }));
   };
 
   const handleStackChange = (event) => {
@@ -163,15 +116,20 @@ const EmpFilter = () => {
         let validFilters = {};
 
         if (filters.workMode.length) validFilters.Job_type = filters.workMode;
-        if (filters.experienceInStack.length) validFilters.experienceInStack = filters.experienceInStack;
-        if (filters.activeJoiners.length) validFilters.activeJoiners = filters.activeJoiners;
+        if (filters.experienceInStack.length)
+          validFilters.experienceInStack = filters.experienceInStack;
+        if (filters.activeJoiners.length)
+          validFilters.activeJoiners = filters.activeJoiners;
         if (filters.state) validFilters.state = filters.state;
         if (filters.location) validFilters.location = filters.location;
-        if (filters.currentPosition) validFilters.currentPosition = filters.currentPosition;
-        if (filters.expertTecStack) validFilters.expertTecStack = filters.expertTecStack;
-        if (filters.skillName.length) validFilters.skillName = filters.skillName;
-        if (filters.noticePeriod.length) validFilters.noticePeriod = filters.noticePeriod;
-
+        if (filters.currentPosition)
+          validFilters.currentPosition = filters.currentPosition;
+        if (filters.expertTecStack)
+          validFilters.expertTecStack = filters.expertTecStack;
+        if (filters.skillName.length)
+          validFilters.skillName = filters.skillName;
+        if (filters.noticePeriod.length)
+          validFilters.noticePeriod = filters.noticePeriod;
 
         let response = Object.keys(validFilters).length
           ? await axios.post(`${BASE_URL}/api/userFilter`, validFilters)
@@ -198,19 +156,25 @@ const EmpFilter = () => {
   };
 
   useEffect(() => {
-    axios.post(`${BASE_URL}/api/userFilter`).then((res) => {
-      if (res.data.status === 200) {
-        setUsers(res.data.result);
-      }
-    }).catch((err) => console.error("API Error:", err));
+    axios
+      .post(`${BASE_URL}/api/userFilter`)
+      .then((res) => {
+        if (res.data.status === 200) {
+          setUsers(res.data.result);
+        }
+      })
+      .catch((err) => console.error("API Error:", err));
   }, []);
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/withOutLogin/getAllCompanyHomePage`).then((response) => {
-      if (response.data.status === 200) {
-        setCompanies(response.data.result);
-      }
-    }).catch((error) => console.error("Error fetching companies:", error));
+    axios
+      .get(`${BASE_URL}/withOutLogin/getAllCompanyHomePage`)
+      .then((response) => {
+        if (response.data.status === 200) {
+          setCompanies(response.data.result);
+        }
+      })
+      .catch((error) => console.error("Error fetching companies:", error));
   }, []);
 
   // useEffect(() => {
@@ -230,44 +194,44 @@ const EmpFilter = () => {
     const fetchCities = async () => {
       setLoadingCities(true);
       try {
-        const response = await axios.get(`${BASE_URL}/withoutLogin/getActiveLocation`);
+        const response = await axios.get(
+          `${BASE_URL}/withoutLogin/getActiveLocation`
+        );
         if (response.data?.locations) {
           setCities(response.data.locations);
         }
       } catch (error) {
-        console.error('Error fetching cities:', error);
+        console.error("Error fetching cities:", error);
       } finally {
         setLoadingCities(false);
       }
     };
-
     fetchCities();
   }, []);
 
-
-
   const filteredProfile = useMemo(() => {
     return users.filter((profile) => {
-      // if (filters.workMode.length > 0 && !filters.workMode.includes(profile.workMode)) return false;
-      // if (filters.location.length > 0 && !filters.location.includes(profile.location)) return false;
-      // if (filters.experienceInStack.length > 0 && !filters.experienceInStack.includes(profile.experienceInStack)) return false;
-      // if (filters.activeJoiners.length > 0 && !filters.activeJoiners.includes(profile.noticePeriod)) return false;
       if (filters.salary && filters.salary.length === 2) {
         const expectedSalary = profile.salary || 0;
-        if (expectedSalary < filters.salary[0] || expectedSalary > filters.salary[1]) return false;
+        if (
+          expectedSalary < filters.salary[0] ||
+          expectedSalary > filters.salary[1]
+        )
+          return false;
       }
       return true;
     });
   }, [users, filters]);
   console.log("Filtered Profiles:", filteredProfile);
 
-  const filteredProfiles = role === "Company" ? companies : filteredProfile;
-
   const indexOfLastProfile = currentPage * profilesPerPage;
   const indexOfFirstProfile = indexOfLastProfile - profilesPerPage;
-  const currentProfiles = filteredProfiles.slice(indexOfFirstProfile, indexOfLastProfile);
+  const currentProfiles = filteredProfile.slice(
+    indexOfFirstProfile,
+    indexOfLastProfile
+  );
 
-  const totalPages = Math.ceil(filteredProfiles.length / profilesPerPage);
+  const totalPages = Math.ceil(filteredProfile.length / profilesPerPage);
 
   const paginationRange = useMemo(() => {
     const startPages = [1, 2, 3];
@@ -309,27 +273,12 @@ const EmpFilter = () => {
     }
   };
 
-
   return (
     <>
-
       <div className="job-search-bar">
-        <div className="search-fields"> {/* 🆕 Wrap fields separately */}
-          {/* <div className="select-wrapper">
-            <select className="search-select"
-              value={filters.workMode[0] || ""}
-              onChange={e => setFilters(f => ({ ...f, workMode: [e.target.value] }))}
-            >
-              <option value="">Select job type</option>
-              <option value="W.F.O">Full Time</option>
-              <option value="Remote">Remote</option>
-              <option value="Hybrid">Hybrid</option>
-            </select>
-            <span className="dropdown-icon">▼</span>
-          </div>
-
-          <div className="divider" /> */}
-
+        <div className="search-fields">
+          {" "}
+          {/* 🆕 Wrap fields separately */}
           <input
             type="text"
             className="search-input"
@@ -337,88 +286,14 @@ const EmpFilter = () => {
             value={filters.expertTecStack}
             onChange={handleStackChange}
           />
-
           <div className="divider" />
-
-          {/* <div className="select-wrapper">
-            <select className="search-select"
-              value={filters.experienceInStack[0] || ""}
-              onChange={e => setFilters(f => ({ ...f, experienceInStack: [e.target.value] }))}
-            >
-              <option value="">Experience</option>
-              <option value="Fresher">Fresher</option>
-              <option value="Junior">Junior</option>
-              <option value="Associate">Associate</option>
-              <option value="Mid-Level">Mid-Level</option>
-              <option value="Senior">Senior</option>
-            </select>
-            <span className="dropdown-icon">▼</span>
-          </div> */}
-          {/* 
-          <div className="select-wrapper">
-            <select
-              className="search-select"
-              value={filters.location[0] || ""}
-              onChange={e => setFilters(f => ({ ...f, location: [e.target.value] }))}
-            >
-              <option value="">Select State</option>
-              {loading ? (
-                <option disabled>Loading...</option>
-              ) : (
-                locations.map((loc) => (
-                  <option key={loc._id} value={loc.name}>
-                    {loc.name}
-                  </option>
-                ))
-              )}
-            </select>
-            <span className="dropdown-icon">▼</span>
-          </div>
-
-          <div className="divider" />
-
-          <div className="select-wrapper">
-            <select
-              className="search-select"
-              value={filters.location[0] || ""}
-              onChange={e => setFilters(f => ({ ...f, location: [e.target.value] }))}
-            >
-              <option value="">Select Location</option>
-              {loading ? (
-                <option disabled>Loading...</option>
-              ) : (
-                locations.map((loc) => (
-                  <option key={loc._id} value={loc.name}>
-                    {loc.name}
-                  </option>
-                ))
-              )}
-            </select>
-            <span className="dropdown-icon">▼</span>
-          </div> */}
-
-          {/* <div className="select-wrapper">
-            <select
-              className="search-select"
-              value={filters.state || ""}
-              onChange={e => setFilters(f => ({ ...f, state: e.target.value, location: "" }))}
-            >
-              <option value="">Select State</option>
-              {states.map((state) => (
-                <option key={state._id} value={state.isoCode}>{state.name}</option>
-              ))}
-            </select>
-            <span className="dropdown-icon">▼</span>
-          </div> */}
-
-
-
-
           <div className="select-wrapper">
             <select
               className="search-select"
               value={filters.location || ""}
-              onChange={e => setFilters(f => ({ ...f, location: e.target.value }))}
+              onChange={(e) =>
+                setFilters((f) => ({ ...f, location: e.target.value }))
+              }
             >
               <option value="">Select City</option>
               {loadingCities ? (
@@ -429,26 +304,23 @@ const EmpFilter = () => {
                     {city.location}
                   </option>
                 ))
-              )
-              }
+              )}
             </select>
             <span className="dropdown-icon">▼</span>
           </div>
-
         </div>
 
-        <button className="search-button">
-          🔍 Search
-        </button>
+        <button className="search-button">🔍 Search</button>
       </div>
-
 
       <div className="job-listing-container">
         <div className="filter-section">
           {/* Filters here */}
           <div className="filter-header">
             <h3>Filter</h3>
-            <button className="reset-btn" onClick={handleResetFilters}>Reset</button>
+            <button className="reset-btn" onClick={handleResetFilters}>
+              Reset
+            </button>
           </div>
 
           <div className="filter-group">
@@ -471,7 +343,9 @@ const EmpFilter = () => {
                   <input
                     type="checkbox"
                     checked={filters.workMode.includes(mode.value)}
-                    onChange={() => handleCheckboxChange("workMode", mode.value)}
+                    onChange={() =>
+                      handleCheckboxChange("workMode", mode.value)
+                    }
                   />
                   {mode.label}
                 </label>
@@ -493,13 +367,14 @@ const EmpFilter = () => {
                   <input
                     type="checkbox"
                     checked={filters.experienceInStack.includes(exp.value)}
-                    onChange={() => handleCheckboxChange("experienceInStack", exp.value)}
+                    onChange={() =>
+                      handleCheckboxChange("experienceInStack", exp.value)
+                    }
                   />
                   {exp.label}
                 </label>
               </div>
             ))}
-
           </div>
 
           <div className="filter-group">
@@ -515,83 +390,86 @@ const EmpFilter = () => {
                 <input
                   type="checkbox"
                   checked={filters.activeJoiners.includes(joiner.value)}
-                  onChange={() => handleCheckboxChange("activeJoiners", joiner.value)}
+                  onChange={() =>
+                    handleCheckboxChange("activeJoiners", joiner.value)
+                  }
                 />
                 {joiner.label}
               </label>
             ))}
           </div>
-
         </div>
 
         <div className="job-cards-section">
-
           {/* Show message if no profiles found */}
-          {(!isLoading && (error || filteredProfiles.length === 0)) && (
-            <div
-              className="no-data-message"
-            >
+          {!isLoading && (error || filteredProfile.length === 0) && (
+            <div className="no-data-message">
               {error || "No profiles found for the selected filters."}
             </div>
           )}
 
-          {role === "Company" ? (
-            currentProfiles.map((job) => (
-              <JobCard key={job._id} {...job} />
-            ))) : currentProfiles.map((profile) => (
-              <div className="job-card" key={profile._id}>
-                <div className="job-card-header">
-                  <img src={profile.image ||  "https://img.freepik.com/free-photo/asian-woman-posing-looking-camera_23-2148255359.jpg"} alt="profile" className="profile-img" />
-                  <div>
-                    <h3>{profile.name}</h3>
-                    <p>{profile.currentPosition}</p>
-                    <p className="companyname">{profile.currentCompanyName}</p>
-                  </div>
-                  <button className="bookmark-btn"><img src={vector} alt="bookmark" /></button>
-                </div>
-
-                <p className="job-desc">
-                  {(() => {
-                    const words = profile.about ? profile.about.split(" ") : [];
-                    if (words.length <= 10) return profile.about;
-                    return words.slice(0, 10).join(" ") + " ...";
-                  })() || "We are looking for someone with experience using AI software to create realistic product photos."}
-                </p>
-
-
-                <div className="job-infos">
-                  <span> <MdOutlineLocationOn color="#3399ff" size={25} /> {profile.location}</span>
-                  <span><IoMdTime color="#3399ff" size={25} />  {noticePeriodLabel(profile.noticePeriod) === "Immediate"
-                    ? "Immediate "
-                    : `${noticePeriodLabel(profile.noticePeriod)} `
+          {currentProfiles.map((profile) => (
+            <div className="job-card" key={profile._id}>
+              <div className="job-card-header">
+                <img
+                  src={
+                    profile.image ||
+                    "https://img.freepik.com/free-photo/asian-woman-posing-looking-camera_23-2148255359.jpg"
                   }
-                  </span>
+                  alt="profile"
+                  className="profile-img"
+                />
+                <div>
+                  <h3>{profile.name}</h3>
+                  <p>{profile.currentPosition}</p>
+                  <p className="companyname">{profile.currentCompanyName}</p>
                 </div>
-
-                <div className="skills">
-                  {profile.skillName.slice(0, 3).map((skill, index) => (
-                    <span key={index}>{skill}</span>
-                  ))}
-
-                </div>
-
-                <button className="view-profile-btn" onClick={() => navigate(`/employee-profile/${profile._id}`)} >View Profile</button>
+                <button className="bookmark-btn">
+                  <img src={vector} alt="bookmark" />
+                </button>
               </div>
-            ))}
 
+              <p className="job-desc">
+                {(() => {
+                  const words = profile.about ? profile.about.split(" ") : [];
+                  if (words.length <= 10) return profile.about;
+                  return words.slice(0, 10).join(" ") + " ...";
+                })()}
+              </p>
 
+              <div className="job-infos">
+                <span>
+                  {" "}
+                  <MdOutlineLocationOn color="#3399ff" size={25} />{" "}
+                  {profile.location}
+                </span>
+                <span>
+                  <IoMdTime color="#3399ff" size={25} />{" "}
+                  {noticePeriodLabel(profile.noticePeriod) === "Immediate"
+                    ? "Immediate "
+                    : `${noticePeriodLabel(profile.noticePeriod)} `}
+                </span>
+              </div>
 
+              <div className="skills">
+                {profile.skillName.slice(0, 3).map((skill, index) => (
+                  <span key={index}>{skill}</span>
+                ))}
+              </div>
 
-
+              <button
+                className="view-profile-btn"
+                onClick={() => navigate(`/employee-profile/${profile._id}`)}
+              >
+                View Profile
+              </button>
+            </div>
+          ))}
         </div>
       </div>
 
       {/* Pagination */}
-      {/* <Pagination
-        currentPage={currentPage}
-        totalPages={Math.ceil(profilesData.length / profilesPerPage)}
-        onPageChange={(page) => setCurrentPage(page)}
-      /> */}
+
       <div className="pagination">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -602,7 +480,9 @@ const EmpFilter = () => {
 
         {paginationRange.map((page, index) =>
           page === "..." ? (
-            <span key={index} className="dots">...</span>
+            <span key={index} className="dots">
+              ...
+            </span>
           ) : (
             <button
               key={page}
@@ -615,7 +495,9 @@ const EmpFilter = () => {
         )}
 
         <button
-          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
           disabled={currentPage === totalPages}
         >
           Next &#8250;

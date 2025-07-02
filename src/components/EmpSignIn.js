@@ -15,7 +15,6 @@ const EmpSignIn = () => {
   const [loading, setLoading] = useState(false);
   const [isOtpSent, setIsOtpSent] = useState(false);
 
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -27,11 +26,17 @@ const EmpSignIn = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${baseUrl}/api/mobileNumberVerificationSendOtp`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mobileNumber: formData.mobileNumber, isForLogin: 1 }),
-      });
+      const response = await fetch(
+        `${baseUrl}/api/mobileNumberVerificationSendOtp`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            mobileNumber: formData.mobileNumber,
+            isForLogin: 1,
+          }),
+        }
+      );
       const data = await response.json();
       if (data.status === 200) {
         setVerificationId(data.result);
@@ -45,7 +50,6 @@ const EmpSignIn = () => {
       setError(error.message || "Something went wrong");
     } finally {
       setLoading(false);
-
     }
   };
 
@@ -53,17 +57,21 @@ const EmpSignIn = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${baseUrl}/api/mobileNumberVerificationSetup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: verificationId, otp: formData.otp }),
-      });
+      const response = await fetch(
+        `${baseUrl}/api/mobileNumberVerificationSetup`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: verificationId, otp: formData.otp }),
+        }
+      );
       const data = await response.json();
       if (data.status === 200) {
         // alert("OTP Verification Successful!");
         if (data.token) {
           Cookies.set("authToken", data.token, { expires: 1 });
           Cookies.set("userId", data.result._id);
+          Cookies.set("role", "candidate");
           navigate("/employee-page");
         }
       } else {
@@ -108,8 +116,12 @@ const EmpSignIn = () => {
         />
       </div>
       <div className="login-btn">
-        <button onClick={verifyOtp} disabled={loading}>Login</button>
-        <p>Don't have an account? <Link to="/signup">Register Now</Link></p>
+        <button onClick={verifyOtp} disabled={loading}>
+          Login
+        </button>
+        <p>
+          Don't have an account? <Link to="/signup">Register Now</Link>
+        </p>
       </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>

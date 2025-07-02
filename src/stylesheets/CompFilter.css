@@ -179,7 +179,7 @@ h3 {
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
-
+/* 
 .job-card {
   border: 1px solid #3399ff;
   border-radius: 10px;
@@ -190,7 +190,7 @@ h3 {
   flex-direction: column;
   justify-content: space-between;
   /* height: fit-content; */
-}
+
 
 .job-card-header {
   display: flex;
@@ -214,15 +214,13 @@ h3 {
   margin-top: -50px;
 }
 
-.job-desc {
-  /* margin: 10px 0;
-   */
+ .job-desc {
+  
   margin-top: 20px;
   font-size: 14px;
   color: #525252;
-  /* margin-left: 15px; */
-  /* text-align: center; */
-}
+  
+} 
 .companyname {
   font-size: small;
 }
@@ -272,7 +270,7 @@ h3 {
 .view-profile-btn:hover {
   background: #1783d0;
   color: white;
-}
+} */
 
 .emp-filterBox {
   width: auto;

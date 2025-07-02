@@ -50,7 +50,6 @@ const EmprSignIn = () => {
       );
     } finally {
       setLoading(false);
-
     }
   };
 
@@ -67,18 +66,21 @@ const EmprSignIn = () => {
         }
       );
 
-      if (response.data.status === 200) {
-        // alert("OTP Verification Successful!");
+      if (response?.data?.status === 200) {
+        const employer = response.data.result;
 
-        if (response.data.token) {
-          Cookies.set("authToken", response.data.token, { expires: 1 });
+        Cookies.set("authToken", response.data.token, { expires: 1 });
+        Cookies.set("userId", employer._id);
+        Cookies.set("role", "company");
 
-          // Store user in AuthContext
-          const userData = { name: "Employer", mobile: formData.mobileNumber };
-          login(userData);
+        const userData = {
+          name: employer.name,
+          mobile: employer.contactNumber,
+          image: employer.logo,
+        };
+        login(userData);
 
-          navigate("/employer");
-        }
+        navigate("/employer");
       } else {
         setError(response.data.message);
       }
@@ -106,7 +108,12 @@ const EmprSignIn = () => {
               onChange={handleChange}
               name="mobileNumber"
             />
-            <button type="button" className="mainfont" onClick={sendOtp} disabled={loading}>
+            <button
+              type="button"
+              className="mainfont"
+              onClick={sendOtp}
+              disabled={loading}
+            >
               <strong>Send OTP</strong>
             </button>
           </div>
@@ -131,7 +138,18 @@ const EmprSignIn = () => {
           </p>
         </div>
 
-        {error && <p style={{ color: "red" , display: "flex" , justifycontent: "center" , width: "528px" }}>{error}</p>}
+        {error && (
+          <p
+            style={{
+              color: "red",
+              display: "flex",
+              justifycontent: "center",
+              width: "528px",
+            }}
+          >
+            {error}
+          </p>
+        )}
       </div>
     </>
   );

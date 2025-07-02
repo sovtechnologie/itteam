@@ -7,7 +7,7 @@
   background-color: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   position: relative;
-  height: 300px;
+  height: fit-content;
 }
 
 .card-header {
@@ -55,6 +55,16 @@
   cursor: pointer;
 }
 
+.job-desc {
+  display: flex;
+  font-size: 14px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  color: #525252;
+  margin-top: 20px;
+}
+
 .job-tags {
   display: flex;
   justify-content: center;
@@ -71,20 +81,14 @@
   color: #1783d0;
   background-color: #f9f9f9;
 }
-
-.job-details {
+.job-webisteurl {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   font-size: 12px;
-  margin-bottom: 15px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3rem;
   color: #525252;
 }
-
-/* .salary,
-.posted {
-    padding: 2px 4px;
-} */
 
 .view-button {
   width: 100%;

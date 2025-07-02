@@ -13,11 +13,9 @@ import { IoIosMail } from "react-icons/io";
 import { FiShare2 } from "react-icons/fi";
 import Profile from "../images/UserProfile.png";
 import resumelogo from "../images/resumelogo.png";
-import companyLogo from "../images/CompanyProfilelogo.png"
-
+import companyLogo from "../images/CompanyProfilelogo.png";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
-
 
 const EmployeeProfile = () => {
   const { id } = useParams();
@@ -27,10 +25,6 @@ const EmployeeProfile = () => {
 
   const [formData, setFormData] = useState({});
 
-
-
-
-
   const [aboutText, setAboutText] = useState(userData?.about || "");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -39,18 +33,9 @@ const EmployeeProfile = () => {
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [educationList, setEducationList] = useState([]);
 
-
-
-
-
   const [projects, setProjects] = useState([]);
 
   const [certifications, setCertifications] = useState([]);
-
-
-
-
-
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -93,29 +78,72 @@ const EmployeeProfile = () => {
     fetchUserData();
   }, [id]);
 
+  const experienceLabel = (value) => {
+    switch (value) {
+      case "1":
+      case 1:
+        return "Fresher";
+      case "2":
+      case 2:
+        return "Junior";
+      case "3":
+      case 3:
+        return "Mid-Level";
+      case "4":
+      case 4:
+        return "Senior";
+      default:
+        return value ? `${value} Year Exp` : "Not specified";
+    }
+  };
+
+  const noticePeriodLabel = (value) => {
+    switch (value) {
+      case "1":
+      case 1:
+        return "Immediate";
+      case "2":
+      case 2:
+        return "Within 7 Days";
+      case "3":
+      case 3:
+        return "Within 15 Days";
+      case "4":
+      case 4:
+        return "Within 30 Days";
+      case "5":
+      case 5:
+        return "Within 45 Days";
+      default:
+        return "Not specified";
+    }
+  };
+
   useEffect(() => {
     if (userData) {
       setFormData({
         name: userData.name,
         designation: userData.currentPosition,
-        company: userData.currentCompany,
-        location: userData.location ,
-        experience: userData.experienceInStack ? `${userData.experienceInStack} Year Exp` : "",
+        company: userData.company_Name,
+        location: userData.location,
+        state: userData.state,
+        experience: userData.experienceInStack
+          ? String(userData.experienceInStack)
+          : "",
         salary: userData.salary ? `${userData.salary} /-Year` : "",
-        notice: userData.noticePeriod ? `${userData.noticePeriod} Days (Notice period)` : "",
+        notice: userData.noticePeriod ? String(userData.noticePeriod) : "",
         phone: userData.mobileNumber ? `+91 ${userData.mobileNumber}` : "",
         email: userData.email,
         profileImg: userData.image,
       });
 
-
       // Optional: Set other related states
       setAboutText(userData.about || "");
-     setSelectedSkills(
-        (userData.skillmodels || []).map(skill => ({
+      setSelectedSkills(
+        (userData.skillmodels || []).map((skill) => ({
           tecStackName: skill.skillsName,
           techStacklogo: skill.skillLogo,
-          _id: skill._id
+          _id: skill._id,
         }))
       );
       setEmploymentList(userData.workExperiences || []);
@@ -124,10 +152,8 @@ const EmployeeProfile = () => {
       setCertifications(userData.lic_certis || []);
       setResumeFile(userData.resume ? userData.resume.split("/").pop() : "");
       setResumeURL(userData.resume);
-
     }
   }, [userData]);
-
 
   function formatDateRange(start, end) {
     if (!start) return "";
@@ -152,7 +178,6 @@ const EmployeeProfile = () => {
     });
   };
 
-
   if (loading) {
     return <h2>Loading...</h2>;
   }
@@ -163,12 +188,8 @@ const EmployeeProfile = () => {
 
   return (
     <>
-
-
-
       <div className="empprofile-card">
         <div className="profileCard-box">
-
           {/* main Profile section */}
           <div className="profile-secOne">
             <div className="profileCardHead">
@@ -193,11 +214,13 @@ const EmployeeProfile = () => {
                     <div className="personalInfo-colOne">
                       <div className="colOne-details">
                         <FaLocationDot size={20} />
-                        <p>{formData.location}</p>
+                        <p>
+                          {formData.location},{formData.state}
+                        </p>
                       </div>
                       <div className="colOne-details">
                         <FaLaptopCode size={25} />
-                        <p>{formData.experience}</p>
+                        <p>{experienceLabel(formData.experience)}</p>
                       </div>
                       <div className="colOne-details">
                         <MdOutlineCurrencyRupee size={25} />
@@ -207,7 +230,7 @@ const EmployeeProfile = () => {
                     <div className="personalInfo-colTwo">
                       <div className="colTwo-details">
                         <FaBusinessTime size={25} />
-                        <p>{formData.notice}</p>
+                        <p>{noticePeriodLabel(formData.notice)}</p>
                       </div>
                       <div className="colTwo-details">
                         <IoCallSharp size={25} />
@@ -222,20 +245,16 @@ const EmployeeProfile = () => {
                 </div>
               </div>
             </div>
-
-
-
-
           </div>
 
           <div className="profile-secTwo">
             <div className="profile-contentBox">
-
-
               {/* Link section */}
               <div className="main-wrapper">
                 <div className="quick-links">
-                  <div className="content-boxes-head"><h2>Quick Links</h2></div>
+                  <div className="content-boxes-head">
+                    <h2>Quick Links</h2>
+                  </div>
                   <ul>
                     <li>About Me </li>
                     <li>Resume </li>
@@ -248,7 +267,6 @@ const EmployeeProfile = () => {
                   </ul>
                 </div>
 
-
                 <div className="content-boxes">
                   <div className="content-boxes-head">
                     <h2>About Me</h2>
@@ -257,16 +275,11 @@ const EmployeeProfile = () => {
                   <div className="about-card-box-details">
                     <div>
                       <div>
-                        <p>
-                          {aboutText}
-                        </p>
+                        <p>{aboutText}</p>
                       </div>
-
                     </div>
                   </div>
                 </div>
-
-
               </div>
 
               {/* Resume section */}
@@ -283,8 +296,15 @@ const EmployeeProfile = () => {
                     </div>
                   ) : (
                     <div className="resume-info">
-                      <p><strong>Uploaded:</strong> {resumeFile}</p>
-                      <a href={resumeURL} target="_blank" rel="noopener noreferrer" className="resume-link">
+                      <p>
+                        <strong>Uploaded:</strong> {resumeFile}
+                      </p>
+                      <a
+                        href={resumeURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="resume-link"
+                      >
                         View / Download Resume
                       </a>
                     </div>
@@ -292,23 +312,27 @@ const EmployeeProfile = () => {
                 </div>
               </div>
 
-
-
               {/* Skill Section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
-                  <h2>Key Skills</h2>           
+                  <h2>Key Skills</h2>
                 </div>
 
                 <div className="skills-card-box-details">
                   <div className="skillsbox-card">
                     {selectedSkills.map((skill, index) => (
                       <div className="skill-badge" key={index}>
-                        <span className="skill-icon"><img
-                          src={skill.techStacklogo}
-                          // alt={skill.tecStackName}
-                          style={{ width: "20px", height: "20px", marginRight: "8px" }}
-                        /></span>
+                        <span className="skill-icon">
+                          <img
+                            src={skill.techStacklogo}
+                            // alt={skill.tecStackName}
+                            style={{
+                              width: "20px",
+                              height: "20px",
+                              marginRight: "8px",
+                            }}
+                          />
+                        </span>
                         <span>{skill.tecStackName}</span>
                       </div>
                     ))}
@@ -316,20 +340,23 @@ const EmployeeProfile = () => {
                 </div>
               </div>
 
-
               {/* Employement Scetion */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Employment</h2>
-                  
                 </div>
                 <div className="exp-card-box-details">
                   <div className="employment-list">
                     {employmentList.map((job, index) => {
-                      const duration = formatDateRange(job.startDate, job.endDate);
+                      const duration = formatDateRange(
+                        job.startDate,
+                        job.endDate
+                      );
                       return (
                         <div className="employment-card" key={index}>
-                          <div className="employment-logo"><img src={job.companyLogo || companyLogo} /></div>
+                          <div className="employment-logo">
+                            <img src={job.companyLogo || companyLogo} />
+                          </div>
                           <div className="employment-content">
                             <div className="employment-header">
                               <h3>{job.title}</h3>
@@ -339,31 +366,36 @@ const EmployeeProfile = () => {
                             </div>
                             <p className="company-name">{job.company_Name}</p>
                             <p className="company-add">{job.location}</p>
-                            <p className="employment-description">{job.description}</p>
+                            <p className="employment-description">
+                              {job.description}
+                            </p>
                           </div>
                         </div>
-                      )
+                      );
                     })}
                   </div>
                 </div>
               </div>
 
-
               {/* Education Section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Education</h2>
-                 
                 </div>
 
                 <div className="education-cards">
                   {educationList.map((edu) => {
-                    const duration = formatDateRange(edu.startDate, edu.endDate);
+                    const duration = formatDateRange(
+                      edu.startDate,
+                      edu.endDate
+                    );
                     return (
                       <div className="education-card" key={edu.id}>
-                        <img src={edu.logo
-                          
-                        } alt="Logo" className="college-logo" />
+                        <img
+                          src={edu.logo}
+                          alt="Logo"
+                          className="college-logo"
+                        />
                         <div className="education-info">
                           <h3>{edu.college}</h3>
                           <p>{edu.degree}</p>
@@ -371,81 +403,86 @@ const EmployeeProfile = () => {
                         </div>
                         <div className="education-details">
                           <div className="duration">{duration}</div>
-                          <div className="grade">Grade {edu?.grade ?? "Not specified"}</div>
+                          <div className="grade">
+                            Grade {edu?.grade ?? "Not specified"}
+                          </div>
                         </div>
                       </div>
-                    )
+                    );
                   })}
                 </div>
-
               </div>
-
 
               {/* Project Section */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Projects</h2>
-                 
                 </div>
                 <div className="education-cards">
                   {projects.map((proj, index) => {
-                    const duration = formatDateRange(proj.startDate, proj.endDate);
+                    const duration = formatDateRange(
+                      proj.startDate,
+                      proj.endDate
+                    );
 
                     return (
                       <div className="project-card" key={index}>
-                        <img src={proj.image} alt="Project Logo" className="project-logo" />
+                        <img
+                          src={proj.image}
+                          alt="Project Logo"
+                          className="project-logo"
+                        />
                         <div className="project-info">
                           <h3>{proj.title}</h3>
                           <p className="project-date">{duration}</p>
-                          <p className="project-associated">{proj.associated}</p>
-                          <p className="project-description">{proj.projectDescription}</p>
+                          <p className="project-associated">
+                            {proj.associated}
+                          </p>
+                          <p className="project-description">
+                            {proj.projectDescription}
+                          </p>
                         </div>
                       </div>
-                    )
+                    );
                   })}
                 </div>
               </div>
-
 
               {/* Licence & Certificate */}
               <div className="content-boxes">
                 <div className="content-boxes-head">
                   <h2>Licenses & Certifications</h2>
-                  
                 </div>
                 <div className="education-cards">
-                {certifications.map((cert, index) => (
-                  <div className="license-card" key={index}>
-                    <img src={cert.image} alt="Certification Logo" className="license-logo" />
-                    <div className="license-info">
-                      <h3>{cert.courses}</h3>
-                      <p className="issuer">{cert.company_Name}</p>
-                      <p className="issued">
-                        Issued {formatDate(cert.issued_Date)}
-                        {cert.endDate
-                          ? ` · Expires ${formatDate(cert.endDate)}`
-                          : " · No Expiration Date"}
-                      </p>
-
+                  {certifications.map((cert, index) => (
+                    <div className="license-card" key={index}>
+                      <img
+                        src={cert.image}
+                        alt="Certification Logo"
+                        className="license-logo"
+                      />
+                      <div className="license-info">
+                        <h3>{cert.courses}</h3>
+                        <p className="issuer">{cert.company_Name}</p>
+                        <p className="issued">
+                          Issued {formatDate(cert.issued_Date)}
+                          {cert.endDate
+                            ? ` · Expires ${formatDate(cert.endDate)}`
+                            : " · No Expiration Date"}
+                        </p>
+                      </div>
+                      <a
+                        href={cert.certificateUrl} // Replace with your actual URL variable
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="show-credential-button"
+                      >
+                        Show credential
+                      </a>
                     </div>
-                    <a
-                      href={cert.certificateUrl}  // Replace with your actual URL variable
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="show-credential-button"
-                    >
-                      Show credential
-                    </a>
-                  </div>
-                ))}
+                  ))}
                 </div>
               </div>
-              
-
-
-              
-
-
             </div>
           </div>
         </div>
@@ -455,4 +492,3 @@ const EmployeeProfile = () => {
 };
 
 export default EmployeeProfile;
-
