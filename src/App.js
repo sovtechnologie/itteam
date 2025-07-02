@@ -46,7 +46,8 @@ const AppContent = () => {
     location.pathname === "/ourTeam" ||
     location.pathname === "/privacy&policy" ||
     location.pathname === "/terms&condition" ||
-    location.pathname === "/contactus";
+    location.pathname === "/contactus" ||
+    location.pathname === "/pricing";
 
   return (
     <>

@@ -1420,8 +1420,8 @@
   gap: 20px;
   margin-bottom: 30px; */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
 .company-card-exact {
@@ -1446,12 +1446,12 @@
   border-radius: 16px;
   margin-bottom: 10px;
 }
-.company-info-exact{
-    border: 2px solid rgba(23, 131, 208, 0.1);
-    padding: 5px;
-    background-color: rgba(23, 131, 208, 0.1);
-    width: 200px;
-    border-radius: 15px;
+.company-info-exact {
+  border: 2px solid rgba(23, 131, 208, 0.1);
+  padding: 5px;
+  background-color: rgba(23, 131, 208, 0.1);
+  width: 200px;
+  border-radius: 15px;
 }
 
 .company-name-exact {
@@ -1472,6 +1472,12 @@
   margin-bottom: 12px;
   line-height: 1.4;
   font-weight: 300;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .company-tags-exact {
@@ -1922,9 +1928,7 @@
   font-size: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
 }
-
 
 .btn-primary {
   padding: 10px 20px;
