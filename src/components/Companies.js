@@ -188,7 +188,7 @@ export default function Companies() {
                 <strong>Website</strong>
                 <div className="link">{companyData?.website}</div>
               </div>
-              <div>
+              <div className='contact-number'>
                 <strong>Industry</strong>
                 <div className="pill-container">
                   {companyData?.industry.map((item, idx) => (
@@ -213,7 +213,7 @@ export default function Companies() {
                 <strong>Address</strong>
                 <p>{companyData?.address}</p>
               </div>
-              <div>
+              <div className='contact-number'>
                 <strong>Founded</strong>
                 <p>{companyData?.founded}</p>
               </div>
@@ -236,7 +236,7 @@ export default function Companies() {
                   <div key={index} className="jobs">
                     <div className="card-heading">
                       <div className="Company-logo">SOV</div>
-                      <img src={vector} style={{ marginTop: "-40px" }} />
+                      {/* <img src={vector} style={{ marginTop: "-40px" }} /> 
                     </div>
                     <div className='Company-details'>
                       <p className="companyName">Sov Technologies</p>
