@@ -40,8 +40,6 @@ const EmpSignUp = () => {
     { value: "other", label: "Other" },
   ];
 
-
-
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
     if (type === "checkbox") {
@@ -53,10 +51,8 @@ const EmpSignUp = () => {
     }
   };
 
-
   const sendOtp = async () => {
     if (!formData.mobileNumber) {
-      alert("Please enter a mobile number");
       return;
     }
     setLoading(true);
@@ -70,8 +66,7 @@ const EmpSignUp = () => {
       );
 
       if (response.data.status === 200) {
-        alert(response.data.message);
-        setIsOtpSent(true)
+        setIsOtpSent(true);
         setFormData((prev) => ({
           ...prev,
           userId: response.data.result,
@@ -79,14 +74,12 @@ const EmpSignUp = () => {
       }
     } catch (error) {
       console.error("Error sending OTP:", error);
-      alert("Failed to send OTP");
     }
     setLoading(false);
   };
 
   const verifyOtp = async () => {
     if (!formData.otp) {
-      alert("Please enter the OTP");
       return;
     }
 
@@ -102,19 +95,16 @@ const EmpSignUp = () => {
       );
 
       if (response.data.status === 200) {
-        alert("OTP Verified Successfully");
         setIsOtpReceive(true);
         setFormData((prev) => ({ ...prev, otpVerified: true }));
       }
     } catch (error) {
       console.error("OTP verification failed:", error);
-      alert("OTP verification failed");
     }
     setLoading(false);
   };
 
   const registerUser = async () => {
-
     if (!formData.termsAccepted) {
       alert("Please accept terms and conditions.");
       return;
@@ -123,7 +113,12 @@ const EmpSignUp = () => {
       alert("Please verify OTP first");
       return;
     }
-    if (!formData.fullName || !formData.email || !formData.resume || !formData.gender) {
+    if (
+      !formData.fullName ||
+      !formData.email ||
+      !formData.resume ||
+      !formData.gender
+    ) {
       alert("Please fill in all required fields.");
       return;
     }
@@ -144,24 +139,25 @@ const EmpSignUp = () => {
         formDataToSend.append("resume", formData.resume); // resume must be a File object
       }
 
-      const response = await axios.post(`${BASE_URL}/api/register`, formDataToSend, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
+      const response = await axios.post(
+        `${BASE_URL}/api/register`,
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (response.data.status === 200) {
-        alert("Registration successful! You can login now...");
         navigate("/signin?role=candidate");
 
         console.log(response.data.result);
       } else {
-        alert(`Error: ${response.data.message}`);
+        console.error(`Error: ${response.data.message}`);
       }
     } catch (error) {
       console.error("Registration failed:", error);
-      alert("Registration failed. Please try again.");
     }
   };
 
@@ -187,38 +183,42 @@ const EmpSignUp = () => {
   };
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/withOutLogin/get-state-list`, {
-      params: { countryCode: "IN" },
-    }).then((response) => {
-      if (response.data && response.data.data) {
-        setStatesList(response.data.data);
-        console.log("States List:", response.data.data);
-      }
-    }).catch((error) => console.error("Error fetching states:", error));
+    axios
+      .get(`${BASE_URL}/withOutLogin/get-state-list`, {
+        params: { countryCode: "IN" },
+      })
+      .then((response) => {
+        if (response.data && response.data.data) {
+          setStatesList(response.data.data);
+          console.log("States List:", response.data.data);
+        }
+      })
+      .catch((error) => console.error("Error fetching states:", error));
   }, []);
 
   useEffect(() => {
     if (selectedStateCode) {
-      axios.post(`${BASE_URL}/withoutLogin/getCityList`, {
-        stateName: selectedStateCode,
-        countryCode: "IN",
-      }).then((response) => {
-        if (response.data && response.data.result) {
-          setCitiesList(response.data.result);
-        }
-      }).catch((error) => console.error("Error fetching cities:", error));
+      axios
+        .post(`${BASE_URL}/withoutLogin/getCityList`, {
+          stateName: selectedStateCode,
+          countryCode: "IN",
+        })
+        .then((response) => {
+          if (response.data && response.data.result) {
+            setCitiesList(response.data.result);
+          }
+        })
+        .catch((error) => console.error("Error fetching cities:", error));
     } else {
       setCitiesList([]); // Clear cities if no state selected
     }
   }, [selectedStateCode]);
-
 
   useEffect(() => {
     if (formData.userId) {
       fetchUserData();
     }
   }, [formData.userId]);
-
 
   return (
     <>
@@ -256,20 +256,22 @@ const EmpSignUp = () => {
                 <select
                   name="state"
                   value={formData.state || ""}
-                  onChange={e => {
+                  onChange={(e) => {
                     const selected = statesList.find(
-                      state => (state.name || state) === e.target.value
+                      (state) => (state.name || state) === e.target.value
                     );
-                    setFormData(prev => ({ ...prev, state: e.target.value }));
+                    setFormData((prev) => ({ ...prev, state: e.target.value }));
                     setSelectedState(e.target.value);
-                    setSelectedStateCode(selected?.isoCode || "");// if you want to use for city dropdown
-
+                    setSelectedStateCode(selected?.isoCode || ""); // if you want to use for city dropdown
                   }}
                   className="form-select"
                 >
                   <option value="">Select State</option>
-                  {statesList.map(state => (
-                    <option key={state._id || state.id || state} value={state.name || state}>
+                  {statesList.map((state) => (
+                    <option
+                      key={state._id || state.id || state}
+                      value={state.name || state}
+                    >
                       {state.name || state}
                     </option>
                   ))}
@@ -279,8 +281,6 @@ const EmpSignUp = () => {
               <div className="signUpform-group">
                 <label htmlFor="workStatus">Work Mode</label>
                 <div className="radio-group">
-
-
                   <div className="radio-option">
                     <input
                       type="radio"
@@ -290,9 +290,13 @@ const EmpSignUp = () => {
                       onChange={handleChange}
                       checked={formData.workStatus === "1"}
                       className="custom-radio"
-
                     />
-                    <label htmlFor="W.F.O" style={{ marginLeft: '8px', marginBottom: '0px'}}>W.F.O</label>
+                    <label
+                      htmlFor="W.F.O"
+                      style={{ marginLeft: "8px", marginBottom: "0px" }}
+                    >
+                      W.F.O
+                    </label>
                   </div>
                   <div className="radio-option">
                     <input
@@ -304,7 +308,9 @@ const EmpSignUp = () => {
                       checked={formData.workStatus === "2"}
                       className="custom-radio"
                     />
-                    <label htmlFor="Remote" style={{ marginLeft: '8px' }}>Remote</label>
+                    <label htmlFor="Remote" style={{ marginLeft: "8px" }}>
+                      Remote
+                    </label>
                   </div>
                   <div className="radio-option">
                     <input
@@ -316,14 +322,16 @@ const EmpSignUp = () => {
                       checked={formData.workStatus === "3"}
                       className="custom-radio"
                     />
-                    <label htmlFor="Hybrid" style={{ marginLeft: '8px' }}>Hybrid</label>
+                    <label htmlFor="Hybrid" style={{ marginLeft: "8px" }}>
+                      Hybrid
+                    </label>
                   </div>
                 </div>
               </div>
 
               <div className="signUpform-group">
                 <label htmlFor="gender">Gender</label>
-                <div className="radio-group" >
+                <div className="radio-group">
                   <div className="radio-option">
                     <input
                       type="radio"
@@ -334,7 +342,9 @@ const EmpSignUp = () => {
                       checked={formData.gender === "male"}
                       className="custom-radio"
                     />
-                    <label htmlFor="male" style={{ marginLeft: '8px' }}>Male</label>
+                    <label htmlFor="male" style={{ marginLeft: "8px" }}>
+                      Male
+                    </label>
                   </div>
                   <div className="radio-option">
                     <input
@@ -346,11 +356,12 @@ const EmpSignUp = () => {
                       checked={formData.gender === "female"}
                       className="custom-radio"
                     />
-                    <label htmlFor="female" style={{ marginLeft: '8px' }}>Female</label>
+                    <label htmlFor="female" style={{ marginLeft: "8px" }}>
+                      Female
+                    </label>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
           <div className="formColTwo">
@@ -377,9 +388,6 @@ const EmpSignUp = () => {
                 </div>
               </div>
 
-
-
-
               <div className="signUpform-group">
                 <label htmlFor="location">City</label>
                 <select
@@ -390,8 +398,11 @@ const EmpSignUp = () => {
                   disabled={!selectedState}
                 >
                   <option value="">Select City</option>
-                  {citiesList.map(city => (
-                    <option key={city._id || city.id || city.name || city} value={city.name || city}>
+                  {citiesList.map((city) => (
+                    <option
+                      key={city._id || city.id || city.name || city}
+                      value={city.name || city}
+                    >
                       {city.name || city}
                     </option>
                   ))}
@@ -405,8 +416,6 @@ const EmpSignUp = () => {
                   onChange={handleChange}
                 />
               </div> */}
-
-
 
               <div className="signUpform-group">
                 <label htmlFor="experience">Experience</label>
@@ -484,7 +493,10 @@ const EmpSignUp = () => {
              
           </div>
         </div> */}
-        <div className="upload-box" onClick={() => document.getElementById("resumeInput").click()}>
+        <div
+          className="upload-box"
+          onClick={() => document.getElementById("resumeInput").click()}
+        >
           {!formData.resume && (
             <FiUpload
               style={{
@@ -501,7 +513,9 @@ const EmpSignUp = () => {
             name="resume"
             accept=".pdf,.doc,.docx"
             style={{ display: "none" }}
-            onChange={(e) => setFormData({ ...formData, resume: e.target.files[0] })}
+            onChange={(e) =>
+              setFormData({ ...formData, resume: e.target.files[0] })
+            }
           />
         </div>
 
@@ -510,15 +524,22 @@ const EmpSignUp = () => {
             type="checkbox"
             id="terms"
             checked={formData.termsAccepted}
-            onChange={(e) => setFormData({ ...formData, termsAccepted: e.target.checked })}
+            onChange={(e) =>
+              setFormData({ ...formData, termsAccepted: e.target.checked })
+            }
           />
           <label htmlFor="terms">
             I accept all{" "}
-            <a href="/terms&condition" target="_blank" rel="noopener noreferrer" className="highlight" style={{ textDecorationLine: "none" }}>
+            <a
+              href="/terms&condition"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="highlight"
+              style={{ textDecorationLine: "none" }}
+            >
               terms and condition
             </a>
           </label>
-
         </div>
         <div className="register-btn">
           <button onClick={registerUser} disabled={loading}>
@@ -526,7 +547,6 @@ const EmpSignUp = () => {
           </button>
           {loading && <p className="loading">Processing...</p>}
         </div>
-
       </div>
     </>
   );

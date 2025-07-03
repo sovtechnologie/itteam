@@ -586,7 +586,7 @@ body::before {
 
 .sign-btn {
   border-radius: 30px;
-  border: 1.5px solid #1783d0;
+  border: 1px solid #1783d0;
   background-color: white;
   color: #333;
   width: 190px;
@@ -599,7 +599,7 @@ body::before {
 
 .signup-btn {
   border-radius: 30px;
-  border: 1.5px solid #1783d0;
+  border: 1px solid #1783d0;
   background-color: white;
   color: #333;
   width: 190px;

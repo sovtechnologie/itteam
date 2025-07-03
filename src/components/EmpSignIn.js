@@ -8,7 +8,7 @@ const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 const EmpSignIn = () => {
   const [formData, setFormData] = useState({
     mobileNumber: "",
-    otp: "1234",
+    otp: "",
   });
   const [verificationId, setVerificationId] = useState(null);
   const [error, setError] = useState(null);

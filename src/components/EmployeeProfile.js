@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Cookies from "js-cookie";
 import "../stylesheets/CandiProfile.css";
 import "../stylesheets/EmpProfile.css";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaLaptopCode } from "react-icons/fa";
 import { MdOutlineCurrencyRupee } from "react-icons/md";
-import { FiPlus } from "react-icons/fi";
 import { FaBusinessTime } from "react-icons/fa6";
 import { IoCallSharp } from "react-icons/io5";
 import { IoIosMail } from "react-icons/io";
-import { FiShare2 } from "react-icons/fi";
 import Profile from "../images/UserProfile.png";
 import resumelogo from "../images/resumelogo.png";
 import companyLogo from "../images/CompanyProfilelogo.png";
+import School from "../images/Profile/Schoolname.png";
+import Course from "../images/Profile/Course.png";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
 const EmployeeProfile = () => {
   const { id } = useParams();
+  const isLoggedIn = !!Cookies.get("authToken"); 
+
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [employmentList, setEmploymentList] = useState([]);
@@ -177,6 +180,9 @@ const EmployeeProfile = () => {
       month: "short",
     });
   };
+  const maskedName = formData.name
+    ? `${formData.name[0]}${"*".repeat(formData.name.length - 1)}`
+    : "";
 
   if (loading) {
     return <h2>Loading...</h2>;
@@ -198,14 +204,9 @@ const EmployeeProfile = () => {
               <div className="cadidate-basicInfo">
                 <div className="profile-header-top">
                   <div>
-                    <h3>{formData.name}</h3>
+                    <h3>{isLoggedIn ? formData.name : maskedName}</h3>
                     <p>{formData.designation}</p>
                     <p>{formData.company}</p>
-                  </div>
-                  <div className="profile-actions">
-                    <button className="action-btn">
-                      <FiShare2 size={30} />
-                    </button>
                   </div>
                 </div>
 
@@ -224,7 +225,7 @@ const EmployeeProfile = () => {
                       </div>
                       <div className="colOne-details">
                         <MdOutlineCurrencyRupee size={25} />
-                        <p>{formData.salary}</p>
+                        <p>{isLoggedIn ? formData.salary : "Hidden"}</p>
                       </div>
                     </div>
                     <div className="personalInfo-colTwo">
@@ -234,11 +235,13 @@ const EmployeeProfile = () => {
                       </div>
                       <div className="colTwo-details">
                         <IoCallSharp size={25} />
-                        <p>{formData.phone}</p>
+                        <p>{isLoggedIn ? formData.phone : "+91 *********"}</p>
                       </div>
                       <div className="colTwo-details">
                         <IoIosMail size={25} />
-                        <p>{formData.email}</p>
+                        <p>
+                          {isLoggedIn ? formData.email : "********@***.com"}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -289,7 +292,7 @@ const EmployeeProfile = () => {
                 </div>
 
                 <div className="resume-card-box-details">
-                  {!resumeFile ? (
+                  {/* {!resumeFile ? (
                     <div>
                       <img src={resumelogo} className="upload-icon" />
                       <p>Upload your Resume here</p>
@@ -307,6 +310,33 @@ const EmployeeProfile = () => {
                       >
                         View / Download Resume
                       </a>
+                    </div>
+                  )} */}
+                  {!resumeFile ? (
+                    <div>
+                      <img src={resumelogo} className="upload-icon" />
+                      <p>Upload your Resume here</p>
+                    </div>
+                  ) : isLoggedIn ? (
+                    <div className="resume-info">
+                      <p>
+                        <strong>Uploaded:</strong> {resumeFile}
+                      </p>
+                      <a
+                        href={resumeURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="resume-link"
+                      >
+                        View / Download Resume
+                      </a>
+                    </div>
+                  ) : (
+                    <div className="resume-info">
+                      <p>
+                        <strong>Uploaded:</strong> {resumeFile}
+                      </p>
+                      <p>Login to view resume</p>
                     </div>
                   )}
                 </div>
@@ -364,8 +394,10 @@ const EmployeeProfile = () => {
                                 <span>{duration}</span>
                               </div>
                             </div>
-                            <p className="company-name">{job.company_Name}</p>
-                            <p className="company-add">{job.location}</p>
+                            <p className="company-name">
+                              {job.company_Name} | {job.location}
+                            </p>
+
                             <p className="employment-description">
                               {job.description}
                             </p>
@@ -392,14 +424,15 @@ const EmployeeProfile = () => {
                     return (
                       <div className="education-card" key={edu.id}>
                         <img
-                          src={edu.logo}
+                          src={edu.logo || School}
                           alt="Logo"
                           className="college-logo"
                         />
                         <div className="education-info">
                           <h3>{edu.college}</h3>
-                          <p>{edu.degree}</p>
-                          <p className="location">{edu.location}</p>
+                          <p>
+                            {edu.degree} | {edu.location}
+                          </p>
                         </div>
                         <div className="education-details">
                           <div className="duration">{duration}</div>
@@ -428,7 +461,7 @@ const EmployeeProfile = () => {
                     return (
                       <div className="project-card" key={index}>
                         <img
-                          src={proj.image}
+                          src={proj.image || School}
                           alt="Project Logo"
                           className="project-logo"
                         />
@@ -457,7 +490,7 @@ const EmployeeProfile = () => {
                   {certifications.map((cert, index) => (
                     <div className="license-card" key={index}>
                       <img
-                        src={cert.image}
+                        src={cert.image || Course}
                         alt="Certification Logo"
                         className="license-logo"
                       />

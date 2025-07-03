@@ -65,6 +65,7 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  margin-top: 8px;
 }
 
 .pill {
@@ -293,9 +294,11 @@ a {
 }
 
 .company-heading {
-  font-size: 35px;
-  font-weight: 700;
-  margin-bottom: 16px;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-family: "Poppins";
+  color: #525252;
 }
 
 .highlight {
@@ -304,9 +307,12 @@ a {
 
 .company-description {
   font-size: 20px;
+  font-weight: 400;
+  font-family: "Poppins";
   line-height: 1.8;
-  color: #333;
+  color: #525252;
   margin-bottom: 24px;
+  text-transform: capitalize;
 }
 
 .company-meta {
@@ -320,10 +326,10 @@ a {
   margin-right: auto;
 }
 
-.contact-number{
+/* .contact-number{
   display: flex;
   gap: 20px;
-}
+} */
 
 /* .company-meta div {
   margin-bottom: 16px;
@@ -332,26 +338,33 @@ a {
 .company-meta strong {
   display: block;
   font-size: 20px;
-  color: #333;
-  margin-bottom: 4px;
+  /* font-family: "Poppins"; */
+  color: #525252;
+  /* margin-bottom: 4px; */
+  margin-top: 20px;
 }
 
 .company-meta p {
   margin: 0;
   font-size: 18px;
-  color: #525252;
+  color: grey;
+  margin-top: 8px;
+  text-transform: capitalize;
 }
 
 .link {
   color: #1783d0;
   text-decoration: underline;
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 8px;
 }
 
 .pill-container {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  margin-top: 8px;
 }
 
 .pill {

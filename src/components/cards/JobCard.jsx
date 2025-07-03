@@ -29,7 +29,7 @@ const JobCard = ({
                 </div>
 
                 {/* <Bookmark size={16} className="bookmark-icon" /> */}
-                <img className='bookmark-icon' src={vector} alt='bookmark-Icon' />
+                {/* <img className='bookmark-icon' src={vector} alt='bookmark-Icon' /> */}
             </div>
             <p className="job-desc">
                 {(() => {

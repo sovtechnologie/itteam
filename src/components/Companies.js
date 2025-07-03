@@ -140,11 +140,6 @@ export default function Companies() {
                   </div>
 
                   {/* Edit and Share Buttons */}
-                  <div className="Profile-buttons">
-                    <button className="icon-btn">
-                      <FiShare2 size={30} />
-                    </button>
-                  </div>
                 </div>
 
                 <div className="Column-One-Info-Two">
@@ -193,7 +188,7 @@ export default function Companies() {
                 <strong>Website</strong>
                 <div className="link">{companyData?.website}</div>
               </div>
-              <div className='contact-number'>
+              <div>
                 <strong>Industry</strong>
                 <div className="pill-container">
                   {companyData?.industry.map((item, idx) => (
@@ -203,8 +198,8 @@ export default function Companies() {
                   ))}
                 </div>
               </div>
-              <div className="contact-number">
-                <strong>Contact :</strong>
+              <div >
+                <strong>Contact </strong>
                 <p>
                   {companyData?.contactNumber
                     ? `+91 ${companyData.contactNumber.replace(
@@ -218,7 +213,7 @@ export default function Companies() {
                 <strong>Address</strong>
                 <p>{companyData?.address}</p>
               </div>
-              <div className='contact-number'>
+              <div >
                 <strong>Founded</strong>
                 <p>{companyData?.founded}</p>
               </div>

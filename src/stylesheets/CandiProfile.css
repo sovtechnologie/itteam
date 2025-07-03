@@ -28,17 +28,16 @@
   grid-template-columns: 1fr 1fr;
   /* 2 columns */
   gap: 20px;
-  
 }
 
-.form-grid input{
-   border: 1px solid #525252;
+.form-grid input {
+  border: 1px solid #525252;
 }
 
 .form-grid input[type="text"],
 .form-grid input[type="file"],
 .form-grid input[type="email"],
-.form-grid input[type="number"]{
+.form-grid input[type="number"] {
   padding: 10px;
   font-size: 16px;
   border-radius: 6px;
@@ -118,7 +117,7 @@
   text-align: center;
 }
 
-.update-add{
+.update-add {
   background-color: #f44336 !important;
 }
 
@@ -136,7 +135,7 @@
   padding: 8px 16px;
   border: none;
   cursor: pointer;
-  background-color: #1783D0;
+  background-color: #1783d0;
   color: white;
   border-radius: 5px;
 }
@@ -263,7 +262,7 @@
   margin-bottom: 15px;
   font-size: 22px;
   font-weight: bold;
-  color: #1783D0;
+  color: #1783d0;
 }
 
 .modal-box input,
@@ -308,7 +307,7 @@
   margin-bottom: 15px;
   font-size: 22px;
   font-weight: bold;
-  color: #1783D0;
+  color: #1783d0;
 }
 
 .modal-content input[type="text"],
@@ -321,7 +320,7 @@
   font-size: 14px;
   outline: none;
 }
-.modal-content input[type="date"]{
+.modal-content input[type="date"] {
   width: 45%;
   margin: 8px 0;
   padding: 10px 12px;
@@ -427,8 +426,8 @@
   border: 1px solid #ccc;
   resize: none;
 }
-.modal-form input[type="date"]{
-  width: 96%;
+.modal-form input[type="date"] {
+  width: 30%;
   padding: 10px 12px;
   border: 1px solid #ddd;
   border-radius: 6px;
@@ -464,7 +463,7 @@
 }
 
 .modal-buttons button[type="submit"] {
-  background-color: #1783D0;
+  background-color: #1783d0;
   color: white;
 }
 
@@ -476,8 +475,6 @@
 .modal-buttons button:hover {
   opacity: 0.9;
 }
-
-
 
 .empprofile-card {
   width: 100%;
@@ -493,7 +490,7 @@
 }
 
 .profile-secOne {
-  background-color: #1783D0;
+  background-color: #1783d0;
   color: #fff;
   border-radius: 20px;
   padding: 40px;
@@ -551,7 +548,6 @@
   font-size: 28px;
   margin: 0;
   color: white;
-  ;
 }
 
 .cadidate-basicInfo p {
@@ -563,8 +559,6 @@
   width: 65%;
   display: flex;
   flex-direction: column;
-
-
 }
 
 .candi-personalInfo h3,
@@ -595,9 +589,6 @@
 .colTwo-details p {
   margin-left: 15px;
 }
-
-
-
 
 .personalInfo-colTwo {
   margin-left: 150px;
@@ -739,7 +730,7 @@
 .quick-links {
   margin-top: 20px;
   background: white;
-  border: 1px solid #1783D0;
+  border: 1px solid #1783d0;
   padding: 15px;
   border-radius: 10px;
   max-width: 250px;
@@ -754,19 +745,19 @@
 }
 
 .action {
-  color: #1783D0;
+  color: #1783d0;
 }
 
 .quick-links li {
   display: flex;
   justify-content: space-between;
   margin: 18px 0;
-  gap: 20px
+  gap: 20px;
 }
 
 .content-boxes {
   background: white;
-  border: 2px solid #1783D0;
+  border: 2px solid #1783d0;
   border-radius: 10px;
   padding: 20px;
   max-width: 900px;
@@ -784,7 +775,6 @@
   padding: 2px 0px;
   /* box-shadow: 0px 2px 5px rgba(155, 153, 153, 0.1); */
   border-radius: 10px;
-
 }
 
 .content-boxes-head h2 {
@@ -792,7 +782,7 @@
   margin: 0;
   font-weight: 500;
   text-transform: uppercase;
-  color: #1783D0;
+  color: #1783d0;
 }
 
 .about-card-box-details p {
@@ -824,7 +814,6 @@
   flex-wrap: wrap;
   gap: 10px;
   width: 900px;
-
 }
 
 .skillsbox-card {
@@ -837,13 +826,13 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  border: 1px solid #1783D0;
+  border: 1px solid #1783d0;
   padding: 8px 20px;
   border-radius: 30px;
   font-size: 16px;
   color: #333;
   background: #ffffff;
-  white-space:nowrap ;
+  white-space: nowrap;
 }
 
 .exp-card-box-details {
@@ -867,7 +856,7 @@
   gap: 20px;
 }
 
-.employment-logo  img {
+.employment-logo img {
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -890,17 +879,18 @@
 
 .employment-header h3 {
   font-size: 20px;
-  color: #1783D0;
+  color: #1783d0;
   font-weight: 600;
   /* margin: 0; */
 }
 
 .employment-timeline {
-  border: 1px solid #1783D0;
+  border: 1px solid #1783d0;
   padding: 3px 10px;
   border-radius: 20px;
   font-size: 18px;
-  color: #1783D0;
+  color: #1783d0;
+  margin-left: 27rem;
 }
 
 .employment-timeline span {
@@ -908,12 +898,12 @@
 }
 
 .edit-icon {
-  color: #1783D0;
+  color: #1783d0;
   cursor: pointer;
 }
 
 .employee-editBtn {
-  color: #1783D0;
+  color: #1783d0;
   cursor: pointer;
   background: transparent;
   border: none;
@@ -929,7 +919,7 @@
   margin: 5px 0;
   font-weight: 600;
   font-size: 18px;
-} 
+}
 
 .employment-description {
   font-size: 20px;
@@ -995,14 +985,13 @@
   gap: 8px;
 }
 
-
 .duration {
   display: inline-block;
-  border: 1px solid #1783D0;
+  border: 1px solid #1783d0;
   border-radius: 20px;
   padding: 2px 10px;
   font-size: 16px;
-  color: #1783D0;
+  color: #1783d0;
   margin-bottom: 5px;
 }
 
@@ -1014,7 +1003,6 @@
   font-size: 16px;
   display: inline-block;
 }
-
 
 .project-card {
   display: flex;
@@ -1037,7 +1025,7 @@
 }
 
 .project-info h3 {
-  color: #1783D0;
+  color: #1783d0;
   font-size: 20px;
   margin-bottom: 4px;
 }
@@ -1054,7 +1042,6 @@
   color: #525252;
   margin-bottom: 10px;
   font-weight: 600;
-
 }
 
 .project-description {
@@ -1074,11 +1061,9 @@
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
-  color: #1783D0;
+  color: #1783d0;
   background-color: #ffffff;
 }
-
-
 
 .license-card {
   display: flex;
@@ -1128,19 +1113,19 @@
   margin-right: 10px;
   font-size: 16px;
   cursor: pointer;
- text-decoration: none;
+  text-decoration: none;
 }
 
 .content-boxes-head button {
   background-color: transparent;
   border: none;
   padding: 5px;
-  color: #1783D0;
+  color: #1783d0;
   transition: all 0.3s ease-in;
 }
 
 .content-boxes-head button:hover {
-  background-color: #1783D0;
+  background-color: #1783d0;
   color: #fff;
   border-radius: 5px;
   cursor: pointer;
@@ -1218,7 +1203,7 @@ textarea {
 }
 
 .popup-input button[type="submit"] {
-  background-color: #1783D0;
+  background-color: #1783d0;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -1228,5 +1213,5 @@ textarea {
 }
 
 .popup-input button[type="submit"]:hover {
-  background-color: #1783D0;
+  background-color: #1783d0;
 }
