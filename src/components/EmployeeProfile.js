@@ -20,7 +20,7 @@ const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
 const EmployeeProfile = () => {
   const { id } = useParams();
-  const isLoggedIn = !!Cookies.get("authToken"); // Add this after const { id } = useParams();
+  const isLoggedIn = !!Cookies.get("authToken"); 
 
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
