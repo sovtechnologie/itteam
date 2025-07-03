@@ -1718,16 +1718,7 @@ const EmpProfPage = () => {
                         <button onClick={handleSave}>
                           {editingIndex !== null ? "Update" : "Add"}
                         </button>
-<<<<<<< HEAD
                         <button className="update-add" onClick={() => setIsExperienceModalOpen(false)}>Cancel</button>
-=======
-                        <button
-                          style={{ backgroundColor: "#333" }}
-                          onClick={() => setIsExperienceModalOpen(false)}
-                        >
-                          Cancel
-                        </button>
->>>>>>> c7cf5066c389573280ff8ca8a9d012f9a1137522
                         {editingIndex !== null && (
                           <button
                             type="button"
@@ -2091,17 +2082,8 @@ const EmpProfPage = () => {
                         />
                       )} */}
                       <div className="modal-buttons">
-<<<<<<< HEAD
                         <button type="submit">{editIndex !== null ? "Update" : "Add"}</button>
                         <button type="button" onClick={() => setShowModal(false)}>Cancel</button>
-=======
-                        <button type="submit">
-                          {editIndex !== null ? "Update" : "Add"}
-                        </button>
-                        <button onClick={() => setShowModal(false)}>
-                          Cancel
-                        </button>
->>>>>>> c7cf5066c389573280ff8ca8a9d012f9a1137522
                         {editIndex !== null && formProjectData._id && (
                           <button
                             type="button"
@@ -2254,17 +2236,8 @@ const EmpProfPage = () => {
                         <img src={formLicensesData.image} alt="Preview" style={{ width: "10%", height: "auto", borderRadius: "8px", marginTop: "10px" }} />
                       )} */}
                       <div className="modal-buttons">
-<<<<<<< HEAD
                         <button type="submit">{editIndexLicenses !== null ? "Update" : "Add"}</button>
                         <button type="button" onClick={() => setShowLicensesModal(false)}>Cancel</button>
-=======
-                        <button type="submit">
-                          {editIndexLicenses !== null ? "Update" : "Add"}
-                        </button>
-                        <button onClick={() => setShowLicensesModal(false)}>
-                          Cancel
-                        </button>
->>>>>>> c7cf5066c389573280ff8ca8a9d012f9a1137522
                         {editIndexLicenses !== null && formLicensesData._id && (
                           <button
                             type="button"
