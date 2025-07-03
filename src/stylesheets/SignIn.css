@@ -157,7 +157,7 @@
 .register-button:hover{
   background-color: white;
   color: #1783d0;
-  border: 2px solid #1783d0;
+  border: 1px solid #1783d0;
 }
 .signin-left img {
   width: 60%;
@@ -309,7 +309,7 @@
 .login-btn button:hover {
   background-color: white;
   color: #1783d0;
-  border: 2px solid #1783d0;
+  border: 1px solid #1783d0;
   cursor: pointer;
 }
 

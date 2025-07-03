@@ -1192,7 +1192,7 @@
   object-fit: cover;
   border-radius: 50%;
   /* makes image circular */
-  border: 2px solid #1783d0;
+  border: 1px solid #1783d0;
   /* optional: gives a blue border */
 }
 
@@ -1275,15 +1275,17 @@
   flex-wrap: wrap;
   gap: 5px;
   margin-bottom: 16px;
-  justify-content: center;
+  /* justify-content: center; */
+  justify-content: left;
 }
 
 .skill-tag-exact {
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
+  border: 0.2px solid #525252;
   color: #525252;
   padding: 4px 8px;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 8px;
   margin-top: 8px;
   text-align: center;
 }
@@ -1318,7 +1320,7 @@
   width: 210px;
   height: 40px;
   background-color: transparent;
-  border: 2px solid #1783d0;
+  border: 1px solid #1783d0;
   border-radius: 30px;
   color: #1783d0;
   font-size: 18px;
@@ -1455,9 +1457,9 @@
 }
 
 .company-name-exact {
-  font-size: 18px;
-  font-weight: bold;
-  color: #1783d0;
+  font-size: 12.2px;
+  font-weight: 400;
+  color: #525252;
   margin-bottom: 4px;
 }
 
@@ -1675,7 +1677,7 @@
 
 .btn-outline {
   padding: 10px 20px;
-  border: 2px solid #1783d0;
+  border: 1px solid #1783d0;
   color: #1783d0;
   background: transparent;
   border-radius: 30px;
@@ -1689,7 +1691,7 @@
 
 .btn-outline:hover {
   padding: 10px 20px;
-  border: 2px solid #1783d0;
+  border: 1px solid #1783d0;
   color: #fff;
   background-color: #1783d0;
   border-radius: 30px;
@@ -1714,7 +1716,7 @@
 
 .btn-filled:hover {
   background-color: white;
-  border: 2px solid #1783d0;
+  border: 1px solid #1783d0;
   color: #1783d0;
 }
 
@@ -1903,7 +1905,7 @@
 
 /* Outline button style */
 .popular-buttons .btn-outline {
-  border: 2px solid #1783d0;
+  border: 1px solid #1783d0;
   background: transparent;
   color: #1783d0;
   padding: 10px 20px;
@@ -1932,7 +1934,7 @@
 
 .btn-primary {
   padding: 10px 20px;
-  border: 2px solid #1783d0;
+  border: 1px solid #1783d0;
   color: #1783d0;
   background: transparent;
   border-radius: 30px;
@@ -1946,7 +1948,7 @@
 
 .popular-buttons .btn-primary:hover {
   background-color: white;
-  border: 2px solid #1783d0;
+  border: 1px solid #1783d0;
   color: #1783d0;
 }
 
