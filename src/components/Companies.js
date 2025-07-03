@@ -140,11 +140,6 @@ export default function Companies() {
                   </div>
 
                   {/* Edit and Share Buttons */}
-                  <div className="Profile-buttons">
-                    <button className="icon-btn">
-                      <FiShare2 size={30} />
-                    </button>
-                  </div>
                 </div>
 
                 <div className="Column-One-Info-Two">

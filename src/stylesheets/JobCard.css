@@ -58,8 +58,8 @@
 .job-desc {
   display: flex;
   font-size: 14px;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   margin-bottom: 1rem;
   color: #525252;
   margin-top: 20px;
@@ -67,7 +67,7 @@
 
 .job-tags {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
   margin: 12px 0;
 }
@@ -84,8 +84,8 @@
 .job-webisteurl {
   display: flex;
   font-size: 12px;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   margin-bottom: 3rem;
   color: #525252;
 }

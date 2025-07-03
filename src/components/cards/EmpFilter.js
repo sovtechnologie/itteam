@@ -2,18 +2,15 @@ import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import "../../stylesheets/EmpFilter.css";
 import SalaryFilterCard from "./SalaryFilterCard";
-
+import Cookies from "js-cookie";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { IoMdTime } from "react-icons/io";
 
-import vector from "../../images/Vector.png";
-import JobCard from "./JobCard";
-
 const EmpFilter = () => {
+  const isLoggedIn = !!Cookies.get("authToken");
   const [currentPage, setCurrentPage] = useState(1);
   const [users, setUsers] = useState([]);
-  const [companies, setCompanies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -166,17 +163,6 @@ const EmpFilter = () => {
       .catch((err) => console.error("API Error:", err));
   }, []);
 
-  useEffect(() => {
-    axios
-      .get(`${BASE_URL}/withOutLogin/getAllCompanyHomePage`)
-      .then((response) => {
-        if (response.data.status === 200) {
-          setCompanies(response.data.result);
-        }
-      })
-      .catch((error) => console.error("Error fetching companies:", error));
-  }, []);
-
   // useEffect(() => {
   //   axios.get(`${BASE_URL}/withOutLogin/get-state-list`, {
   //     params: { countryCode: "IN" },
@@ -273,6 +259,10 @@ const EmpFilter = () => {
     }
   };
 
+  const maskedName = (name) => {
+    return name ? `${name[0]}${"*".repeat(name.length - 1)}` : "";
+  };
+
   return (
     <>
       <div className="job-search-bar">
@@ -282,7 +272,7 @@ const EmpFilter = () => {
           <input
             type="text"
             className="search-input"
-            placeholder="Enter keyword / designation"
+            placeholder="Search"
             value={filters.expertTecStack}
             onChange={handleStackChange}
           />
@@ -310,7 +300,7 @@ const EmpFilter = () => {
           </div>
         </div>
 
-        <button className="search-button">🔍 Search</button>
+        <button className="search-button">Search</button>
       </div>
 
       <div className="job-listing-container">
@@ -420,20 +410,19 @@ const EmpFilter = () => {
                   className="profile-img"
                 />
                 <div>
-                  <h3>{profile.name}</h3>
+                  <h3>
+                    {isLoggedIn ? profile.name : maskedName(profile.name)}
+                  </h3>
                   <p>{profile.currentPosition}</p>
                   <p className="companyname">{profile.currentCompanyName}</p>
                 </div>
-                <button className="bookmark-btn">
-                  <img src={vector} alt="bookmark" />
-                </button>
               </div>
 
               <p className="job-desc">
                 {(() => {
                   const words = profile.about ? profile.about.split(" ") : [];
-                  if (words.length <= 10) return profile.about;
-                  return words.slice(0, 10).join(" ") + " ...";
+                  if (words.length <= 9) return profile.about;
+                  return words.slice(0, 9).join(" ") + " ...";
                 })()}
               </p>
 

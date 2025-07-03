@@ -1272,10 +1272,13 @@
 /* Skills */
 .skills-container-exact {
   display: flex;
+  align-items: flex-start;
   flex-wrap: wrap;
   gap: 5px;
   margin-bottom: 16px;
-  justify-content: center;
+
+  /* change this */
+  justify-content: flex-start;
 }
 
 .skill-tag-exact {

@@ -7,13 +7,13 @@ const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 const EmprSignUp = () => {
   const [formData, setFormData] = useState({
     mobileNumber: "",
-    otp: "1234",
+    otp: "",
     fullname: "",
     companyName: "",
     email: "",
     state: "",
     currentRole: "",
-    city:"",
+    city: "",
     location: [],
     otpVerified: false,
     termsAccepted: false,
@@ -42,19 +42,23 @@ const EmprSignUp = () => {
     setError(null);
 
     try {
-      const response = await axios.post(`${baseUrl}/employer/mobileNumberVerificationSendOtp`, {
-        mobileNumber: formData.mobileNumber,
-        isForLogin: 0,
-      });
+      const response = await axios.post(
+        `${baseUrl}/employer/mobileNumberVerificationSendOtp`,
+        {
+          mobileNumber: formData.mobileNumber,
+          isForLogin: 0,
+        }
+      );
       if (response.data.status === 200) {
         setIsOtpSent(true);
         setVerificationId(response.data.result);
-
       } else {
         setError(response.data.message);
       }
     } catch (error) {
-      setError(error.response ? error.response.data.message : "Something went wrong");
+      setError(
+        error.response ? error.response.data.message : "Something went wrong"
+      );
     } finally {
       setLoading(false);
     }
@@ -66,19 +70,23 @@ const EmprSignUp = () => {
     setError(null);
 
     try {
-      const response = await axios.post(`${baseUrl}/employer/mobileNumberVerificationSetup`, {
-        id: verificationId,
-        otp: formData.otp,
-      });
+      const response = await axios.post(
+        `${baseUrl}/employer/mobileNumberVerificationSetup`,
+        {
+          id: verificationId,
+          otp: formData.otp,
+        }
+      );
 
       if (response.data.status === 200) {
-
         setFormData((prev) => ({ ...prev, otpVerified: true }));
       } else {
         setError(response.data.message);
       }
     } catch (error) {
-      setError(error.response ? error.response.data.message : "Something went wrong");
+      setError(
+        error.response ? error.response.data.message : "Something went wrong"
+      );
     } finally {
       setLoading(false);
     }
@@ -123,34 +131,41 @@ const EmprSignUp = () => {
         setError(response.data.message);
       }
     } catch (error) {
-      setError(error.response ? error.response.data.message : "Something went wrong");
+      setError(
+        error.response ? error.response.data.message : "Something went wrong"
+      );
     } finally {
       setLoading(false);
     }
   };
 
-
   useEffect(() => {
-    axios.get(`${baseUrl}/withOutLogin/get-state-list`, {
-      params: { countryCode: "IN" },
-    }).then((response) => {
-      if (response.data && response.data.data) {
-        setStatesList(response.data.data);
-        console.log("States List:", response.data.data);
-      }
-    }).catch((error) => console.error("Error fetching states:", error));
+    axios
+      .get(`${baseUrl}/withOutLogin/get-state-list`, {
+        params: { countryCode: "IN" },
+      })
+      .then((response) => {
+        if (response.data && response.data.data) {
+          setStatesList(response.data.data);
+          console.log("States List:", response.data.data);
+        }
+      })
+      .catch((error) => console.error("Error fetching states:", error));
   }, []);
 
   useEffect(() => {
     if (selectedStateCode) {
-      axios.post(`${baseUrl}/withoutLogin/getCityList`, {
-        stateName: selectedStateCode, // Use selectedState directly if it's the state name
-        countryCode: "IN",
-      }).then((response) => {
-        if (response.data && response.data.result) {
-          setCitiesList(response.data.result);
-        }
-      }).catch((error) => console.error("Error fetching cities:", error));
+      axios
+        .post(`${baseUrl}/withoutLogin/getCityList`, {
+          stateName: selectedStateCode, // Use selectedState directly if it's the state name
+          countryCode: "IN",
+        })
+        .then((response) => {
+          if (response.data && response.data.result) {
+            setCitiesList(response.data.result);
+          }
+        })
+        .catch((error) => console.error("Error fetching cities:", error));
     } else {
       setCitiesList([]); // Clear cities if no state selected
     }
@@ -192,7 +207,6 @@ const EmprSignUp = () => {
                 </div>
               </div>
 
-
               <div className="signUpform-group">
                 <label htmlFor="currentrole">Your Current Role</label>
                 <input
@@ -205,40 +219,37 @@ const EmprSignUp = () => {
                 />
               </div>
 
-
               <div className="signUpform-group">
                 <label htmlFor="state">State</label>
                 <select
                   name="state"
                   value={formData.state || ""}
-                  onChange={e => {
+                  onChange={(e) => {
                     const selected = statesList.find(
-                      state => (state.name || state) === e.target.value
+                      (state) => (state.name || state) === e.target.value
                     );
-                    setFormData(prev => ({ ...prev, state: e.target.value }));
+                    setFormData((prev) => ({ ...prev, state: e.target.value }));
                     setSelectedState(e.target.value);
-                    setSelectedStateCode(selected?.isoCode || "");// if you want to use for city dropdown
-
+                    setSelectedStateCode(selected?.isoCode || ""); // if you want to use for city dropdown
                   }}
                   className="form-select"
                 >
                   <option value="">Select State</option>
-                  {statesList.map(state => (
-                    <option key={state._id || state.id || state} value={state.name || state}>
+                  {statesList.map((state) => (
+                    <option
+                      key={state._id || state.id || state}
+                      value={state.name || state}
+                    >
                       {state.name || state}
                     </option>
                   ))}
                 </select>
               </div>
-
-
-
             </div>
           </div>
 
           <div className="formColTwo">
             <div className="signUpform-emp">
-
               <div className="signUpform-group">
                 <label htmlFor="email">Email</label>
                 <input
@@ -250,8 +261,6 @@ const EmprSignUp = () => {
                   onChange={handleChange}
                 />
               </div>
-
-
 
               <div className="signUpform-group">
                 <label htmlFor="verify-otp">OTP</label>
@@ -270,8 +279,6 @@ const EmprSignUp = () => {
                 </div>
               </div>
 
-
-
               {/* <div className="signUpform-group">
                 <label htmlFor="location">Location</label>
                 <input
@@ -283,7 +290,6 @@ const EmprSignUp = () => {
                   onChange={handleChange}
                 />
               </div> */}
-
 
               <div className="signUpform-group">
                 <label htmlFor="company">Company Name</label>
@@ -307,15 +313,16 @@ const EmprSignUp = () => {
                   disabled={!selectedState}
                 >
                   <option value="">Select City</option>
-                  {citiesList.map(city => (
-                    <option key={city._id || city.id || city.name || city} value={city.name || city}>
+                  {citiesList.map((city) => (
+                    <option
+                      key={city._id || city.id || city.name || city}
+                      value={city.name || city}
+                    >
                       {city.name || city}
                     </option>
                   ))}
                 </select>
               </div>
-
-
 
               {/* <div className="signUpform-group">
                 <label htmlFor="companysize">Company Size</label>
@@ -336,19 +343,26 @@ const EmprSignUp = () => {
             type="checkbox"
             id="terms"
             checked={formData.termsAccepted}
-            onChange={(e) => setFormData({ ...formData, termsAccepted: e.target.checked })}
+            onChange={(e) =>
+              setFormData({ ...formData, termsAccepted: e.target.checked })
+            }
           />
           <label htmlFor="terms">
             I accept all{" "}
-            <a href="/terms&condition" target="_blank" rel="noopener noreferrer" className="highlight" style={{ textDecorationLine: "none" }}>
+            <a
+              href="/terms&condition"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="highlight"
+              style={{ textDecorationLine: "none" }}
+            >
               terms and condition
             </a>
           </label>
-
         </div>
         <div className="register-btn">
           <div className="register-btns">
-            <button type="submit" onClick={handleSubmit} >
+            <button type="submit" onClick={handleSubmit}>
               {loading ? "Registering..." : "Register Now"}
             </button>
           </div>
@@ -361,8 +375,6 @@ const EmprSignUp = () => {
 };
 
 export default EmprSignUp;
-
-
 
 // import React from "react";
 

@@ -6,6 +6,7 @@ import trustpopular from "../images/trustpopular.png";
 import { IoIosSearch, IoMdTime } from "react-icons/io";
 
 import api from "../services/api";
+import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import seniorExpert from "../images/Roles/expert.png";
 import counseller from "../images/Roles/counselling.png";
@@ -27,6 +28,7 @@ import { fetchtopskillandlocation } from "../services/apiService";
 import { MdOutlineLocationOn } from "react-icons/md";
 
 const Home = () => {
+  const isLoggedIn = !!Cookies.get("authToken");
   const navigate = useNavigate();
 
   const handleTechStackClick = (techStack) => {
@@ -134,6 +136,10 @@ const Home = () => {
     }
   };
 
+  const maskedName = (name) => {
+    return name ? `${name[0]}${"*".repeat(name.length - 1)}` : "";
+  };
+
   return (
     <>
       <div className="hero-section">
@@ -152,7 +158,7 @@ const Home = () => {
               <IoIosSearch className="search-icon" />
               <input
                 type="text"
-                placeholder="Job title, keyword or company"
+                placeholder="Job title"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
               />
@@ -162,14 +168,14 @@ const Home = () => {
 
           <div className="category-tags">
             {[
-              { img: remote1, label: "Remote" },
-              { img: mnc, label: "MNC" },
-              { img: sales, label: "Sales" },
-              { img: project, label: "Project Management" },
-              { img: development, label: "Development" },
-              { img: data, label: "Data Operator" },
-              { img: intership, label: "Internship" },
-              { img: analytic, label: "Analytics" },
+              { img: remote1, label: "Angular" },
+              { img: mnc, label: "DevOps" },
+              { img: sales, label: "AI" },
+              { img: project, label: "AIML" },
+              { img: development, label: "Python" },
+              { img: data, label: "Project Manager" },
+              { img: intership, label: "Data Analyst" },
+              { img: analytic, label: "Data Engineer" },
             ].map(({ img, label }) => (
               <button key={label} onClick={() => handleTechStackClick(label)}>
                 <img
@@ -280,7 +286,9 @@ const Home = () => {
                   alt={`${candidate.name}'s profile`}
                 />
                 <div className="candidate-details-exact">
-                  <h3 className="candidate-name-exact">{candidate.name}</h3>
+                  <h3 className="candidate-name-exact">
+                    {isLoggedIn ? candidate.name : maskedName(candidate.name)}
+                  </h3>
                   <p className="candidate-position-exact">
                     {candidate.currentPosition}
                   </p>
@@ -298,8 +306,7 @@ const Home = () => {
                     : [];
                   if (words.length <= 10) return candidate.about;
                   return words.slice(0, 10).join(" ") + " ...";
-                })() ||
-                  "We are looking for someone with experience using AI software to create realistic product photos."}
+                })()}
               </p>
 
               <div className="location-options-exact">
@@ -390,7 +397,7 @@ const Home = () => {
                 {company?.description}
               </p>
               <div className="company-tags-exact">
-                {company?.tags?.map((tag, index) => (
+                {company?.industry?.map((tag, index) => (
                   <span key={index} className="company-tag">
                     {tag}
                   </span>
@@ -495,14 +502,17 @@ const Home = () => {
           </p>
 
           <div className="popular-grid">
-            {Array(4)
-              .fill(0)
-              .map((_, i) => (
-                <div className="popular-item" key={i}>
-                  <img src={topcompanies} alt="Icon" />
-                  <span>Top Companies</span>
-                </div>
-              ))}
+            {[
+              "Free for Jobseeker",
+              "No fake Job",
+              "HR Friendly",
+              "Future Of Job",
+            ].map((company, i) => (
+              <div className="popular-item" key={i}>
+                <img src={topcompanies} alt="Icon" />
+                <span>{company}</span>
+              </div>
+            ))}
           </div>
 
           <div className="popular-buttons">
