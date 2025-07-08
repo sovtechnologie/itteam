@@ -47,15 +47,17 @@ const AppContent = () => {
     location.pathname === "/privacy&policy" ||
     location.pathname === "/terms&condition" ||
     location.pathname === "/contactus" ||
-    location.pathname === "/pricing";
+    location.pathname === "/pricing" ||
+    location.pathname === "/signin" ||
+    location.pathname === "/signup";
 
   return (
     <>
       <ScrollToTop />
 
-      {location.pathname !== "/signin" && location.pathname !== "/signup" && (
-        <Header isHomePage={isHomePage} />
-      )}
+      {/* {location.pathname !== "/signin" && location.pathname !== "/signup" && ( */}
+      <Header isHomePage={isHomePage} />
+      {/* )} */}
       <Routes>
         {/* Your Routes */}
         <Route path="/" element={<Home />} />
@@ -83,9 +85,9 @@ const AppContent = () => {
         <Route path="/signup" element={<SignUp />} />
       </Routes>
 
-      {location.pathname !== "/signin" && location.pathname !== "/signup" && (
-        <Footer />
-      )}
+      {/* {location.pathname !== "/signin" && location.pathname !== "/signup" && ( */}
+      <Footer />
+      {/* )} */}
     </>
   );
 };

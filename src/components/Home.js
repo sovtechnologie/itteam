@@ -10,7 +10,6 @@ import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import seniorExpert from "../images/Roles/expert.png";
 import counseller from "../images/Roles/counselling.png";
-import Hr from "../images/Roles/hr-manager.png";
 import topcompanies from "../images/Companies.png";
 
 import remote1 from "../images/HomeIcons/Newremote.png";
@@ -25,7 +24,11 @@ import next from "../images/next-arrow.png";
 
 import { fetchtopskillandlocation } from "../services/apiService";
 
-import { MdOutlineLocationOn } from "react-icons/md";
+import {
+  MdOutlineLocationOn,
+  MdOutlineEmail,
+  MdPhoneEnabled,
+} from "react-icons/md";
 
 const Home = () => {
   const isLoggedIn = !!Cookies.get("authToken");
@@ -114,23 +117,36 @@ const Home = () => {
     fetchData();
   }, []);
 
-  const noticePeriodLabel = (value) => {
+  const ExperiencedLabel = (value) => {
     switch (value) {
       case "1":
       case 1:
-        return "Immediate";
+        return "Fresher";
       case "2":
       case 2:
-        return "7";
+        return "Junior";
       case "3":
       case 3:
-        return "15";
+        return "Mid-Level";
       case "4":
       case 4:
-        return "30";
-      case "5":
-      case 5:
-        return "45";
+        return "Senior";
+      default:
+        return "Not specified";
+    }
+  };
+
+  const JobtypeLabel = (value) => {
+    switch (value) {
+      case "1":
+      case 1:
+        return "W.F.O";
+      case "2":
+      case 2:
+        return "Remote";
+      case "3":
+      case 3:
+        return "Hybrid";
       default:
         return "Not specified";
     }
@@ -168,7 +184,7 @@ const Home = () => {
 
           <div className="category-tags">
             {[
-              { img: remote1, label: "Angular"},
+              { img: remote1, label: "Angular" },
               { img: mnc, label: "DevOps" },
               { img: sales, label: "AI" },
               { img: project, label: "AIML" },
@@ -293,20 +309,37 @@ const Home = () => {
                     {candidate.currentPosition}
                   </p>
                   <p className="candidate-company-exact">
-                    {candidate.company_Name}
+                    {JobtypeLabel(candidate.Job_type)}
                   </p>
                 </div>
               </div>
 
               <p className="job-description-exact">
-                {" "}
+                {/* {" "}
                 {(() => {
                   const words = candidate.about
                     ? candidate.about.split(" ")
                     : [];
                   if (words.length <= 10) return candidate.about;
                   return words.slice(0, 10).join(" ") + " ...";
-                })()}
+                })()} */}
+                <div className="location-left">
+                  <MdOutlineEmail
+                    style={{ color: "#1783D0", fontSize: "1.6rem" }}
+                  />
+                  <span>
+                    {" "}
+                    {isLoggedIn ? candidate.email : "********@***.com"}
+                  </span>
+                </div>
+                <div className="location-left">
+                  <MdPhoneEnabled
+                    style={{ color: "#1783D0", fontSize: "1.6rem" }}
+                  />
+                  <span>
+                    {isLoggedIn ? candidate.mobileNumber : "+91 *********"}
+                  </span>
+                </div>
               </p>
 
               <div className="location-options-exact">
@@ -315,35 +348,21 @@ const Home = () => {
                     <MdOutlineLocationOn
                       style={{ color: "#1783D0", fontSize: "1.6rem" }}
                     />
-                    <span>{candidate.location}</span>
+                    <span>
+                      {candidate.location},{candidate.state}
+                    </span>
                   </div>
 
-                  {candidate.noticePeriod && (
-                    <div className="notice-right">
-                      <IoMdTime
-                        style={{ color: "#1783D0", fontSize: "1.6rem" }}
-                      />
-                      <span>
-                        {noticePeriodLabel(candidate.noticePeriod) ===
-                        "Immediate"
-                          ? "Immediate"
-                          : `${noticePeriodLabel(
-                              candidate.noticePeriod
-                            )} Days N.P`}
-                      </span>
-                    </div>
-                  )}
+                  <div className="notice-right">
+                    <IoMdTime
+                      style={{ color: "#1783D0", fontSize: "1.6rem" }}
+                    />
+                    <span>
+                      {`${ExperiencedLabel(candidate.experienceInStack)}`}
+                    </span>
+                  </div>
                 </div>
               </div>
-              {candidate.skillName.length > 0 && (
-                <div className="skills-container-exact">
-                  {candidate.skillName.slice(0, 4).map((skill, index) => (
-                    <span className="skill-tag-exact" key={index}>
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              )}
 
               <button
                 className="view-profile-btn-exact"
@@ -389,19 +408,19 @@ const Home = () => {
                 <div className="company-info-exact">
                   <h3 className="company-name-exact">{company?.companyName}</h3>
                   <p className="company-rating-exact">
-                    ⭐ {company?.reviews || 75}k+ reviews
+                    {company.designationName}|{company.email}
                   </p>
                 </div>
               </div>
               <p className="company-description-exact">
-                {company?.description}
+                {company.state},{company.city}
               </p>
               <div className="company-tags-exact">
-                {company?.industry?.map((tag, index) => (
+                {/* {company?.industry?.map((tag, index) => (
                   <span key={index} className="company-tag">
                     {tag}
                   </span>
-                ))}
+                ))} */}
               </div>
               <button
                 className="view-details-btn-exact"

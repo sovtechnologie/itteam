@@ -276,28 +276,7 @@ const EmpFilter = () => {
             value={filters.expertTecStack}
             onChange={handleStackChange}
           />
-          <div className="divider" />
-          <div className="select-wrapper">
-            <select
-              className="search-select"
-              value={filters.location || ""}
-              onChange={(e) =>
-                setFilters((f) => ({ ...f, location: e.target.value }))
-              }
-            >
-              <option value="">Select City</option>
-              {loadingCities ? (
-                <option disabled>Loading...</option>
-              ) : (
-                cities.map((city, index) => (
-                  <option key={city.location} value={city.location}>
-                    {city.location}
-                  </option>
-                ))
-              )}
-            </select>
-            <span className="dropdown-icon">▼</span>
-          </div>
+          {/* <div className="divider" /> */}
         </div>
 
         <button className="search-button">Search</button>
@@ -319,6 +298,30 @@ const EmpFilter = () => {
               salaryRange={filters.salary}
               onSalaryChange={handleSalaryChange}
             />
+          </div>
+          <div className="filter-group">
+            <h3 style={{ marginBottom: "10px" }}>Select City</h3>
+            <div className="select-wrapper select-city">
+              <select
+                className="search-select"
+                value={filters.location || ""}
+                onChange={(e) =>
+                  setFilters((f) => ({ ...f, location: e.target.value }))
+                }
+              >
+                <option value="">Select City</option>
+                {loadingCities ? (
+                  <option disabled>Loading...</option>
+                ) : (
+                  cities.map((city, index) => (
+                    <option key={city.location} value={city.location}>
+                      {city.location}
+                    </option>
+                  ))
+                )}
+              </select>
+              {/* <span className="dropdown-icon">▼</span> */}
+            </div>
           </div>
 
           <div className="filter-group">

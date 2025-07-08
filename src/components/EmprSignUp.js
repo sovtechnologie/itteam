@@ -222,7 +222,6 @@ const EmprSignUp = () => {
               <div className="signUpform-group">
                 <label htmlFor="state">State</label>
                 <select
-               
                   name="state"
                   value={formData.state || ""}
                   onChange={(e) => {
