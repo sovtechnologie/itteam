@@ -49,7 +49,7 @@ const AppContent = () => {
     location.pathname === "/contactus" ||
     location.pathname === "/pricing" ||
     location.pathname === "/signin" ||
-    location.pathname === "/signup";
+    location.pathname === "/signup" ;
 
   return (
     <>

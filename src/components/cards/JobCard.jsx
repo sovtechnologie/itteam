@@ -12,9 +12,9 @@ const JobCard = ({
     logo,
     companyName,
     designationName,
+    email,
     city,
-    description,
-    industry,
+    state,
     website,
 }) => {
     const navigate = useNavigate();
@@ -22,29 +22,36 @@ const JobCard = ({
         <div className="jobcard">
             <div className="card-header">
                 <img src={logo || company} alt={companyName || "logo"} className="company-logo" />
-                <div className="job-info">
+                {/* <div className="job-info">
                     <div className="company-name">{companyName}</div>
                     <div className="job-title">{designationName}</div>
-                    <div className="job-location">{city}</div>
+                    <div className="job-location">{city},{state}</div>
+                </div> */}
+                <div className="job-info">
+                  <h3 className="company-name">{companyName}</h3>
+                  <p className="job-title">
+                    {designationName}|{email}
+                  </p>
                 </div>
 
                 {/* <Bookmark size={16} className="bookmark-icon" /> */}
                 {/* <img className='bookmark-icon' src={vector} alt='bookmark-Icon' /> */}
             </div>
             <p className="job-desc">
-                {(() => {
+                {/* {(() => {
                     const words = description ? description.split(" ") : [];
                     if (words.length <= 10) return description;
                     return words.slice(0, 10).join(" ") + " ...";
-                })()}
+                })()} */}
+               {state} {city},
             </p>
 
             <div className="job-tags">
-                {(industry).map((tag, index) => (
+                {/* {(industry).map((tag, index) => (
                     <span key={index}>{tag}</span>
-                ))}
+                ))} */}
+                {/* {contactNumber} */}
             </div>
-            <div className="job-webisteurl"> <a href={website}>{website}</a></div>
 
             {/* <div className="job-details">
                 <div className="salary"><img src={coin} alt='coin-icon' /> {salary || "22000"}</div>

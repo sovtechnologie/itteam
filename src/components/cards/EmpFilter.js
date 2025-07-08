@@ -4,7 +4,7 @@ import "../../stylesheets/EmpFilter.css";
 import SalaryFilterCard from "./SalaryFilterCard";
 import Cookies from "js-cookie";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { MdOutlineLocationOn } from "react-icons/md";
+import { MdOutlineEmail, MdOutlineLocationOn, MdOutlinePhone } from "react-icons/md";
 import { IoMdTime } from "react-icons/io";
 
 const EmpFilter = () => {
@@ -258,6 +258,40 @@ const EmpFilter = () => {
         return "Not specified";
     }
   };
+  const ExperiencedLabel = (value) => {
+    switch (value) {
+      case "1":
+      case 1:
+        return "Fresher";
+      case "2":
+      case 2:
+        return "Junior";
+      case "3":
+      case 3:
+        return "Mid-Level";
+      case "4":
+      case 4:
+        return "Senior";
+      default:
+        return "Not specified";
+    }
+  };
+
+  const JobtypeLabel = (value) => {
+    switch (value) {
+      case "1":
+      case 1:
+        return "W.F.O";
+      case "2":
+      case 2:
+        return "Remote";
+      case "3":
+      case 3:
+        return "Hybrid";
+      default:
+        return "Not specified";
+    }
+  };
 
   const maskedName = (name) => {
     return name ? `${name[0]}${"*".repeat(name.length - 1)}` : "";
@@ -416,38 +450,49 @@ const EmpFilter = () => {
                   <h3>
                     {isLoggedIn ? profile.name : maskedName(profile.name)}
                   </h3>
-                  <p>{profile.currentPosition}</p>
-                  <p className="companyname">{profile.currentCompanyName}</p>
+                  {/* <p>{profile.currentPosition}</p> */}
+                  <p className="companyname">{JobtypeLabel(profile.Job_type)}</p>
                 </div>
               </div>
 
               <p className="job-desc">
-                {(() => {
+                {/* {(() => {
                   const words = profile.about ? profile.about.split(" ") : [];
                   if (words.length <= 9) return profile.about;
                   return words.slice(0, 9).join(" ") + " ...";
-                })()}
+                })()} */}
+                  <span>
+                  {" "}
+                  <MdOutlineEmail color="#3399ff" size={25} />{" "}
+                    {isLoggedIn ? profile.email : "********@***.com"}
+                </span>
+                </p>
+                <p className="job-infos">
+                <span>
+                  {" "}
+                  <MdOutlinePhone color="#3399ff" size={25} />{" "}
+                  {isLoggedIn ? profile.mobileNumber : "+91 *********"}
+                </span>
+
               </p>
 
               <div className="job-infos">
                 <span>
                   {" "}
                   <MdOutlineLocationOn color="#3399ff" size={25} />{" "}
-                  {profile.location}
+                  {profile.location},{profile.state}
                 </span>
                 <span>
                   <IoMdTime color="#3399ff" size={25} />{" "}
-                  {noticePeriodLabel(profile.noticePeriod) === "Immediate"
-                    ? "Immediate "
-                    : `${noticePeriodLabel(profile.noticePeriod)} `}
+                  {ExperiencedLabel(profile.experienceInStack)}
                 </span>
               </div>
 
-              <div className="skills">
+              {/* <div className="skills">
                 {profile.skillName.slice(0, 3).map((skill, index) => (
                   <span key={index}>{skill}</span>
                 ))}
-              </div>
+              </div> */}
 
               <button
                 className="view-profile-btn"
