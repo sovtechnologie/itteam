@@ -4,25 +4,15 @@ import {
   FaMapMarkerAlt,
   FaPhoneAlt,
   FaBuilding,
-  FaEnvelope,
-  FaEdit,
-  FaShareAlt,
 } from "react-icons/fa";
-import { MdOutlineCurrencyRupee, MdOutlineEdit } from "react-icons/md";
-import { FiPlus, FiUpload, FiX } from "react-icons/fi";
-import { FiShare2 } from "react-icons/fi";
-import { FaBusinessTime, FaLaptopCode, FaLocationDot } from "react-icons/fa6";
-import { IoCallSharp } from "react-icons/io5";
+
 import { IoIosMail } from "react-icons/io";
-// import { Bookmark } from 'lucide-react';
+
 import CompanyLogo from "../images/CompanyProfilelogo.png";
-import vector from "../images/Vector.png";
-import coin from "../images/coins.png";
+
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import mostpopular from "../images/mostpopular.png";
-import trustpopular from "../images/trustpopular.png";
-import topcompanies from "../images/Companies.png";
+
 
 const BASE_URL = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
@@ -71,9 +61,7 @@ export default function Companies() {
   const [companyData, setCompanyData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newIndustry, setNewIndustry] = useState("");
-  const [formState, setFormState] = useState(companyData);
+  
 
   useEffect(() => {
     const fetchEmployerData = async () => {

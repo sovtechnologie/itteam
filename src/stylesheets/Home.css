@@ -1456,7 +1456,7 @@ text-transform: capitalize;
   background-color: transparent;
   border: 1px solid #1783d0;
   color: #1783d0;
-  /* padding: 6px 12px; */
+  
   border-radius: 30px;
   font-size: 14px;
   cursor: pointer;
@@ -1493,7 +1493,7 @@ text-transform: capitalize;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  /* padding: 40px 20px; */
+  
   background: #fff;
   max-width: 1200px;
   margin: 0 auto;
@@ -1597,7 +1597,7 @@ text-transform: capitalize;
   min-width: 300px;
   padding-top: 30px;
   margin-left: 50px;
-  /* text-align: center; */
+ 
 }
 
 .hero-right h1 {
@@ -1612,18 +1612,17 @@ text-transform: capitalize;
 .description {
   margin-top: 20px;
   font-size: 20px;
-  /* color: #525252; */
+ 
   color: #525252;
   max-width: 600px;
-  /* margin-left: auto; */
-  /* margin-right: auto; */
+ 
   line-height: 1.6;
 }
 
 .hero-buttons {
   margin-top: 50px;
   display: flex;
-  /* justify-content: center; */
+ 
   gap: 15px;
   flex-wrap: wrap;
 }
@@ -1666,7 +1665,7 @@ font-size: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* max-width: 222px; */
+ 
 }
 
 .btn-filled:hover {
@@ -1677,7 +1676,7 @@ font-size: 18px;
 
 .popular-section {
   text-align: center;
-  /* padding: 50px 20px; */
+
   margin-top: 100px;
 }
 
@@ -1688,16 +1687,13 @@ font-size: 18px;
   align-items: center;
   justify-content: center;
   border: 1px solid #1783d0;
-  /* padding: 8px 16px; */
-  /* Added padding for better visual appearance */
-  /* width: fit-content; */
-  /* Ensures the element only takes needed width */
+ 
   margin: 0 auto;
-  /* Centers the element if needed */
+ 
   font-size: 14px;
-  /* Added font size for better control */
+ 
   font-weight: 300;
-  /* Slightly bolder text */
+
   transition: all 0.3s ease;
   margin-bottom: 10px;
   width: 140px;
