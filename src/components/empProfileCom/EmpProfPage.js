@@ -1119,7 +1119,29 @@ const EmpProfPage = () => {
             {isEditOpen && (
               <div className="modal-overlay">
                 <div className="edit-modal-horizontal">
-                  <h3>Edit Profile</h3>
+                  {/* <h3>Edit Profile</h3> */}
+                 
+                  <div className="modal-header">
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        marginBottom: "20px",
+                      }}
+                    >
+                      <h2 className="edit-about">Edit Profile</h2>
+                      <button
+                       style={{
+                      marginTop: "0px",
+                      }}
+                        className="fancy-close"
+                        onClick={handleClose}
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                  </div>
+
                   {formData.profileImg && (
                     <div
                       style={{
@@ -1293,365 +1315,473 @@ const EmpProfPage = () => {
                     <button onClick={handleSaveProfileWithImage}>
                       Save & Close
                     </button>
-                    <button type="button" onClick={handleClose}>
+                    {/* <button type="button" onClick={handleClose}>
                       Cancel
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="profile-secTwo">
-            <div className="profile-contentBox">
-              <div className="main-wrapper">
-                {/* siderbar Link section */}
-                <div className="quick-links">
-                  <div className="content-boxes-head">
-                    <h2>Quick Links</h2>
+          <div className="quick-links-wrapper">
+            <div className="profile-secTwo">
+              <div className="aside">
+                <div className="profile-contentBox">
+                  <div className="main-wrapper">
+                    {/* siderbar Link section */}
+                    <div className="quick-links">
+                      <div className="content-boxes-head">
+                        <h2>Quick Links</h2>
+                      </div>
+                      <ul>
+                        <li>
+                          <a href="#about">About Me</a>{" "}
+                        </li>
+                        <li>
+                          <a href="#resume">Resume</a>
+                        </li>
+                        <li>
+                          <a href="#skills">Key Skills</a>
+                        </li>
+                        <li>
+                          <a href="#employment">Employment</a>
+                        </li>
+                        <li>
+                          <a href="#education">Education</a>
+                        </li>
+                        <li>
+                          <a href="#projects">Projects</a>
+                        </li>
+                        <li>
+                          <a href="#certifications">
+                            Licenses & certifications
+                          </a>
+                        </li>
+                        <li>Accomplishments</li>
+                      </ul>
+                    </div>
                   </div>
-                  <ul>
-                    <li>About Me </li>
-                    <li>Resume </li>
-                    <li>Key skills </li>
-                    <li>Employment </li>
-                    <li>Education </li>
-                    <li>Projects </li>
-                    <li>Licenses & certifications </li>
-                    <li>Accomplishments </li>
-                  </ul>
+                </div>
+              </div>
+
+              {/* AboutMe Section */}
+              <div className="right-aside">
+                <div>
+                  <div className="content-boxes">
+                    <div className="content-boxes-head">
+                      <h2>About Me</h2>
+                      <button
+                        className="aboutMe-editBtn"
+                        onClick={() => {
+                          setAboutInput(aboutText || "");
+                          setIsAboutEditOpen(true);
+                        }}
+                      >
+                        <FiPlus size={30} className="plus-icon" />
+                      </button>
+                    </div>
+
+                    <div className="about-card-box-details" id="about">
+                      <div>
+                        <div>
+                          <p>
+                            {aboutText ||
+                              "No about me information available. Click the plus icon to add."}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Modal for AboutMe Editing */}
+                    {isAboutEditOpen && (
+                      <div className="modal-overlay">
+                        <div className="edit-modal">
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                               marginBottom: "20px",
+                            }}
+                          >
+                            <h3 className="edit-about">Edit About</h3>
+
+                            <button
+                              className="fancy-close"
+                              onClick={() => setIsAboutEditOpen(false)}
+                              aria-label="Close"
+                            ></button>
+                          </div>
+
+                          <textarea
+                            rows={6}
+                            value={aboutInput}
+                            onChange={(e) => {
+                              const text = e.target.value;
+                              const words = text
+                                .trim()
+                                .split(/\s+/)
+                                .filter(Boolean);
+
+                              // truncate above max
+                              if (words.length > MAX_WORDS) {
+                                const trimmed = words
+                                  .slice(0, MAX_WORDS)
+                                  .join(" ");
+                                setAboutInput(trimmed + " ");
+                              } else {
+                                setAboutInput(text);
+                              }
+
+                              // update minWordsReached flag
+                              setMinWordsReached(words.length >= MIN_WORDS);
+                            }}
+                          />
+                          <br />
+                          <small>
+                            {countWords(aboutInput)} / {MAX_WORDS} words (min{" "}
+                            {MIN_WORDS})
+                          </small>
+                          <br />
+                          {!minWordsReached && (
+                            <p style={{ color: "red" }}>
+                              Please write at least {MIN_WORDS} words. You have
+                              only {countWords(aboutInput)}.
+                            </p>
+                          )}
+
+                          {error && <p style={{ color: "red" }}>{error}</p>}
+                          {success && (
+                            <p style={{ color: "green" }}>{success}</p>
+                          )}
+                          <div className="modal-actions">
+                            <button
+                              onClick={handleEditAbout}
+                              disabled={loading || !minWordsReached}
+                            >
+                              {loading ? "Saving..." : "Save"}
+                            </button>
+                            {/* <button
+                                style={{
+                                  backgroundColor: "#f44336",
+                                  color: "white",
+                                }}
+                                onClick={() => setIsAboutEditOpen(false)}
+                                disabled={loading}
+                              >
+                                Cancel
+                              </button> */}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                {/* AboutMe Section */}
-                <div className="content-boxes">
+                {/* Resume section */}
+
+                <div className="content-boxes" id="resume">
                   <div className="content-boxes-head">
-                    <h2>About Me</h2>
+                    <h2>Upload Resume</h2>
                     <button
                       className="aboutMe-editBtn"
-                      onClick={() => {
-                        setAboutInput(aboutText || "");
-                        setIsAboutEditOpen(true);
-                      }}
+                      onClick={() => setIsModalOpen(true)}
                     >
                       <FiPlus size={30} className="plus-icon" />
                     </button>
                   </div>
 
-                  <div className="about-card-box-details">
-                    <div>
+                  <div className="resume-card-box-details">
+                    {!resumeFile ? (
                       <div>
-                        <p>
-                          {aboutText ||
-                            "No about me information available. Click the plus icon to add."}
-                        </p>
+                        <img src={resumelogo} className="upload-icon" />
+                        <p>Upload your Resume here</p>
                       </div>
-                    </div>
+                    ) : (
+                      <div className="resume-info">
+                        <p>
+                          <strong>Uploaded:</strong> {resumeFile}
+                        </p>
+                        <a
+                          href={resumeURL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="resume-link"
+                        >
+                          View / Download Resume
+                        </a>
+                      </div>
+                    )}
                   </div>
-                  {/* Modal for AboutMe Editing */}
-                  {isAboutEditOpen && (
+                  {/* Modal for Upload Resume */}
+                  {isModalOpen && (
                     <div className="modal-overlay">
-                      <div className="edit-modal">
-                        <h3>Edit About Me</h3>
-                        <textarea
-                          rows={6}
-                          value={aboutInput}
-                          onChange={(e) => {
-                            const text = e.target.value;
-                            const words = text
-                              .trim()
-                              .split(/\s+/)
-                              .filter(Boolean);
-
-                            // truncate above max
-                            if (words.length > MAX_WORDS) {
-                              const trimmed = words
-                                .slice(0, MAX_WORDS)
-                                .join(" ");
-                              setAboutInput(trimmed + " ");
-                            } else {
-                              setAboutInput(text);
-                            }
-
-                            // update minWordsReached flag
-                            setMinWordsReached(words.length >= MIN_WORDS);
-                          }}
-                        />
-                        <br />
-                        <small>
-                          {countWords(aboutInput)} / {MAX_WORDS} words (min{" "}
-                          {MIN_WORDS})
-                        </small>
-                        <br />
-                        {!minWordsReached && (
-                          <p style={{ color: "red" }}>
-                            Please write at least {MIN_WORDS} words. You have
-                            only {countWords(aboutInput)}.
-                          </p>
-                        )}
-
-                        {error && <p style={{ color: "red" }}>{error}</p>}
-                        {success && <p style={{ color: "green" }}>{success}</p>}
-                        <div className="modal-actions">
-                          <button
-                            onClick={handleEditAbout}
-                            disabled={loading || !minWordsReached}
-                          >
-                            {loading ? "Saving..." : "Save"}
-                          </button>
-                          <button
+                      <div className="modal-box">
+                        <div className="modal-header">
+                          <div
                             style={{
-                              backgroundColor: "#f44336",
-                              color: "white",
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                               marginBottom: "20px",
                             }}
-                            onClick={() => setIsAboutEditOpen(false)}
-                            disabled={loading}
+                          >
+                            <h2 className="edit-about">Upload Resume</h2>
+                            <button
+                              className="fancy-close"
+                              onClick={() => setIsModalOpen(false)}
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                        </div>
+
+                        <input
+                          type="file"
+                          accept=".pdf,.doc,.docx"
+                          onChange={handleFileChange}
+                        />
+                        <div className="modal-buttons"  style={{
+                              display: "flex",
+                              justifyContent: "end",
+                             
+                            }}>
+                          <button onClick={handleUpload}>Upload</button>
+                          {/* <button
+                            type="button"
+                            onClick={() => setIsModalOpen(false)}
                           >
                             Cancel
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     </div>
                   )}
                 </div>
-              </div>
 
-              {/* Resume section */}
-              <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Upload Resume</h2>
-                  <button
-                    className="aboutMe-editBtn"
-                    onClick={() => setIsModalOpen(true)}
-                  >
-                    <FiPlus size={30} className="plus-icon" />
-                  </button>
-                </div>
+                {/* Skills section */}
+                <div className="content-boxes" id="skills">
+                  <div className="content-boxes-head">
+                    <h2>Key Skills</h2>
+                    <button
+                      className="aboutMe-editBtn"
+                      onClick={() => setIsSkillModalOpen(true)}
+                    >
+                      <FiPlus size={30} className="plus-icon" />
+                    </button>
+                  </div>
 
-                <div className="resume-card-box-details">
-                  {!resumeFile ? (
-                    <div>
-                      <img src={resumelogo} className="upload-icon" />
-                      <p>Upload your Resume here</p>
+                  <div className="skills-card-box-details">
+                    <div className="skillsbox-card">
+                      {selectedSkills.map((skill, index) => (
+                        <div className="skill-badge" key={index}>
+                          <span className="skill-icon">
+                            <img
+                              src={skill.techStacklogo}
+                              // alt={skill.tecStackName}
+                              style={{
+                                width: "20px",
+                                height: "20px",
+                                marginRight: "8px",
+                              }}
+                            />
+                          </span>
+                          <span>{skill.tecStackName}</span>
+                        </div>
+                      ))}
                     </div>
-                  ) : (
-                    <div className="resume-info">
-                      <p>
-                        <strong>Uploaded:</strong> {resumeFile}
-                      </p>
-                      <a
-                        href={resumeURL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="resume-link"
-                      >
-                        View / Download Resume
-                      </a>
+                  </div>
+                  {/* Modal for Skill editing */}
+                  {isSkillModalOpen && (
+                    <div className="modal-overlay">
+                      <div className="modal-box">
+                        <div className="modal-header">
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                               marginBottom: "20px",
+                            }}
+                          >
+                            <h2 className="edit-about">Skills</h2>
+                            <button
+                              className="fancy-close"
+                              onClick={() => setIsSkillModalOpen(false)}
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                        </div>
+
+                        <input
+                          type="text"
+                          placeholder="Search new skill..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          className="skill-search"
+                        />
+
+                        <div className="selected-skills">
+                          {selectedSkills.map((skill, i) => (
+                            <div key={i} className="selected-skill">
+                              <span className="skill-icon">
+                                <img
+                                  src={skill.techStacklogo}
+                                  alt={skill.tecStackName}
+                                  style={{
+                                    width: "20px",
+                                    height: "20px",
+                                    marginRight: "8px",
+                                  }}
+                                />
+                              </span>
+                              {skill.tecStackName}
+                              <FiX
+                                onClick={() =>
+                                  handleRemoveSkill(
+                                    skill.tecStackName,
+                                    skill._id
+                                  )
+                                }
+                              />
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="skill-list">
+                          {filteredSkills.map((skill, i) => (
+                            <div
+                              key={i}
+                              className="skill-option"
+                              onClick={() => handleAddSkill(skill)}
+                            >
+                              <span className="skill-icon">
+                                <img
+                                  src={skill.techStacklogo}
+                                  alt={skill.tecStackName}
+                                  style={{
+                                    width: "20px",
+                                    height: "20px",
+                                    marginRight: "8px",
+                                  }}
+                                />
+                              </span>
+                              {skill.tecStackName}
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="modal-buttons"  style={{
+                              display: "flex",
+                              justifyContent: "end",
+                             
+                            }}>
+                          <button onClick={() => setIsSkillModalOpen(false)}>
+                            Save
+                          </button>
+                          {/* <button
+                            type="button"
+                            onClick={() => setIsSkillModalOpen(false)}
+                          >
+                            Cancel
+                          </button> */}
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
-                {/* Modal for Upload Resume */}
-                {isModalOpen && (
-                  <div className="modal-overlay">
-                    <div className="modal-box">
-                      <h3>Select Resume</h3>
-                      <input
-                        type="file"
-                        accept=".pdf,.doc,.docx"
-                        onChange={handleFileChange}
-                      />
-                      <div className="modal-buttons">
-                        <button onClick={handleUpload}>Upload</button>
-                        <button
-                          type="button"
-                          onClick={() => setIsModalOpen(false)}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </div>
+
+                {/* Experience section */}
+                <div className="content-boxes" id="employment">
+                  <div className="content-boxes-head">
+                    <h2>Employment</h2>
+                    <button
+                      className="aboutMe-editBtn"
+                      onClick={() => handleOpenModal()}
+                    >
+                      <FiPlus size={30} className="plus-icon" />
+                    </button>
                   </div>
-                )}
-              </div>
-
-              {/* Skills section */}
-              <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Key Skills</h2>
-                  <button
-                    className="aboutMe-editBtn"
-                    onClick={() => setIsSkillModalOpen(true)}
-                  >
-                    <FiPlus size={30} className="plus-icon" />
-                  </button>
-                </div>
-
-                <div className="skills-card-box-details">
-                  <div className="skillsbox-card">
-                    {selectedSkills.map((skill, index) => (
-                      <div className="skill-badge" key={index}>
-                        <span className="skill-icon">
-                          <img
-                            src={skill.techStacklogo}
-                            // alt={skill.tecStackName}
-                            style={{
-                              width: "20px",
-                              height: "20px",
-                              marginRight: "8px",
-                            }}
-                          />
-                        </span>
-                        <span>{skill.tecStackName}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                {/* Modal for Skill editing */}
-                {isSkillModalOpen && (
-                  <div className="modal-overlay">
-                    <div className="modal-box">
-                      <h3>Edit Skills</h3>
-
-                      <input
-                        type="text"
-                        placeholder="Search new skill..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="skill-search"
-                      />
-
-                      <div className="selected-skills">
-                        {selectedSkills.map((skill, i) => (
-                          <div key={i} className="selected-skill">
-                            <span className="skill-icon">
-                              <img
-                                src={skill.techStacklogo}
-                                alt={skill.tecStackName}
-                                style={{
-                                  width: "20px",
-                                  height: "20px",
-                                  marginRight: "8px",
-                                }}
-                              />
-                            </span>
-                            {skill.tecStackName}
-                            <FiX
-                              onClick={() =>
-                                handleRemoveSkill(skill.tecStackName, skill._id)
-                              }
-                            />
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="skill-list">
-                        {filteredSkills.map((skill, i) => (
-                          <div
-                            key={i}
-                            className="skill-option"
-                            onClick={() => handleAddSkill(skill)}
-                          >
-                            <span className="skill-icon">
-                              <img
-                                src={skill.techStacklogo}
-                                alt={skill.tecStackName}
-                                style={{
-                                  width: "20px",
-                                  height: "20px",
-                                  marginRight: "8px",
-                                }}
-                              />
-                            </span>
-                            {skill.tecStackName}
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="modal-buttons">
-                        <button onClick={() => setIsSkillModalOpen(false)}>
-                          Done
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setIsSkillModalOpen(false)}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Experience section */}
-              <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Employment</h2>
-                  <button
-                    className="aboutMe-editBtn"
-                    onClick={() => handleOpenModal()}
-                  >
-                    <FiPlus size={30} className="plus-icon" />
-                  </button>
-                </div>
-                <div className="exp-card-box-details">
-                  <div className="employment-list">
-                    {employmentList.map((job, index) => {
-                      const duration = formatDateRange(
-                        job?.startDate,
-                        job?.endDate
-                      );
-                      return (
-                        <div className="employment-card" key={index}>
-                          <div className="employment-logo">
-                            <img src={Company} />
-                          </div>
-                          <div className="employment-content">
-                            <div className="employment-header">
-                              <h3>{job?.title}</h3>
-                              <div className="employment-timeline">
-                                <span>{duration}</span>
-                              </div>
-                              <div style={{ display: "flex", gap: "8px" }}>
-                                <button
-                                  className="employee-editBtn"
-                                  onClick={() =>
-                                    handleOpenModal(job._id, index)
-                                  }
-                                >
-                                  <MdOutlineEdit size={25} />
-                                </button>
-                                {/* <button
+                  <div className="exp-card-box-details">
+                    <div className="employment-list">
+                      {employmentList.map((job, index) => {
+                        const duration = formatDateRange(
+                          job?.startDate,
+                          job?.endDate
+                        );
+                        return (
+                          <div className="employment-card" key={index}>
+                            <div className="employment-logo">
+                              <img src={Company} />
+                            </div>
+                            <div className="employment-content">
+                              <div className="employment-header">
+                                <h3>{job?.title}</h3>
+                                <div className="employment-timeline">
+                                  <span>{duration}</span>
+                                </div>
+                                <div style={{ display: "flex", gap: "8px" }}>
+                                  <button
+                                    className="employee-editBtn"
+                                    onClick={() =>
+                                      handleOpenModal(job._id, index)
+                                    }
+                                  >
+                                    <MdOutlineEdit size={25} />
+                                  </button>
+                                  {/* <button
                                 className="employee-deleteBtn"
                                 onClick={() => handleDelete(index)}
                               >
                                 <FiX size={20} />
                               </button> */}
+                                </div>
                               </div>
+                              {/* <p className="company-name">{job?.company_Name}</p>
+                            <p className="company-add">{job?.location}</p> */}
+                              <p className="company-name">
+                                {job.company_Name} | {job.location}
+                              </p>
+                              <p className="employment-description">
+                                {job?.description}
+                              </p>
                             </div>
-                            <p className="company-name">{job?.company_Name}</p>
-                            <p className="company-add">{job?.location}</p>
-                            <p className="employment-description">
-                              {job?.description}
-                            </p>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-                {/* Modal for Experience Editing */}
-                {isExperienceModalOpen && (
-                  <div className="modal-overlay">
-                    <div className="modal-box">
-                      <h3>
+                  {/* Modal for Experience Editing */}
+                  {isExperienceModalOpen && (
+                    <div className="modal-overlay">
+                      <div className="modal-box">
+                        {/* <h3>
                         {editingIndex !== null
                           ? "Edit Employment"
                           : "Add New Employment"}
-                      </h3>
-                      {/* {newJob.companyLogo && (
+                      </h3> */}
+
+                        <div className="modal-header">
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                               marginBottom: "20px",
+                            }}
+                          >
+                            <h2 className="edit-about">Add Experience</h2>
+                            <button
+                              className="fancy-close"
+                              onClick={() => setIsExperienceModalOpen(false)}
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                        </div>
+
+                        {/* {newJob.companyLogo && (
                       <img src={newJob.companyLogo} alt="Preview" style={{ width: "10%", height: "auto", borderRadius: "8px", marginTop: "10px" }} />
                     )} */}
-                      {/* <input
+                        {/* <input
                       type="file"
                       accept="image/*"
                       onChange={(e) => {
@@ -1665,193 +1795,297 @@ const EmpProfPage = () => {
                         }
                       }}
                     /> */}
-                      <input
-                        type="text"
-                        placeholder="Company Name"
-                        value={newJob?.company_Name}
-                        onChange={(e) =>
-                          setNewJob({ ...newJob, company_Name: e.target.value })
-                        }
-                      />
-                      <input
-                        type="text"
-                        placeholder="Position"
-                        value={newJob?.title}
-                        onChange={(e) =>
-                          setNewJob({ ...newJob, title: e.target.value })
-                        }
-                      />
-                      <input
-                        type="date"
-                        placeholder="Enter a Start Date"
-                        value={newJob?.JoiningDate}
-                        onChange={(e) =>
-                          setNewJob({ ...newJob, JoiningDate: e.target.value })
-                        }
-                      />
-                      <input
-                        type="date"
-                        placeholder="Enter a End Date"
-                        value={newJob?.endDate}
-                        onChange={(e) =>
-                          setNewJob({ ...newJob, endDate: e.target.value })
-                        }
-                      />
-                      <input
-                        type="text"
-                        placeholder="Location"
-                        value={newJob?.location}
-                        onChange={(e) =>
-                          setNewJob({ ...newJob, location: e.target.value })
-                        }
-                      />
-                      <textarea
-                        placeholder="Description"
-                        rows={3}
-                        value={newJob?.description}
-                        onChange={(e) =>
-                          setNewJob({ ...newJob, description: e.target.value })
-                        }
-                      />
-
-                      <div className="modal-buttons">
-                        <button onClick={handleSave}>
-                          {editingIndex !== null ? "Update" : "Add"}
-                        </button>
-                        <button className="update-add" onClick={() => setIsExperienceModalOpen(false)}>Cancel</button>
-                        {editingIndex !== null && (
-                          <button
-                            type="button"
-                            onClick={() => handleDeleteExperience(newJob._id)}
-                          >
-                            Delete
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Education section */}
-              <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Education</h2>
-                  <button
-                    className="aboutMe-editBtn"
-                    onClick={() => setIsEduModalOpen(true)}
-                  >
-                    <FiPlus size={30} className="plus-icon" />
-                  </button>
-                </div>
-
-                <div className="education-cards">
-                  {educationList.map((edu) => {
-                    const duration = formatDateRange(
-                      edu?.startDate,
-                      edu?.endDate
-                    );
-                    return (
-                      <div className="education-card" key={edu?._id}>
-                        <img src={School} alt="Logo" className="college-logo" />
-                        <div className="education-info">
-                          <h3>{edu?.college}</h3>
-                          <p>{edu?.degree}</p>
-                          <p className="location">{edu?.location}</p>
+                        <div>
+                          <label className="company-label">Company Name</label>
+                          <input
+                            type="text"
+                            placeholder="Company Name"
+                            value={newJob?.company_Name}
+                            onChange={(e) =>
+                              setNewJob({
+                                ...newJob,
+                                company_Name: e.target.value,
+                              })
+                            }
+                          />
                         </div>
-                        <div className="education-details">
-                          <div className="duration">{duration}</div>
-                          <div className="grade">
-                            Grade {edu?.grade ?? "Not specified"}
+
+                        <div>
+                          <label className="company-label">Position</label>
+                          <input
+                            type="text"
+                            placeholder="Position"
+                            value={newJob?.title}
+                            onChange={(e) =>
+                              setNewJob({ ...newJob, title: e.target.value })
+                            }
+                          />
+                        </div>
+
+                        <div className="start-end-date">
+                          <div className="start-date">
+                            <label className="company-label">
+                              Enter a Start Date
+                            </label>
+                            <input
+                              className="end-date"
+                              type="date"
+                              placeholder="Enter a Start Date"
+                              value={newJob?.JoiningDate}
+                              onChange={(e) =>
+                                setNewJob({
+                                  ...newJob,
+                                  JoiningDate: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="end-date">
+                            <label className="company-label">
+                              Enter a End Date
+                            </label>
+                            <input
+                              className="end-date"
+                              type="date"
+                              placeholder="Enter a End Date"
+                              value={newJob?.endDate}
+                              onChange={(e) =>
+                                setNewJob({
+                                  ...newJob,
+                                  endDate: e.target.value,
+                                })
+                              }
+                            />
                           </div>
                         </div>
-                        <button
-                          className="employee-editBtn"
-                          style={{ marginTop: "-40px" }}
-                          onClick={() => handleEditClick(edu)}
-                        >
-                          <MdOutlineEdit size={25} />
-                        </button>
+
+                        <div>
+                          <label className="company-label">Location</label>
+                          <input
+                            type="text"
+                            placeholder="Location"
+                            value={newJob?.location}
+                            onChange={(e) =>
+                              setNewJob({
+                                ...newJob,
+                                location: e.target.value,
+                              })
+                            }
+                          />
+                        </div>
+
+                        <div>
+                          <label className="company-label">Description</label>
+                          <textarea
+                            className="discription"
+                            placeholder="Description"
+                            rows={3}
+                            value={newJob?.description}
+                            onChange={(e) =>
+                              setNewJob({
+                                ...newJob,
+                                description: e.target.value,
+                              })
+                            }
+                          />
+                        </div>
+
+                        <div className="modal-buttons" >
+                        
+                          {/* <button
+                            className="update-add"
+                            onClick={() => setIsExperienceModalOpen(false)}
+                          >
+                            Cancel
+                          </button> */}
+                          {editingIndex !== null && (
+                            <div
+                              type="button"
+                              onClick={() => handleDeleteExperience(newJob._id)}
+                            >
+                              Delete Experience
+                            </div>
+                          )}
+                            <button onClick={handleSave}>
+                            {editingIndex !== null ? "Save" : "Add"}
+                          </button>
+                        </div>
                       </div>
-                    );
-                  })}
+                    </div>
+                  )}
                 </div>
-                {/* Modal for Education Editing */}
-                {isEduModalOpen && (
-                  <div className="modal-overlay">
-                    <div className="modal-content">
-                      <h3>{isEditing ? "Edit Education" : "Add Education"}</h3>
 
-                      <input
-                        type="text"
-                        placeholder="College Name"
-                        value={newEducation.college}
-                        onChange={(e) =>
-                          setNewEducation({
-                            ...newEducation,
-                            college: e.target.value,
-                          })
-                        }
-                      />
-                      <input
-                        type="text"
-                        placeholder="Degree"
-                        value={newEducation.degree}
-                        onChange={(e) =>
-                          setNewEducation({
-                            ...newEducation,
-                            degree: e.target.value,
-                          })
-                        }
-                      />
-                      <input
-                        type="text"
-                        placeholder="Location"
-                        value={newEducation.location}
-                        onChange={(e) =>
-                          setNewEducation({
-                            ...newEducation,
-                            location: e.target.value,
-                          })
-                        }
-                      />
-                      <input
-                        type="date"
-                        placeholder="Start Date"
-                        value={newEducation.startDate}
-                        onChange={(e) =>
-                          setNewEducation({
-                            ...newEducation,
-                            startDate: e.target.value,
-                          })
-                        }
-                      />
+                {/* Education section */}
 
-                      <input
-                        type="date"
-                        placeholder="End Date"
-                        value={newEducation.endDate}
-                        onChange={(e) =>
-                          setNewEducation({
-                            ...newEducation,
-                            endDate: e.target.value,
-                          })
-                        }
-                      />
+                <div className="content-boxes" id="education">
+                  <div className="content-boxes-head">
+                    <h2>Education</h2>
+                    <button
+                      className="aboutMe-editBtn"
+                      onClick={() => setIsEduModalOpen(true)}
+                    >
+                      <FiPlus size={30} className="plus-icon" />
+                    </button>
+                  </div>
 
-                      <input
-                        type="text"
-                        placeholder="Grade"
-                        value={newEducation.grade}
-                        onChange={(e) =>
-                          setNewEducation({
-                            ...newEducation,
-                            grade: e.target.value,
-                          })
-                        }
-                      />
+                  <div className="education-cards">
+                    {educationList.map((edu) => {
+                      const duration = formatDateRange(
+                        edu?.startDate,
+                        edu?.endDate
+                      );
+                      return (
+                        <div className="education-card" key={edu?._id}>
+                          <img
+                            src={School}
+                            alt="Logo"
+                            className="college-logo"
+                          />
+                          <div className="education-info">
+                            <h3>{edu?.college}</h3>
+                            <p>{edu?.degree}</p>
+                            <p className="location">{edu?.location}</p>
+                          </div>
+                          <div className="education-details">
+                            <div className="duration">{duration}</div>
+                            <div className="grade">
+                              Grade {edu?.grade ?? "Not specified"}
+                            </div>
+                          </div>
+                          <button
+                            className="employee-editBtn"
+                            style={{ marginTop: "-40px" }}
+                            onClick={() => handleEditClick(edu)}
+                          >
+                            <MdOutlineEdit size={25} />
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {/* Modal for Education Editing */}
+                  {isEduModalOpen && (
+                    <div className="modal-overlay">
+                      <div className="modal-content">
+                        {/* <h3>{isEditing ? "Edit Education" : "Add Education"}</h3> */}
 
-                      {/* <label>Upload College Logo</label>
+                        <div className="modal-header">
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                               marginBottom: "20px",
+                            }}
+                          >
+                            <h2 className="edit-about">Education</h2>
+                            <button
+                              className="fancy-close"
+                              onClick={() => {
+                                setIsEduModalOpen(false);
+                                setIsEditing(false);
+                                setEditId(null);
+                              }}
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="company-label">Description</label>
+                          <input
+                            type="text"
+                            placeholder="College Name"
+                            value={newEducation.college}
+                            onChange={(e) =>
+                              setNewEducation({
+                                ...newEducation,
+                                college: e.target.value,
+                              })
+                            }
+                          />
+                        </div>
+                        <div>
+                          <label className="company-label">Degree</label>
+                          <input
+                            type="text"
+                            placeholder="Degree"
+                            value={newEducation.degree}
+                            onChange={(e) =>
+                              setNewEducation({
+                                ...newEducation,
+                                degree: e.target.value,
+                              })
+                            }
+                          />
+                        </div>
+                        <div>
+                          <label className="company-label"> Location</label>
+                          <input
+                            type="text"
+                            placeholder="Location"
+                            value={newEducation.location}
+                            onChange={(e) =>
+                              setNewEducation({
+                                ...newEducation,
+                                location: e.target.value,
+                              })
+                            }
+                          />
+                        </div>
+
+                        <div className="start-end-date">
+                          <div className="start-date">
+                            <label className="company-label">
+                              Enter a Start Date
+                            </label>
+                            <input
+                              className="start-date"
+                              type="date"
+                              placeholder="Start Date"
+                              value={newEducation.startDate}
+                              onChange={(e) =>
+                                setNewEducation({
+                                  ...newEducation,
+                                  startDate: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+
+                          <div className="end-date">
+                            <label className="company-label">
+                              Enter a End Date
+                            </label>
+                            <input
+                              className="end-date"
+                              type="date"
+                              placeholder="End Date"
+                              value={newEducation.endDate}
+                              onChange={(e) =>
+                                setNewEducation({
+                                  ...newEducation,
+                                  endDate: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                        </div>
+
+                        <label className="company-label">Grade</label>
+                        <input
+                          type="text"
+                          placeholder="Grade"
+                          value={newEducation.grade}
+                          onChange={(e) =>
+                            setNewEducation({
+                              ...newEducation,
+                              grade: e.target.value,
+                            })
+                          }
+                        />
+
+                        {/* <label>Upload College Logo</label>
                     <input type="file" accept="image/*" onChange={handleLogoChange} />
 
                     {newEducation.logo && typeof newEducation.logo !== 'string' && (
@@ -1862,208 +2096,262 @@ const EmpProfPage = () => {
                       />
                     )} */}
 
-                      <div className="modal-actions">
-                        <button
-                          onClick={async () => {
-                            const educationData = {
-                              ...newEducation,
-                            };
-                            console.log("Education Data:", educationData);
-                            try {
-                              if (isEditing) {
-                                const res = await updateEducation(
-                                  educationData
-                                );
-                                // Ensure the returned object has _id
-                                console.log("Update education response:", res);
-                                if (!res || (!res._id && !res.id)) {
-                                  alert(
-                                    "Failed to update education. Please try again."
-                                  );
-                                  return;
-                                }
-                                const updatedEdu = {
-                                  ...res,
-                                  _id: res._id || res.id,
-                                };
-                                setEducationList((prev) =>
-                                  prev.map((edu) =>
-                                    edu._id === editId ? updatedEdu : edu
-                                  )
-                                );
-                              } else {
-                                const res = await addEducation(educationData);
-                                setEducationList([
-                                  ...educationList,
-                                  res.data.result,
-                                ]);
-                              }
+                        <div className="modal-actions">
 
-                              // Reset modal state
-                              setNewEducation({
-                                college: "",
-                                degree: "",
-                                location: "",
-                                startDate: "",
-                                endDate: "",
-                                grade: "",
-                                logo: School,
-                              });
-                              setIsEditing(false);
-                              setEditId(null);
-                              setIsEduModalOpen(false);
-                            } catch (err) {
-                              console.error("Education save failed:", err);
-                              alert("Error saving education.");
-                            }
-                          }}
-                        >
-                          {isEditing ? "Update" : "Save"}
-                        </button>
-
-                        <button
- style={{ backgroundColor: "red", color: "white" }}
-                          onClick={() => {
-                            setIsEduModalOpen(false);
-                            setIsEditing(false);
-                            setEditId(null);
-                          }}
-                        >
-                          Cancel
-                        </button>
-
-                        {isEditing && (
+                           {isEditing && (
+                            <div
+                              // style={{
+                              //   backgroundColor: "red",
+                              //   color: "white",
+                              // }}
+                              onClick={() => {
+                                handleDeleteEducation(editId);
+                                setIsEduModalOpen(false);
+                                setIsEditing(false);
+                                setEditId(null);
+                              }}
+                            >
+                              Delete Education
+                            </div>
+                          )}
                           <button
+                            onClick={async () => {
+                              const educationData = {
+                                ...newEducation,
+                              };
+                              console.log("Education Data:", educationData);
+                              try {
+                                if (isEditing) {
+                                  const res = await updateEducation(
+                                    educationData
+                                  );
+                                  // Ensure the returned object has _id
+                                  console.log(
+                                    "Update education response:",
+                                    res
+                                  );
+                                  if (!res || (!res._id && !res.id)) {
+                                    alert(
+                                      "Failed to update education. Please try again."
+                                    );
+                                    return;
+                                  }
+                                  const updatedEdu = {
+                                    ...res,
+                                    _id: res._id || res.id,
+                                  };
+                                  setEducationList((prev) =>
+                                    prev.map((edu) =>
+                                      edu._id === editId ? updatedEdu : edu
+                                    )
+                                  );
+                                } else {
+                                  const res = await addEducation(educationData);
+                                  setEducationList([
+                                    ...educationList,
+                                    res.data.result,
+                                  ]);
+                                }
+
+                                // Reset modal state
+                                setNewEducation({
+                                  college: "",
+                                  degree: "",
+                                  location: "",
+                                  startDate: "",
+                                  endDate: "",
+                                  grade: "",
+                                  logo: School,
+                                });
+                                setIsEditing(false);
+                                setEditId(null);
+                                setIsEduModalOpen(false);
+                              } catch (err) {
+                                console.error("Education save failed:", err);
+                                alert("Error saving education.");
+                              }
+                            }}
+                          >
+                            {isEditing ? "Save" : "Save"}
+                          </button>
+
+                          {/* <button
                             style={{ backgroundColor: "red", color: "white" }}
                             onClick={() => {
-                              handleDeleteEducation(editId);
                               setIsEduModalOpen(false);
                               setIsEditing(false);
                               setEditId(null);
                             }}
                           >
-                            Delete
-                          </button>
-                        )}
+                            Cancel
+                          </button> */}
+
+                         
+                        </div>
                       </div>
                     </div>
+                  )}
+                </div>
+
+                {/* Project section */}
+                <div className="content-boxes" id="projects">
+                  <div className="content-boxes-head">
+                    <h2>Projects</h2>
+                    <button
+                      className="aboutMe-editBtn"
+                      onClick={() => handleAddEditClick()}
+                    >
+                      <FiPlus size={30} className="plus-icon" />
+                    </button>
                   </div>
-                )}
-              </div>
+                  <div className="education-cards">
+                    {projects.map((proj, index) => {
+                      const duration = formatDateRange(
+                        proj?.startDate,
+                        proj?.endDate
+                      );
 
-              {/* Project section */}
-              <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Projects</h2>
-                  <button
-                    className="aboutMe-editBtn"
-                    onClick={() => handleAddEditClick()}
-                  >
-                    <FiPlus size={30} className="plus-icon" />
-                  </button>
-                </div>
-                <div className="education-cards">
-                  {projects.map((proj, index) => {
-                    const duration = formatDateRange(
-                      proj?.startDate,
-                      proj?.endDate
-                    );
-
-                    return (
-                      <div className="project-card" key={index}>
-                        <img
-                          src={proj?.image || School}
-                          alt="Project Logo"
-                          className="project-logo"
-                        />
-                        <div className="project-info">
-                          <h3>{proj?.title}</h3>
-                          <p className="project-date">{duration}</p>
-                          <p className="project-associated">
-                            {proj?.associated}
-                          </p>
-                          <p className="project-description">
-                            {proj?.projectDescription}
-                          </p>
+                      return (
+                        <div className="project-card" key={index}>
+                          <img
+                            src={proj?.image || School}
+                            alt="Project Logo"
+                            className="project-logo"
+                          />
+                          <div className="project-info">
+                            <h3>{proj?.title}</h3>
+                            <p className="project-date">{duration}</p>
+                            <p className="project-associated">
+                              {proj?.associated}
+                            </p>
+                            <p className="project-description">
+                              {proj?.projectDescription}
+                            </p>
+                          </div>
+                          <div className="project-actions">
+                            <button
+                              onClick={() => handleAddEditClick(proj, index)}
+                            >
+                              <MdOutlineEdit size={25} />
+                            </button>
+                            {/* <button onClick={() => handleDelete(index)}>Delete</button> */}
+                          </div>
                         </div>
-                        <div className="project-actions">
-                          <button
-                            onClick={() => handleAddEditClick(proj, index)}
+                      );
+                    })}
+                  </div>
+
+                  {showModal && (
+                    <div className="modal-overlay">
+                      <form
+                        className="modal-content"
+                        onSubmit={handleFormSubmit}
+                      >
+                        <div className="modal-header">
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                               marginBottom: "20px",
+                            }}
                           >
-                            <MdOutlineEdit size={25} />
-                          </button>
-                          {/* <button onClick={() => handleDelete(index)}>Delete</button> */}
+                            <h2 className="edit-about">Add Project</h2>
+                            <button
+                              className="fancy-close"
+                              onClick={() => setShowModal(false)}
+                              aria-label="Close"
+                            ></button>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
 
-                {showModal && (
-                  <div className="modal-overlay">
-                    <form className="modal-content" onSubmit={handleFormSubmit}>
-                      <h3>
-                        {editIndex !== null ? "Edit Project" : "Add Project"}
-                      </h3>
-                      <input
-                        type="text"
-                        placeholder="Title"
-                        value={formProjectData.title}
-                        onChange={(e) =>
-                          setFormProjectData({
-                            ...formProjectData,
-                            title: e.target.value,
-                          })
-                        }
-                        required
-                      />
+                        <div>
+                          <label className="company-label">Title</label>
+                          <input
+                            type="text"
+                            placeholder="Title"
+                            value={formProjectData.title}
+                            onChange={(e) =>
+                              setFormProjectData({
+                                ...formProjectData,
+                                title: e.target.value,
+                              })
+                            }
+                            required
+                          />
+                        </div>
 
-                      <input
-                        type="date"
-                        placeholder="startDate"
-                        value={formProjectData.startDate}
-                        onChange={(e) =>
-                          setFormProjectData({
-                            ...formProjectData,
-                            startDate: e.target.value,
-                          })
-                        }
-                      />
-                      <input
-                        type="date"
-                        placeholder="EndDate"
-                        value={formProjectData.endDate}
-                        onChange={(e) =>
-                          setFormProjectData({
-                            ...formProjectData,
-                            endDate: e.target.value,
-                          })
-                        }
-                      />
-                      <input
-                        type="text"
-                        placeholder="Associated With"
-                        value={formProjectData.associated}
-                        onChange={(e) =>
-                          setFormProjectData({
-                            ...formProjectData,
-                            associated: e.target.value,
-                          })
-                        }
-                        required
-                      />
-                      <textarea
-                        placeholder="Description"
-                        value={formProjectData.projectDescription}
-                        onChange={(e) =>
-                          setFormProjectData({
-                            ...formProjectData,
-                            projectDescription: e.target.value,
-                          })
-                        }
-                        required
-                      />
-                      {/* <input
+                        <div className="start-end-date">
+                          <div className="start-date">
+                            <label className="company-label">
+                              Enter a Start Date
+                            </label>
+                            <input
+                              className="start-date"
+                              type="date"
+                              placeholder="startDate"
+                              value={formProjectData.startDate}
+                              onChange={(e) =>
+                                setFormProjectData({
+                                  ...formProjectData,
+                                  startDate: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+
+                          <div className="end-date">
+                            <label className="company-label">
+                              Enter a End Date
+                            </label>
+                            <input
+                              className="end-date"
+                              type="date"
+                              placeholder="EndDate"
+                              value={formProjectData.endDate}
+                              onChange={(e) =>
+                                setFormProjectData({
+                                  ...formProjectData,
+                                  endDate: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="company-label">
+                            Associated With
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Associated With"
+                            value={formProjectData.associated}
+                            onChange={(e) =>
+                              setFormProjectData({
+                                ...formProjectData,
+                                associated: e.target.value,
+                              })
+                            }
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <label className="company-label">Description</label>
+                          <textarea
+                            placeholder="Description"
+                            value={formProjectData.projectDescription}
+                            onChange={(e) =>
+                              setFormProjectData({
+                                ...formProjectData,
+                                projectDescription: e.target.value,
+                              })
+                            }
+                            required
+                          />
+                        </div>
+                        {/* <input
                         type="file"
                         accept="image/*"
                         onChange={(e) => {
@@ -2081,144 +2369,178 @@ const EmpProfPage = () => {
                           style={{ width: "10%", height: "auto", borderRadius: "8px", marginTop: "10px" }}
                         />
                       )} */}
-                      <div className="modal-buttons">
-                        <button type="submit">{editIndex !== null ? "Update" : "Add"}</button>
-                        <button type="button" onClick={() => setShowModal(false)}>Cancel</button>
-                        {editIndex !== null && formProjectData._id && (
-                          <button
+
+
+                      
+                        <div className="modal-buttons" >
+
+                           {editIndex !== null && formProjectData._id && (
+                            <div
+                              type="button"
+                              // style={{
+                              //   backgroundColor: "red",
+                              //   color: "white",
+                              // }}
+                              onClick={() =>
+                                handleDeleteProject(formProjectData._id)
+                              }
+                            >
+                              Delete Project
+                            </div>
+                          )}
+                          <button type="submit">
+                            {editIndex !== null ? "Update" : "Add"}
+                          </button>
+                          {/* <button
                             type="button"
-                            style={{ backgroundColor: "red", color: "white" }}
+                            onClick={() => setShowModal(false)}
+                          >
+                            Cancel
+                          </button> */}
+                         
+                        </div>
+                      </form>
+                    </div>
+                  )}
+                </div>
+
+                {/* Certificate and lincences section */}
+                <div className="content-boxes" id="certifications">
+                  <div className="content-boxes-head">
+                    <h2>Licenses & Certifications</h2>
+                    <button
+                      className="aboutMe-editBtn"
+                      onClick={() => handleAddEditLicensesClick()}
+                    >
+                      <FiPlus size={30} className="plus-icon" />
+                    </button>
+                  </div>
+
+                  <div className="education-cards">
+                    {certifications.map((cert, index) => (
+                      <div className="license-card" key={index}>
+                        <img
+                          src={cert?.image || Course}
+                          alt="Certification Logo"
+                          className="license-logo"
+                        />
+                        <div className="license-info">
+                          <h3>{cert?.courses}</h3>
+                          <p className="issuer">{cert?.company_Name}</p>
+                          <p className="issued">
+                            Issued {formatDate(cert?.issued_Date)}
+                            {cert?.endDate
+                              ? ` · Expires ${formatDate(cert.endDate)}`
+                              : " · No Expiration Date"}
+                          </p>
+                        </div>
+                        <a
+                          href={cert?.certificateUrl} // Replace with your actual URL variable
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="show-credential-button"
+                        >
+                          Show credential
+                        </a>
+
+                        <div className="project-actions">
+                          <button
                             onClick={() =>
-                              handleDeleteProject(formProjectData._id)
+                              handleAddEditLicensesClick(cert, index)
                             }
                           >
-                            Delete
+                            <MdOutlineEdit size={25} />
                           </button>
-                        )}
+                          {/* <button onClick={() => handleLicensesDelete(index)}>Delete</button> */}
+                        </div>
                       </div>
-                    </form>
+                    ))}
                   </div>
-                )}
-              </div>
-
-              {/* Certificate and lincences section */}
-              <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Licenses & Certifications</h2>
-                  <button
-                    className="aboutMe-editBtn"
-                    onClick={() => handleAddEditLicensesClick()}
-                  >
-                    <FiPlus size={30} className="plus-icon" />
-                  </button>
-                </div>
-                <div className="education-cards">
-                  {certifications.map((cert, index) => (
-                    <div className="license-card" key={index}>
-                      <img
-                        src={cert?.image || Course}
-                        alt="Certification Logo"
-                        className="license-logo"
-                      />
-                      <div className="license-info">
-                        <h3>{cert?.courses}</h3>
-                        <p className="issuer">{cert?.company_Name}</p>
-                        <p className="issued">
-                          Issued {formatDate(cert?.issued_Date)}
-                          {cert?.endDate
-                            ? ` · Expires ${formatDate(cert.endDate)}`
-                            : " · No Expiration Date"}
-                        </p>
-                      </div>
-                      <a
-                        href={cert?.certificateUrl} // Replace with your actual URL variable
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="show-credential-button"
+                  {showLicensesModal && (
+                    <div className="modal">
+                      <form
+                        className="modal-form"
+                        onSubmit={handleFormLicensesSubmit}
                       >
-                        Show credential
-                      </a>
-
-                      <div className="project-actions">
-                        <button
-                          onClick={() =>
-                            handleAddEditLicensesClick(cert, index)
-                          }
-                        >
-                          <MdOutlineEdit size={25} />
-                        </button>
-                        {/* <button onClick={() => handleLicensesDelete(index)}>Delete</button> */}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                {showLicensesModal && (
-                  <div className="modal">
-                    <form
-                      className="modal-form"
-                      onSubmit={handleFormLicensesSubmit}
-                    >
-                      <h3>
+                        {/* <h3>
                         {editIndex !== null
                           ? "Edit Certification"
                           : "Add Certification"}
-                      </h3>
-                      <input
-                        type="text"
-                        placeholder="Certification Title"
-                        value={formLicensesData.title}
-                        onChange={(e) =>
-                          setFormLicensesData({
-                            ...formLicensesData,
-                            title: e.target.value,
-                          })
-                        }
-                        required
-                      />
-                      <input
-                        type="text"
-                        placeholder="Issuer"
-                        value={formLicensesData.issuer}
-                        onChange={(e) =>
-                          setFormLicensesData({
-                            ...formLicensesData,
-                            issuer: e.target.value,
-                          })
-                        }
-                        required
-                      />
-                      <input
-                        type="date"
-                        placeholder="Issued Date"
-                        value={formLicensesData.issuedDate}
-                        onChange={(e) =>
-                          setFormLicensesData({
-                            ...formLicensesData,
-                            issuedDate: e.target.value,
-                          })
-                        }
-                        required
-                      />
-                      {/* <input
+                      </h3> */}
+                        <div className="modal-header">
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                               marginBottom: "20px",
+                            }}
+                          >
+                            <h2 className="edit-about">Add Certification</h2>
+                            <button
+                              className="fancy-close"
+                              onClick={() => setShowLicensesModal(false)}
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                        </div>
+
+                        <input
+                          type="text"
+                          placeholder="Certification Title"
+                          value={formLicensesData.title}
+                          onChange={(e) =>
+                            setFormLicensesData({
+                              ...formLicensesData,
+                              title: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                        <input
+                          type="text"
+                          placeholder="Issuer"
+                          value={formLicensesData.issuer}
+                          onChange={(e) =>
+                            setFormLicensesData({
+                              ...formLicensesData,
+                              issuer: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                        <input
+                          type="date"
+                          placeholder="Issued Date"
+                          value={formLicensesData.issuedDate}
+                          onChange={(e) =>
+                            setFormLicensesData({
+                              ...formLicensesData,
+                              issuedDate: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                        {/* <input
                         type="date"
                         placeholder="Issued Date"
                         value={formLicensesData.issuedDate}
                         onChange={(e) => setFormLicensesData({ ...formLicensesData, issuedDate: e.target.value })}
                         required
                       /> */}
-                      <input
-                        type="url"
-                        placeholder="Credential Link"
-                        value={formLicensesData.credentialUrl}
-                        onChange={(e) =>
-                          setFormLicensesData({
-                            ...formLicensesData,
-                            credentialUrl: e.target.value,
-                          })
-                        }
-                      />
+                        <input
+                          type="url"
+                          placeholder="Credential Link"
+                          value={formLicensesData.credentialUrl}
+                          onChange={(e) =>
+                            setFormLicensesData({
+                              ...formLicensesData,
+                              credentialUrl: e.target.value,
+                            })
+                          }
+                        />
 
-                      {/* <input
+                        {/* <input
                         type="file"
                         accept="image/*"
                         onChange={(e) => {
@@ -2235,24 +2557,36 @@ const EmpProfPage = () => {
                       {formLicensesData.image && (
                         <img src={formLicensesData.image} alt="Preview" style={{ width: "10%", height: "auto", borderRadius: "8px", marginTop: "10px" }} />
                       )} */}
-                      <div className="modal-buttons">
-                        <button type="submit">{editIndexLicenses !== null ? "Update" : "Add"}</button>
-                        <button type="button" onClick={() => setShowLicensesModal(false)}>Cancel</button>
-                        {editIndexLicenses !== null && formLicensesData._id && (
-                          <button
-                            type="button"
-                            style={{ backgroundColor: "red", color: "white" }}
-                            onClick={() =>
-                              handleDeleteLicenses(formLicensesData._id)
-                            }
-                          >
-                            Delete
+                        <div className="modal-buttons">
+                          <button type="submit">
+                            {editIndexLicenses !== null ? "Update" : "Add"}
                           </button>
-                        )}
-                      </div>
-                    </form>
-                  </div>
-                )}
+                          {/* <button
+                            type="button"
+                            onClick={() => setShowLicensesModal(false)}
+                          >
+                            Cancel
+                          </button> */}
+                          {editIndexLicenses !== null &&
+                            formLicensesData._id && (
+                              <button
+                                type="button"
+                                style={{
+                                  backgroundColor: "red",
+                                  color: "white",
+                                }}
+                                onClick={() =>
+                                  handleDeleteLicenses(formLicensesData._id)
+                                }
+                              >
+                                Delete
+                              </button>
+                            )}
+                        </div>
+                      </form>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

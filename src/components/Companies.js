@@ -132,7 +132,7 @@ export default function Companies() {
               <img src={formData?.profileImg} alt="Profile" />
               <div className="Profile-basic-info">
                 <div className="Profile-top">
-                  <div>
+                  <div className="profile-top">
                     <h3>{formData?.companyName}</h3>
                     <p>
                       {formData?.contactName} | {formData?.designation}

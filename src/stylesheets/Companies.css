@@ -176,7 +176,7 @@ a {
   width: 180px;
   background-color: #fff;
   border-radius: 50%;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   object-fit: cover;
 }
 .edit-button {
@@ -207,9 +207,11 @@ a {
 }
 
 .Profile-basic-info h3 {
-  font-size: 28px;
+  font-size: 24px;
   margin: 0;
   color: white;
+  font-family: "Poppins";
+  font-weight: 600;
 }
 
 .Profile-basic-info p {
@@ -225,7 +227,13 @@ a {
 
 .Profile-personal-info h3,
 .Profile-personal-info p {
-  padding: 8px 0;
+  padding: 4px 0;
+}
+
+.profile-top p {
+  font-size: 24px;
+  font-weight: 400;
+  font-family: "Poppins";
 }
 
 .Profile-personal-info {
@@ -290,7 +298,7 @@ a {
   margin: 30px auto;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   font-family: "Segoe UI", sans-serif;
-  max-width: 100%;
+  max-width: 96%;
 }
 
 .company-heading {
@@ -368,10 +376,11 @@ a {
 }
 
 .pill {
-  padding: 6px 12px;
-  border-radius: 30px;
-  font-size: 18px;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 20px;
   font-weight: 500;
+  margin-top: 8px;
 }
 
 .pill.blue {
@@ -525,7 +534,7 @@ a {
   font-size: 18px;
   font-weight: 600;
   color: #333;
-  margin: 5px 0 ;
+  margin: 5px 0;
 }
 
 .jobLocation {
@@ -561,7 +570,7 @@ a {
   display: flex;
   justify-content: space-between;
   /* align-items: center; */
-  margin-left: 70px
+  margin-left: 70px;
 }
 
 .more-details {

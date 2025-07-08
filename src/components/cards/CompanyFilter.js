@@ -4,6 +4,7 @@ import "../../stylesheets/CompFilter.css";
 import { useSearchParams } from "react-router-dom";
 import JobCard from "./JobCard";
 
+
 const BASE_URL = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
 const CompanyFilter = () => {
@@ -194,7 +195,7 @@ const CompanyFilter = () => {
           </div>
         </div>
 
-        <button className="search-button">🔍 Search</button>
+        <button className="search-button">Search</button>
       </div>
 
       <div className="job-listing-container">

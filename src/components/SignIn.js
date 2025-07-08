@@ -43,8 +43,10 @@ const SignIn = () => {
                 </p>
               </>)}
 
-
-            <button className="register-button">Register For Free</button>
+             
+            <button onClick={() => {
+                    window.location.href = `/signup?role=${userRole}`;
+                  }} className="register-button">Register For Free</button>
           </div>
         </div>
 

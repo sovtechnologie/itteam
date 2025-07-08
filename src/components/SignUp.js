@@ -45,12 +45,16 @@ const SignUp = () => {
                 </p>
               </div>
             )}
-
-            <p className="login-prompt">Already Registered?  <button  onClick={() => {
-                    const queryParams = new URLSearchParams(window.location.search);
-                    const role = queryParams.get("type") || "candidate"; // Get current role
+            <div onClick={() => {
                     window.location.href = `/signin?role=${userRole}`;
-                  }}> Login here</button></p>
+                  }}>
+            <p className="login-prompt">Already Registered?  <div onClick={() => {
+                    window.location.href = `/signin?role=${userRole}`;
+                  }}
+                    // window.location.href = `/signin?role=${userRole}`;}}
+                    > Login here</div></p></div>
+
+
             <img src={illustration} alt="Signup" style={{ width: "auto", height: "320px", margin: "0 auto" , marginTop:"100px"}} />
           </div>
           {/* )} */}

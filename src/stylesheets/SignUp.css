@@ -38,8 +38,8 @@
 }
 
 /* .signup-left { */
-  /* width: 100%; */
-  /* max-width: 600px; */
+/* width: 100%; */
+/* max-width: 600px; */
 /* } */
 
 .benefits-section,
@@ -123,7 +123,7 @@
   display: flex;
   justify-content: center;
   /* width: auto; */
-
+  gap: 10px;
   max-width: 600px;
   /* width: 600px; */
 }
@@ -134,11 +134,11 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 } */
-.login-prompt:hover{
+.login-prompt:hover {
   color: #1783d0;
   background-color: white;
   border: 1px solid #1783d0;
-   transform: translateY(-2px);
+  transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 .login-prompt a {
@@ -150,12 +150,10 @@
   padding: 0 5px;
 }
 
-
 .login-prompt:hover a {
   color: #1783d0;
   transform: scale(1.05);
 }
-
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -303,7 +301,8 @@
   /* width: 250px; */
 }
 
-.formColTwo , .formColOne {
+.formColTwo,
+.formColOne {
   width: 350px;
 }
 
@@ -390,14 +389,12 @@
 }
 
 .upload-box {
-  
-      border: 2px solid #ddd;
-    border-radius: 14px;
-    /* height: 42px; */
-    padding: 10px;
-    text-align: center;
-    color: #666;
-   
+  border: 2px solid #ddd;
+  border-radius: 14px;
+  /* height: 42px; */
+  padding: 10px;
+  text-align: center;
+  color: #666;
 }
 
 .upload-box input[type="file"] {

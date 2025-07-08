@@ -154,7 +154,7 @@
   font-weight: 400;
   transition: background-color 0.3s;
 }
-.register-button:hover{
+.register-button:hover {
   background-color: white;
   color: #1783d0;
   border: 1px solid #1783d0;
@@ -209,11 +209,14 @@
   /* align-items: center; */
   flex-direction: column;
   gap: 20px;
-
 }
 .form-select {
   color: grey;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  outline: none;
 }
+
 .signUpform-group {
   color: red;
 }
@@ -321,7 +324,7 @@
   color: #1783d0;
 }
 
-.form p{
+.form p {
   display: flex;
   justify-content: center;
   width: 528px;

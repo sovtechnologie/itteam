@@ -14,8 +14,12 @@ input {
 }
 
 select {
-      border: 1px solid #ddd;
-    border-radius: 14px;
+      border: 1px solid black;
+    /* border-radius: 14px; */
+    color: grey;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  outline: none;
 
   font-family: "Poppins", sans-serif ;
   font-size: 16px; /* Optional: adjust the font size */

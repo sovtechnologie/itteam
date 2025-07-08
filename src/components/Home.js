@@ -168,7 +168,7 @@ const Home = () => {
 
           <div className="category-tags">
             {[
-              { img: remote1, label: "Angular" },
+              { img: remote1, label: "Angular"},
               { img: mnc, label: "DevOps" },
               { img: sales, label: "AI" },
               { img: project, label: "AIML" },
@@ -194,7 +194,7 @@ const Home = () => {
                   }
                 />
                 <span className="button-text">{label}</span>
-                <img src={next} alt="Next" />
+                <img className="home-page-next-img" src={next} alt="Next" />
               </button>
             ))}
           </div>

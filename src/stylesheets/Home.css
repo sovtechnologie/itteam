@@ -787,7 +787,7 @@
 
 .search-input-wrapper button {
   position: absolute;
-  right: 5px;
+  right: 8px;
   background-color: #1783d0;
   color: white;
   border: none;
@@ -841,6 +841,13 @@
   width: auto;
   min-width: unset;
 }
+.category-tags button:hover {
+  background-color: white;
+  color: #1783d0;
+}
+/* .category-tags button hover:img{
+filter: grayscale(1);
+} */
 
 .button-text {
   padding: 0 1rem;
@@ -973,7 +980,7 @@
   margin-top: 100px;
   /* padding: 40px 20px; */
   font-family: "Poppins";
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 500;
   color: #525252;
 }
@@ -1102,7 +1109,7 @@
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
-  margin-top: 15px;
+  /* margin-top: 15px; */
 }
 
 .view-profile-btn:hover {
@@ -1288,7 +1295,7 @@
   color: #525252;
   padding: 4px 8px;
   border-radius: 4px;
-  font-size: 8px;
+  font-size: 10px;
   margin-top: 8px;
   text-align: center;
 }
@@ -2090,7 +2097,7 @@ font-size: 18px;
 
 .job-hunting-button {
   position: absolute;
-  right: 20px;
+  right: 8px;
   top: 5px;
   padding: 10px 20px;
   background-color: #1783d0;
@@ -2104,4 +2111,9 @@ font-size: 18px;
 
 .job-hunting-button:hover {
   background-color: #086cb4;
+}
+
+
+.category-tags button:hover .home-page-next-img {
+  filter: brightness(0) saturate(100%) invert(41%) sepia(69%) saturate(2376%) hue-rotate(182deg) brightness(91%) contrast(91%);
 }

@@ -313,9 +313,9 @@ export default function Employer() {
                     <button className="icon-btn">
                       <MdOutlineEdit size={30} onClick={handleEditToggle} />
                     </button>
-                    <button className="icon-btn">
+                    {/* <button className="icon-btn">
                       <FiShare2 size={30} />
-                    </button>
+                    </button> */}
                   </div>
                 </div>
 
@@ -349,7 +349,23 @@ export default function Employer() {
             {isEditOpen && (
               <div className="modal-overlay">
                 <div className="edit-modal-horizontal">
-                  <h3>Edit Profile</h3>
+                  <div className="modal-header">
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <h2 className="edit-about">Edit Profile</h2>
+                      <button
+                        className="fancy-close"
+                        onClick={handleClose}
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                  </div>
+
                   {formData.profileImg && (
                     <div
                       style={{
@@ -390,59 +406,164 @@ export default function Employer() {
                   )}
 
                   <div className="form-grid">
-                    <input
-                      name="contactName"
-                      placeholder="Full Name"
-                      value={formData.contactName}
-                      onChange={handleInput}
-                    />
+                    <div>
+                      <label
+                        style={{
+                          color: "black",
+                          marginBottom: "5px",
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                        }}
+                      >
+                        Full Name
+                      </label>
+                      <input
+                        name="contactName"
+                        placeholder="Full Name"
+                        value={formData.contactName}
+                        onChange={handleInput}
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        style={{
+                          color: "black",
+                          marginBottom: "5px",
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                        }}
+                      >
+                        Designation
+                      </label>
                     <input
                       name="designation"
                       placeholder="Designation"
                       value={formData.designation}
                       onChange={handleInput}
-                    />
+                    /></div>
+
+                    <div>
+                      <label
+                        style={{
+                          color: "black",
+                          marginBottom: "5px",
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                        }}
+                      >
+                       Company Name
+                      </label>
                     <input
                       name="companyName"
                       placeholder="Company"
                       value={formData.companyName}
                       onChange={handleInput}
-                    />
+                    /></div>
+
+                    <div>
+                      <label
+                        style={{
+                          color: "black",
+                          marginBottom: "5px",
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                        }}
+                      >
+                        Location
+                      </label>
                     <input
                       name="location"
                       placeholder="Location"
                       value={formData.location}
                       onChange={handleInput}
-                    />
+                    /></div>
+
+                    <div>
+                      <label
+                        style={{
+                          color: "black",
+                          marginBottom: "5px",
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                        }}
+                      >
+                       Company Size
+                      </label>
                     <input
                       name="companySize"
                       placeholder="size like 0-13 Employee"
                       value={formData.companySize}
                       onChange={handleInput}
-                    />
+                    /></div>
+
+                    <div>
+                      <label
+                        style={{
+                          color: "black",
+                          marginBottom: "5px",
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                        }}
+                      >
+                       HR Phone
+                      </label>
                     <input
                       name="phone"
                       placeholder="Phone"
                       value={formData.phone}
                       onChange={handleInput}
-                    />
+                    /></div>
+
+
+                    <div>
+                      <label
+                        style={{
+                          color: "black",
+                          marginBottom: "5px",
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                        }}
+                      >
+                        Email id
+                      </label>
                     <input
                       name="email"
                       placeholder="Email"
                       value={formData.email}
                       onChange={handleInput}
-                    />
+                    /></div>
+
+                    <div>
+                      <label
+                        style={{
+                          color: "black",
+                          marginBottom: "5px",
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                        }}
+                      >
+                        Profile Image
+                      </label>
                     <input
                       type="file"
                       name="profileImg"
                       onChange={handleInput}
                     />
-                  </div>
+                  </div></div>
                   <div className="modal-buttons">
-                    <button onClick={handleProfileSave}>Save & Close</button>
-                    <button type="button" onClick={handleClose}>
+                    <button onClick={handleProfileSave}>Save </button>
+                    {/* <button type="button" onClick={handleClose}>
                       Cancel
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
@@ -506,99 +627,155 @@ export default function Employer() {
             {isModalOpen && (
               <div className="modal">
                 <form className="modal-form" onSubmit={handleSubmit}>
-                  <h3>Edit Company Info</h3>
-                  <textarea
-                    name="description"
-                    value={formState.description}
-                    onChange={handleInputChange}
-                    rows={5}
-                    placeholder="Company Description"
-                    required
-                  />
-                  <input
-                    name="website"
-                    type="url"
-                    value={formState.website}
-                    onChange={handleInputChange}
-                    placeholder="Website"
-                    required
-                  />
-                  <input
-                    name="contact"
-                    type="text"
-                    value={formState.contact}
-                    onChange={handleInputChange}
-                    placeholder="Contact"
-                    required
-                  />
-                  <input
-                    name="address"
-                    type="text"
-                    value={formState.address}
-                    onChange={handleInputChange}
-                    placeholder="Address"
-                    required
-                  />
-                  <label>Industries</label>
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "10px",
-                      flexWrap: "wrap",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    {formState.industry.map((item, idx) => (
-                      <span
-                        key={idx}
-                        style={{
-                          background: "#f0f0f0",
-                          padding: "5px 10px",
-                          borderRadius: "20px",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "8px",
-                        }}
-                      >
-                        {item}
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setFormState((prev) => ({
-                              ...prev,
-                              industry: prev.industry.filter(
-                                (_, i) => i !== idx
-                              ),
-                            }))
-                          }
-                          style={{
-                            background: "none",
-                            border: "20px",
-                            fontWeight: "bold",
-                            cursor: "pointer",
-                          }}
-                        >
-                          ×
-                        </button>
-                      </span>
-                    ))}
+                  <div className="modal-header">
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <h2 className="edit-about">Edit Company Info</h2>
+                      <button
+                        className="fancy-close"
+                        onClick={() => setIsModalOpen(false)}
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="company-info">Company Description</label>
+                    <textarea
+                      name="description"
+                      value={formState.description}
+                      onChange={handleInputChange}
+                      rows={5}
+                      placeholder="Company Description"
+                      required
+                    />
                   </div>
 
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "10px",
-                      marginBottom: "20px",
-                    }}
-                  >
+                  <div style={{ display: "flex", gap: "28px" }}>
+                    <div
+                      style={{
+                        width: "47%",
+                      }}
+                    >
+                      <label>Company Website</label>
+                      <input
+                        name="website"
+                        type="url"
+                        value={formState.website}
+                        onChange={handleInputChange}
+                        placeholder="Website"
+                        required
+                      />
+                    </div>
+                    <div
+                      style={{
+                        width: "47%",
+                      }}
+                    >
+                      <label>HR Contact</label>
+                      <input
+                        name="contact"
+                        type="text"
+                        value={formState.contact}
+                        onChange={handleInputChange}
+                        placeholder="Contact"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="company-info">Company Address</label>
                     <input
+                      name="address"
                       type="text"
-                      placeholder="Add Industry"
-                      value={newIndustry}
-                      onChange={(e) => setNewIndustry(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          e.preventDefault();
+                      value={formState.address}
+                      onChange={handleInputChange}
+                      placeholder="Address"
+                      required
+                    />
+                  </div>
+                  {/* <div>
+                    <label>Industries</label>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "10px",
+                        flexWrap: "wrap",
+                        marginTop: "5px",
+                      }}
+                    >
+                      {formState.industry.map((item, idx) => (
+                        <span
+                          key={idx}
+                          style={{
+                            background: "#f0f0f0",
+                            padding: "5px 10px",
+                            borderRadius: "20px",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px",
+                          }}
+                        >
+                          {item}
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setFormState((prev) => ({
+                                ...prev,
+                                industry: prev.industry.filter(
+                                  (_, i) => i !== idx
+                                ),
+                              }))
+                            }
+                            style={{
+                              background: "none",
+                              border: "20px",
+                              fontWeight: "bold",
+                              cursor: "pointer",
+                            }}
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  </div> */}
+                  <div>
+                    <label className="company-info">Add Industry</label>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "10px",
+                      }}
+                    >
+                      <input
+                        type="text"
+                        placeholder="Add Industry"
+                        value={newIndustry}
+                        onChange={(e) => setNewIndustry(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            if (newIndustry.trim()) {
+                              setFormState((prev) => ({
+                                ...prev,
+                                industry: [
+                                  ...prev.industry,
+                                  newIndustry.trim(),
+                                ],
+                              }));
+                              setNewIndustry("");
+                            }
+                          }
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
                           if (newIndustry.trim()) {
                             setFormState((prev) => ({
                               ...prev,
@@ -606,44 +783,82 @@ export default function Employer() {
                             }));
                             setNewIndustry("");
                           }
-                        }
-                      }}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (newIndustry.trim()) {
-                          setFormState((prev) => ({
-                            ...prev,
-                            industry: [...prev.industry, newIndustry.trim()],
-                          }));
-                          setNewIndustry("");
-                        }
+                        }}
+                      >
+                        <FiPlus
+                          size={30}
+                          style={{
+                            backgroundColor: "#ffffff",
+                            color: "#1783D0",
+                            border: "none",
+                          }}
+                        />
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    {/* <label>Industries</label> */}
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "10px",
+                        flexWrap: "wrap",
+                        // marginTop: "5px",
                       }}
                     >
-                      <FiPlus
-                        size={30}
-                        style={{
-                          backgroundColor: "#ffffff",
-                          color: "#1783D0",
-                          border: "none",
-                        }}
-                      />
-                    </button>
+                      {formState.industry.map((item, idx) => (
+                        <span
+                          key={idx}
+                          style={{
+                            background: "#f0f0f0",
+                            padding: "7px 22px",
+                            borderRadius: "20px",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px",
+                          }}
+                        >
+                          {item}
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setFormState((prev) => ({
+                                ...prev,
+                                industry: prev.industry.filter(
+                                  (_, i) => i !== idx
+                                ),
+                              }))
+                            }
+                            style={{
+                              background: "none",
+                              border: "20px",
+                              fontWeight: "bold",
+                              cursor: "pointer",
+                            }}
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <input
-                    name="founded"
-                    type="text"
-                    value={formState.founded}
-                    onChange={handleInputChange}
-                    placeholder="Founded"
-                    required
-                  />
+
+                  <div>
+                    <label className="company-info">Company Founded</label>
+                    <input
+                      name="founded"
+                      type="text"
+                      value={formState.founded}
+                      onChange={handleInputChange}
+                      placeholder="Founded"
+                      required
+                    />
+                  </div>
                   <div className="modal-buttons">
                     <button type="submit">Save</button>
-                    <button type="button" onClick={() => setIsModalOpen(false)}>
+                    {/* <button type="button" onClick={() => setIsModalOpen(false)}>
                       Cancel
-                    </button>
+                    </button> */}
                   </div>
                 </form>
               </div>

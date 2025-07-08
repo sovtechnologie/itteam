@@ -16,11 +16,12 @@ import companyLogo from "../images/CompanyProfilelogo.png";
 import School from "../images/Profile/Schoolname.png";
 import Course from "../images/Profile/Course.png";
 
+
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
 const EmployeeProfile = () => {
   const { id } = useParams();
-  const isLoggedIn = !!Cookies.get("authToken"); 
+  const isLoggedIn = !!Cookies.get("authToken");
 
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -250,27 +251,49 @@ const EmployeeProfile = () => {
             </div>
           </div>
 
-          <div className="profile-secTwo">
-            <div className="profile-contentBox">
-              {/* Link section */}
-              <div className="main-wrapper">
-                <div className="quick-links">
-                  <div className="content-boxes-head">
-                    <h2>Quick Links</h2>
+          <div className="quick-links-wrapper">
+            <div className="profile-secTwo">
+              <div className="aside">
+                <div className="profile-contentBox">
+                  {/* Link section */}
+                  <div className="main-wrapper">
+                    <div className="quick-links">
+                      <div className="content-boxes-head">
+                        <h2>Quick Links</h2>
+                      </div>
+                      <ul>
+                        <li>
+                          <a href="#about">About Me</a>{" "}
+                        </li>
+                        <li>
+                          <a href="#resume">Resume</a>
+                        </li>
+                        <li>
+                          <a href="#skills">Key Skills</a>
+                        </li>
+                        <li>
+                          <a href="#employment">Employment</a>
+                        </li>
+                        <li>
+                          <a href="#education">Education</a>
+                        </li>
+                        <li>
+                          <a href="#projects">Projects</a>
+                        </li>
+                        <li>
+                          <a href="#certifications">
+                            Licenses & certifications
+                          </a>
+                        </li>
+                        <li>Accomplishments</li>
+                      </ul>
+                    </div>
                   </div>
-                  <ul>
-                    <li>About Me </li>
-                    <li>Resume </li>
-                    <li>Key skills </li>
-                    <li>Employment </li>
-                    <li>Education </li>
-                    <li>Projects </li>
-                    <li>Licenses & certifications </li>
-                    <li>Accomplishments </li>
-                  </ul>
                 </div>
+              </div>
 
-                <div className="content-boxes">
+              <div className="right-aside">
+                <div className="content-boxes" id="about">
                   <div className="content-boxes-head">
                     <h2>About Me</h2>
                   </div>
@@ -283,16 +306,15 @@ const EmployeeProfile = () => {
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Resume section */}
-              <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Upload Resume</h2>
-                </div>
+                {/* Resume section */}
+                <div className="content-boxes" id="resume">
+                  <div className="content-boxes-head">
+                    <h2>Upload Resume</h2>
+                  </div>
 
-                <div className="resume-card-box-details">
-                  {/* {!resumeFile ? (
+                  <div className="resume-card-box-details">
+                    {/* {!resumeFile ? (
                     <div>
                       <img src={resumelogo} className="upload-icon" />
                       <p>Upload your Resume here</p>
@@ -312,94 +334,167 @@ const EmployeeProfile = () => {
                       </a>
                     </div>
                   )} */}
-                  {!resumeFile ? (
-                    <div>
-                      <img src={resumelogo} className="upload-icon" />
-                      <p>Upload your Resume here</p>
-                    </div>
-                  ) : isLoggedIn ? (
-                    <div className="resume-info">
-                      <p>
-                        <strong>Uploaded:</strong> {resumeFile}
-                      </p>
-                      <a
-                        href={resumeURL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="resume-link"
-                      >
-                        View / Download Resume
-                      </a>
-                    </div>
-                  ) : (
-                    <div className="resume-info">
-                      <p>
-                        <strong>Uploaded:</strong> {resumeFile}
-                      </p>
-                      <p>Login to view resume</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Skill Section */}
-              <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Key Skills</h2>
-                </div>
-
-                <div className="skills-card-box-details">
-                  <div className="skillsbox-card">
-                    {selectedSkills.map((skill, index) => (
-                      <div className="skill-badge" key={index}>
-                        <span className="skill-icon">
-                          <img
-                            src={skill.techStacklogo}
-                            // alt={skill.tecStackName}
-                            style={{
-                              width: "20px",
-                              height: "20px",
-                              marginRight: "8px",
-                            }}
-                          />
-                        </span>
-                        <span>{skill.tecStackName}</span>
+                    {!resumeFile ? (
+                      <div>
+                        <img src={resumelogo} className="upload-icon" />
+                        <p>Upload your Resume here</p>
                       </div>
-                    ))}
+                    ) : isLoggedIn ? (
+                      <div className="resume-info">
+                        <p>
+                          <strong>Uploaded:</strong> {resumeFile}
+                        </p>
+                        <a
+                          href={resumeURL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="resume-link"
+                        >
+                          View / Download Resume
+                        </a>
+                      </div>
+                    ) : (
+                      <div className="resume-info">
+                        <p>
+                          <strong>Uploaded:</strong> {resumeFile}
+                        </p>
+                        <p>Login to view resume</p>
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
 
-              {/* Employement Scetion */}
-              <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Employment</h2>
+                {/* Skill Section */}
+                <div className="content-boxes" id="skills">
+                  <div className="content-boxes-head">
+                    <h2>Key Skills</h2>
+                  </div>
+
+                  <div className="skills-card-box-details">
+                    <div className="skillsbox-card">
+                      {selectedSkills.map((skill, index) => (
+                        <div className="skill-badge" key={index}>
+                          <span className="skill-icon">
+                            <img
+                              src={skill.techStacklogo}
+                              // alt={skill.tecStackName}
+                              style={{
+                                width: "20px",
+                                height: "20px",
+                                marginRight: "8px",
+                              }}
+                            />
+                          </span>
+                          <span>{skill.tecStackName}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <div className="exp-card-box-details">
-                  <div className="employment-list">
-                    {employmentList.map((job, index) => {
+
+                {/* Employement Scetion */}
+                <div className="content-boxes" id="employment">
+                  <div className="content-boxes-head">
+                    <h2>Employment</h2>
+                  </div>
+                  <div className="exp-card-box-details">
+                    <div className="employment-list">
+                      {employmentList.map((job, index) => {
+                        const duration = formatDateRange(
+                          job.startDate,
+                          job.endDate
+                        );
+                        return (
+                          <div className="employment-card" key={index}>
+                            <div className="employment-logo">
+                              <img src={job.companyLogo || companyLogo} />
+                            </div>
+                            <div className="employment-content">
+                              <div className="employment-header">
+                                <h3>{job.title}</h3>
+                                <div className="employment-timeline">
+                                  <span>{duration}</span>
+                                </div>
+                              </div>
+                              <p className="company-name">
+                                {job.company_Name} | {job.location}
+                              </p>
+
+                              <p className="employment-description">
+                                {job.description}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Education Section */}
+                <div className="content-boxes" id="education">
+                  <div className="content-boxes-head">
+                    <h2>Education</h2>
+                  </div>
+
+                  <div className="education-cards">
+                    {educationList.map((edu) => {
                       const duration = formatDateRange(
-                        job.startDate,
-                        job.endDate
+                        edu.startDate,
+                        edu.endDate
                       );
                       return (
-                        <div className="employment-card" key={index}>
-                          <div className="employment-logo">
-                            <img src={job.companyLogo || companyLogo} />
-                          </div>
-                          <div className="employment-content">
-                            <div className="employment-header">
-                              <h3>{job.title}</h3>
-                              <div className="employment-timeline">
-                                <span>{duration}</span>
-                              </div>
-                            </div>
-                            <p className="company-name">
-                              {job.company_Name} | {job.location}
+                        <div className="education-card" key={edu.id}>
+                          <img
+                            src={edu.logo || School}
+                            alt="Logo"
+                            className="college-logo"
+                          />
+                          <div className="education-info">
+                            <h3>{edu.college}</h3>
+                            <p>
+                              {edu.degree} | {edu.location}
                             </p>
+                          </div>
+                          <div className="education-details">
+                            <div className="duration">{duration}</div>
+                            <div className="grade">
+                              Grade {edu?.grade ?? "Not specified"}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
 
-                            <p className="employment-description">
-                              {job.description}
+                {/* Project Section */}
+                <div className="content-boxes" id="projects">
+                  <div className="content-boxes-head">
+                    <h2>Projects</h2>
+                  </div>
+                  <div className="education-cards">
+                    {projects.map((proj, index) => {
+                      const duration = formatDateRange(
+                        proj.startDate,
+                        proj.endDate
+                      );
+
+                      return (
+                        <div className="project-card" key={index}>
+                          <img
+                            src={proj.image || School}
+                            alt="Project Logo"
+                            className="project-logo"
+                          />
+                          <div className="project-info">
+                            <h3>{proj.title}</h3>
+                            <p className="project-date">{duration}</p>
+                            <p className="project-associated">
+                              {proj.associated}
+                            </p>
+                            <p className="project-description">
+                              {proj.projectDescription}
                             </p>
                           </div>
                         </div>
@@ -407,113 +502,41 @@ const EmployeeProfile = () => {
                     })}
                   </div>
                 </div>
-              </div>
 
-              {/* Education Section */}
-              <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Education</h2>
-                </div>
-
-                <div className="education-cards">
-                  {educationList.map((edu) => {
-                    const duration = formatDateRange(
-                      edu.startDate,
-                      edu.endDate
-                    );
-                    return (
-                      <div className="education-card" key={edu.id}>
+                {/* Licence & Certificate */}
+                <div className="content-boxes" id="certifications">
+                  <div className="content-boxes-head">
+                    <h2>Licenses & Certifications</h2>
+                  </div>
+                  <div className="education-cards">
+                    {certifications.map((cert, index) => (
+                      <div className="license-card" key={index}>
                         <img
-                          src={edu.logo || School}
-                          alt="Logo"
-                          className="college-logo"
+                          src={cert.image || Course}
+                          alt="Certification Logo"
+                          className="license-logo"
                         />
-                        <div className="education-info">
-                          <h3>{edu.college}</h3>
-                          <p>
-                            {edu.degree} | {edu.location}
+                        <div className="license-info">
+                          <h3>{cert.courses}</h3>
+                          <p className="issuer">{cert.company_Name}</p>
+                          <p className="issued">
+                            Issued {formatDate(cert.issued_Date)}
+                            {cert.endDate
+                              ? ` · Expires ${formatDate(cert.endDate)}`
+                              : " · No Expiration Date"}
                           </p>
                         </div>
-                        <div className="education-details">
-                          <div className="duration">{duration}</div>
-                          <div className="grade">
-                            Grade {edu?.grade ?? "Not specified"}
-                          </div>
-                        </div>
+                        <a
+                          href={cert.certificateUrl} // Replace with your actual URL variable
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="show-credential-button"
+                        >
+                          Show credential
+                        </a>
                       </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Project Section */}
-              <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Projects</h2>
-                </div>
-                <div className="education-cards">
-                  {projects.map((proj, index) => {
-                    const duration = formatDateRange(
-                      proj.startDate,
-                      proj.endDate
-                    );
-
-                    return (
-                      <div className="project-card" key={index}>
-                        <img
-                          src={proj.image || School}
-                          alt="Project Logo"
-                          className="project-logo"
-                        />
-                        <div className="project-info">
-                          <h3>{proj.title}</h3>
-                          <p className="project-date">{duration}</p>
-                          <p className="project-associated">
-                            {proj.associated}
-                          </p>
-                          <p className="project-description">
-                            {proj.projectDescription}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Licence & Certificate */}
-              <div className="content-boxes">
-                <div className="content-boxes-head">
-                  <h2>Licenses & Certifications</h2>
-                </div>
-                <div className="education-cards">
-                  {certifications.map((cert, index) => (
-                    <div className="license-card" key={index}>
-                      <img
-                        src={cert.image || Course}
-                        alt="Certification Logo"
-                        className="license-logo"
-                      />
-                      <div className="license-info">
-                        <h3>{cert.courses}</h3>
-                        <p className="issuer">{cert.company_Name}</p>
-                        <p className="issued">
-                          Issued {formatDate(cert.issued_Date)}
-                          {cert.endDate
-                            ? ` · Expires ${formatDate(cert.endDate)}`
-                            : " · No Expiration Date"}
-                        </p>
-                      </div>
-                      <a
-                        href={cert.certificateUrl} // Replace with your actual URL variable
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="show-credential-button"
-                      >
-                        Show credential
-                      </a>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
