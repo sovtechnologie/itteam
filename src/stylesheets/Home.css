@@ -421,7 +421,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* padding: 8px 5px; */
+ 
   width: 100%;
   position: relative;
   transition: transform 0.3s ease;
@@ -432,7 +432,7 @@
   transform: translateY(-5px);
 }
 
-/* ----------------------------------------------------------- */
+
 
 .experienceHeadBox h2 {
   font-weight: 600;
@@ -485,7 +485,7 @@
   cursor: pointer;
 }
 
-/* ----------------------------------------------------------- */
+
 
 .homeAboutBox {
   height: 70vh;
@@ -518,9 +518,6 @@
   font-weight: 300;
 }
 
-/* .aboutLeftBox button {
-  border-radius: 3px;
-} */
 
 .aboutLeftBox button:hover {
   cursor: pointer;
@@ -552,7 +549,7 @@
 }
 
 .aboutRightBox {
-  /* background-color: #1f70c1; */
+
   width: 40%;
   object-fit: cover;
   display: flex;
@@ -577,7 +574,7 @@
   flex: 1;
 }
 
-/* ----------------------------------------------------------- */
+
 
 .bottomJoin {
   display: flex;
@@ -624,19 +621,12 @@
 }
 
 .hero-section {
-  /* background: url('../images/teamMemberTwo.jpg'), #1783D0; 
-  background-blend-mode: overlay;
-  background-size: cover;
-  background-position: center;
-  color: white;
-  text-align: center;
-  padding: 80px 20px; */
+  
   width: 100%;
   height: 100vh;
-  /* Takes full viewport height */
-  /* background-image: url('../images/teamMemberTwo.jpg'); update with correct path */
+ 
   background: url("../images/homecard.png") #1783d0;
-  /* opacity: 0.8; */
+ 
   background-blend-mode: overlay;
   background-size: cover;
   background-position: center;
@@ -648,7 +638,7 @@
   color: white;
   text-align: center;
   padding-top: 100px;
-  /* adjust depending on your header height */
+ 
 }
 
 .hero-title {
@@ -712,17 +702,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* 
-.category-tags {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 15px;
-  max-width: 1000px;
-  margin: 0 auto;
-}
 
-
- */
 
 .category-tags {
   display: flex;
@@ -736,7 +716,7 @@
 .category-tags button {
   background: rgba(255, 255, 255, 0.1);
   padding: 0.75rem 1rem;
-  /* General vertical padding */
+ 
   font-size: 18px;
   display: flex;
   align-items: center;
@@ -758,21 +738,17 @@
   background-color: white;
   color: #1783d0;
 }
-/* .category-tags button hover:img{
-filter: grayscale(1);
-} */
 
 .button-text {
   padding: 0 1rem;
-  /* Left and right space only around the text */
+
 }
 
 .job-search-container h6 {
-  /* display: flex; */
+  
   color: #1783d0;
   border-radius: 30px;
-  /* align-items: center; */
-  /* justify-content: center; */
+  
   border: 1px solid #1783d0;
   padding: 0px 16px;
   width: fit-content;
@@ -790,7 +766,7 @@ filter: grayscale(1);
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
-  /* padding: 40px 20px; */
+  
   margin-top: 60px;
   font-family: "Poppins";
 }
@@ -815,7 +791,7 @@ filter: grayscale(1);
   font-size: 24px;
   color: #525252;
   text-align: center;
-  /* max-width: 800px; */
+  
   margin: 0 auto 40px;
   line-height: 1.6;
   max-width: 1200px;
@@ -836,7 +812,7 @@ filter: grayscale(1);
   position: relative;
 }
 
-/* Vertical divider */
+
 .step:not(:last-child)::after {
   content: "";
   position: absolute;
@@ -853,7 +829,7 @@ filter: grayscale(1);
   color: #525252;
 }
 
-/* Apply hover effect to .step-number when .step is hovered */
+
 .step:hover .step-number {
   color: #1783d0;
 }
@@ -865,7 +841,7 @@ filter: grayscale(1);
   margin-bottom: 20px;
 }
 
-/* Apply hover effect to .step-title when .step is hovered */
+
 .step:hover .step-title {
   font-weight: 600;
 }
@@ -1430,7 +1406,7 @@ filter: grayscale(1);
   background-color: transparent;
   border: 1px solid #1783d0;
   color: #1783d0;
-  /* padding: 6px 12px; */
+  
   border-radius: 30px;
   font-size: 14px;
   cursor: pointer;
@@ -1467,7 +1443,7 @@ filter: grayscale(1);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  /* padding: 40px 20px; */
+  
   background: #fff;
   max-width: 1200px;
   margin: 0 auto;
@@ -1571,7 +1547,7 @@ filter: grayscale(1);
   min-width: 300px;
   padding-top: 30px;
   margin-left: 50px;
-  /* text-align: center; */
+ 
 }
 
 .hero-right h1 {
@@ -1586,18 +1562,17 @@ filter: grayscale(1);
 .description {
   margin-top: 20px;
   font-size: 20px;
-  /* color: #525252; */
+ 
   color: #525252;
   max-width: 600px;
-  /* margin-left: auto; */
-  /* margin-right: auto; */
+ 
   line-height: 1.6;
 }
 
 .hero-buttons {
   margin-top: 50px;
   display: flex;
-  /* justify-content: center; */
+ 
   gap: 15px;
   flex-wrap: wrap;
 }
@@ -1640,7 +1615,7 @@ filter: grayscale(1);
   display: flex;
   justify-content: center;
   align-items: center;
-  /* max-width: 222px; */
+ 
 }
 
 .btn-filled:hover {
@@ -1651,7 +1626,7 @@ filter: grayscale(1);
 
 .popular-section {
   text-align: center;
-  /* padding: 50px 20px; */
+
   margin-top: 100px;
 }
 
@@ -1662,16 +1637,13 @@ filter: grayscale(1);
   align-items: center;
   justify-content: center;
   border: 1px solid #1783d0;
-  /* padding: 8px 16px; */
-  /* Added padding for better visual appearance */
-  /* width: fit-content; */
-  /* Ensures the element only takes needed width */
+ 
   margin: 0 auto;
-  /* Centers the element if needed */
+ 
   font-size: 14px;
-  /* Added font size for better control */
+ 
   font-weight: 300;
-  /* Slightly bolder text */
+
   transition: all 0.3s ease;
   margin-bottom: 10px;
   width: 140px;
@@ -1691,7 +1663,7 @@ filter: grayscale(1);
 .role-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  /* Force exactly 4 per row */
+ 
   gap: 30px;
   max-width: 1200px;
   margin: 0 auto;
@@ -1700,14 +1672,14 @@ filter: grayscale(1);
 @media (max-width: 1024px) {
   .role-grid {
     grid-template-columns: repeat(2, 1fr);
-    /* 2 per row on tablets */
+   
   }
 }
 
 @media (max-width: 600px) {
   .role-grid {
     grid-template-columns: 1fr;
-    /* 1 per row on mobile */
+   
   }
 }
 
@@ -1715,15 +1687,13 @@ filter: grayscale(1);
   background-color: #eff1f7;
   border-radius: 5px;
   padding: 20px 30px;
-  /* Balanced padding */
+ 
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-/* .role-card:hover {
-  transform: translateY(-4px);
-} */
+
 
 .role-icon {
   font-size: 48px;
@@ -1755,7 +1725,7 @@ filter: grayscale(1);
 .why-popular {
   max-width: 1200px;
   margin: 0 auto;
-  /* <-- THIS centers it horizontally */
+ 
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1793,9 +1763,9 @@ filter: grayscale(1);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 0px;
-  /* Horizontal gap */
+ 
   row-gap: 15px;
-  /* Vertical gap */
+ 
   margin-bottom: 30px;
   width: 435px;
 }
@@ -1810,7 +1780,7 @@ filter: grayscale(1);
   border-radius: 20px 8px 8px 8px;
   font-size: 12px;
   max-width: 171px;
-  /* Decrease card width */
+  
   color: #727272;
 }
 
@@ -1819,20 +1789,17 @@ filter: grayscale(1);
   gap: 10px;
   font-size: 11.8px;
 }
-/* 
-.popular-item img {
-  width: 40px;
-} */
+
 
 .popular-buttons {
   display: flex;
   gap: 15px;
-  /* Slightly reduced for better spacing */
+  
   flex-wrap: wrap;
-  /* Optional: lets buttons wrap on small screens */
+  
 }
 
-/* Outline button style */
+
 .popular-buttons .btn-outline {
   border: 1px solid #1783d0;
   background: transparent;
@@ -1850,11 +1817,11 @@ filter: grayscale(1);
   color: white;
 }
 
-/* Primary button style */
+
 .popular-buttons .btn-primary {
   background-color: #1783d0;
   color: white;
-  /* padding: 10px 20px; */
+ 
   border: none;
   border-radius: 30px;
   font-size: 18px;
@@ -1905,11 +1872,11 @@ filter: grayscale(1);
 .trusted-tag {
   position: absolute;
   top: 40%;
-  /* Position halfway down the container */
+ 
   left: -30px;
-  /* Distance from the left */
+ 
   transform: translateY(-90%);
-  /* Center vertically */
+ 
   background: white;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 8px 15px;
@@ -1921,7 +1888,7 @@ filter: grayscale(1);
   font-family: "Poppins";
   width: 1200px;
   padding: 20px 0px;
-  /* Vertical | Horizontal padding */
+
   background-color: #1783d0;
   border-radius: 30px;
   text-align: center;
@@ -1930,10 +1897,10 @@ filter: grayscale(1);
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
-  /* Smooth hover transitions */
+ 
 }
 
-/* Optional: Add a subtle pattern overlay */
+
 .job-hunting-container::before {
   content: "";
   position: absolute;
@@ -1949,13 +1916,9 @@ filter: grayscale(1);
   pointer-events: none;
 }
 
-/* Hover effect
-.job-hunting-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-} */
 
-/* Responsive adjustments */
+
+
 @media (max-width: 768px) {
   .job-hunting-container {
     padding: 40px 20px;
@@ -1993,7 +1956,7 @@ filter: grayscale(1);
 }
 
 .job-hunting-input {
-  /* padding: 15px 120px 12px 20px; */
+
   padding-left: 20px;
   border: 1px solid #ddd;
   border-radius: 30px;
@@ -2007,7 +1970,7 @@ filter: grayscale(1);
 
 .job-hunting-input::placeholder {
   color: #1783d0;
-  /* Light gray placeholder text */
+ 
 }
 
 .job-hunting-button {

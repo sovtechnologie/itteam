@@ -1,15 +1,8 @@
 .about-us-section {
-  /* background: url('../images/teamMemberTwo.jpg') #1182d1; 
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  color: white;
-  text-align: center;
-  padding: 100px 20px 60px; */
+  
   width: 100%;
   height: 100vh;
-  /* Takes full viewport height */
-  /* background-image: url('../images/teamMemberTwo.jpg'); update with correct path */
+  
   background: url('../images/aboutusbackgroundImg.png') #1783d0;
   background-blend-mode: overlay;
   background-size: cover;
@@ -232,20 +225,13 @@
 .company-about {
   
   height: 100vh;
-  /* Takes full viewport height */
-  /* background-image: url('../images/teamMemberTwo.jpg'); update with correct path */
+  
   background: url('../images/AboutusImg.png');
   background-blend-mode: overlay;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  /* display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  color: white;
-  text-align: center;
-  padding-top: 100px; */
+ 
   display: flex;
   justify-content: space-between;
   align-items: center;

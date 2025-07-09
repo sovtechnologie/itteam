@@ -4,6 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
+
+const isValidIndianPhone = (num) => {
+  const regex = /^(\+91[\-\s]?)?[0]?(91)?[6-9]\d{9}$/;
+  return regex.test(num);
+};
+
+
 const EmprSignUp = () => {
   const [formData, setFormData] = useState({
     mobileNumber: "",
@@ -22,7 +29,10 @@ const EmprSignUp = () => {
   const [verificationId, setVerificationId] = useState(null);
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loadingSendOtp, setLoadingSendOtp] = useState(false);
+const [loadingVerify, setLoadingVerify] = useState(false);
+const [loadingRegister, setLoadingRegister] = useState(false);
+
   const [statesList, setStatesList] = useState([]);
   const [citiesList, setCitiesList] = useState([]);
   const [selectedState, setSelectedState] = useState("");
@@ -35,10 +45,19 @@ const EmprSignUp = () => {
       ...formData,
       [name]: value,
     });
+     // Clear any existing error once the user types
+  if (error) {
+    setError(null);
+  }
   };
 
   const sendOtp = async () => {
-    setLoading(true);
+
+     if (!isValidIndianPhone(formData.mobileNumber)) {
+    setError("Please enter a valid 10-digit Indian mobile number.");
+    return;
+  }
+    setLoadingSendOtp(true);
     setError(null);
 
     try {
@@ -60,13 +79,17 @@ const EmprSignUp = () => {
         error.response ? error.response.data.message : "Something went wrong"
       );
     } finally {
-      setLoading(false);
+      setLoadingSendOtp(false);
     }
   };
 
   // Verify OTP
   const verifyOtp = async () => {
-    setLoading(true);
+     if (!verificationId) {
+    setError("Enter the otp for verification.");
+    return;
+  }
+    setLoadingVerify(true);
     setError(null);
 
     try {
@@ -88,25 +111,30 @@ const EmprSignUp = () => {
         error.response ? error.response.data.message : "Something went wrong"
       );
     } finally {
-      setLoading(false);
+      setLoadingVerify(false);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoadingRegister(true);
     setError(null);
 
+      if (!formData.otpVerified) {
+      setError("Please verify OTP first")
+      setLoadingRegister(false);
+      return;
+    }
+
     if (!formData.termsAccepted) {
-      alert("Please accept terms and conditions.");
+      setError("Please accept terms and conditions");
+       setLoadingRegister(false);
       return;
     }
-    if (!formData.otpVerified) {
-      alert("Please verify OTP first");
-      return;
-    }
+  
     if (!formData.fullname || !formData.email || !formData.companyName) {
-      alert("Please fill in all required fields.");
+      setError("Please fill in all required fields.")
+       setLoadingRegister(false);
       return;
     }
 
@@ -135,7 +163,7 @@ const EmprSignUp = () => {
         error.response ? error.response.data.message : "Something went wrong"
       );
     } finally {
-      setLoading(false);
+      setLoadingRegister(false);
     }
   };
 
@@ -192,17 +220,24 @@ const EmprSignUp = () => {
               <div className="signUpform-group">
                 <label htmlFor="mobile">Mobile Number</label>
                 <div className="send-otp no-spinner">
-                  <input
-                    type="number"
-                    id="mobile"
-                    name="mobileNumber"
-                    placeholder="Mobile Number"
-                    value={formData.mobileNumber}
-                    onChange={handleChange}
-                    disabled={isOtpSent}
-                  />
-                  <button type="button" onClick={sendOtp} disabled={loading}>
-                    {loading ? "Sending OTP..." : "Send OTP"}
+                 <input
+  type="tel"
+  id="mobile"
+  name="mobileNumber"
+  placeholder="Mobile Number"
+  value={formData.mobileNumber}
+  onChange={(e) => {
+    const cleaned = e.target.value.replace(/\D/g, '').slice(0, 10);
+    handleChange({ target: { name: 'mobileNumber', value: cleaned } });
+  }}
+  disabled={isOtpSent}
+  maxLength={10}
+  pattern="\d{10}"
+  inputMode="numeric"
+/>
+
+                  <button type="button" onClick={sendOtp} disabled={loadingSendOtp}>
+                    {loadingSendOtp ? "Sending OTP..." : "Send OTP"}
                   </button>
                 </div>
               </div>
@@ -273,8 +308,8 @@ const EmprSignUp = () => {
                     value={formData.otp}
                     onChange={handleChange}
                   />
-                  <button type="button" onClick={verifyOtp} disabled={loading}>
-                    {loading ? "Verifying OTP..." : "Verify OTP"}
+                  <button type="button" onClick={verifyOtp} disabled={loadingVerify}>
+                    {loadingVerify ? "Verifying OTP..." : "Verify OTP"}
                   </button>
                 </div>
               </div>
@@ -362,8 +397,8 @@ const EmprSignUp = () => {
         </div>
         <div className="register-btn">
           <div className="register-btns">
-            <button type="submit" onClick={handleSubmit}>
-              {loading ? "Registering..." : "Register Now"}
+            <button type="submit" onClick={handleSubmit} disabled={loadingRegister}>
+              {loadingRegister ? "Registering..." : "Register Now"}
             </button>
           </div>
         </div>

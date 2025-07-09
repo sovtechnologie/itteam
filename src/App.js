@@ -55,9 +55,9 @@ const AppContent = () => {
     <>
       <ScrollToTop />
 
-      {/* {location.pathname !== "/signin" && location.pathname !== "/signup" && ( */}
+      
       <Header isHomePage={isHomePage} />
-      {/* )} */}
+     
       <Routes>
         {/* Your Routes */}
         <Route path="/" element={<Home />} />
@@ -85,9 +85,9 @@ const AppContent = () => {
         <Route path="/signup" element={<SignUp />} />
       </Routes>
 
-      {/* {location.pathname !== "/signin" && location.pathname !== "/signup" && ( */}
+     
       <Footer />
-      {/* )} */}
+     
     </>
   );
 };
