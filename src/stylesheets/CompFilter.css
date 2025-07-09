@@ -105,7 +105,7 @@
   flex: 1;
 }
 .job-card {
-  height: 300px;
+  height: 250px;
   overflow-y: auto;
 }
 
@@ -200,7 +200,7 @@ h3 {
 }
 
 .job-desc {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   font-size: 14px;
   color: #525252;
   text-transform: capitalize;
@@ -601,6 +601,8 @@ h3 {
   /* border-radius: 4px; */
   cursor: pointer;
   min-width: 40px;
+  border: 1px solid #1783d0;
+  border-radius: 4px;
 }
 .pagination .dots {
   padding: 0.5rem;
@@ -608,18 +610,19 @@ h3 {
 }
 
 .pagination button:hover {
-  background-color: #1783d0;
-  color: white;
+  /* background-color: #1783d0; */
+  /* color: white; */
 }
 
 .pagination button.active {
-  background-color: #1783d0;
-  color: white;
+  /* background-color: #1783d0; */
+  /* color: white; */
   font-weight: bold;
 }
 
 .pagination button:disabled {
-  background: #ccc;
+  background: #ffffff;
+
   cursor: not-allowed;
 }
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../stylesheets/Footer.css";
-import logowhite from "../images/logowhite.svg";
+import logowhite from "../images/logowhite1.svg";
 import instagram from "../images/Footer/Instagram.png";
 import Twitter from "../images/Footer/Twitter.png";
 import linkedin from "../images/Footer/Linkdin.png";
@@ -81,7 +81,7 @@ const Footer = () => {
           <div className="footer-container">
             <div className="footer-top-content">
               <div className="footer-col">
-                <img src={logowhite} alt="Logo" />
+                <img style={{width: "80px"}} src={logowhite} alt="Logo" />
                 <br />
                 <p>
                   Our generator uses cutting-edge technology <br />

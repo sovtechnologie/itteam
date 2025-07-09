@@ -10,9 +10,12 @@ import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import seniorExpert from "../images/Roles/expert.png";
 import counseller from "../images/Roles/counselling.png";
-import topcompanies from "../images/Companies.png";
+import topcompanies from "../images/No fake Job.svg";
+import topcompanies1 from "../images/Free for Jobseeker.svg";
+import topcompanies2 from "../images/Future Of Job.svg";
+import topcompanies3 from "../images/HR Friendly.svg";
 
-import remote1 from "../images/HomeIcons/Newremote.png";
+import remote1 from "../images/HomeIcons/remote1.svg";
 import mnc from "../images/HomeIcons/mnc.png";
 import sales from "../images/HomeIcons/sales.png";
 import project from "../images/HomeIcons/projectmanagement.png";
@@ -522,14 +525,14 @@ const Home = () => {
 
           <div className="popular-grid">
             {[
-              "Free for Jobseeker",
-              "No fake Job",
-              "HR Friendly",
-              "Future Of Job",
-            ].map((company, i) => (
-              <div className="popular-item" key={i}>
-                <img src={topcompanies} alt="Icon" />
-                <span>{company}</span>
+              {img: topcompanies,  label:"Free for Jobseeker"},
+              {img: topcompanies1, label:"No fake Job"},
+              {img: topcompanies2, label:"HR Friendly"},
+              {img: topcompanies3, label:"Future Of Job"}
+            ].map(({ img, label }) => (
+              <div className="popular-item" key={label}>
+                <img src={img} alt="Icon" />
+                <span>{label}</span>
               </div>
             ))}
           </div>

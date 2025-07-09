@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import "../stylesheets/Header.css";
-import HeaderLogo from "../images/headerLogo.svg";
+import HeaderLogo from "../images/HeaderLogo copy.svg";
 import defaultLogo from "../images/defaultImg.png";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
@@ -113,7 +113,7 @@ const Header = ({ isHomePage }) => {
     <header className={`header main-header ${isHomePage ? "home-header" : ""}`}>
       <div id="left">
         <Link to="/" className="header-logo">
-          <img src={HeaderLogo} alt="Logo" />
+          <img style={{width: "80px"}} src={HeaderLogo} alt="Logo" />
         </Link>
       </div>
 

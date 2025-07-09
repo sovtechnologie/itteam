@@ -110,7 +110,7 @@
   row-gap: 110px;
 }
 .job-card {
-  height: 300px;
+  height: 250px;
   overflow-y: auto;
 }
 
@@ -220,7 +220,7 @@ h3 {
 .job-desc {
   /* margin: 10px 0;
    */
-  margin-top: 20px;
+  /* margin-top: 20px; */
   font-size: 14px;
   color: #525252;
   text-transform: capitalize;
@@ -638,8 +638,12 @@ h3 {
 }
 
 .pagination button:disabled {
-  background: #ccc;
+  background: #ffffff;
   cursor: not-allowed;
+}
+.prev-button:hover{
+  color: #ffffff !important;
+  background-color: #1783d0 !important;
 }
 
 .no-data-message {

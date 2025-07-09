@@ -6,7 +6,7 @@ import EmpSignIn from "./EmpSignIn";
 import k5Img from "../images/Group 2.png";
 import mostpopular from "../images/mostpopular.png";
 import trustpopular from "../images/trustpopular.png";
-import topcompanies from "../images/Companies.png";
+import topcompanies from "../images/No fake Job.svg";
 
 const SignIn = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -62,11 +62,15 @@ const SignIn = () => {
           </div>
         </div>
 
+
+
         <div className="right-form">
           <div className="right-form-head">
-            <img src={wavinghand} alt="Hello" className="hello-icon" />
+            {/* <img src={wavinghand} alt="Hello" className="hello-icon" /> */}
             <h2 className="oswald">Welcome back!</h2>
             <p>Please login to access your account</p>
+
+           
           </div>
 
           <div className="signInRight">
@@ -89,6 +93,10 @@ const SignIn = () => {
                   Register
                 </button>
               </div>
+               {/* <h1 style={{color: "#1783D0" }}>
+                Login As{" "}
+                {userRole === "company" ? "Company" : "Job Seeker"}
+              </h1> */}
               {userRole === "company" ? <EmprSignIn /> : <EmpSignIn />}
             </div>
           </div>

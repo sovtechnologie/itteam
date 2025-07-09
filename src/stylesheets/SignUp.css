@@ -22,7 +22,7 @@
 
 .leftBox {
   background-color: #1783d0;
-  height: 100vh;
+  height: 114vh;
   /* width: 40%; */
   display: flex;
   /* justify-content: flex-start; */
@@ -35,6 +35,10 @@
   box-sizing: border-box;
   width: 600px;
   max-width: 600px;
+  margin-top: 150px;
+}
+.signUpRight{
+  margin-top: 150px;
 }
 
 /* .signup-left { */
