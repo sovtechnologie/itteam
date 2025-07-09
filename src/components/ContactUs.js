@@ -81,7 +81,7 @@ const ContactUs = () => {
           <h1>Contact <span className="highlight">Us</span></h1>
 
           <div className="info-block">
-            <div className="icon">
+            <div className="icon" /* style={{backgroundColor:"white"}} */> 
               <img src={location} style={{ width: "38px", height: "38px" }} />
             </div>
             <p>Shop No 2, Veer Sawarkar<br />Nagar Thane west, 400606</p>

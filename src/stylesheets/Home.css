@@ -55,13 +55,12 @@
 .input-wrapper input {
   width: 100%;
   padding: 14px 120px 14px 50px;
-  
+
   border: 1px solid #ccc;
   border-radius: 30px;
   font-size: 18px;
-  
+
   height: 30px;
- 
 }
 
 .search-icon {
@@ -86,8 +85,6 @@
   cursor: pointer;
 }
 
-
-
 .home-second-box {
   width: 100%;
   display: flex;
@@ -108,7 +105,6 @@
 }
 
 .main-sec-brands {
- 
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
   width: 60%;
@@ -137,12 +133,10 @@
   margin: 8px 6px;
   padding: 6px 5px 6px 10px;
   display: flex;
- 
+
   align-items: center;
   border: 1px solid #ea4232;
   border-radius: 30px;
-
- 
 }
 
 .empr-homeCard img {
@@ -160,16 +154,11 @@
   font-size: 12px;
   font-weight: 600;
   margin-left: 10px;
-
- 
 }
 
 .emprhomeCardDetails p {
   font-size: 10px;
-
- 
 }
-
 
 .activejoiner-cardbox {
   width: 90%;
@@ -178,8 +167,6 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 10px;
   justify-content: space-between;
-
-  
 }
 
 .avtivejoinerBox a {
@@ -197,7 +184,6 @@
   padding: 7px 0;
   position: relative;
   transition: transform 0.3s ease;
-
 }
 
 .activeCard:hover {
@@ -211,7 +197,6 @@
   flex-direction: column;
   gap: 3px;
   margin-left: 3px;
- 
 }
 
 .activejoiner-details-one {
@@ -220,8 +205,6 @@
   align-items: center;
   margin: 0;
   padding: 0;
-
- 
 }
 
 .rupeeIcons {
@@ -233,8 +216,6 @@
   width: 180px;
   display: flex;
   justify-content: left;
-
- 
 }
 
 .stack-details-one img {
@@ -255,8 +236,6 @@
   text-align: left;
   color: #012970;
   font-weight: 600;
-
-  
 }
 
 .activejoiner-details-one p {
@@ -268,8 +247,6 @@
   font-size: 10px;
   text-align: left;
   color: #727272;
-
-  
 }
 
 .activejoiner-role {
@@ -324,8 +301,6 @@
   color: #012970;
   text-decoration: underline;
 }
-
-
 
 .huntHeadBox {
   display: flex;
@@ -408,8 +383,6 @@
   justify-content: center;
   align-items: center;
   margin: 15px 8px;
-
- 
 }
 
 .stack-details-one p {
@@ -422,8 +395,6 @@
   height: 35px;
   display: flex;
   align-items: center;
-
-
 }
 
 .huntlocation-details-one p {
@@ -1125,6 +1096,9 @@ filter: grayscale(1);
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .candidate-header-exact {
@@ -1427,7 +1401,7 @@ filter: grayscale(1);
   margin-bottom: 12px;
   line-height: 1.4;
   font-weight: 300;
-text-transform: capitalize;
+  text-transform: capitalize;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -1655,7 +1629,7 @@ text-transform: capitalize;
 
 .btn-filled {
   padding: 10px 23px;
-font-size: 18px;
+  font-size: 18px;
   font-weight: 400;
   border: none;
   background: #1783d0;
@@ -2054,7 +2028,7 @@ font-size: 18px;
   background-color: #086cb4;
 }
 
-
 .category-tags button:hover .home-page-next-img {
-  filter: brightness(0) saturate(100%) invert(41%) sepia(69%) saturate(2376%) hue-rotate(182deg) brightness(91%) contrast(91%);
+  filter: brightness(0) saturate(100%) invert(41%) sepia(69%) saturate(2376%)
+    hue-rotate(182deg) brightness(91%) contrast(91%);
 }

@@ -508,7 +508,7 @@ const EmpFilter = () => {
       {/* Pagination */}
 
       <div className="pagination">
-        <button
+        <button className="prev-button"
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
         >
@@ -531,7 +531,7 @@ const EmpFilter = () => {
           )
         )}
 
-        <button
+        <button className="prev-button"
           onClick={() =>
             setCurrentPage((prev) => Math.min(prev + 1, totalPages))
           }

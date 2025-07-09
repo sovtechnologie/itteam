@@ -64,7 +64,7 @@
 
 .job-desc {
  color: #525252;
-  margin-bottom: 12px;
+  /* margin-bottom: 12px; */
   line-height: 1.4;
   font-weight: 300;
 text-transform: capitalize;

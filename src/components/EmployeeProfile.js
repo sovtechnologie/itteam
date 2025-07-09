@@ -17,7 +17,7 @@ import School from "../images/Profile/Schoolname.png";
 import Course from "../images/Profile/Course.png";
 import mostpopular from "../images/mostpopular.png";
 import trustpopular from "../images/trustpopular.png";
-import topcompanies from "../images/Companies.png";
+import topcompanies from "../images/No fake Job.svg";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
