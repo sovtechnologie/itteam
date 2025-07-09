@@ -19,19 +19,13 @@
   max-width: 900px;
 }
 
-/* .edit-modal-horizontal h2 {
-  margin-bottom: 20px;
-} */
-
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* 2 columns */
   gap: 20px;
 }
 
 .form-grid input {
-  /* border: 1px solid #525252; */
   color: grey;
   border: 1px solid #ddd;
   border-radius: 14px;
@@ -45,20 +39,12 @@
 .form-grid input[type="number"] {
   padding: 10px;
   font-size: 16px;
-  /* border-radius: 6px; */
-  /* border: 1px solid black; */
   width: 95%;
   color: grey;
   border: 1px solid #ddd;
 }
 
 .edit-modal-horizontal button {
-  /* margin-top: 20px; */
-  /* padding: 12px 20px; */
-  /* background: #007bff; */
-  /* color: #fff; */
-  /* border: none; */
-  /* border-radius: 6px; */
   cursor: pointer;
 }
 
@@ -99,7 +85,6 @@
   padding: 10px 20px;
   border: none;
   border-radius: 6px;
-  /* margin-right: 10px; */
   cursor: pointer;
 }
 
@@ -121,17 +106,12 @@
   padding: 30px;
   border-radius: 10px;
   width: 800px;
-  /* max-width: 90%; */
   text-align: center;
 }
 
 .update-add {
   background-color: #f44336 !important;
 }
-
-/* .modal-box input[type="file"] {
-  margin-top: 15px;
-} */
 
 .modal-buttons {
   margin-top: 20px;
@@ -233,7 +213,6 @@
 }
 
 .skill-icon {
-  /* font-size: 18px; */
   display: flex;
 }
 
@@ -323,7 +302,7 @@
 .modal-content input[type="file"] {
   width: 98%;
   margin-top: 5px;
-  /* padding: 10px 12px; */
+
   border: 1px solid #140b0b;
   border-radius: 6px;
   font-size: 14px;
@@ -332,7 +311,7 @@
 .modal-content input[type="date"] {
   width: 98%;
   margin-top: 5px;
-  /* padding: 10px 12px; */
+
   border: 1px solid #160f0f;
   border-radius: 6px;
   font-size: 14px;
@@ -340,7 +319,7 @@
   color: #525252;
 }
 .modal-content input[type="date"]:not(:last-of-type) {
-  margin-right: 10px; /* adjust as needed */
+  margin-right: 10px;
 }
 
 .modal-content label {
@@ -398,7 +377,6 @@
   background-color: #c0392b;
 }
 
-/* Modal backdrop */
 .modal {
   position: fixed;
   top: 0;
@@ -412,7 +390,6 @@
   z-index: 1000;
 }
 
-/* Modal box */
 .modal-form {
   background: white;
   padding: 2rem;
@@ -425,7 +402,6 @@
   gap: 1rem;
 }
 
-/* Input fields */
 .modal-form input,
 .modal-form textarea {
   width: 96%;
@@ -446,18 +422,16 @@
   color: #525252;
 }
 .modal-form input[type="date"]:not(:last-of-type) {
-  margin-right: 10px; /* adjust as needed */
+  margin-right: 10px;
   width: 96%;
 }
 
-/* Image preview */
 .image-preview {
   max-height: 150px;
   object-fit: contain;
   margin-top: 10px;
 }
 
-/* Modal buttons */
 .modal-buttons {
   display: flex;
   justify-content: space-between;
@@ -493,7 +467,6 @@
   margin-top: 100px;
   display: flex;
   justify-content: center;
-  /* background-color: green; */
 }
 
 .profile-head {
@@ -512,7 +485,6 @@
 .profileCardHead {
   display: flex;
   justify-content: space-evenly;
-  /* align-items: center; */
 }
 
 .profileCard-box {
@@ -521,8 +493,6 @@
   flex-direction: column;
   width: 100%;
   margin: 0 75px;
-
-  /* background-color: greenyellow; */
 }
 
 .profileCardHead img {
@@ -530,12 +500,9 @@
   width: 180px;
   background-color: #fff;
   border-radius: 50%;
-  /* margin-top: 30px; */
-  /* border: 5px solid #fff; */
   object-fit: cover;
 }
 
-/* Top section inside cadidate-basicInfo */
 .profile-header-top {
   display: flex;
   justify-content: space-between;
@@ -716,7 +683,6 @@
   border: none;
 }
 
-
 .profile-secTwo {
   min-height: 80vh;
   margin: 50px 0;
@@ -737,16 +703,7 @@
   margin-top: 20px;
 }
 
-/* .quick-links {
-  flex: 1;
-}
-
-.content-boxes {
-  flex: 2;
-} */
-
 .quick-links {
-  /* margin-top: 20px; */
   background: white;
   border: 2px solid #1783d0;
   padding: 15px;
@@ -782,7 +739,6 @@
   width: 900px;
   min-height: 200px;
   margin: 20px 0px 0px auto;
-  /* Top 20px, Right auto, Bottom 0, Left auto */
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -791,7 +747,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 2px 0px;
-  /* box-shadow: 0px 2px 5px rgba(155, 153, 153, 0.1); */
   border-radius: 10px;
 }
 
@@ -879,8 +834,6 @@
   height: 60px;
   border-radius: 50%;
   object-fit: cover;
-  /* margin-right: 15px; */
-  /* margin-top: 5px; */
 }
 
 .employment-content {
@@ -890,7 +843,6 @@
 .employment-header {
   display: flex;
   align-items: center;
-  /* gap: 190px; */
   justify-content: space-between;
   flex-wrap: nowrap;
 }
@@ -899,7 +851,6 @@
   font-size: 20px;
   color: #1783d0;
   font-weight: 600;
-  /* margin: 0; */
 }
 
 .employment-timeline {
@@ -1165,8 +1116,6 @@
   cursor: pointer;
 }
 
-/* ------------------------- */
-
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -1237,19 +1186,17 @@ textarea {
 
 .edit-about {
   font-size: 24px;
-  /* margin-bottom: 20px; */
   color: black;
   font-family: "Poppins";
   font-weight: 500;
   display: flex;
 }
 
-
-.quick-links li a{
+.quick-links li a {
   text-decoration: none;
   color: black;
 }
- 
+
 .fancy-close {
   position: relative;
   width: 32px;
@@ -1260,8 +1207,8 @@ textarea {
   cursor: pointer;
   padding: 0;
 }
-.fancy-close:hover{
-  background-color: rgb(212, 208, 208)
+.fancy-close:hover {
+  background-color: rgb(212, 208, 208);
 }
 
 .fancy-close::before,
@@ -1285,13 +1232,3 @@ textarea {
 .fancy-close::after {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
-
-/* .fancy-close:hover::before {
-  transform: translate(-50%, -50%) rotate(-135deg);
-  background-color: #f44336;
-}
-
-.fancy-close:hover::after {
-  transform: translate(-50%, -50%) rotate(135deg);
-  background-color: #f44336;
-} */
