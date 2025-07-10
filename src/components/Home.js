@@ -9,7 +9,7 @@ import api from "../services/api";
 import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import seniorExpert from "../images/Roles/expert.png";
-import counseller from "../images/Roles/counselling.png";
+import counseller from "../images/Roles/counselling.svg";
 import topcompanies from "../images/No fake Job.svg";
 import topcompanies1 from "../images/Free for Jobseeker.svg";
 import topcompanies2 from "../images/Future Of Job.svg";
