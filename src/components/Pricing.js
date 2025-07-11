@@ -42,7 +42,7 @@ const Pricing = () => {
             and hire talent with IT Team
           </p>
         </div>
-a
+
 
         <div className="benefits-tabs">
           <button

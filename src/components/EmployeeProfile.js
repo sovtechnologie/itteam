@@ -12,12 +12,20 @@ import { IoCallSharp } from "react-icons/io5";
 import { IoIosMail } from "react-icons/io";
 import Profile from "../images/UserProfile.png";
 import resumelogo from "../images/resumelogo.png";
-import companyLogo from "../images/CompanyProfilelogo.png";
-import School from "../images/Profile/Schoolname.png";
+import companyLogo from "../images/company profile.svg";
+import School from "../images/Education.svg";
+import Certifications from "../images/Certifications.svg";
+import Projects from "../images/Projects.svg";
 import Course from "../images/Profile/Course.png";
 import mostpopular from "../images/mostpopular.png";
 import trustpopular from "../images/trustpopular.png";
 import topcompanies from "../images/No fake Job.svg";
+import empprofile1 from "../images/HomeIcons/FaLocationDot.svg";
+import empprofile2 from "../images/HomeIcons/FaLaptopCode.svg";
+import empprofile3 from "../images/HomeIcons/MdOutlineCurrencyRupee.svg";
+import empprofile4 from "../images/HomeIcons/FaBusinessTime.svg";
+import empprofile5 from "../images/HomeIcons/IoCallSharp.svg";
+import empprofile6 from "../images/HomeIcons/IoIosMail.svg";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
@@ -217,31 +225,37 @@ const EmployeeProfile = () => {
                   <div className="candi-personalInfo">
                     <div className="personalInfo-colOne">
                       <div className="colOne-details">
-                        <FaLocationDot size={20} />
+                        {/* <FaLocationDot size={20} /> */}
+                        <img src={empprofile1} />
                         <p>
                           {formData.location},{formData.state}
                         </p>
                       </div>
                       <div className="colOne-details">
-                        <FaLaptopCode size={25} />
+                        {/* <FaLaptopCode size={25} /> */}
+                        <img src={empprofile2} />
                         <p>{experienceLabel(formData.experience)}</p>
                       </div>
                       <div className="colOne-details">
-                        <MdOutlineCurrencyRupee size={25} />
+                        {/* <MdOutlineCurrencyRupee size={25} /> */}
+                        <img src={empprofile3} />
                         <p>{isLoggedIn ? formData.salary : "Hidden"}</p>
                       </div>
                     </div>
                     <div className="personalInfo-colTwo">
                       <div className="colTwo-details">
-                        <FaBusinessTime size={25} />
+                        {/* <FaBusinessTime size={25} /> */}
+                        <img src={empprofile4} />
                         <p>{noticePeriodLabel(formData.notice)}</p>
                       </div>
                       <div className="colTwo-details">
-                        <IoCallSharp size={25} />
+                        {/* <IoCallSharp size={25} /> */}
+                        <img src={empprofile5} />
                         <p>{isLoggedIn ? formData.phone : "+91 *********"}</p>
                       </div>
                       <div className="colTwo-details">
-                        <IoIosMail size={25} />
+                        {/* <IoIosMail size={25} /> */}
+                        <img src={empprofile6} />
                         <p>
                           {isLoggedIn ? formData.email : "********@***.com"}
                         </p>
@@ -409,7 +423,9 @@ const EmployeeProfile = () => {
                         return (
                           <div className="employment-card" key={index}>
                             <div className="employment-logo">
-                              <img src={job.companyLogo || companyLogo} />
+                              <img src={job.companyLogo || companyLogo}
+                              alt="Logo"
+                            className="college-logo" />
                             </div>
                             <div className="employment-content">
                               <div className="employment-header">
@@ -485,7 +501,7 @@ const EmployeeProfile = () => {
                       return (
                         <div className="project-card" key={index}>
                           <img
-                            src={proj.image || School}
+                            src={proj.image || Projects}
                             alt="Project Logo"
                             className="project-logo"
                           />
@@ -514,7 +530,7 @@ const EmployeeProfile = () => {
                     {certifications.map((cert, index) => (
                       <div className="license-card" key={index}>
                         <img
-                          src={cert.image || Course}
+                          src={cert.image || Certifications}
                           alt="Certification Logo"
                           className="license-logo"
                         />
@@ -545,7 +561,6 @@ const EmployeeProfile = () => {
           </div>
         </div>
       </div>
-
     </>
   );
 };

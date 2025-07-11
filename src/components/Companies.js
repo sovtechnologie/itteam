@@ -12,6 +12,10 @@ import CompanyLogo from "../images/CompanyProfilelogo.png";
 
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import empprofile1 from "../images/HomeIcons/FaLocationDot.svg";
+import empprofile7 from "../images/HomeIcons/empprofile7.svg";
+import empprofile5 from "../images/HomeIcons/IoCallSharp.svg";
+import empprofile6 from "../images/HomeIcons/IoIosMail.svg";
 
 
 const BASE_URL = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
@@ -137,20 +141,25 @@ export default function Companies() {
                   <div className="Profile-personal-info">
                     <div className="Profile-personal-info-One">
                       <div className="Column-One-Details">
-                        <FaMapMarkerAlt size={25} />
+                        {/* <FaMapMarkerAlt size={25} /> */}
+                         <img src={empprofile1} />
                         <p>{formData?.location}</p>
                       </div>
                       <div className="Column-One-Details">
-                        <FaPhoneAlt size={25} /> <p>{formData?.phone}</p>
+                        {/* <FaPhoneAlt size={25} />  */}
+                         <img src={empprofile5} />
+                        <p>{formData?.phone}</p>
                       </div>
                     </div>
                     <div className="Profile-personal-info-Two">
                       <div className="Column-Two-Details">
-                        <FaBuilding size={25} />
+                        {/* <FaBuilding size={25} /> */}
+                         <img src={empprofile7} />
                         <p> Company Size : {formData?.companySize} </p>
                       </div>
                       <div className="Column-Two-Details">
-                        <IoIosMail size={30} />
+                        {/* <IoIosMail size={30} /> */}
+                         <img src={empprofile6} />
                         <p>{formData?.email}</p>
                       </div>
                     </div>

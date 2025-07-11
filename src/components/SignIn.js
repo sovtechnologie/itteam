@@ -7,6 +7,7 @@ import k5Img from "../images/Group 2.png";
 import mostpopular from "../images/mostpopular.png";
 import trustpopular from "../images/trustpopular.png";
 import topcompanies from "../images/No fake Job.svg";
+import topcompanies1 from "../images/checked (2) 2.svg";
 
 const SignIn = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -37,11 +38,11 @@ const SignIn = () => {
               <>
                 <div className="new-to-it">
                   <h1>New to IT Team?</h1>
-                  <ul>
-                    <li>One click apply using naukri profile.</li>
-                    <li>Get relevant job recommendations.</li>
-                    <li>Showcase profile to top companies and consultants.</li>
-                    <li>Know application status on applied jobs.</li>
+                  <ul style={{marginTop:"20px"}}>
+                    <li><img src={topcompanies1} alt="" style={{height:"30px", width:"30px"}} />One click apply using naukri profile.</li>
+                    <li><img src={topcompanies1} alt="" style={{height:"30px", width:"30px"}} />Get relevant job recommendations.</li>
+                    <li><img src={topcompanies1} alt="" style={{height:"30px", width:"30px"}} />Showcase profile to top companies and consultants.</li>
+                    <li><img src={topcompanies1} alt="" style={{height:"30px", width:"30px"}} />Know application status on applied jobs.</li>
                   </ul>
                 </div>
                 <h1>Let Job Find You</h1>

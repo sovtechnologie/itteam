@@ -108,7 +108,7 @@
   /* background-color: greenyellow; */
 }
 
-.Profile-head img {
+.Profile-head > img {
   height: 180px;
   width: 180px;
   background-color: #fff;

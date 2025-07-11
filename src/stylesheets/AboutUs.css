@@ -3,7 +3,7 @@
   width: 100%;
   height: 100vh;
   
-  background: url('../images/aboutusbackgroundImg.png') #1783d0;
+  background: url('../images/about-us.svg');
   background-blend-mode: overlay;
   background-size: cover;
   background-position: center;

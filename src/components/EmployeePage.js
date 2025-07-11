@@ -31,6 +31,12 @@ import Awads from "../components/profileCards/Awads";
 import { FaPlus } from "react-icons/fa6";
 import AboutMe from "../components/profileCards/AboutMe";
 import { RiEditBoxLine } from "react-icons/ri";
+import empprofile1 from "../images/HomeIcons/FaLocationDot.svg";
+import empprofile2 from "../images/HomeIcons/FaLaptopCode.svg";
+import empprofile3 from "../images/HomeIcons/MdOutlineCurrencyRupee.svg";
+import empprofile4 from "../images/HomeIcons/FaBusinessTime.svg";
+import empprofile5 from "../images/HomeIcons/IoCallSharp.svg";
+import empprofile6 from "../images/HomeIcons/IoIosMail.svg";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
@@ -122,29 +128,36 @@ const EmployeePage = () => {
                       <div className="candi-personalInfo">
                         <div className="personalInfo-colOne">
                           <div className="colOne-details">
-                            <FaLocationDot size={20} />
+                            
+                            {/* <FaLocationDot size={20} /> */}
+                             <img src={empprofile1} />
                             <p>{userData.location}</p>
                           </div>
                           <div className="colOne-details">
-                            <FaLaptopCode size={20} />
+                            {/* <FaLaptopCode size={20} /> */}
+                             <img src={empprofile2} />
                             <p>{userData.experienceInStack} Year Exp</p>
                           </div>
                           <div className="colOne-details">
-                            <MdOutlineCurrencyRupee size={20} />
+                            {/* <MdOutlineCurrencyRupee size={20} /> */}
+                             <img src={empprofile3} />
                             <p>{userData.salary} /-Year</p>
                           </div>
                         </div>
                         <div className="personalInfo-colTwo">
                           <div className="colTwo-details">
-                            <FaBusinessTime size={20} />
+                            {/* <FaBusinessTime size={20} /> */}
+                             <img src={empprofile4} />
                             <p>{userData.noticePeriod} Days (Notice period)</p>
                           </div>
                           <div className="colTwo-details">
-                            <IoCallSharp size={20} />
+                            {/* <IoCallSharp size={20} /> */}
+                             <img src={empprofile5} />
                             <p>+91 {userData.mobileNumber}</p>
                           </div>
                           <div className="colTwo-details">
-                            <IoIosMail size={20} />
+                            {/* <IoIosMail size={20} /> */}
+                             <img src={empprofile6} />
                             <p>{userData.email}</p>
                           </div>
                         </div>

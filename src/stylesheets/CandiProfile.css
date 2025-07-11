@@ -495,7 +495,7 @@
   margin: 0 75px;
 }
 
-.profileCardHead img {
+.profileCardHead >img {
   height: 180px;
   width: 180px;
   background-color: #fff;
@@ -902,7 +902,7 @@
   flex-direction: column;
   gap: 15px;
   width: 900px;
-  padding: 15px;
+  /* padding: 15px; */
 }
 
 .education-card {
@@ -981,8 +981,8 @@
 }
 
 .project-logo {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   object-fit: cover;
   margin-top: 5px;

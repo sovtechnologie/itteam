@@ -5,9 +5,9 @@ import { TbPhoneCall } from "react-icons/tb";
 import { IoIosMail } from "react-icons/io";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import location from "../images/Location.png";
-import caller from "../images/caller.png";
-import mail from "../images/mail.png";
+import location from "../images/Location copy.svg";
+import caller from "../images/caller.svg";
+import mail from "../images/mail.svg";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
@@ -82,21 +82,21 @@ const ContactUs = () => {
 
           <div className="info-block">
             <div className="icon" /* style={{backgroundColor:"white"}} */> 
-              <img src={location} style={{ width: "38px", height: "38px" }} />
+              <img src={location} style={{ width: "50px", height: "50px" }} />
             </div>
             <p>Shop No 2, Veer Sawarkar<br />Nagar Thane west, 400606</p>
           </div>
 
           <div className="info-block">
             <div className="icon">
-              <img src={caller} style={{ width: "38px", height: "38px" }} />
+              <img src={caller} style={{ width: "50px", height: "50px" }} />
             </div>
             <p>+91 7738311925</p>
           </div>
 
           <div className="info-block">
             <div className="icon">
-              <img src={mail} style={{ width: "38px", height: "38px" }} />
+              <img src={mail} style={{ width: "50px", height: "50px" }} />
             </div>
             <p>info@itteam.com</p>
           </div>
