@@ -609,10 +609,10 @@ h3 {
   color: #999;
 }
 
-.pagination button:hover {
-  /* background-color: #1783d0; */
-  /* color: white; */
-}
+/* .pagination button:hover {
+  background-color: #1783d0; 
+   color: white;
+} */
 
 .pagination button.active {
   /* background-color: #1783d0; */

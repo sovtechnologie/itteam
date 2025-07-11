@@ -17,11 +17,7 @@
   padding-top: 100px;
 }
 
-/* .overlay {
-  background-color:#1182d1; Blue overlay
-  padding: 60px 20px;
-  border-radius: 10px;
-} */
+
 
 .about-title {
   font-size: 60px;
@@ -153,7 +149,7 @@
   text-align: center;
 }
 
-/* --------------------------------- */
+
 
 .our-team-container {
   margin: 50px #747070;
@@ -339,7 +335,6 @@
 }
 
 .logo-box img {
-  /* width: 150px; */
   height: 45px;
 }
 
