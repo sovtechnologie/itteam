@@ -70,7 +70,7 @@ const SignUp = () => {
                   // window.location.href = `/signin?role=${userRole}`;}}
                 >
                   {" "}
-                  Login here
+                  Login
                 </div>
               </p>
             </div>
@@ -198,8 +198,8 @@ const SignUp = () => {
           </h1>
           <p className="description">
             Find your dream job from thousands daily updated job vacancies. Find
-            the best jobs online from UK job sites or apply directly on a
-            business website. Search and find jobs today!
+            the best jobs around the world or apply directly on a business
+            website. Search and find jobs today!
           </p>
           <div className="hero-buttons">
             <button
@@ -223,9 +223,9 @@ const SignUp = () => {
             Why We are <span className="highlight oswald">Most Popular</span>
           </h1>
           <p>
-            Quis ipsum suspendisse ultrices gravida, Risus commodo viverra
-            maecenas accumsan lacus vel facilisis. Quis ipsum suspendisse
-            ultrices gravida
+            Looking for a job is hard enough. That’s why we don’t charge any
+            fees—no hidden costs, no paid registrations, and no premium
+            upgrades.
           </p>
 
           <div className="popular-grid">

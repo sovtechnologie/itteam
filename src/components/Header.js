@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import "../stylesheets/Header.css";
 import HeaderLogo from "../images/HeaderLogo copy.svg";
 import defaultLogo from "../images/defaultImg.png";
+import { useLocation } from "react-router-dom";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
@@ -109,11 +110,14 @@ const Header = ({ isHomePage }) => {
     }
   }, [authToken]);
 
+  const location = useLocation();
+  const currentPath = location.pathname.toLowerCase();
+
   return (
     <header className={`header main-header ${isHomePage ? "home-header" : ""}`}>
       <div id="left">
         <Link to="/" className="header-logo">
-          <img style={{width: "80px"}} src={HeaderLogo} alt="Logo" />
+          <img style={{ width: "80px" }} src={HeaderLogo} alt="Logo" />
         </Link>
       </div>
 
@@ -122,16 +126,33 @@ const Header = ({ isHomePage }) => {
           <div id="mid">
             <ul className="nav-links">
               <li>
-                <Link to="/">Home</Link>
+                <Link to="/" className={currentPath === "/" ? "active" : ""}>
+                  Home
+                </Link>
               </li>
               <li>
-                <Link to="/aboutus">About Us</Link>
+                <Link
+                  to="/aboutus"
+                  className={currentPath === "/aboutus" ? "active" : ""}
+                >
+                  About Us
+                </Link>
               </li>
               <li>
-                <Link to="/ourTeam">Our Team</Link>
+                <Link
+                  to="/ourTeam"
+                  className={currentPath === "/ourteam" ? "active" : ""}
+                >
+                  Our Team
+                </Link>
               </li>
               <li>
-                <Link to="/pricing">Pricing</Link>
+                <Link
+                  to="/pricing"
+                  className={currentPath === "/pricing" ? "active" : ""}
+                >
+                  Pricing
+                </Link>
               </li>
             </ul>
           </div>

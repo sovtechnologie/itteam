@@ -24,6 +24,10 @@ import data from "../images/HomeIcons/dataOperator1.svg";
 import intership from "../images/HomeIcons/intership1.svg";
 import analytic from "../images/HomeIcons/analytic1.svg";
 import next from "../images/next-arrow.png";
+import homeemail from "../images/HomeIcons/home-email.svg";
+import homecaller from "../images/HomeIcons/homecaller.svg";
+import homelocation from "../images/HomeIcons/homelocation.svg";
+import homenotice from "../images/HomeIcons/homenotice.svg";
 
 import { fetchtopskillandlocation } from "../services/apiService";
 
@@ -327,18 +331,20 @@ const Home = () => {
                   return words.slice(0, 10).join(" ") + " ...";
                 })()} */}
                 <div className="location-left">
-                  <MdOutlineEmail
+                  <img src={homeemail} />
+                  {/* <MdOutlineEmail
                     style={{ color: "#1783D0", fontSize: "1.6rem" }}
-                  />
+                  /> */}
                   <span>
                     {" "}
                     {isLoggedIn ? candidate.email : "********@***.com"}
                   </span>
                 </div>
                 <div className="location-left">
-                  <MdPhoneEnabled
+                  <img src={homecaller} />
+                  {/* <MdPhoneEnabled
                     style={{ color: "#1783D0", fontSize: "1.6rem" }}
-                  />
+                  /> */}
                   <span>
                     {isLoggedIn ? candidate.mobileNumber : "+91 *********"}
                   </span>
@@ -348,18 +354,20 @@ const Home = () => {
               <div className="location-options-exact">
                 <div className="location-option-exact">
                   <div className="location-left">
-                    <MdOutlineLocationOn
+                    <img src={homelocation} />
+                    {/* <MdOutlineLocationOn
                       style={{ color: "#1783D0", fontSize: "1.6rem" }}
-                    />
+                    /> */}
                     <span>
                       {candidate.location},{candidate.state}
                     </span>
                   </div>
 
                   <div className="notice-right">
-                    <IoMdTime
+                    <img src={homenotice} />
+                    {/* <IoMdTime
                       style={{ color: "#1783D0", fontSize: "1.6rem" }}
-                    />
+                    /> */}
                     <span>
                       {`${ExperiencedLabel(candidate.experienceInStack)}`}
                     </span>
@@ -456,8 +464,8 @@ const Home = () => {
             <span className="highlight">Job Portal</span>
           </h1>
           <p className="description">
-            Find your dream job from thousands daily updated job vacancies. Find
-            the best jobs online from UK job sites or apply directly on a
+            Find your dream job from thousands daily updated job vacancies.
+            Find the best jobs around the world or apply directly on a
             business website. Search and find jobs today!
           </p>
           <div className="hero-buttons">
@@ -518,9 +526,7 @@ const Home = () => {
             Why We are <span className="highlight oswald">Most Popular</span>
           </h1>
           <p>
-            Quis ipsum suspendisse ultrices gravida, Risus commodo viverra
-            maecenas accumsan lacus vel facilisis. Quis ipsum suspendisse
-            ultrices gravida
+            Looking for a job is hard enough. That’s why we don’t charge any fees—no hidden costs, no paid registrations, and no premium upgrades.
           </p>
 
           <div className="popular-grid">

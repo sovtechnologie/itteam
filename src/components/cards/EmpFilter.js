@@ -6,6 +6,10 @@ import Cookies from "js-cookie";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { MdOutlineEmail, MdOutlineLocationOn, MdOutlinePhone } from "react-icons/md";
 import { IoMdTime } from "react-icons/io";
+import homeemail from "../../images/HomeIcons/home-email.svg";
+import homecaller from "../../images/HomeIcons/homecaller.svg";
+import homelocation from "../../images/HomeIcons/homelocation.svg";
+import homenotice from "../../images/HomeIcons/homenotice.svg";
 
 const EmpFilter = () => {
   const isLoggedIn = !!Cookies.get("authToken");
@@ -461,29 +465,37 @@ const EmpFilter = () => {
                   if (words.length <= 9) return profile.about;
                   return words.slice(0, 9).join(" ") + " ...";
                 })()} */}
-                  <span>
+                  <span className="job">
                   {" "}
-                  <MdOutlineEmail color="#3399ff" size={25} />{" "}
+                   <img src={homeemail}  />
+                  {/* <MdOutlineEmail color="#3399ff" size={25} /> */}
+                  {" "}
                     {isLoggedIn ? profile.email : "********@***.com"}
                 </span>
                 </p>
                 <p className="job-infos">
-                <span>
+                <span className="job">
                   {" "}
-                  <MdOutlinePhone color="#3399ff" size={25} />{" "}
+                   <img src={homecaller} />
+                  {/* <MdOutlinePhone color="#3399ff" size={25} /> */}
+                  {" "}
                   {isLoggedIn ? profile.mobileNumber : "+91 *********"}
                 </span>
 
               </p>
 
               <div className="job-infos">
-                <span>
+                <span className="job">
                   {" "}
-                  <MdOutlineLocationOn color="#3399ff" size={25} />{" "}
+                   <img src={homelocation}  />
+                  {/* <MdOutlineLocationOn color="#3399ff" size={25} /> */}
+                  {" "}
                   {profile.location},{profile.state}
                 </span>
-                <span>
-                  <IoMdTime color="#3399ff" size={25} />{" "}
+                <span className="job" >
+                   <img src={homenotice} />
+                  {/* <IoMdTime color="#3399ff" size={25} /> */}
+                  {" "}
                   {ExperiencedLabel(profile.experienceInStack)}
                 </span>
               </div>

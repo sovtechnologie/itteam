@@ -48,11 +48,11 @@
   align-items: stretch;
 }
 
-.bar {
+/* .bar {
   width: 3px;
   background-color: #955b50;
   margin-right: 20px;
-}
+} */
 
 .bar-text h1 {
   font-size: 54px;

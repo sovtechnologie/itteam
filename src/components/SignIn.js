@@ -38,11 +38,39 @@ const SignIn = () => {
               <>
                 <div className="new-to-it">
                   <h1>New to IT Team?</h1>
-                  <ul style={{marginTop:"20px"}}>
-                    <li><img src={topcompanies1} alt="" style={{height:"30px", width:"30px"}} />One click apply using naukri profile.</li>
-                    <li><img src={topcompanies1} alt="" style={{height:"30px", width:"30px"}} />Get relevant job recommendations.</li>
-                    <li><img src={topcompanies1} alt="" style={{height:"30px", width:"30px"}} />Showcase profile to top companies and consultants.</li>
-                    <li><img src={topcompanies1} alt="" style={{height:"30px", width:"30px"}} />Know application status on applied jobs.</li>
+                  <ul style={{ marginTop: "20px" }}>
+                    <li>
+                      <img
+                        src={topcompanies1}
+                        alt=""
+                        style={{ height: "30px", width: "30px" }}
+                      />
+                      One click apply using naukri profile.
+                    </li>
+                    <li>
+                      <img
+                        src={topcompanies1}
+                        alt=""
+                        style={{ height: "30px", width: "30px" }}
+                      />
+                      Get relevant job recommendations.
+                    </li>
+                    <li>
+                      <img
+                        src={topcompanies1}
+                        alt=""
+                        style={{ height: "30px", width: "30px" }}
+                      />
+                      Showcase profile to top companies and consultants.
+                    </li>
+                    <li>
+                      <img
+                        src={topcompanies1}
+                        alt=""
+                        style={{ height: "30px", width: "30px" }}
+                      />
+                      Know application status on applied jobs.
+                    </li>
                   </ul>
                 </div>
                 <h1>Let Job Find You</h1>
@@ -63,15 +91,11 @@ const SignIn = () => {
           </div>
         </div>
 
-
-
         <div className="right-form">
           <div className="right-form-head">
             {/* <img src={wavinghand} alt="Hello" className="hello-icon" /> */}
             <h2 className="oswald">Welcome back!</h2>
             <p>Please login to access your account</p>
-
-           
           </div>
 
           <div className="signInRight">
@@ -94,7 +118,7 @@ const SignIn = () => {
                   Register
                 </button>
               </div>
-               {/* <h1 style={{color: "#1783D0" }}>
+              {/* <h1 style={{color: "#1783D0" }}>
                 Login As{" "}
                 {userRole === "company" ? "Company" : "Job Seeker"}
               </h1> */}
@@ -172,8 +196,8 @@ const SignIn = () => {
           </h1>
           <p className="description">
             Find your dream job from thousands daily updated job vacancies. Find
-            the best jobs online from UK job sites or apply directly on a
-            business website. Search and find jobs today!
+            the best jobs around the world or apply directly on a business
+            website. Search and find jobs today!
           </p>
           <div className="hero-buttons">
             <button
@@ -197,9 +221,9 @@ const SignIn = () => {
             Why We are <span className="highlight oswald">Most Popular</span>
           </h1>
           <p>
-            Quis ipsum suspendisse ultrices gravida, Risus commodo viverra
-            maecenas accumsan lacus vel facilisis. Quis ipsum suspendisse
-            ultrices gravida
+            Looking for a job is hard enough. That’s why we don’t charge any
+            fees—no hidden costs, no paid registrations, and no premium
+            upgrades.
           </p>
 
           <div className="popular-grid">

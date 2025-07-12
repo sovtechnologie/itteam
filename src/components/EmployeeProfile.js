@@ -246,7 +246,7 @@ const EmployeeProfile = () => {
                       <div className="colTwo-details">
                         {/* <FaBusinessTime size={25} /> */}
                         <img src={empprofile4} />
-                        <p>{noticePeriodLabel(formData.notice)}</p>
+                        <p>{noticePeriodLabel(formData.notice) }</p>
                       </div>
                       <div className="colTwo-details">
                         {/* <IoCallSharp size={25} /> */}

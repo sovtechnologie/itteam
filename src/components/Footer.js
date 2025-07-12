@@ -81,14 +81,19 @@ const Footer = () => {
           <div className="footer-container">
             <div className="footer-top-content">
               <div className="footer-col">
-                <img style={{width: "80px"}} src={logowhite} alt="Logo" />
+                <img style={{ width: "80px" }} src={logowhite} alt="Logo" />
                 <br />
-                <p>
-                  Our generator uses cutting-edge technology <br />
-                  to create unique to history and ..
+                <p style={{width:"500px",fontSize :15}}>
+                  At IT Team, we believe that everyone deserves a
+                  second chance. Founded with the mission to support individuals
+                  going through tough times—whether due to layoffs, career gaps,
+                  or unexpected job loss—we are dedicated to helping job seekers
+                  get back on their feet, completely free of cost.
                 </p>
                 <div className="footer-social-icon">
-                  <ul style={{ display: "flex", gap: "30px", marginTop: "60px" }}>
+                  <ul
+                    style={{ display: "flex", gap: "30px", marginTop: "60px" }}
+                  >
                     <li>
                       <img src={facebook} alt="facebook" />
                     </li>
@@ -101,7 +106,6 @@ const Footer = () => {
                     <li>
                       <img src={Twitter} alt="twitter" />
                     </li>
-
                   </ul>
                 </div>
               </div>
@@ -170,16 +174,16 @@ const Footer = () => {
                     { label: "Senior", min: 10, max: null },
                   ].map(({ label }) => (
                     <li key={label}>
-                      <a onClick={() => handleExpTechClick(label)} style={{ cursor: "pointer" }}>
+                      <a
+                        onClick={() => handleExpTechClick(label)}
+                        style={{ cursor: "pointer" }}
+                      >
                         {label}
                       </a>
                     </li>
                   ))}
-
                 </ul>
               </div>
-
-
             </div>
 
             <div className="footer-bottom">

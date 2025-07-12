@@ -208,6 +208,12 @@ h3 {
 .companyname {
   font-size: small;
 }
+.job {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
 
 .job-infos {
   display: flex;

@@ -3,12 +3,12 @@ import "../stylesheets/AboutUs.css";
 import trustpopular from "../images/trustpopular.png";
 import { Link } from "react-router-dom";
 import ladypicture from "../images/ladypicture.png";
-import company1 from "../images/campanieslogo/company1.png";
+import company1 from "../images/campanieslogo/company1.svg";
 import company2 from "../images/campanieslogo/company2.png";
-import company3 from "../images/campanieslogo/company3.png";
-import company4 from "../images/campanieslogo/company4.png";
-import company5 from "../images/campanieslogo/company5.png";
-import company6 from "../images/campanieslogo/company6.png";
+import company3 from "../images/campanieslogo/company3.svg";
+import company4 from "../images/campanieslogo/company4.svg";
+import company5 from "../images/campanieslogo/company5.svg";
+import company6 from "../images/campanieslogo/company6.svg";
 
 const AboutUs = () => {
   return (
@@ -97,7 +97,7 @@ const AboutUs = () => {
           </h1>
           <p className="description">
             Find your dream job from thousands daily updated job vacancies.
-            Find the best jobs online from UK job sites or apply directly on a
+            Find the best jobs around the world or apply directly on a
             business website. Search and find jobs today!
           </p>
           <div className="hero-buttons">
