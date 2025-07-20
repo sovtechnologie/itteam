@@ -112,6 +112,8 @@ const Header = ({ isHomePage }) => {
 
   const location = useLocation();
   const currentPath = location.pathname.toLowerCase();
+  const searchParams = new URLSearchParams(location.search);
+  const roleParam = searchParams.get("role");
 
   return (
     <header className={`header main-header ${isHomePage ? "home-header" : ""}`}>
@@ -185,22 +187,29 @@ const Header = ({ isHomePage }) => {
               </div>
             ) : (
               <div className="header-buttons">
-                <button
-                  onClick={() =>
-                    (window.location.href = "/signin?role=candidate")
-                  }
-                  className="sign-btn"
-                >
-                  Join as Jobseeker
-                </button>
-                <button
-                  onClick={() =>
-                    (window.location.href = "/signin?role=company")
-                  }
-                  className="signup-btn"
-                >
-                  Join as Company
-                </button>
+                <Link to="/signin?role=candidate">
+                  <button
+                    className={`sign-btn ${
+                      currentPath === "/signin" && roleParam === "candidate"
+                        ? "active"
+                        : ""
+                    }`}
+                  >
+                    Join as Jobseeker
+                  </button>
+                </Link>
+
+                <Link to="/signin?role=company">
+                  <button
+                    className={`signup-btn ${
+                      currentPath === "/signin" && roleParam === "company"
+                        ? "active"
+                        : ""
+                    }`}
+                  >
+                    Join as Company
+                  </button>
+                </Link>
               </div>
             )}
           </div>
@@ -211,3 +220,4 @@ const Header = ({ isHomePage }) => {
 };
 
 export default Header;
+

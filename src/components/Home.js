@@ -10,10 +10,10 @@ import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import seniorExpert from "../images/Roles/expert.svg";
 import counseller from "../images/Roles/counselling.svg";
-import topcompanies from "../images/No fake Job.svg";
-import topcompanies1 from "../images/Free for Jobseeker.svg";
-import topcompanies2 from "../images/Future Of Job.svg";
-import topcompanies3 from "../images/HR Friendly.svg";
+import topcompanies from "../images/No fake Job.png";
+import topcompanies1 from "../images/Free for Jobseeker.png";
+import topcompanies2 from "../images/Future Of Job.png";
+import topcompanies3 from "../images/HR Friendly.png";
 
 import remote1 from "../images/HomeIcons/remote1.svg";
 import mnc from "../images/HomeIcons/mnc1.svg";
@@ -30,6 +30,7 @@ import homelocation from "../images/HomeIcons/homelocation.svg";
 import homenotice from "../images/HomeIcons/homenotice.svg";
 
 import { fetchtopskillandlocation } from "../services/apiService";
+import { BsDownload } from "react-icons/bs";
 
 import {
   MdOutlineLocationOn,
@@ -319,6 +320,9 @@ const Home = () => {
                     {JobtypeLabel(candidate.Job_type)}
                   </p>
                 </div>
+                <div>
+                  <BsDownload style={{ width: "25px", height: "25px", marginTop: "-25px", color:"#1783D0"}} />
+                </div>
               </div>
 
               <p className="job-description-exact">
@@ -464,9 +468,9 @@ const Home = () => {
             <span className="highlight">Job Portal</span>
           </h1>
           <p className="description">
-            Find your dream job from thousands daily updated job vacancies.
-            Find the best jobs around the world or apply directly on a
-            business website. Search and find jobs today!
+            Find your dream job from thousands daily updated job vacancies. Find
+            the best jobs around the world or apply directly on a business
+            website. Search and find jobs today!
           </p>
           <div className="hero-buttons">
             <button
@@ -526,15 +530,17 @@ const Home = () => {
             Why We are <span className="highlight oswald">Most Popular</span>
           </h1>
           <p>
-            Looking for a job is hard enough. That’s why we don’t charge any fees—no hidden costs, no paid registrations, and no premium upgrades.
+            Looking for a job is hard enough. That’s why we don’t charge any
+            fees—no hidden costs, no paid registrations, and no premium
+            upgrades.
           </p>
 
           <div className="popular-grid">
             {[
-              {img: topcompanies,  label:"Free for Jobseeker"},
-              {img: topcompanies1, label:"No fake Job"},
-              {img: topcompanies2, label:"HR Friendly"},
-              {img: topcompanies3, label:"Future Of Job"}
+              { img: topcompanies, label: "Free for Jobseeker" },
+              { img: topcompanies1, label: "No fake Job" },
+              { img: topcompanies2, label: "HR Friendly" },
+              { img: topcompanies3, label: "Future Of Job" },
             ].map(({ img, label }) => (
               <div className="popular-item" key={label}>
                 <img src={img} alt="Icon" />

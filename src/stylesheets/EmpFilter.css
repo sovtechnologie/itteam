@@ -25,7 +25,7 @@
   align-items: center;
 }
 .select-city {
-  border: 2px solid #1783d0;
+  border: 1px solid #1783d0;
   border-radius: 10px;
 }
 
@@ -33,7 +33,7 @@
   font-weight: 400;
   /* border: none; */
   /* outline: none; */
-  font-size: 18px;
+  font-size: 16px;
   padding: 10px 30px 10px 10px;
   background: transparent;
   color: #525252;
@@ -136,7 +136,7 @@ h3 {
 }
 
 .filter-group {
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 .filter-group h4 {
@@ -146,7 +146,7 @@ h3 {
 
 .filter-group label {
   display: block;
-  margin-bottom: 15px;
+  margin-bottom: 8px;
   font-size: 16px;
   color: #525252;
 }
@@ -201,6 +201,13 @@ h3 {
   gap: 10px;
 }
 
+.job-card-header > div:nth-child(2) {
+  flex-grow: 1; /* makes the text section expand */
+}
+
+.job-card-header > div:last-child {
+  margin-left: auto; /* pushes the icon to the right */
+}
 .profile-img {
   width: 70px;
   height: 70px;

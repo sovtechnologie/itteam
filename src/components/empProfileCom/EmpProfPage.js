@@ -1120,7 +1120,7 @@ const EmpProfPage = () => {
               <div className="modal-overlay">
                 <div className="edit-modal-horizontal">
                   {/* <h3>Edit Profile</h3> */}
-                 
+
                   <div className="modal-header">
                     <div
                       style={{
@@ -1132,9 +1132,9 @@ const EmpProfPage = () => {
                     >
                       <h2 className="edit-about">Edit Profile</h2>
                       <button
-                       style={{
-                      marginTop: "0px",
-                      }}
+                        style={{
+                          marginTop: "0px",
+                        }}
                         className="fancy-close"
                         onClick={handleClose}
                         aria-label="Close"
@@ -1401,7 +1401,7 @@ const EmpProfPage = () => {
                               display: "flex",
                               justifyContent: "space-between",
                               alignItems: "center",
-                               marginBottom: "20px",
+                              marginBottom: "20px",
                             }}
                           >
                             <h3 className="edit-about">Edit About</h3>
@@ -1523,7 +1523,7 @@ const EmpProfPage = () => {
                               display: "flex",
                               justifyContent: "space-between",
                               alignItems: "center",
-                               marginBottom: "20px",
+                              marginBottom: "20px",
                             }}
                           >
                             <h2 className="edit-about">Upload Resume</h2>
@@ -1540,11 +1540,13 @@ const EmpProfPage = () => {
                           accept=".pdf,.doc,.docx"
                           onChange={handleFileChange}
                         />
-                        <div className="modal-buttons"  style={{
-                              display: "flex",
-                              justifyContent: "end",
-                             
-                            }}>
+                        <div
+                          className="modal-buttons"
+                          style={{
+                            display: "flex",
+                            justifyContent: "end",
+                          }}
+                        >
                           <button onClick={handleUpload}>Upload</button>
                           {/* <button
                             type="button"
@@ -1600,7 +1602,7 @@ const EmpProfPage = () => {
                               display: "flex",
                               justifyContent: "space-between",
                               alignItems: "center",
-                               marginBottom: "20px",
+                              marginBottom: "20px",
                             }}
                           >
                             <h2 className="edit-about">Skills</h2>
@@ -1670,11 +1672,13 @@ const EmpProfPage = () => {
                           ))}
                         </div>
 
-                        <div className="modal-buttons"  style={{
-                              display: "flex",
-                              justifyContent: "end",
-                             
-                            }}>
+                        <div
+                          className="modal-buttons"
+                          style={{
+                            display: "flex",
+                            justifyContent: "end",
+                          }}
+                        >
                           <button onClick={() => setIsSkillModalOpen(false)}>
                             Save
                           </button>
@@ -1716,24 +1720,26 @@ const EmpProfPage = () => {
                             <div className="employment-content">
                               <div className="employment-header">
                                 <h3>{job?.title}</h3>
-                                <div className="employment-timeline">
-                                  <span>{duration}</span>
-                                </div>
-                                <div style={{ display: "flex", gap: "8px" }}>
-                                  <button
-                                    className="employee-editBtn"
-                                    onClick={() =>
-                                      handleOpenModal(job._id, index)
-                                    }
-                                  >
-                                    <MdOutlineEdit size={25} />
-                                  </button>
-                                  {/* <button
+                                <div style={{display:"flex", gap: "8px"}}>
+                                  <div className="duration">
+                                    <span>{duration}</span>
+                                  </div>
+                                  <div style={{ display: "flex", gap: "8px" }}>
+                                    <button
+                                      className="employee-editBtn"
+                                      onClick={() =>
+                                        handleOpenModal(job._id, index)
+                                      }
+                                    >
+                                      <MdOutlineEdit size={25} />
+                                    </button>
+                                    {/* <button
                                 className="employee-deleteBtn"
                                 onClick={() => handleDelete(index)}
                               >
                                 <FiX size={20} />
                               </button> */}
+                                  </div>
                                 </div>
                               </div>
                               {/* <p className="company-name">{job?.company_Name}</p>
@@ -1766,7 +1772,7 @@ const EmpProfPage = () => {
                               display: "flex",
                               justifyContent: "space-between",
                               alignItems: "center",
-                               marginBottom: "20px",
+                              marginBottom: "20px",
                             }}
                           >
                             <h2 className="edit-about">Add Experience</h2>
@@ -1890,8 +1896,7 @@ const EmpProfPage = () => {
                           />
                         </div>
 
-                        <div className="modal-buttons" >
-                        
+                        <div className="modal-buttons">
                           {/* <button
                             className="update-add"
                             onClick={() => setIsExperienceModalOpen(false)}
@@ -1906,7 +1911,7 @@ const EmpProfPage = () => {
                               Delete Experience
                             </div>
                           )}
-                            <button onClick={handleSave}>
+                          <button onClick={handleSave}>
                             {editingIndex !== null ? "Save" : "Add"}
                           </button>
                         </div>
@@ -1975,7 +1980,7 @@ const EmpProfPage = () => {
                               display: "flex",
                               justifyContent: "space-between",
                               alignItems: "center",
-                               marginBottom: "20px",
+                              marginBottom: "20px",
                             }}
                           >
                             <h2 className="edit-about">Education</h2>
@@ -2097,8 +2102,7 @@ const EmpProfPage = () => {
                     )} */}
 
                         <div className="modal-actions">
-
-                           {isEditing && (
+                          {isEditing && (
                             <div
                               // style={{
                               //   backgroundColor: "red",
@@ -2185,8 +2189,6 @@ const EmpProfPage = () => {
                           >
                             Cancel
                           </button> */}
-
-                         
                         </div>
                       </div>
                     </div>
@@ -2219,8 +2221,15 @@ const EmpProfPage = () => {
                             className="project-logo"
                           />
                           <div className="project-info">
-                            <h3>{proj?.title}</h3>
-                            <p className="project-date">{duration}</p>
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                              }}
+                            >
+                              <h3>{proj?.title}</h3>
+                              <p className="duration">{duration}</p>
+                            </div>
                             <p className="project-associated">
                               {proj?.associated}
                             </p>
@@ -2253,7 +2262,7 @@ const EmpProfPage = () => {
                               display: "flex",
                               justifyContent: "space-between",
                               alignItems: "center",
-                               marginBottom: "20px",
+                              marginBottom: "20px",
                             }}
                           >
                             <h2 className="edit-about">Add Project</h2>
@@ -2370,11 +2379,8 @@ const EmpProfPage = () => {
                         />
                       )} */}
 
-
-                      
-                        <div className="modal-buttons" >
-
-                           {editIndex !== null && formProjectData._id && (
+                        <div className="modal-buttons">
+                          {editIndex !== null && formProjectData._id && (
                             <div
                               type="button"
                               // style={{
@@ -2397,7 +2403,6 @@ const EmpProfPage = () => {
                           >
                             Cancel
                           </button> */}
-                         
                         </div>
                       </form>
                     </div>
@@ -2473,7 +2478,7 @@ const EmpProfPage = () => {
                               display: "flex",
                               justifyContent: "space-between",
                               alignItems: "center",
-                               marginBottom: "20px",
+                              marginBottom: "20px",
                             }}
                           >
                             <h2 className="edit-about">Add Certification</h2>

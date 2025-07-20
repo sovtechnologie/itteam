@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 8px;
+  /* margin-top: 8px;÷ */
 }
 
 .pill {
@@ -256,14 +256,14 @@
   font-family: "Poppins";
   line-height: 1.8;
   color: #525252;
-  margin-bottom: 24px;
+  margin-bottom: 10px;
   text-transform: capitalize;
 }
 
 .company-meta {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 5px;
   margin-bottom: 16px;
   width: 1450px; /* Set your desired width */
   max-width: 100%; /* Prevent overflow on small screens */
@@ -276,14 +276,17 @@
   font-size: 20px;
   color: #525252;
   margin-top: 20px;
+  font-family: "Poppins";
+  font-weight: 600;
 }
 
 .company-meta p {
   margin: 0;
-  font-size: 18px;
+  font-size: 20px;
   color: grey;
-  margin-top: 8px;
+  /* margin-top: 8px; */
   text-transform: capitalize;
+  font-family: "Poppins";
 }
 
 .link {
@@ -298,7 +301,7 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-top: 8px;
+  /* margin-top: 8px; */
 }
 
 .pill {

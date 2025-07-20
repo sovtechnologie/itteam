@@ -495,7 +495,7 @@
   margin: 0 75px;
 }
 
-.profileCardHead >img {
+.profileCardHead > img {
   height: 180px;
   width: 180px;
   background-color: #fff;
@@ -705,9 +705,9 @@
 
 .quick-links {
   background: white;
-  border: 2px solid #1783d0;
+  border: 1px solid #1783d0;
   padding: 15px;
-  border-radius: 10px;
+  border-radius: 16px;
   max-width: 250px;
   width: 250px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
@@ -728,12 +728,16 @@
   justify-content: space-between;
   margin: 18px 0;
   gap: 20px;
+   color: #525252;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins";
 }
 
 .content-boxes {
   background: white;
-  border: 2px solid #1783d0;
-  border-radius: 10px;
+  border: 1px solid #1783d0;
+  border-radius: 16px;
   padding: 20px;
   max-width: 900px;
   width: 900px;
@@ -751,16 +755,17 @@
 }
 
 .content-boxes-head h2 {
-  font-size: 1.5rem;
+  font-size: 20px;
   margin: 0;
-  font-weight: 500;
+  font-weight: 400;
   text-transform: uppercase;
   color: #1783d0;
+  font-family: "Poppins";
 }
 
 .about-card-box-details p {
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 15px;
   font-family: "Poppins";
   font-weight: 400;
   color: rgba(82, 82, 82, 1);
@@ -822,11 +827,12 @@
   display: flex;
   flex-direction: column;
   gap: 50px;
+  flex: 1 1;
 }
 
 .employment-card {
   display: flex;
-  gap: 20px;
+  /* gap: 20px; */
 }
 
 .employment-logo img {
@@ -834,6 +840,7 @@
   height: 60px;
   border-radius: 50%;
   object-fit: cover;
+  margin-right: 15px;
 }
 
 .employment-content {
@@ -851,15 +858,16 @@
   font-size: 20px;
   color: #1783d0;
   font-weight: 600;
+  font-family: "Poppins";
 }
 
 .employment-timeline {
   border: 1px solid #1783d0;
-  padding: 3px 10px;
   border-radius: 20px;
   font-size: 18px;
   color: #1783d0;
-  margin-left: 26rem;
+  margin-left: 23rem;
+  padding: 2px 11px;
 }
 
 .employment-timeline span {
@@ -880,8 +888,9 @@
 
 .company-name {
   margin: 5px 0;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 18px;
+  font-family: "Poppins";
   color: #525252;
 }
 .company-add {
@@ -891,9 +900,11 @@
 }
 
 .employment-description {
-  font-size: 20px;
+  font-size: 16px;
   color: #525252;
-  margin-top: 8px;
+  margin-top: 20px;
+  font-family: "Poppins";
+  font-weight: 400;
 }
 
 .education-cards {
@@ -926,16 +937,18 @@
 }
 
 .education-info h3 {
-  color: #2e86de;
+  color: #1783d0;
   font-size: 20px;
   margin-bottom: 4px;
+  font-family: "Poppins";
 }
 
 .education-info p {
   margin: 0;
   color: #525252;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 500;
+  font-family: "Poppins";
 }
 
 .location {
@@ -977,7 +990,7 @@
   display: flex;
   align-items: flex-start;
   padding: 20px 0;
-  gap: 15px;
+  /* gap: 15px; */
 }
 
 .project-logo {
@@ -997,30 +1010,35 @@
   color: #1783d0;
   font-size: 20px;
   margin-bottom: 4px;
+  font-family: "Poppins";
+  font-weight: 600;
 }
 
 .project-date {
   font-size: 18px;
   color: #525252;
   margin-bottom: 6px;
-  font-weight: 600;
+  font-weight: 500;
+  font-family: "Poppins";
 }
 
 .project-associated {
   font-size: 18px;
   color: #525252;
   margin-bottom: 10px;
-  font-weight: 600;
+  font-weight: 500;
+  font-family: "Poppins";
 }
 
 .project-description {
-  font-size: 15px;
-  color: #777;
+  font-size: 16px;
+  color: #525252;
+  font-weight: 400;
   line-height: 1.5;
 }
 
 .project-actions {
-  margin-top: 10px;
+  margin-top: -5px;
 }
 
 .project-actions button {
@@ -1052,29 +1070,33 @@
 
 .license-info {
   flex: 1;
-  margin-left: 15px;
+  /* margin-left: 15px; */
 }
 
 .license-info h3 {
-  color: #2e86de;
+  color: #1783d0;
   font-size: 20px;
   margin-bottom: 4px;
+  font-family: "Poppins";
+  font-weight: 600;
 }
 
 .issuer {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 500;
   color: #525252;
   margin-bottom: 2px;
+  font-family: "Poppins";
 }
 
 .issued {
-  font-size: 14px;
-  color: #777;
+  font-size: 16px;
+  color: #525252;
+  font-family: "Poppins";
 }
 
 .show-credential-button {
-  background-color: #3498db;
+  background-color: #1783d0;
   color: white;
   border: none;
   padding: 6px 12px;
@@ -1194,7 +1216,10 @@ textarea {
 
 .quick-links li a {
   text-decoration: none;
-  color: black;
+  color: #525252;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins";
 }
 
 .fancy-close {

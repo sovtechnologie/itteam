@@ -4,7 +4,7 @@ import trustpopular from "../images/trustpopular.png";
 import { Link } from "react-router-dom";
 import ladypicture from "../images/ladypicture.png";
 import company1 from "../images/campanieslogo/company1.svg";
-import company2 from "../images/campanieslogo/company2.png";
+import company2 from "../images/campanieslogo/company2.svg";
 import company3 from "../images/campanieslogo/company3.svg";
 import company4 from "../images/campanieslogo/company4.svg";
 import company5 from "../images/campanieslogo/company5.svg";

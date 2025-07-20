@@ -26,7 +26,7 @@
 .search-select {
   border: none;
   outline: none;
-  font-size: 18px;
+  font-size: 16px;
   padding: 10px 30px 10px 10px;
   background: transparent;
   color: #525252;
@@ -115,11 +115,27 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.filter-header h3 {
+  font-family: "Inter";
+  color: #1783d0;
+  font-size: 19.34px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
 h3 {
   color: #1783d0;
   font-size: 20px;
   font-weight: 600;
   text-transform: capitalize;
+}
+.filter-group h3 {
+  color: #1783d0;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: capitalize;
+  font-family: "Poppins";
 }
 
 .reset-btn {
@@ -129,10 +145,14 @@ h3 {
   color: #525252;
   cursor: pointer;
   font-weight: 600;
+  font-family: "Inter";
+  font-size: 19.34px;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
 .filter-group {
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 .filter-group h4 {
@@ -142,9 +162,11 @@ h3 {
 
 .filter-group label {
   display: block;
-  margin-bottom: 15px;
-  font-size: 16px;
+  margin-bottom: 8px;
+  font-size: 14px;
   color: #525252;
+  font-family: "Poppins";
+  font-weight: 400;
 }
 
 .filter-group input[type="checkbox"] {
@@ -182,6 +204,19 @@ h3 {
   align-items: center;
   gap: 10px;
 }
+.job-card-header h3 {
+  font-family: "Poppins";
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.job-card-header > div:nth-child(2) {
+  flex-grow: 1; /* makes the text section expand */
+}
+
+.job-card-header > div:last-child {
+  margin-left: auto; /* pushes the icon to the right */
+}
 
 .profile-img {
   width: 70px;
@@ -213,7 +248,6 @@ h3 {
   align-items: center;
   gap: 5px;
 }
-
 
 .job-infos {
   display: flex;

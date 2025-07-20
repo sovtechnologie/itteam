@@ -509,7 +509,7 @@ body::before {
 .nav-btn {
   display: flex;
   align-items: center;
-  margin-right:  2.063rem;;
+  margin-right: 2.063rem;
 }
 
 .nav {
@@ -521,8 +521,6 @@ body::before {
   list-style: none;
   height: 100%;
 }
-
-
 
 .right-container {
   display: flex;
@@ -545,7 +543,7 @@ body::before {
 #mid ul li a {
   text-decoration: none;
   /* color: black; */
-   color: #525252;
+  color: #525252;
   position: relative;
   font-family: "Poppins";
   font-weight: 400;
@@ -581,14 +579,11 @@ body::before {
   width: 100%;
 }
 
-
-
-
 .sign-btn {
   border-radius: 30px;
   border: 1px solid #1783d0;
   background-color: white;
-  color: #333;
+  color: #1783d0;
   width: 190px;
   text-align: center;
   text-decoration: none;
@@ -601,7 +596,9 @@ body::before {
   border-radius: 30px;
   border: 1px solid #1783d0;
   background-color: white;
-  color: #333;
+  background-color: #1783d0;
+  color: white;
+  /* color: #1783d0; */
   width: 190px;
   text-align: center;
   text-decoration: none;
@@ -611,11 +608,28 @@ body::before {
   /* color: #1783d0; */
 }
 
-.sign-btn:hover,
-.signup-btn:hover {
+.sign-btn:hover{
   background-color: #1783d0;;
   color: white;
   border-color: #1783d0;;
+}
+
+.sign-btn.active {
+  background-color: #1783d0;
+  color: #fff;
+  border: 1px solid #1783d0;
+}
+.signup-btn.active {
+  background-color: #1783d0;
+  color: #fff;
+  border: 1px solid #1783d0;
+}
+
+
+.signup-btn:hover {
+  background-color: white;
+  color: #1783d0;
+  border: 1px solid #1783d0;
 }
 
 /* Profile dropdown */
@@ -668,4 +682,3 @@ body::before {
 .headerProfDropdown a:hover {
   background-color: #f0f0f0;
 }
-

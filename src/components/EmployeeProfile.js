@@ -12,10 +12,10 @@ import { IoCallSharp } from "react-icons/io5";
 import { IoIosMail } from "react-icons/io";
 import Profile from "../images/UserProfile.png";
 import resumelogo from "../images/resumelogo.png";
-import companyLogo from "../images/company profile.svg";
-import School from "../images/Education.svg";
-import Certifications from "../images/Certifications.svg";
-import Projects from "../images/Projects.svg";
+import companyLogo from "../images/company profile.png";
+import School from "../images/Education.png";
+import Certifications from "../images/Certifications (1).png";
+import Projects from "../images/Projects.png";
 import Course from "../images/Profile/Course.png";
 import mostpopular from "../images/mostpopular.png";
 import trustpopular from "../images/trustpopular.png";
@@ -26,6 +26,7 @@ import empprofile3 from "../images/HomeIcons/MdOutlineCurrencyRupee.svg";
 import empprofile4 from "../images/HomeIcons/FaBusinessTime.svg";
 import empprofile5 from "../images/HomeIcons/IoCallSharp.svg";
 import empprofile6 from "../images/HomeIcons/IoIosMail.svg";
+import { BsDownload } from "react-icons/bs";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
@@ -246,7 +247,7 @@ const EmployeeProfile = () => {
                       <div className="colTwo-details">
                         {/* <FaBusinessTime size={25} /> */}
                         <img src={empprofile4} />
-                        <p>{noticePeriodLabel(formData.notice) }</p>
+                        <p>{noticePeriodLabel(formData.notice)}</p>
                       </div>
                       <div className="colTwo-details">
                         {/* <IoCallSharp size={25} /> */}
@@ -263,6 +264,15 @@ const EmployeeProfile = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+              <div>
+                <BsDownload
+                  style={{
+                    width: "25px",
+                    height: "25px",
+                     color:"#ffffff"
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -310,7 +320,7 @@ const EmployeeProfile = () => {
 
               <div className="right-aside">
                 <div className="content-boxes" id="about">
-                  <div className="content-boxes-head">
+                  <div className="content-boxes-head underline" >
                     <h2>About Me</h2>
                   </div>
 
@@ -325,7 +335,7 @@ const EmployeeProfile = () => {
 
                 {/* Resume section */}
                 <div className="content-boxes" id="resume">
-                  <div className="content-boxes-head">
+                  <div className="content-boxes-head underline ">
                     <h2>Upload Resume</h2>
                   </div>
 
@@ -382,7 +392,7 @@ const EmployeeProfile = () => {
 
                 {/* Skill Section */}
                 <div className="content-boxes" id="skills">
-                  <div className="content-boxes-head">
+                  <div className="content-boxes-head underline">
                     <h2>Key Skills</h2>
                   </div>
 
@@ -410,10 +420,10 @@ const EmployeeProfile = () => {
 
                 {/* Employement Scetion */}
                 <div className="content-boxes" id="employment">
-                  <div className="content-boxes-head">
+                  <div className="content-boxes-head underline">
                     <h2>Employment</h2>
                   </div>
-                  <div className="exp-card-box-details">
+                  <div className="education-cards">
                     <div className="employment-list">
                       {employmentList.map((job, index) => {
                         const duration = formatDateRange(
@@ -423,15 +433,23 @@ const EmployeeProfile = () => {
                         return (
                           <div className="employment-card" key={index}>
                             <div className="employment-logo">
-                              <img src={job.companyLogo || companyLogo}
-                              alt="Logo"
-                            className="college-logo" />
+                              <img
+                                src={job.companyLogo || companyLogo}
+                                alt="Logo"
+                                className="college-logo"
+                              />
                             </div>
                             <div className="employment-content">
                               <div className="employment-header">
-                                <h3>{job.title}</h3>
-                                <div className="employment-timeline">
-                                  <span>{duration}</span>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    flex: " 1 1",
+                                  }}
+                                >
+                                  <h3>{job.title}</h3>
+                                  <div className="duration">{duration}</div>
                                 </div>
                               </div>
                               <p className="company-name">
@@ -451,7 +469,7 @@ const EmployeeProfile = () => {
 
                 {/* Education Section */}
                 <div className="content-boxes" id="education">
-                  <div className="content-boxes-head">
+                  <div className="content-boxes-head underline">
                     <h2>Education</h2>
                   </div>
 
@@ -488,7 +506,7 @@ const EmployeeProfile = () => {
 
                 {/* Project Section */}
                 <div className="content-boxes" id="projects">
-                  <div className="content-boxes-head">
+                  <div className="content-boxes-head underline">
                     <h2>Projects</h2>
                   </div>
                   <div className="education-cards">
@@ -506,8 +524,15 @@ const EmployeeProfile = () => {
                             className="project-logo"
                           />
                           <div className="project-info">
-                            <h3>{proj.title}</h3>
-                            <p className="project-date">{duration}</p>
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                              }}
+                            >
+                              <h3>{proj.title}</h3>
+                              <p className="duration">{duration}</p>
+                            </div>
                             <p className="project-associated">
                               {proj.associated}
                             </p>
@@ -523,7 +548,7 @@ const EmployeeProfile = () => {
 
                 {/* Licence & Certificate */}
                 <div className="content-boxes" id="certifications">
-                  <div className="content-boxes-head">
+                  <div className="content-boxes-head underline">
                     <h2>Licenses & Certifications</h2>
                   </div>
                   <div className="education-cards">

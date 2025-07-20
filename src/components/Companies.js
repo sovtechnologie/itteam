@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../stylesheets/Companies.css";
-import {
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-  FaBuilding,
-} from "react-icons/fa";
+import { FaMapMarkerAlt, FaPhoneAlt, FaBuilding } from "react-icons/fa";
 
 import { IoIosMail } from "react-icons/io";
 
@@ -16,7 +12,7 @@ import empprofile1 from "../images/HomeIcons/FaLocationDot.svg";
 import empprofile7 from "../images/HomeIcons/empprofile7.svg";
 import empprofile5 from "../images/HomeIcons/IoCallSharp.svg";
 import empprofile6 from "../images/HomeIcons/IoIosMail.svg";
-
+import { BsDownload } from "react-icons/bs";
 
 const BASE_URL = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
@@ -65,7 +61,6 @@ export default function Companies() {
   const [companyData, setCompanyData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
 
   useEffect(() => {
     const fetchEmployerData = async () => {
@@ -142,30 +137,39 @@ export default function Companies() {
                     <div className="Profile-personal-info-One">
                       <div className="Column-One-Details">
                         {/* <FaMapMarkerAlt size={25} /> */}
-                         <img src={empprofile1} />
+                        <img src={empprofile1} />
                         <p>{formData?.location}</p>
                       </div>
                       <div className="Column-One-Details">
                         {/* <FaPhoneAlt size={25} />  */}
-                         <img src={empprofile5} />
+                        <img src={empprofile5} />
                         <p>{formData?.phone}</p>
                       </div>
                     </div>
                     <div className="Profile-personal-info-Two">
                       <div className="Column-Two-Details">
                         {/* <FaBuilding size={25} /> */}
-                         <img src={empprofile7} />
+                        <img src={empprofile7} />
                         <p> Company Size : {formData?.companySize} </p>
                       </div>
                       <div className="Column-Two-Details">
                         {/* <IoIosMail size={30} /> */}
-                         <img src={empprofile6} />
+                        <img src={empprofile6} />
                         <p>{formData?.email}</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
+            <div>
+              <BsDownload
+                style={{
+                  width: "25px",
+                  height: "25px",
+                  color:"#1782D0"
+                }}
+              />
             </div>
           </div>
 
@@ -266,8 +270,6 @@ export default function Companies() {
           </div> */}
         </div>
       </div>
-
-      
     </>
   );
 }

@@ -361,11 +361,24 @@
 
 .start-date {
   width: 48%;
-  
 }
 
 .end-date {
   width: 48%;
+}
 
+.underline {
+  position: relative;
+  padding-bottom: 20px; /* space for the line */
+  margin-bottom: 20px; /* space below the line */
+}
 
+.underline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -18px;
+  width: 104%;
+  height: 1px;
+  background-color: #dddddd;
 }

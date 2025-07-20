@@ -1066,7 +1066,17 @@
   align-items: center;
   gap: 1rem;
   /* spacing between image and name */
+  /* justify-content: space-between; */
 }
+
+.candidate-details-exact {
+  flex-grow: 1; /* makes the middle content take available space */
+}
+
+.candidate-header-exact > div:last-child {
+  margin-left: auto; /* ensures the download icon goes to the far right */
+}
+
 
 .candidate-header-exact img {
   width: 60px;
@@ -1584,7 +1594,7 @@
   background-color: #1783d0;
   border-radius: 30px;
   cursor: pointer;
-  font-size: 20px;
+  /* font-size: 20px; */
 }
 
 .btn-filled {
@@ -1749,6 +1759,10 @@
   margin-bottom: 30px;
   width: 435px;
 }
+.popular-grid img{
+  height: 32px;
+  width: 32px;
+}
 
 .popular-item {
   display: flex;
@@ -1757,7 +1771,8 @@
   background-color: #fff;
   padding: 7px 15px;
   border: 1px solid #eee;
-  border-radius: 20px 8px 8px 8px;
+  /* border-radius: 20px 8px 8px 8px; */
+  border-radius: 10px;
   font-size: 12px;
   max-width: 171px;
 

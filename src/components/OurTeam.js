@@ -50,15 +50,15 @@ const OurTeam = () => {
             strategic alignment, and continuous improvement—values that form the
             backbone of our company’s approach today.
           </p>
-          <div className="header-buttons">
+          <div className="popular-buttons">
             <button
+              className="btn-outline"
               onClick={() => (window.location.href = "/signin?role=candidate")}
-              className="sign-btn"
             >
               Join as Jobseeker
             </button>
             <button
-               className="signup-btn"
+              className="btn-primary"
               onClick={() => (window.location.href = "/signin?role=company")}
             >
               Join as Company
