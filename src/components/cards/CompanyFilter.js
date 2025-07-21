@@ -157,10 +157,20 @@ const CompanyFilter = () => {
     if (currentPage > totalPages) setCurrentPage(1);
   }, [totalPages, currentPage]);
 
+  const handleResetFilters = () => {
+    setFilters({
+      state: "",
+      location: "",
+      currentPosition: "",
+      expertTecStack: "",
+      skillName: [],
+    });
+  };
+
   return (
     <>
-      <div className="job-search-bar">
-        <div className="search-fields">
+      {/* <div className="job-search-bar">
+        <div className="search-fields"> */}
           {" "}
           {/* 🆕 Wrap fields separately */}
           {/* <input
@@ -172,7 +182,7 @@ const CompanyFilter = () => {
                     />
 
                     <div className="divider" /> */}
-          <div className="select-wrapper">
+          {/* <div className="select-wrapper">
             <select
               className="search-select"
               value={filters.location || ""}
@@ -192,15 +202,15 @@ const CompanyFilter = () => {
               )}
             </select>
             <span className="dropdown-icon">▼</span>
-          </div>
-        </div>
+          </div> */}
+        {/* </div>
 
         <button className="search-button">Search</button>
-      </div>
+      </div> */}
 
       <div className="job-listing-container">
-        {/* <div className="filter-section">
-         
+        <div className="filter-section">
+
           <div className="filter-header">
             <h3>Filter</h3>
             <button className="reset-btn" onClick={handleResetFilters}>
@@ -209,6 +219,33 @@ const CompanyFilter = () => {
           </div>
 
           <div className="filter-group">
+            <h3 style={{ marginBottom: "10px" }}>Select City</h3>
+
+            <div className= "select-wrapper select-city">
+              <select
+                className="search-select"
+                value={filters.location || ""}
+                onChange={(e) =>
+                  setFilters((f) => ({ ...f, location: e.target.value }))
+                }
+              >
+                <option value="">Select City</option>
+                {loadingCities ? (
+                  <option disabled>Loading...</option>
+                ) : (
+                  cities.map((city, index) => (
+                    <option key={city.location} value={city.location}>
+                      {city.location}
+                    </option>
+                  ))
+                )}
+              </select>
+            </div>
+          </div>
+
+
+
+          {/* <div className="filter-group">
             <h3 style={{ marginBottom: "10px" }}>Salary Range</h3>
             <SalaryFilterCard
               salaryRange={filters.salary}
@@ -282,8 +319,8 @@ const CompanyFilter = () => {
                 {joiner.label}
               </label>
             ))}
-          </div>
-        </div> */}
+          </div> */}
+        </div>
 
         <div className="job-cards-section">
           {/* Show message if no profiles found */}

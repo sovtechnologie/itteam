@@ -4,12 +4,6 @@ import "../../stylesheets/EmpFilter.css";
 import SalaryFilterCard from "./SalaryFilterCard";
 import Cookies from "js-cookie";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import {
-  MdOutlineEmail,
-  MdOutlineLocationOn,
-  MdOutlinePhone,
-} from "react-icons/md";
-import { IoMdTime } from "react-icons/io";
 import homeemail from "../../images/HomeIcons/home-email.svg";
 import homecaller from "../../images/HomeIcons/homecaller.svg";
 import homelocation from "../../images/HomeIcons/homelocation.svg";
@@ -308,10 +302,10 @@ const EmpFilter = () => {
 
   return (
     <>
-      <div className="job-search-bar">
+      {/* <div className="job-search-bar">
         <div className="search-fields">
           {" "}
-          {/* 🆕 Wrap fields separately */}
+         
           <input
             type="text"
             className="search-input"
@@ -319,11 +313,12 @@ const EmpFilter = () => {
             value={filters.expertTecStack}
             onChange={handleStackChange}
           />
-          {/* <div className="divider" /> */}
+          
         </div>
 
         <button className="search-button">Search</button>
-      </div>
+      </div> */}
+      <div className="candidate-filter-container">
 
       <div className="job-listing-container">
         <div className="filter-section">
@@ -333,6 +328,19 @@ const EmpFilter = () => {
             <button className="reset-btn" onClick={handleResetFilters}>
               Reset
             </button>
+          </div>
+
+          <div className="filter-group">
+            <h3 style={{ marginBottom: "10px" }}>Search</h3>
+            <div className="select-wrapper select-city">
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Search"
+                value={filters.expertTecStack}
+                onChange={handleStackChange}
+              />
+            </div>
           </div>
 
           <div className="filter-group">
@@ -470,7 +478,7 @@ const EmpFilter = () => {
                       width: "25px",
                       height: "25px",
                       marginTop: "-25px",
-                       color:"#1782D0"
+                      color: "#1782D0"
                     }}
                   />
                 </div>
@@ -565,6 +573,8 @@ const EmpFilter = () => {
         >
           Next &#8250;
         </button>
+      </div>
+
       </div>
     </>
   );

@@ -3,7 +3,7 @@ import "../stylesheets/Home.css";
 import linkedin from "../images/linkedin.png";
 import mostpopular from "../images/mostpopular.png";
 import trustpopular from "../images/trustpopular.png";
-import { IoIosSearch, IoMdTime } from "react-icons/io";
+import { IoIosSearch } from "react-icons/io";
 
 import api from "../services/api";
 import Cookies from "js-cookie";
@@ -32,11 +32,7 @@ import homenotice from "../images/HomeIcons/homenotice.svg";
 import { fetchtopskillandlocation } from "../services/apiService";
 import { BsDownload } from "react-icons/bs";
 
-import {
-  MdOutlineLocationOn,
-  MdOutlineEmail,
-  MdPhoneEnabled,
-} from "react-icons/md";
+
 
 const Home = () => {
   const isLoggedIn = !!Cookies.get("authToken");
@@ -52,8 +48,6 @@ const Home = () => {
   const [activeJoiners, setActiveJoiners] = useState([]);
   const [loading, setLoading] = useState(true);
   const [techStacks, setTechStacks] = useState([]);
-  const [statesList, setStatesList] = useState([]);
-  const [loadingStates, setLoadingStates] = useState(true);
   const [topSkills, setTopSkills] = useState([]);
   const [topLocation, setTopLocation] = useState([]);
 
