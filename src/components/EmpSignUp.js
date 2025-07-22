@@ -659,7 +659,10 @@ const getError = (field) => errors.find((e) => e.field === field)?.message;
             id="terms"
             checked={formData.termsAccepted}
             onChange={(e) =>
+            {
               setFormData({ ...formData, termsAccepted: e.target.checked })
+              setErrors((prev) => prev.filter((err) => err.field !== "termsAccepted"));
+            }
             }
             // onChange={handleChange}
           />

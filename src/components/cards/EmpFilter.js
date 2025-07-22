@@ -484,27 +484,23 @@ const EmpFilter = () => {
                       </p>
                     </div>
                     <div>
-                      <BsDownload
+                      {isLoggedIn ? <BsDownload
                         style={{
                           width: "25px",
                           height: "25px",
                           marginTop: "-25px",
                           color: "#1782D0"
                         }}
-                      />
+                      /> : ''}
+
                     </div>
                   </div>
 
                   <p className="job-desc">
-                    {/* {(() => {
-                  const words = profile.about ? profile.about.split(" ") : [];
-                  if (words.length <= 9) return profile.about;
-                  return words.slice(0, 9).join(" ") + " ...";
-                })()} */}
                     <span className="job">
                       {" "}
                       <img src={homeemail} />
-                      {/* <MdOutlineEmail color="#3399ff" size={25} /> */}{" "}
+                      {" "}
                       {isLoggedIn ? profile.email : "********@***.com"}
                     </span>
                   </p>
@@ -512,7 +508,7 @@ const EmpFilter = () => {
                     <span className="job">
                       {" "}
                       <img src={homecaller} />
-                      {/* <MdOutlinePhone color="#3399ff" size={25} /> */}{" "}
+                      {" "}
                       {isLoggedIn ? profile.mobileNumber : "+91 *********"}
                     </span>
                   </p>

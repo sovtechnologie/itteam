@@ -121,7 +121,7 @@ const EmpProfPage = () => {
   const [modalErrors, setModalErrors] = useState([]);
   const [success, setSuccess] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [resumeFile, setResumeFile] = useState(null); // holds File object or file name
+  const [resumeFile, setResumeFile] = useState(null); 
   const [resumeURL, setResumeURL] = useState(""); // for full backend resume URL
   const [newResume, setNewResume] = useState(null); // File for new upload
 

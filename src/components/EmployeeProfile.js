@@ -5,7 +5,6 @@ import Cookies from "js-cookie";
 import "../stylesheets/CandiProfile.css";
 import "../stylesheets/EmpProfile.css";
 
-import Profile from "../images/UserProfile.png";
 import resumelogo from "../images/resumelogo.png";
 import companyLogo from "../images/company profile.png";
 import School from "../images/Education.png";
@@ -18,6 +17,8 @@ import empprofile4 from "../images/HomeIcons/FaBusinessTime.svg";
 import empprofile5 from "../images/HomeIcons/IoCallSharp.svg";
 import empprofile6 from "../images/HomeIcons/IoIosMail.svg";
 import { BsDownload } from "react-icons/bs";
+import femaleAvator from "../images/female.png";
+import MaleAvator from "../images/male.png";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
@@ -187,6 +188,17 @@ const EmployeeProfile = () => {
     ? `${formData.name[0]}${"*".repeat(formData.name.length - 1)}`
     : "";
 
+  const getProfileSrc = () => {
+    if (formData.profileImg) return formData.profileImg;
+
+    switch ((userData.gender || "").toLowerCase()) {
+      case "female":
+        return femaleAvator;
+      case "male":
+        return MaleAvator;
+    }
+  };
+
   if (loading) {
     return <h2>Loading...</h2>;
   }
@@ -202,7 +214,7 @@ const EmployeeProfile = () => {
           {/* main Profile section */}
           <div className="profile-secOne">
             <div className="profileCardHead">
-              <img src={formData.profileImg || Profile} alt="Profile" />
+              <img src={getProfileSrc()} alt="Profile" />
 
               <div className="cadidate-basicInfo">
                 <div className="profile-header-top">
@@ -231,7 +243,7 @@ const EmployeeProfile = () => {
                       <div className="colOne-details">
                         {/* <MdOutlineCurrencyRupee size={25} /> */}
                         <img src={empprofile3} />
-                        <p>{isLoggedIn ? formData.salary : "Hidden"}</p>
+                        <p>{isLoggedIn ? formData.salary : "*******"}</p>
                       </div>
                     </div>
                     <div className="personalInfo-colTwo">
@@ -257,13 +269,14 @@ const EmployeeProfile = () => {
                 </div>
               </div>
               <div>
-                <BsDownload
+                {isLoggedIn ? <BsDownload
                   style={{
                     width: "25px",
                     height: "25px",
-                     color:"#ffffff"
+                    color: "#ffffff"
                   }}
-                />
+                /> : ''}
+
               </div>
             </div>
           </div>
