@@ -125,11 +125,22 @@ const handleChange = (e) => {
 
       if (response.data.status === 200) {
         setIsOtpReceive(true);
+        setIsOtpSent(false);
         setFormData((prev) => ({ ...prev, otpVerified: true }));
         setMessages([{ field: 'otp', message: 'OTP verified!' }])
       }
+      else{
+        setErrors([{ field:"otp",message:response.data.message}])
+      }
     } catch (error) {
-      console.error("OTP verification failed:", error);
+      if(error.status === 400){
+        setErrors([{ field:"otp",message:"Otp Not Matched"}])
+        setIsOtpSent(false);
+      }
+      else{
+        setErrors([{ field:"otp",message:error.message}])
+      }
+      
     }
     setLoading(false);
   };
@@ -352,7 +363,7 @@ const getError = (field) => errors.find((e) => e.field === field)?.message;
                     disabled={isOtpSent}
                   />
                   
-                  <button onClick={sendOtp}>Send OTP</button>
+                  <button onClick={sendOtp} disabled={isOtpSent}>Send OTP</button>
                 </div>
                 {getError("mobileNumber") && <p className="error-text">{getError("mobileNumber")}</p>}
                  {!getError('mobileNumber') && getSuccess('mobileNumber') && (
@@ -493,10 +504,12 @@ const getError = (field) => errors.find((e) => e.field === field)?.message;
                 <label htmlFor="verify-otp">OTP</label>
                 <div className="send-otp">
                   <input
+                  type="password"
                     name="otp"
                     placeholder="Enter OTP"
                     onChange={handleChange}
                     disabled={isOtpReceive}
+                    maxLength={6}
                   />
                    
                   <button onClick={verifyOtp}>Verify OTP</button>

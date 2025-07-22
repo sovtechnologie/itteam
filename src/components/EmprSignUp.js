@@ -23,6 +23,7 @@ const EmprSignUp = () => {
 
   const [verificationId, setVerificationId] = useState(null);
   const [isOtpSent, setIsOtpSent] = useState(false);
+   const [isOtpReceive, setIsOtpReceive] = useState(false);
   const [loadingSendOtp, setLoadingSendOtp] = useState(false);
   const [loadingVerify, setLoadingVerify] = useState(false);
   const [loadingRegister, setLoadingRegister] = useState(false);
@@ -120,8 +121,11 @@ const EmprSignUp = () => {
       if (response.data.status === 200) {
         setFormData((prev) => ({ ...prev, otpVerified: true }));
          setMessages([{ field: 'otp', message: 'OTP verified!' }])
+         setIsOtpReceive(true);
+        setIsOtpSent(false);
       } else {
         setErrors([{field:'otp', message:response.data.message}]);
+        setIsOtpSent(false);
       }
     } catch (error) {
       setErrors([{
@@ -129,6 +133,7 @@ const EmprSignUp = () => {
         message : error.response.data.message || "Something went wrong",
       }]
       );
+      setIsOtpSent(false);
     } finally {
       setLoadingVerify(false);
     }
@@ -318,7 +323,7 @@ const EmprSignUp = () => {
                     inputMode="numeric"
                   />
 
-                  <button type="button" onClick={sendOtp} disabled={loadingSendOtp}>
+                  <button type="button" onClick={sendOtp} disabled={isOtpSent}>
                     {loadingSendOtp ? "Sending OTP..." : "Send OTP"}
                   </button>
                 </div>
@@ -397,6 +402,7 @@ const EmprSignUp = () => {
                     placeholder="Enter OTP"
                     value={formData.otp}
                     onChange={handleChange}
+                    maxLength={6}
                   />
                   <button type="button" onClick={verifyOtp} disabled={loadingVerify}>
                     {loadingVerify ? "Verifying OTP..." : "Verify OTP"}
