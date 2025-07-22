@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -13,22 +13,36 @@ const EmprSignIn = () => {
   });
 
   const [verificationId, setVerificationId] = useState(null);
-  const [error, setError] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [loadingSendOtp, setLoadingSendOtp] = useState(false);
+  const [loadingVerify, setLoadingVerify] = useState(false);
   const { login } = useAuth(); // Get login function from AuthContext
   const navigate = useNavigate();
 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
+    setErrors((prev) => prev.filter((err) => err.field !== name));
   };
 
   const sendOtp = async () => {
-    setLoading(true);
-    setError(null);
+    const newErrors = [];
+    if (!/^\d{10}$/.test(formData.mobileNumber)) {
+      newErrors.push({ field: 'mobileNumber', message: 'Enter a valid 10-digit mobile number' });
+    }
+    if (newErrors.length) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors([]);
+
+    setLoadingSendOtp(true);
+    setMessages([]);
     try {
       const response = await axios.post(
         `${baseUrl}/employer/mobileNumberVerificationSendOtp`,
@@ -40,22 +54,54 @@ const EmprSignIn = () => {
 
       if (response.data.status === 200) {
         setVerificationId(response.data.result);
-        // alert("OTP sent successfully!",response.data.result.OTP);
+        setIsOtpSent(true);
+        setMessages([{ field: 'mobileNumber', message: 'OTP sent successfully to your registered mobile.' }]);
       } else {
-        setError(response.data.message);
+        setErrors([
+          {
+            field: "mobileNumber",
+            message: response.data.message || "Failed to send OTP",
+          },
+        ]);
       }
     } catch (error) {
-      setError(
-        error.response ? error.response.data.message : "Something went wrong"
-      );
+      if (error.status === 404) {
+        setErrors([
+          {
+            field: "mobileNumber",
+            message: "Mobile Number not found",
+          },
+        ]);
+      }
+      else {
+        setErrors([
+          {
+            field: "mobileNumber",
+            message: error.message || "Something went wrong.",
+          },
+        ]);
+      }
+
     } finally {
-      setLoading(false);
+      setLoadingSendOtp(false);
     }
   };
 
   const verifyOtp = async () => {
-    setLoading(true);
-    setError(null);
+    const newErrors = [];
+    if (!verificationId) {
+      newErrors.push({ field: 'mobileNumber', message: 'Please request OTP first' });
+    }
+    if (!formData.otp) {
+      newErrors.push({ field: 'otp', message: 'Enter the OTP received' });
+    }
+    if (newErrors.length) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors([]);
+    setLoadingVerify(true);
+    setMessages([]);
 
     try {
       const response = await axios.post(
@@ -65,13 +111,18 @@ const EmprSignIn = () => {
           otp: formData.otp,
         }
       );
+      const data = await response.json();
+      console.log("mu data",data)
 
-      if (response?.data?.status === 200) {
-        const employer = response.data.result;
+      if (data?.status === 200) {
+        const employer = data.result;
 
         Cookies.set("authToken", response.data.token, { expires: 1 });
         Cookies.set("userId", employer._id);
         Cookies.set("role", "company");
+        setMessages([{ field: 'otp', message: 'OTP verified!' }])
+        setOtpVerified(true);
+        setIsOtpSent(false);
 
         const userData = {
           name: employer.name,
@@ -82,17 +133,48 @@ const EmprSignIn = () => {
 
         navigate("/employer");
       } else {
-        setError(response.data.message);
+        setErrors([
+          {
+            field: "otp",
+            message: data.message || "OTP verification failed",
+          },
+        ]);
       }
     } catch (error) {
-      setError(
-        error.response ? error.response.data.message : "Something went wrong"
-      );
+      if(error.status === 400){
+      setErrors([
+        {
+          field: "otp",
+          message: "Otp Not Matched",
+        },
+      ]);
+      }else{
+          setErrors([
+        {
+          field: "otp",
+          message: error.message || "Something went wrong.",
+        },
+      ]);
+      }
+     
     } finally {
-      setLoading(false);
+      setLoadingVerify(false);
     }
   };
+  const getError = (field) => {
+    const err = errors.find((e) => e.field === field);
+    return err ? err.message : "";
+  };
+  const getSuccess = (field) =>
+    messages.find((s) => s.field === field)?.message || '';
 
+
+  useEffect(() => {
+    if (messages) {
+      const timer = setTimeout(() => setMessages([]), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [messages]);
   return (
     <>
       <div className="form">
@@ -112,44 +194,43 @@ const EmprSignIn = () => {
               type="button"
               className="mainfont"
               onClick={sendOtp}
-              disabled={loading}
+              disabled={isOtpSent}
             >
-              <strong>Send OTP</strong>
+              <strong>{loadingSendOtp ? "Sending..." : "Send OTP"}</strong>
             </button>
           </div>
+          {getError("mobileNumber") && (
+            <p className="error-text" style={{ color: "red" }}>{getError("mobileNumber")}</p>
+          )}
+          {!getError('mobileNumber') && getSuccess('mobileNumber') && (
+            <p className="success-text">{getSuccess('mobileNumber')}</p>
+          )}
         </div>
 
         <div className="form-group">
           <label htmlFor="otp">OTP</label>
           <input
-            type="text"
+            type="password"
             placeholder="Enter OTP"
             maxLength={8}
             value={formData.otp}
             onChange={handleChange}
             name="otp"
           />
+          {getError("otp") && (
+            <p className="error-text" style={{ color: "red" }}>{getError("otp")}</p>
+          )}
+          {!getError('otp') && getSuccess('otp') && (
+            <p className="success-text">{getSuccess('otp')}</p>
+          )}
         </div>
 
         <div className="login-btn">
-          <button onClick={verifyOtp}>Login</button>
+          <button onClick={verifyOtp} disabled={loadingVerify}>Login</button>
           <p>
             Don't have an account? <Link to="/signup">Register Now</Link>
           </p>
         </div>
-
-        {error && (
-          <p
-            style={{
-              color: "red",
-              display: "flex",
-              justifycontent: "center",
-              width: "528px",
-            }}
-          >
-            {error}
-          </p>
-        )}
       </div>
     </>
   );

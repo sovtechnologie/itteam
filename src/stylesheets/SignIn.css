@@ -338,3 +338,16 @@
   width: 528px;
   gap: 5px;
 }
+
+
+
+.error-text {
+  color: red;
+  font-size: 0.85em;
+  margin-top: 4px;
+}
+.success-text {
+  color: green;
+  font-size: 0.85em;
+  margin-top: 4px;
+}

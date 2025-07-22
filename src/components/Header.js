@@ -5,6 +5,8 @@ import "../stylesheets/Header.css";
 import HeaderLogo from "../images/HeaderLogo copy.svg";
 import defaultLogo from "../images/defaultImg.png";
 import { useLocation } from "react-router-dom";
+import femaleAvator from "../images/female.png";
+import MaleAvator from "../images/male.png";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
@@ -23,6 +25,8 @@ const Header = ({ isHomePage }) => {
   const [userName, setUserName] = useState("User");
   const [userImage, setUserImage] = useState(null);
   const navigate = useNavigate();
+  const [userGender, setUserGender] = useState(null);
+ 
 
   const authToken = Cookies.get("authToken");
   const userId = Cookies.get("userId");
@@ -95,6 +99,9 @@ const Header = ({ isHomePage }) => {
 
           setUserName(userData?.name || "User");
           setUserImage(image || null);
+          setUserGender(userData.gender || null);
+          Cookies.set("gender", userData.gender || "");
+
         }
       } catch (error) {
         console.error("Failed to fetch user data:", error);
@@ -115,8 +122,26 @@ const Header = ({ isHomePage }) => {
   const searchParams = new URLSearchParams(location.search);
   const roleParam = searchParams.get("role");
 
+
+  const getAvatarSrc = () => {
+  if (userImage) return userImage;
+
+  const gender = userGender || Cookies.get("gender") || "neutral";
+  switch (gender.toLowerCase()) {
+    case "female": return femaleAvator;
+    case "male": return MaleAvator;
+    default: return defaultLogo;
+  }
+};
+  const [avatarSrc, setAvatarSrc] = useState(getAvatarSrc());
+
+useEffect(() => {
+  setAvatarSrc(getAvatarSrc());
+}, [userImage, userGender]);
+
+// {`header main-header ${isHomePage ? "home-header" : ""}`}
   return (
-    <header className={`header main-header ${isHomePage ? "home-header" : ""}`}>
+    <header className="header main-header home-header ">
       <div id="left">
         <Link to="/" className="header-logo">
           <img style={{ width: "80px" }} src={HeaderLogo} alt="Logo" />
@@ -167,7 +192,7 @@ const Header = ({ isHomePage }) => {
                 onMouseLeave={handleMouseLeave}
               >
                 <img
-                  src={userImage || defaultLogo}
+                  src={avatarSrc|| defaultLogo}
                   alt="profile"
                   height={50}
                   width={50}

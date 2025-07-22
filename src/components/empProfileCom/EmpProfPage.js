@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "../../stylesheets/CandiProfile.css";
-import "../../stylesheets/EmpProfile.css";
+// import "../../stylesheets/EmpProfile.css";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaLaptopCode } from "react-icons/fa";
 import { MdOutlineCurrencyRupee } from "react-icons/md";
@@ -12,13 +12,13 @@ import { FaBusinessTime } from "react-icons/fa6";
 import { IoCallSharp } from "react-icons/io5";
 import { IoIosMail } from "react-icons/io";
 import { MdOutlineEdit } from "react-icons/md";
-import { FiShare2 } from "react-icons/fi";
-import Profile from "../../images/UserProfile.png";
 import Company from "../../images/Profile/Campanyname.png";
 import School from "../../images/Profile/Schoolname.png";
 import Course from "../../images/Profile/Course.png";
 import resumelogo from "../../images/resumelogo.png";
-import { fetchProjects } from "../../services/apiService";
+import { fetchEmployment, fetchProjects } from "../../services/apiService";
+import femaleAvator from "../../images/female.png";
+import MaleAvator from "../../images/male.png";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
@@ -51,7 +51,7 @@ const EmpProfPage = () => {
     notice: "",
     phone: "",
     email: "",
-    profileImg: Profile,
+    profileImg: "",
   });
 
   const handleEditToggle = () => setIsEditOpen(true);
@@ -118,6 +118,7 @@ const EmpProfPage = () => {
   const [aboutInput, setAboutInput] = useState(aboutText);
   const [minWordsReached, setMinWordsReached] = useState(false);
   const [error, setError] = useState("");
+  const [modalErrors, setModalErrors] = useState([]);
   const [success, setSuccess] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [resumeFile, setResumeFile] = useState(null); // holds File object or file name
@@ -255,7 +256,7 @@ const EmpProfPage = () => {
     } catch (error) {
       setError(
         error.response?.data?.message ||
-          "Something went wrong while adding skill."
+        "Something went wrong while adding skill."
       );
     }
   };
@@ -296,7 +297,7 @@ const EmpProfPage = () => {
     } catch (error) {
       setError(
         error.response?.data?.message ||
-          "Something went wrong while removing the skill."
+        "Something went wrong while removing the skill."
       );
     }
   };
@@ -345,9 +346,9 @@ const EmpProfPage = () => {
           userId,
           ...(isEdit
             ? {
-                _id: jobData._id,
-                ...jobData,
-              }
+              _id: jobData._id,
+              ...jobData,
+            }
             : { ...jobData }),
         },
         {
@@ -363,53 +364,124 @@ const EmpProfPage = () => {
       alert("Network error: " + error.message);
       return null;
     }
+    
   };
+  
 
-  const handleSave = async () => {
-    const { company_Name, title, startDate, endDate, location, description } =
-      newJob;
+  // const handleSave = async () => {
+  //   const { company_Name, title, JoiningDate, endDate, location, description } = newJob;
 
-    // if (
-    //   !company_Name?.trim() ||
-    //   !title?.trim() ||
-    //   !startDate?.trim() ||
-    //   !endDate?.trim() ||
-    //   !location?.trim() ||
-    //   !description?.trim()
-    // ) {
-    //   alert("Please fill in all required fields.");
-    //   return;
-    // }
+  //   setModalErrors([]);
+  //   // Validate inputs
+  //   const errs = [];
+  //   if (!company_Name?.trim()) errs.push({ field: "company_Name", message: "Company Name is required." });
+  //   if (!title?.trim()) errs.push({ field: "title", message: "Position is required." });
+  //   if (!JoiningDate) errs.push({ field: "JoiningDate", message: "Start Date is required." });
+  //   if (!endDate) errs.push({ field: "endDate", message: "End Date is required." });
+  //   if (new Date(endDate) < new Date(JoiningDate))
+  //     errs.push({ field: "endDate", message: "End date cannot be earlier than start date." });
+  //   if (!location?.trim()) errs.push({ field: "location", message: "Location is required." });
+  //   if (!description?.trim()) errs.push({ field: "description", message: "Description is required." });
 
-    const updatedList = [...employmentList];
+  //   if (errs.length) {
+  //     setModalErrors(errs);
+  //     return;
+  //   }
 
-    if (editingIndex !== null) {
-      updatedList[editingIndex] = newJob;
+  //   const updatedList = [...employmentList];
+
+  //   if (editingIndex !== null) {
+  //     updatedList[editingIndex] = newJob;
+  //   } else {
+  //     updatedList.push(newJob);
+  //   }
+
+  //   // Optimistically update local state first
+  //   const response = await saveEmployment(
+  //     userId,
+  //     newJob,
+  //     editingIndex !== null
+  //   );
+
+  //   if (response && response.data && response.data.status === 200) {
+  //     const savedExperience = response.data.result;
+  //     let updatedList;
+  //     if (editingIndex !== null) {
+  //       updatedList = [...employmentList];
+  //       updatedList[editingIndex] = savedExperience;
+  //     } else {
+  //       updatedList = [...employmentList, savedExperience];
+  //     }
+  //     setEmploymentList(updatedList);
+  //   }
+  //   setModalErrors([{ field: "general", message: "Failed to save experience." }]);
+  //   setIsExperienceModalOpen(false);
+  //   setEditingIndex(null);
+  // };
+
+const handleSave = async () => {
+  const {
+    company_Name,
+    title,
+    JoiningDate,
+    endDate,
+    location,
+    description
+  } = newJob;
+
+  // reset errors
+  setModalErrors([]);
+
+  // Validate inputs
+  const errs = [];
+  if (!company_Name?.trim())
+    errs.push({ field: "company_Name", message: "Company Name is required." });
+  if (!title?.trim())
+    errs.push({ field: "title", message: "Position is required." });
+  if (!JoiningDate)
+    errs.push({ field: "JoiningDate", message: "Start Date is required." });
+  if (!endDate)
+    errs.push({ field: "endDate", message: "End Date is required." });
+  if (JoiningDate && endDate && new Date(endDate) < new Date(JoiningDate))
+    errs.push({ field: "endDate", message: "End date cannot be earlier than start date." });
+  if (!location?.trim())
+    errs.push({ field: "location", message: "Location is required." });
+  if (!description?.trim())
+    errs.push({ field: "description", message: "Description is required." });
+
+  if (errs.length) {
+    setModalErrors(errs);
+    return; // early return to prevent API call
+  }
+
+  try {
+    // Submit to backend
+    const response = await saveEmployment(userId, newJob, editingIndex !== null);
+
+    if (response?.data?.status === 200) {
+      const saved = response.data.result;
+
+      setEmploymentList(prev => {
+        if (editingIndex !== null) {
+          return prev.map((item, idx) =>
+            idx === editingIndex ? saved : item
+          );
+        }
+        return [...prev, saved];
+      });
+
+      // Clear modal errors, close modal, reset edit index
+      setModalErrors([]);
+      setIsExperienceModalOpen(false);
+      setEditingIndex(null);
     } else {
-      updatedList.push(newJob);
+      setModalErrors([{ field: "general", message: response.data.message || "Failed to save experience." }]);
     }
+  } catch (e) {
+    setModalErrors([{ field: "general", message: e.message || "Failed to save experience." }]);
+  }
+};
 
-    // Optimistically update local state first
-    const response = await saveEmployment(
-      userId,
-      newJob,
-      editingIndex !== null
-    );
-
-    if (response && response.data && response.data.status === 200) {
-      const savedExperience = response.data.result;
-      let updatedList;
-      if (editingIndex !== null) {
-        updatedList = [...employmentList];
-        updatedList[editingIndex] = savedExperience;
-      } else {
-        updatedList = [...employmentList, savedExperience];
-      }
-      setEmploymentList(updatedList);
-    }
-    setIsExperienceModalOpen(false);
-    setEditingIndex(null);
-  };
 
   const handleDeleteExperience = async (job_id) => {
     try {
@@ -809,6 +881,8 @@ const EmpProfPage = () => {
     }
   };
 
+  
+
   useEffect(() => {
     if (!authToken || !userId) {
       navigate("/signin");
@@ -857,7 +931,7 @@ const EmpProfPage = () => {
     };
 
     fetchUserData();
-  }, [authToken, userId, navigate]);
+  }, [authToken, userId, navigate,employmentList]);
 
   const [selectedState, setSelectedState] = useState("");
   const [selectedStateCode, setSelectedStateCode] = useState("");
@@ -921,7 +995,7 @@ const EmpProfPage = () => {
         notice: userData.noticePeriod ? String(userData.noticePeriod) : "",
         phone: userData.mobileNumber ? `+91 ${userData.mobileNumber}` : "",
         email: userData.email,
-        profileImg: userData.image || Profile,
+        profileImg: userData.image,
       });
 
       // Optional: Set other related states
@@ -1052,6 +1126,18 @@ const EmpProfPage = () => {
     return <h2>User data not found</h2>;
   }
 
+  const getProfileSrc = () => {
+    if (formData.profileImg) return formData.profileImg;
+
+    switch ((userData.gender || "").toLowerCase()) {
+      case "female":
+        return femaleAvator;
+      case "male":
+        return MaleAvator;
+    }
+  };
+
+ 
   return (
     <>
       <div className="empprofile-card">
@@ -1059,7 +1145,7 @@ const EmpProfPage = () => {
           <div className="profile-secOne">
             {/* Profile section */}
             <div className="profileCardHead">
-              <img src={formData.profileImg || Profile} alt="Profile" />
+              <img src={getProfileSrc()} alt="Profile" />
 
               <div className="cadidate-basicInfo">
                 <div className="profile-header-top">
@@ -1194,12 +1280,6 @@ const EmpProfPage = () => {
                       value={formData.designation}
                       onChange={handleInputChange}
                     />
-                    {/* <input
-                      name="company"
-                      placeholder="Company"
-                      value={formData.company}
-                      onChange={handleInputChange}
-                    /> */}
                     <input
                       name="email"
                       placeholder="Email"
@@ -1386,8 +1466,7 @@ const EmpProfPage = () => {
                       <div>
                         <div>
                           <p>
-                            {aboutText ||
-                              "No about me information available. Click the plus icon to add."}
+                            {aboutText}
                           </p>
                         </div>
                       </div>
@@ -1442,13 +1521,6 @@ const EmpProfPage = () => {
                             {countWords(aboutInput)} / {MAX_WORDS} words (min{" "}
                             {MIN_WORDS})
                           </small>
-                          <br />
-                          {!minWordsReached && (
-                            <p style={{ color: "red" }}>
-                              Please write at least {MIN_WORDS} words. You have
-                              only {countWords(aboutInput)}.
-                            </p>
-                          )}
 
                           {error && <p style={{ color: "red" }}>{error}</p>}
                           {success && (
@@ -1720,7 +1792,7 @@ const EmpProfPage = () => {
                             <div className="employment-content">
                               <div className="employment-header">
                                 <h3>{job?.title}</h3>
-                                <div style={{display:"flex", gap: "8px"}}>
+                                <div style={{ display: "flex", gap: "8px" }}>
                                   <div className="duration">
                                     <span>{duration}</span>
                                   </div>
@@ -1745,7 +1817,7 @@ const EmpProfPage = () => {
                               {/* <p className="company-name">{job?.company_Name}</p>
                             <p className="company-add">{job?.location}</p> */}
                               <p className="company-name">
-                                {job.company_Name} | {job.location}
+                                {job?.company_Name} | {job?.location}
                               </p>
                               <p className="employment-description">
                                 {job?.description}
@@ -1807,13 +1879,19 @@ const EmpProfPage = () => {
                             type="text"
                             placeholder="Company Name"
                             value={newJob?.company_Name}
-                            onChange={(e) =>
+                            onChange={(e) =>{
                               setNewJob({
                                 ...newJob,
                                 company_Name: e.target.value,
                               })
+                             setModalErrors(prev => prev.filter(err => err.field !== "company_Name" ));
                             }
+                            }
+                            required
                           />
+                          {modalErrors.find(e => e.field === "company_Name") && (
+                            <p className="error-text">{modalErrors.find(e => e.field === "company_Name").message}</p>
+                          )}
                         </div>
 
                         <div>
@@ -1823,9 +1901,15 @@ const EmpProfPage = () => {
                             placeholder="Position"
                             value={newJob?.title}
                             onChange={(e) =>
-                              setNewJob({ ...newJob, title: e.target.value })
+                              {setNewJob({ ...newJob, title: e.target.value })
+                               setModalErrors(prev => prev.filter(err => err.field !== "title" ));
                             }
+                            }
+                            required
                           />
+                          {modalErrors.find(e => e.field === "title") && (
+                            <p className="error-text">{modalErrors.find(e => e.field === "title").message}</p>
+                          )}
                         </div>
 
                         <div className="start-end-date">
@@ -1838,13 +1922,19 @@ const EmpProfPage = () => {
                               type="date"
                               placeholder="Enter a Start Date"
                               value={newJob?.JoiningDate}
-                              onChange={(e) =>
+                              onChange={(e) =>{
                                 setNewJob({
                                   ...newJob,
                                   JoiningDate: e.target.value,
                                 })
+                                 setModalErrors(prev => prev.filter(err => err.field !== "JoiningDate" ));
                               }
+                              }
+                              required
                             />
+                            {modalErrors.find(e => e.field === "JoiningDate") && (
+                              <p className="error-text">{modalErrors.find(e => e.field === "JoiningDate").message}</p>
+                            )}
                           </div>
                           <div className="end-date">
                             <label className="company-label">
@@ -1855,13 +1945,19 @@ const EmpProfPage = () => {
                               type="date"
                               placeholder="Enter a End Date"
                               value={newJob?.endDate}
-                              onChange={(e) =>
+                              onChange={(e) =>{
                                 setNewJob({
                                   ...newJob,
                                   endDate: e.target.value,
                                 })
+                                 setModalErrors(prev => prev.filter(err => err.field !== "endDate" ));
                               }
+                              }
+                              required
                             />
+                            {modalErrors.find(e => e.field === "endDate") && (
+                              <p className="error-text">{modalErrors.find(e => e.field === "endDate").message}</p>
+                            )}
                           </div>
                         </div>
 
@@ -1871,13 +1967,18 @@ const EmpProfPage = () => {
                             type="text"
                             placeholder="Location"
                             value={newJob?.location}
-                            onChange={(e) =>
+                            onChange={(e) =>{
                               setNewJob({
                                 ...newJob,
                                 location: e.target.value,
                               })
+                              setModalErrors(prev => prev.filter(err => err.field !== "location" ));
+                            }
                             }
                           />
+                          {modalErrors.find(e => e.field === "location") && (
+                            <p className="error-text">{modalErrors.find(e => e.field === "location").message}</p>
+                          )}
                         </div>
 
                         <div>
@@ -1887,13 +1988,18 @@ const EmpProfPage = () => {
                             placeholder="Description"
                             rows={3}
                             value={newJob?.description}
-                            onChange={(e) =>
+                            onChange={(e) =>{
                               setNewJob({
                                 ...newJob,
                                 description: e.target.value,
                               })
+                              setModalErrors(prev => prev.filter(err => err.field !== "description" ));
+                            }
                             }
                           />
+                          {modalErrors.find(e => e.field === "description") && (
+                            <p className="error-text">{modalErrors.find(e => e.field === "description").message}</p>
+                          )}
                         </div>
 
                         <div className="modal-buttons">

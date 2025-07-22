@@ -5,11 +5,6 @@ import { useNavigate } from "react-router-dom";
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
 
-const isValidIndianPhone = (num) => {
-  const regex = /^(\+91[\-\s]?)?[0]?(91)?[6-9]\d{9}$/;
-  return regex.test(num);
-};
-
 
 const EmprSignUp = () => {
   const [formData, setFormData] = useState({
@@ -28,10 +23,11 @@ const EmprSignUp = () => {
 
   const [verificationId, setVerificationId] = useState(null);
   const [isOtpSent, setIsOtpSent] = useState(false);
-  const [error, setError] = useState(null);
   const [loadingSendOtp, setLoadingSendOtp] = useState(false);
-const [loadingVerify, setLoadingVerify] = useState(false);
-const [loadingRegister, setLoadingRegister] = useState(false);
+  const [loadingVerify, setLoadingVerify] = useState(false);
+  const [loadingRegister, setLoadingRegister] = useState(false);
+  const [errors, setErrors] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   const [statesList, setStatesList] = useState([]);
   const [citiesList, setCitiesList] = useState([]);
@@ -39,26 +35,35 @@ const [loadingRegister, setLoadingRegister] = useState(false);
   const [selectedStateCode, setSelectedStateCode] = useState("");
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-     // Clear any existing error once the user types
-  if (error) {
-    setError(null);
-  }
-  };
+ const handleChange = (e) => {
+  const { name, type, checked, files, value } = e.target;
+  const newValue = type === "checkbox"
+    ? checked
+    : type === "file"
+    ? files[0]
+    : value;
+
+  setFormData(prev => ({
+    ...prev,
+    [name]: newValue,
+  }));
+
+  // Clear existing error or success message for this field
+  setErrors(prev => prev.filter(err => err.field !== name));
+  setMessages(prev => prev.filter(msg => msg.field !== name));
+};
+
+
 
   const sendOtp = async () => {
 
-     if (!isValidIndianPhone(formData.mobileNumber)) {
-    setError("Please enter a valid 10-digit Indian mobile number.");
-    return;
-  }
+     if (!validateSendOtp()) return;
+    if (!formData.mobileNumber) {
+      return;
+    }
+    setMessages([]);
+    setErrors([]);
     setLoadingSendOtp(true);
-    setError(null);
 
     try {
       const response = await axios.post(
@@ -71,13 +76,22 @@ const [loadingRegister, setLoadingRegister] = useState(false);
       if (response.data.status === 200) {
         setIsOtpSent(true);
         setVerificationId(response.data.result);
+         setMessages([{ field: 'mobileNumber', message: 'OTP sent successfully to your registered mobile.' }])
       } else {
-        setError(response.data.message);
+        setErrors([
+          {
+            field: "mobileNumber",
+            message: response.data.message || "Failed to send OTP",
+          },
+        ]);
       }
     } catch (error) {
-      setError(
-        error.response ? error.response.data.message : "Something went wrong"
-      );
+     setErrors([
+        {
+          field: "mobileNumber",
+          message: error.message || "Something went wrong.",
+        },
+      ]);
     } finally {
       setLoadingSendOtp(false);
     }
@@ -85,12 +99,14 @@ const [loadingRegister, setLoadingRegister] = useState(false);
 
   // Verify OTP
   const verifyOtp = async () => {
-     if (!verificationId) {
-    setError("Enter the otp for verification.");
-    return;
-  }
+    if (!validateVerifyOtp()) return;
+    if (!formData.otp) {
+      return;
+    }
+    setMessages([]);
+    setErrors([]);
     setLoadingVerify(true);
-    setError(null);
+   
 
     try {
       const response = await axios.post(
@@ -103,12 +119,15 @@ const [loadingRegister, setLoadingRegister] = useState(false);
 
       if (response.data.status === 200) {
         setFormData((prev) => ({ ...prev, otpVerified: true }));
+         setMessages([{ field: 'otp', message: 'OTP verified!' }])
       } else {
-        setError(response.data.message);
+        setErrors([{field:'otp', message:response.data.message}]);
       }
     } catch (error) {
-      setError(
-        error.response ? error.response.data.message : "Something went wrong"
+      setErrors([{
+        field: 'otp',
+        message : error.response.data.message || "Something went wrong",
+      }]
       );
     } finally {
       setLoadingVerify(false);
@@ -116,25 +135,23 @@ const [loadingRegister, setLoadingRegister] = useState(false);
   };
 
   const handleSubmit = async (e) => {
+     if (!validateRegister()) return;
     e.preventDefault();
     setLoadingRegister(true);
-    setError(null);
+    setErrors([]);
 
-      if (!formData.otpVerified) {
-      setError("Please verify OTP first")
+    if (!formData.otpVerified) {
       setLoadingRegister(false);
       return;
     }
 
     if (!formData.termsAccepted) {
-      setError("Please accept terms and conditions");
-       setLoadingRegister(false);
+      setLoadingRegister(false);
       return;
     }
-  
+
     if (!formData.fullname || !formData.email || !formData.companyName) {
-      setError("Please fill in all required fields.")
-       setLoadingRegister(false);
+      setLoadingRegister(false);
       return;
     }
 
@@ -156,12 +173,10 @@ const [loadingRegister, setLoadingRegister] = useState(false);
 
         navigate("/signin?role=company");
       } else {
-        setError(response.data.message);
+        console.log(response.data.message);
       }
     } catch (error) {
-      setError(
-        error.response ? error.response.data.message : "Something went wrong"
-      );
+     console.log("error")
     } finally {
       setLoadingRegister(false);
     }
@@ -199,6 +214,72 @@ const [loadingRegister, setLoadingRegister] = useState(false);
     }
   }, [selectedStateCode]);
 
+  // validation
+    const validateSendOtp = () => {
+    const errs = [];
+    if (!/^\d{10}$/.test(formData.mobileNumber)) {
+      errs.push({ field: "mobileNumber", message: "Enter a valid 10-digit mobile number" });
+    }
+    setErrors(errs);
+    return errs.length === 0;
+  };
+  
+  const validateVerifyOtp = () => {
+    const errs = [];
+    if (!formData.otp) {
+      errs.push({ field: "otp", message: "Enter the OTP received" });
+    }
+    setErrors(errs);
+    return errs.length === 0;
+  };
+  
+  const validateRegister = () => {
+    const errs = [];
+    if (!formData.fullname) {
+      errs.push({ field: "fullname", message: "Name is required" });
+    }
+    if (!formData.email.match(/^[^@]+@[^@]+\.[^@]+$/)) {
+      errs.push({ field: "email", message: "Enter a valid email address" });
+    }
+    if(!formData.mobileNumber){
+      errs.push({ field: "mobileNumber", message: "mobile Number is required" });
+    }
+    if(!formData.otp){
+      errs.push({ field: "otp", message: "otp is required" });
+    }
+    if(!formData.state){
+      errs.push({ field: "state", message: "State is required" });
+    }
+    if(!formData.location){
+      errs.push({ field: "location", message: "City is required" });
+    }
+     if(!formData.city){
+      errs.push({ field: "city", message: "City is required" });
+    }
+    if(!formData.companyName){
+      errs.push({ field: "companyName", message: "companyName is required" });
+    }
+    if(!formData.currentRole){
+      errs.push({ field: "currentRole", message: "currentRole is required" });
+    }
+    if (!formData.termsAccepted) {
+      errs.push({ field: "termsAccepted", message: "You must accept terms" });
+    }
+    setErrors(errs);
+    return errs.length === 0;
+  };
+  
+  const getError = (field) => errors.find((e) => e.field === field)?.message;
+    const getSuccess = (field) =>
+      messages.find((s) => s.field === field)?.message || '';
+  
+   useEffect(() => {
+      if (messages) {
+        const timer = setTimeout(() => setMessages([]), 3000);
+        return () => clearTimeout(timer);
+      }
+    }, [messages]);
+
   return (
     <>
       <div className="signUpform">
@@ -215,31 +296,36 @@ const [loadingRegister, setLoadingRegister] = useState(false);
                   value={formData.fullname}
                   onChange={handleChange}
                 />
+                 {getError("fullname") && <p className="error-text">{getError("fullname")}</p>}
               </div>
 
               <div className="signUpform-group">
                 <label htmlFor="mobile">Mobile Number</label>
                 <div className="send-otp no-spinner">
-                 <input
-  type="tel"
-  id="mobile"
-  name="mobileNumber"
-  placeholder="Mobile Number"
-  value={formData.mobileNumber}
-  onChange={(e) => {
-    const cleaned = e.target.value.replace(/\D/g, '').slice(0, 10);
-    handleChange({ target: { name: 'mobileNumber', value: cleaned } });
-  }}
-  disabled={isOtpSent}
-  maxLength={10}
-  pattern="\d{10}"
-  inputMode="numeric"
-/>
+                  <input
+                    type="tel"
+                    id="mobile"
+                    name="mobileNumber"
+                    placeholder="Mobile Number"
+                    value={formData.mobileNumber}
+                    onChange={(e) => {
+                      const cleaned = e.target.value.replace(/\D/g, '').slice(0, 10);
+                      handleChange({ target: { name: 'mobileNumber', value: cleaned } });
+                    }}
+                    disabled={isOtpSent}
+                    maxLength={10}
+                    pattern="\d{10}"
+                    inputMode="numeric"
+                  />
 
                   <button type="button" onClick={sendOtp} disabled={loadingSendOtp}>
                     {loadingSendOtp ? "Sending OTP..." : "Send OTP"}
                   </button>
                 </div>
+                {getError("mobileNumber") && <p className="error-text">{getError("mobileNumber")}</p>}
+                 {!getError('mobileNumber') && getSuccess('mobileNumber') && (
+          <p className="success-text">{getSuccess('mobileNumber')}</p>
+        )}
               </div>
 
               <div className="signUpform-group">
@@ -252,6 +338,7 @@ const [loadingRegister, setLoadingRegister] = useState(false);
                   value={formData.currentRole}
                   onChange={handleChange}
                 />
+                {getError("currentRole") && <p className="error-text">{getError("currentRole")}</p>}
               </div>
 
               <div className="signUpform-group">
@@ -260,6 +347,7 @@ const [loadingRegister, setLoadingRegister] = useState(false);
                   name="state"
                   value={formData.state || ""}
                   onChange={(e) => {
+                    handleChange(e);
                     const selected = statesList.find(
                       (state) => (state.name || state) === e.target.value
                     );
@@ -279,6 +367,7 @@ const [loadingRegister, setLoadingRegister] = useState(false);
                     </option>
                   ))}
                 </select>
+                {getError("state") && <p className="error-text">{getError("state")}</p>}
               </div>
             </div>
           </div>
@@ -295,6 +384,7 @@ const [loadingRegister, setLoadingRegister] = useState(false);
                   value={formData.email}
                   onChange={handleChange}
                 />
+                {getError("email") && <p className="error-text">{getError("email")}</p>}
               </div>
 
               <div className="signUpform-group">
@@ -312,6 +402,10 @@ const [loadingRegister, setLoadingRegister] = useState(false);
                     {loadingVerify ? "Verifying OTP..." : "Verify OTP"}
                   </button>
                 </div>
+                  {getError("otp") && <p className="error-text">{getError("otp")}</p>}
+                 {!getError('otp') && getSuccess('otp') && (
+          <p className="success-text">{getSuccess('otp')}</p>
+        )}
               </div>
 
               {/* <div className="signUpform-group">
@@ -336,6 +430,7 @@ const [loadingRegister, setLoadingRegister] = useState(false);
                   value={formData.companyName}
                   onChange={handleChange}
                 />
+                {getError("companyName") && <p className="error-text">{getError("companyName")}</p>}
               </div>
 
               <div className="signUpform-group">
@@ -357,6 +452,7 @@ const [loadingRegister, setLoadingRegister] = useState(false);
                     </option>
                   ))}
                 </select>
+                {getError("location") && <p className="error-text">{getError("location")}</p>}
               </div>
 
               {/* <div className="signUpform-group">
@@ -394,7 +490,9 @@ const [loadingRegister, setLoadingRegister] = useState(false);
               terms and condition
             </a>
           </label>
+          
         </div>
+        {getError("termsAccepted") && <p className="error-text">{getError("termsAccepted")}</p>}
         <div className="register-btn">
           <div className="register-btns">
             <button type="submit" onClick={handleSubmit} disabled={loadingRegister}>
@@ -403,7 +501,6 @@ const [loadingRegister, setLoadingRegister] = useState(false);
           </div>
         </div>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
       </div>
     </>
   );

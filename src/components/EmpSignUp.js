@@ -16,6 +16,9 @@ const EmpSignUp = () => {
   const [selectedCity, setSelectedCity] = useState("");
   const [statesList, setStatesList] = useState([]);
   const [citiesList, setCitiesList] = useState([]);
+  const [errors, setErrors] = useState([]);
+  const [messages,setMessages] = useState([]);
+  const [registerLoading,setRegisterLoading]  = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -33,29 +36,38 @@ const EmpSignUp = () => {
     termsAccepted: false,
   });
 
-  const options = [
-    { value: "", label: "Select Gender" },
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-    { value: "other", label: "Other" },
-  ];
+ 
+const handleChange = (e) => {
+  const { name, type, files, checked, value } = e.target;
+  let newValue;
 
-  const handleChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
-    if (type === "checkbox") {
-      setFormData((prev) => ({ ...prev, [name]: checked }));
-    } else if (type === "file") {
-      setFormData((prev) => ({ ...prev, [name]: files[0] }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
-  };
+  if (type === "checkbox") {
+    newValue = checked;
+  } else if (type === "file") {
+    newValue = files[0];
+  } else {
+    newValue = value;
+  }
+
+  setFormData((prev) => ({
+    ...prev,
+    [name]: newValue,
+  }));
+
+  // Clear error for this specific field
+  setErrors((prev) => prev.filter((err) => err.field !== name));
+};
+
+
 
   const sendOtp = async () => {
+     if (!validateSendOtp()) return;
     if (!formData.mobileNumber) {
       return;
     }
     setLoading(true);
+    setMessages([]);
+    setErrors([]);
     try {
       const response = await axios.post(
         `${BASE_URL}/api/mobileNumberVerificationSendOtp`,
@@ -71,19 +83,36 @@ const EmpSignUp = () => {
           ...prev,
           userId: response.data.result,
         }));
+        setMessages([{ field: 'mobileNumber', message: 'OTP sent successfully to your registered mobile.' }])
+      }
+      else if(response.data.status === 404){
+        setErrors([
+          {
+            field: "mobileNumber",
+            message: response.data.message || "Failed to send OTP",
+          },
+        ]);
       }
     } catch (error) {
-      console.error("Error sending OTP:", error);
+      setErrors([
+        {
+          field: "mobileNumber",
+          message: error.message || "Something went wrong.",
+        },
+      ]);
     }
     setLoading(false);
   };
 
   const verifyOtp = async () => {
+     if (!validateVerifyOtp()) return;
     if (!formData.otp) {
       return;
     }
 
     setLoading(true);
+    setMessages([]);
+    setErrors([]);
     try {
       const response = await axios.post(
         `${BASE_URL}/api/mobileNumberVerificationSetup`,
@@ -97,6 +126,7 @@ const EmpSignUp = () => {
       if (response.data.status === 200) {
         setIsOtpReceive(true);
         setFormData((prev) => ({ ...prev, otpVerified: true }));
+        setMessages([{ field: 'otp', message: 'OTP verified!' }])
       }
     } catch (error) {
       console.error("OTP verification failed:", error);
@@ -105,6 +135,7 @@ const EmpSignUp = () => {
   };
 
   const registerUser = async () => {
+     if (!validateRegister()) return;
     if (!formData.termsAccepted) {
       alert("Please accept terms and conditions.");
       return;
@@ -122,6 +153,7 @@ const EmpSignUp = () => {
       alert("Please fill in all required fields.");
       return;
     }
+    setRegisterLoading(true);
 
     try {
       const formDataToSend = new FormData();
@@ -158,6 +190,8 @@ const EmpSignUp = () => {
       }
     } catch (error) {
       console.error("Registration failed:", error);
+    }finally{
+     setRegisterLoading(false);
     }
   };
 
@@ -214,6 +248,75 @@ const EmpSignUp = () => {
     }
   }, [selectedStateCode]);
 
+  // validation
+  const validateSendOtp = () => {
+  const errs = [];
+  if (!/^\d{10}$/.test(formData.mobileNumber)) {
+    errs.push({ field: "mobileNumber", message: "Enter a valid 10-digit mobile number" });
+  }
+  setErrors(errs);
+  return errs.length === 0;
+};
+
+const validateVerifyOtp = () => {
+  const errs = [];
+  if (!formData.otp) {
+    errs.push({ field: "otp", message: "Enter the OTP received" });
+  }
+  setErrors(errs);
+  return errs.length === 0;
+};
+
+const validateRegister = () => {
+  const errs = [];
+  if (!formData.fullName) {
+    errs.push({ field: "fullName", message: "Name is required" });
+  }
+  if (!formData.email.match(/^[^@]+@[^@]+\.[^@]+$/)) {
+    errs.push({ field: "email", message: "Enter a valid email address" });
+  }
+  if (!formData.resume) {
+    errs.push({ field: "resume", message: "Resume is required" });
+  }
+  if (!formData.gender) {
+    errs.push({ field: "gender", message: "Gender is required" });
+  }
+   if (!formData.mobileNumber) {
+    errs.push({ field:"mobileNumber", message: "mobile Number is required" });
+  }
+   if (!formData.otp) {
+    errs.push({ field:"otp", message: "otp is required" });
+  }
+  if(!formData.state){
+     errs.push({ field: "state", message: "State is required" });
+  }
+   if(!formData.location){
+     errs.push({ field: "location", message: "city is required" });
+  }
+   if(!formData.workStatus){
+     errs.push({ field: "workStatus", message: "Workmode is required" });
+  }
+   if(!formData.experience){
+     errs.push({ field: "experience", message: "Experience is required" });
+  }
+  if (!formData.termsAccepted) {
+    errs.push({ field: "termsAccepted", message: "You must accept terms" });
+  }
+  setErrors(errs);
+  return errs.length === 0;
+};
+
+const getError = (field) => errors.find((e) => e.field === field)?.message;
+  const getSuccess = (field) =>
+    messages.find((s) => s.field === field)?.message || '';
+
+ useEffect(() => {
+    if (messages) {
+      const timer = setTimeout(() => setMessages([]), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [messages]);
+
   useEffect(() => {
     if (formData.userId) {
       fetchUserData();
@@ -233,6 +336,7 @@ const EmpSignUp = () => {
                   placeholder="Your Full Name"
                   onChange={handleChange}
                 />
+                {getError("fullName") && <p className="error-text">{getError("fullName")}</p>}
               </div>
               <div className="signUpform-group">
                 <label htmlFor="mobile">Mobile Number</label>
@@ -247,8 +351,13 @@ const EmpSignUp = () => {
                     onChange={handleChange}
                     disabled={isOtpSent}
                   />
+                  
                   <button onClick={sendOtp}>Send OTP</button>
                 </div>
+                {getError("mobileNumber") && <p className="error-text">{getError("mobileNumber")}</p>}
+                 {!getError('mobileNumber') && getSuccess('mobileNumber') && (
+          <p className="success-text">{getSuccess('mobileNumber')}</p>
+        )}
               </div>
 
               <div className="signUpform-group">
@@ -257,6 +366,7 @@ const EmpSignUp = () => {
                   name="state"
                   value={formData.state || ""}
                   onChange={(e) => {
+                    handleChange(e);
                     const selected = statesList.find(
                       (state) => (state.name || state) === e.target.value
                     );
@@ -276,6 +386,7 @@ const EmpSignUp = () => {
                     </option>
                   ))}
                 </select>
+                {getError("state") && <p className="error-text">{getError("state")}</p>}
               </div>
 
               <div className="signUpform-group">
@@ -327,6 +438,7 @@ const EmpSignUp = () => {
                     </label>
                   </div>
                 </div>
+                {getError("workStatus") && <p className="error-text">{getError("workStatus")}</p>}
               </div>
 
               <div className="signUpform-group">
@@ -361,6 +473,7 @@ const EmpSignUp = () => {
                     </label>
                   </div>
                 </div>
+                {getError("gender") && <p className="error-text">{getError("gender")}</p>}
               </div>
             </div>
           </div>
@@ -373,6 +486,7 @@ const EmpSignUp = () => {
                   placeholder="Email"
                   onChange={handleChange}
                 />
+                 {getError("email") && <p className="error-text">{getError("email")}</p>}
               </div>
 
               <div className="signUpform-group">
@@ -384,8 +498,13 @@ const EmpSignUp = () => {
                     onChange={handleChange}
                     disabled={isOtpReceive}
                   />
+                   
                   <button onClick={verifyOtp}>Verify OTP</button>
                 </div>
+                {getError("otp") && <p className="error-text">{getError("otp")}</p>}
+                 {!getError('otp') && getSuccess('otp') && (
+          <p className="success-text">{getSuccess('otp')}</p>
+        )}
               </div>
 
               <div className="signUpform-group">
@@ -407,6 +526,7 @@ const EmpSignUp = () => {
                     </option>
                   ))}
                 </select>
+                {getError("location") && <p className="error-text">{getError("location")}</p>}
               </div>
               {/* <div className="signUpform-group">
                 <label htmlFor="location">City</label>
@@ -431,6 +551,7 @@ const EmpSignUp = () => {
                   <option value="3">Mid-level</option>
                   <option value="4">Senior</option>
                 </select>
+                {getError("experience") && <p className="error-text">{getError("experience")}</p>}
               </div>
 
               {/* <div className="signUpform-emp dropdown-main">
@@ -513,11 +634,11 @@ const EmpSignUp = () => {
             name="resume"
             accept=".pdf,.doc,.docx"
             style={{ display: "none" }}
-            onChange={(e) =>
-              setFormData({ ...formData, resume: e.target.files[0] })
-            }
+            onChange={handleChange}
+            
           />
         </div>
+         {getError("resume") && <p className="error-text">{getError("resume")}</p>}
 
         <div className="terms-section">
           <input
@@ -527,6 +648,7 @@ const EmpSignUp = () => {
             onChange={(e) =>
               setFormData({ ...formData, termsAccepted: e.target.checked })
             }
+            // onChange={handleChange}
           />
           <label htmlFor="terms">
             I accept all{" "}
@@ -541,11 +663,12 @@ const EmpSignUp = () => {
             </a>
           </label>
         </div>
+        {getError("termsAccepted") && <p className="error-text">{getError("termsAccepted")}</p>}
         <div className="register-btn">
           <button onClick={registerUser} disabled={loading}>
-            {loading ? "Registering..." : "Register Now"}
+            {registerLoading ? "Registering..." : "Register Now"}
           </button>
-          {loading && <p className="loading">Processing...</p>}
+          {registerLoading && <p className="loading">Processing...</p>}
         </div>
       </div>
     </>

@@ -50,16 +50,20 @@ const AppContent = () => {
     location.pathname === "/pricing" ||
     location.pathname === "/empfilter" ||
     location.pathname === "/Compfilter" ||
+    location.pathname === "/employee-profile" ||
+    location.pathname === "/employee-page" ||
+    location.pathname === "/employee-profile/:id" ||
+    location.pathname === "/companies/:id" ||
     location.pathname === "/signin" ||
-    location.pathname === "/signup" ;
+    location.pathname === "/signup";
 
   return (
     <>
       <ScrollToTop />
 
-      
+
       <Header isHomePage={isHomePage} />
-     
+
       <Routes>
         {/* Your Routes */}
         <Route path="/" element={<Home />} />
@@ -77,7 +81,7 @@ const AppContent = () => {
         <Route path="/employee-profile/:id" element={<EmployeeProfile />} />
         <Route path="/employer-profile/:id" element={<EmployerProfile />} />
         <Route path="/employee-profile" element={<EmployeeProfile />} />
-        <Route path="companies/:id" element={<Companies />} />
+        <Route path="/companies/:id" element={<Companies />} />
         <Route
           path="/active-joiner-profile/:id"
           element={<EmployeeProfile />}
@@ -87,9 +91,9 @@ const AppContent = () => {
         <Route path="/signup" element={<SignUp />} />
       </Routes>
 
-     
+
       <Footer />
-     
+
     </>
   );
 };

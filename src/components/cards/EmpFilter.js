@@ -9,6 +9,8 @@ import homecaller from "../../images/HomeIcons/homecaller.svg";
 import homelocation from "../../images/HomeIcons/homelocation.svg";
 import homenotice from "../../images/HomeIcons/homenotice.svg";
 import { BsDownload } from "react-icons/bs";
+import femaleAvator from "../../images/female.png";
+import MaleAvator from "../../images/male.png";
 
 const EmpFilter = () => {
   const isLoggedIn = !!Cookies.get("authToken");
@@ -320,260 +322,271 @@ const EmpFilter = () => {
       </div> */}
       <div className="candidate-filter-container">
 
-      <div className="job-listing-container">
-        <div className="filter-section">
-          {/* Filters here */}
-          <div className="filter-header">
-            <h3>Filter</h3>
-            <button className="reset-btn" onClick={handleResetFilters}>
-              Reset
-            </button>
-          </div>
+        <div className="job-listing-container">
+          <div className="filter-section">
+            {/* Filters here */}
+            <div className="filter-header">
+              <h3>Filter</h3>
+              <button className="reset-btn" onClick={handleResetFilters}>
+                Reset
+              </button>
+            </div>
 
-          <div className="filter-group">
-            <h3 style={{ marginBottom: "10px" }}>Search</h3>
-            <div className="select-wrapper select-city">
-              <input
-                type="text"
-                className="search-input"
-                placeholder="Search"
-                value={filters.expertTecStack}
-                onChange={handleStackChange}
+            <div className="filter-group">
+              <h3 style={{ marginBottom: "10px" }}>Search</h3>
+              <div className="select-wrapper select-city">
+                <input
+                  type="text"
+                  className="search-input"
+                  placeholder="Search"
+                  value={filters.expertTecStack}
+                  onChange={handleStackChange}
+                />
+              </div>
+            </div>
+
+            <div className="filter-group">
+              <h3 style={{ marginBottom: "10px" }}>Salary Range</h3>
+              <SalaryFilterCard
+                salaryRange={filters.salary}
+                onSalaryChange={handleSalaryChange}
               />
             </div>
-          </div>
+            <div className="filter-group">
+              <h3 style={{ marginBottom: "10px" }}>Select City</h3>
+              <div className="select-wrapper select-city">
+                <select
+                  className="search-select"
+                  value={filters.location || ""}
+                  onChange={(e) =>
+                    setFilters((f) => ({ ...f, location: e.target.value }))
+                  }
+                >
+                  <option value="">Select City</option>
+                  {loadingCities ? (
+                    <option disabled>Loading...</option>
+                  ) : (
+                    cities.map((city, index) => (
+                      <option key={city.location} value={city.location}>
+                        {city.location}
+                      </option>
+                    ))
+                  )}
+                </select>
+                {/* <span className="dropdown-icon">▼</span> */}
+              </div>
+            </div>
 
-          <div className="filter-group">
-            <h3 style={{ marginBottom: "10px" }}>Salary Range</h3>
-            <SalaryFilterCard
-              salaryRange={filters.salary}
-              onSalaryChange={handleSalaryChange}
-            />
-          </div>
-          <div className="filter-group">
-            <h3 style={{ marginBottom: "10px" }}>Select City</h3>
-            <div className="select-wrapper select-city">
-              <select
-                className="search-select"
-                value={filters.location || ""}
-                onChange={(e) =>
-                  setFilters((f) => ({ ...f, location: e.target.value }))
-                }
-              >
-                <option value="">Select City</option>
-                {loadingCities ? (
-                  <option disabled>Loading...</option>
-                ) : (
-                  cities.map((city, index) => (
-                    <option key={city.location} value={city.location}>
-                      {city.location}
-                    </option>
-                  ))
-                )}
-              </select>
-              {/* <span className="dropdown-icon">▼</span> */}
+            <div className="filter-group">
+              <h3 style={{ marginBottom: "10px" }}>Work mode</h3>
+              {[
+                { label: "W.F.O", value: 1 },
+                { label: "Remote", value: 2 },
+                { label: "Hybrid", value: 3 },
+              ].map((mode) => (
+                <div key={mode.value}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={filters.workMode.includes(mode.value)}
+                      onChange={() =>
+                        handleCheckboxChange("workMode", mode.value)
+                      }
+                    />
+                    {mode.label}
+                  </label>
+                </div>
+              ))}
+            </div>
+
+            <div className="filter-group">
+              <h3 style={{ marginBottom: "10px" }}>Experience level</h3>
+
+              {[
+                { label: "Fresher", value: 1 },
+                { label: "Junior", value: 2 },
+                { label: "Mid-Level", value: 3 },
+                { label: "Senior", value: 4 },
+              ].map((exp) => (
+                <div key={exp.label}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={filters.experienceInStack.includes(exp.value)}
+                      onChange={() =>
+                        handleCheckboxChange("experienceInStack", exp.value)
+                      }
+                    />
+                    {exp.label}
+                  </label>
+                </div>
+              ))}
+            </div>
+
+            <div className="filter-group">
+              <h3 style={{ marginBottom: "10px" }}>Active Joiner</h3>
+              {[
+                { label: "Immediate", value: 1 },
+                { label: "Within 7 Days", value: 2 },
+                { label: "Within 15 Days", value: 3 },
+                { label: "Within 30 Days", value: 4 },
+                { label: "Within 45 Days", value: 5 },
+              ].map((joiner) => (
+                <label key={joiner.value}>
+                  <input
+                    type="checkbox"
+                    checked={filters.activeJoiners.includes(joiner.value)}
+                    onChange={() =>
+                      handleCheckboxChange("activeJoiners", joiner.value)
+                    }
+                  />
+                  {joiner.label}
+                </label>
+              ))}
             </div>
           </div>
 
-          <div className="filter-group">
-            <h3 style={{ marginBottom: "10px" }}>Work mode</h3>
-            {[
-              { label: "W.F.O", value: 1 },
-              { label: "Remote", value: 2 },
-              { label: "Hybrid", value: 3 },
-            ].map((mode) => (
-              <div key={mode.value}>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={filters.workMode.includes(mode.value)}
-                    onChange={() =>
-                      handleCheckboxChange("workMode", mode.value)
-                    }
-                  />
-                  {mode.label}
-                </label>
+          <div className="job-cards-section">
+            {/* Show message if no profiles found */}
+            {!isLoading && (error || filteredProfile.length === 0) && (
+              <div className="no-data-message">
+                {error || "No profiles found for the selected filters."}
               </div>
-            ))}
-          </div>
+            )}
 
-          <div className="filter-group">
-            <h3 style={{ marginBottom: "10px" }}>Experience level</h3>
+            {currentProfiles.map((profile) => {
 
-            {[
-              { label: "Fresher", value: 1 },
-              { label: "Junior", value: 2 },
-              { label: "Mid-Level", value: 3 },
-              { label: "Senior", value: 4 },
-            ].map((exp) => (
-              <div key={exp.label}>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={filters.experienceInStack.includes(exp.value)}
-                    onChange={() =>
-                      handleCheckboxChange("experienceInStack", exp.value)
-                    }
-                  />
-                  {exp.label}
-                </label>
-              </div>
-            ))}
-          </div>
+              const avatarSrc = profile.image
+                ? profile.image
+                : profile.gender === "female"
+                  ? femaleAvator
+                  : profile.gender === "male"
+                    ? MaleAvator
+                    : "/images/default-neutral.jpg";
 
-          <div className="filter-group">
-            <h3 style={{ marginBottom: "10px" }}>Active Joiner</h3>
-            {[
-              { label: "Immediate", value: 1 },
-              { label: "Within 7 Days", value: 2 },
-              { label: "Within 15 Days", value: 3 },
-              { label: "Within 30 Days", value: 4 },
-              { label: "Within 45 Days", value: 5 },
-            ].map((joiner) => (
-              <label key={joiner.value}>
-                <input
-                  type="checkbox"
-                  checked={filters.activeJoiners.includes(joiner.value)}
-                  onChange={() =>
-                    handleCheckboxChange("activeJoiners", joiner.value)
-                  }
-                />
-                {joiner.label}
-              </label>
-            ))}
-          </div>
-        </div>
+              return (
+                <div className="job-card" key={profile._id}>
+                  <div className="job-card-header">
+                    <img
+                      src={
+                        avatarSrc
+                      }
+                      alt="profile"
+                      className="profile-img"
+                    />
+                    <div>
+                      <h3>
+                        {isLoggedIn ? profile.name : maskedName(profile.name)}
+                      </h3>
+                      {/* <p>{profile.currentPosition}</p> */}
+                      <p className="companyname">
+                        {JobtypeLabel(profile.Job_type)}
+                      </p>
+                    </div>
+                    <div>
+                      <BsDownload
+                        style={{
+                          width: "25px",
+                          height: "25px",
+                          marginTop: "-25px",
+                          color: "#1782D0"
+                        }}
+                      />
+                    </div>
+                  </div>
 
-        <div className="job-cards-section">
-          {/* Show message if no profiles found */}
-          {!isLoading && (error || filteredProfile.length === 0) && (
-            <div className="no-data-message">
-              {error || "No profiles found for the selected filters."}
-            </div>
-          )}
-
-          {currentProfiles.map((profile) => (
-            <div className="job-card" key={profile._id}>
-              <div className="job-card-header">
-                <img
-                  src={
-                    profile.image ||
-                    "https://img.freepik.com/free-photo/asian-woman-posing-looking-camera_23-2148255359.jpg"
-                  }
-                  alt="profile"
-                  className="profile-img"
-                />
-                <div>
-                  <h3>
-                    {isLoggedIn ? profile.name : maskedName(profile.name)}
-                  </h3>
-                  {/* <p>{profile.currentPosition}</p> */}
-                  <p className="companyname">
-                    {JobtypeLabel(profile.Job_type)}
-                  </p>
-                </div>
-                <div>
-                  <BsDownload
-                    style={{
-                      width: "25px",
-                      height: "25px",
-                      marginTop: "-25px",
-                      color: "#1782D0"
-                    }}
-                  />
-                </div>
-              </div>
-
-              <p className="job-desc">
-                {/* {(() => {
+                  <p className="job-desc">
+                    {/* {(() => {
                   const words = profile.about ? profile.about.split(" ") : [];
                   if (words.length <= 9) return profile.about;
                   return words.slice(0, 9).join(" ") + " ...";
                 })()} */}
-                <span className="job">
-                  {" "}
-                  <img src={homeemail} />
-                  {/* <MdOutlineEmail color="#3399ff" size={25} /> */}{" "}
-                  {isLoggedIn ? profile.email : "********@***.com"}
-                </span>
-              </p>
-              <p className="job-infos">
-                <span className="job">
-                  {" "}
-                  <img src={homecaller} />
-                  {/* <MdOutlinePhone color="#3399ff" size={25} /> */}{" "}
-                  {isLoggedIn ? profile.mobileNumber : "+91 *********"}
-                </span>
-              </p>
+                    <span className="job">
+                      {" "}
+                      <img src={homeemail} />
+                      {/* <MdOutlineEmail color="#3399ff" size={25} /> */}{" "}
+                      {isLoggedIn ? profile.email : "********@***.com"}
+                    </span>
+                  </p>
+                  <p className="job-infos">
+                    <span className="job">
+                      {" "}
+                      <img src={homecaller} />
+                      {/* <MdOutlinePhone color="#3399ff" size={25} /> */}{" "}
+                      {isLoggedIn ? profile.mobileNumber : "+91 *********"}
+                    </span>
+                  </p>
 
-              <div className="job-infos">
-                <span className="job">
-                  {" "}
-                  <img src={homelocation} />
-                  {/* <MdOutlineLocationOn color="#3399ff" size={25} /> */}{" "}
-                  {profile.location},{profile.state}
-                </span>
-                <span className="job">
-                  <img src={homenotice} />
-                  {/* <IoMdTime color="#3399ff" size={25} /> */}{" "}
-                  {ExperiencedLabel(profile.experienceInStack)}
-                </span>
-              </div>
+                  <div className="job-infos">
+                    <span className="job">
+                      {" "}
+                      <img src={homelocation} />
+                      {/* <MdOutlineLocationOn color="#3399ff" size={25} /> */}{" "}
+                      {profile.location},{profile.state}
+                    </span>
+                    <span className="job">
+                      <img src={homenotice} />
+                      {/* <IoMdTime color="#3399ff" size={25} /> */}{" "}
+                      {ExperiencedLabel(profile.experienceInStack)}
+                    </span>
+                  </div>
 
-              {/* <div className="skills">
+                  {/* <div className="skills">
                 {profile.skillName.slice(0, 3).map((skill, index) => (
                   <span key={index}>{skill}</span>
                 ))}
               </div> */}
 
-              <button
-                className="view-profile-btn"
-                onClick={() => navigate(`/employee-profile/${profile._id}`)}
-              >
-                View Profile
-              </button>
-            </div>
-          ))}
+                  <button
+                    className="view-profile-btn"
+                    onClick={() => navigate(`/employee-profile/${profile._id}`)}
+                  >
+                    View Profile
+                  </button>
+                </div>
+              )
+            }
+            )}
+          </div>
         </div>
-      </div>
 
-      {/* Pagination */}
+        {/* Pagination */}
 
-      <div className="pagination">
-        <button
-          className="prev-button"
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-        >
-          &#8249; Prev
-        </button>
+        <div className="pagination">
+          <button
+            className="prev-button"
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            &#8249; Prev
+          </button>
 
-        {paginationRange.map((page, index) =>
-          page === "..." ? (
-            <span key={index} className="dots">
-              ...
-            </span>
-          ) : (
-            <button
-              key={page}
-              onClick={() => setCurrentPage(page)}
-              className={currentPage === page ? "active" : ""}
-            >
-              {page}
-            </button>
-          )
-        )}
+          {paginationRange.map((page, index) =>
+            page === "..." ? (
+              <span key={index} className="dots">
+                ...
+              </span>
+            ) : (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={currentPage === page ? "active" : ""}
+              >
+                {page}
+              </button>
+            )
+          )}
 
-        <button
-          className="prev-button"
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
-          disabled={currentPage === totalPages}
-        >
-          Next &#8250;
-        </button>
-      </div>
+          <button
+            className="prev-button"
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            disabled={currentPage === totalPages}
+          >
+            Next &#8250;
+          </button>
+        </div>
 
       </div>
     </>

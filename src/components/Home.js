@@ -31,6 +31,8 @@ import homenotice from "../images/HomeIcons/homenotice.svg";
 
 import { fetchtopskillandlocation } from "../services/apiService";
 import { BsDownload } from "react-icons/bs";
+import femaleAvator from "../images/female.png";
+import MaleAvator from "../images/male.png";
 
 
 
@@ -202,12 +204,12 @@ const Home = () => {
                   style={
                     label === "Remote"
                       ? {
-                          backgroundColor: "white",
-                          borderRadius: "50%",
-                          width: "28px",
-                          height: "28px",
-                          padding: "5px",
-                        }
+                        backgroundColor: "white",
+                        borderRadius: "50%",
+                        width: "28px",
+                        height: "28px",
+                        padding: "5px",
+                      }
                       : {}
                   }
                 />
@@ -293,34 +295,43 @@ const Home = () => {
         </div>
 
         <div className="candidate-grid-exact">
-          {activeJoiners.map((candidate) => (
-            <div className="candidate-card-exact" key={candidate._id}>
-              <div className="candidate-header-exact">
-                <img
-                  src={
-                    candidate.image ||
-                    "https://img.freepik.com/free-photo/asian-woman-posing-looking-camera_23-2148255359.jpg"
-                  }
-                  alt={`${candidate.name}'s profile`}
-                />
-                <div className="candidate-details-exact">
-                  <h3 className="candidate-name-exact">
-                    {isLoggedIn ? candidate.name : maskedName(candidate.name)}
-                  </h3>
-                  <p className="candidate-position-exact">
-                    {candidate.currentPosition}
-                  </p>
-                  <p className="candidate-company-exact">
-                    {JobtypeLabel(candidate.Job_type)}
-                  </p>
-                </div>
-                <div>
-                  <BsDownload style={{ width: "25px", height: "25px", marginTop: "-25px", color:"#1783D0"}} />
-                </div>
-              </div>
+          {activeJoiners.map((candidate) => {
 
-              <p className="job-description-exact">
-                {/* {" "}
+            const avatarSrc = candidate.image
+              ? candidate.image
+              : candidate.gender === "female"
+                ? femaleAvator
+                : candidate.gender === "male"
+                  ? MaleAvator
+                  : "/images/default-neutral.jpg";
+
+            return (
+              <div className="candidate-card-exact" key={candidate._id}>
+                <div className="candidate-header-exact">
+                  <img
+                    src={
+                      avatarSrc
+                    }
+                    alt={`${candidate.name}'s profile`}
+                  />
+                  <div className="candidate-details-exact">
+                    <h3 className="candidate-name-exact">
+                      {isLoggedIn ? candidate.name : maskedName(candidate.name)}
+                    </h3>
+                    <p className="candidate-position-exact">
+                      {candidate.currentPosition}
+                    </p>
+                    <p className="candidate-company-exact">
+                      {JobtypeLabel(candidate.Job_type)}
+                    </p>
+                  </div>
+                  <div>
+                    <BsDownload style={{ width: "25px", height: "25px", marginTop: "-25px", color: "#1783D0" }} />
+                  </div>
+                </div>
+
+                <p className="job-description-exact">
+                  {/* {" "}
                 {(() => {
                   const words = candidate.about
                     ? candidate.about.split(" ")
@@ -328,59 +339,61 @@ const Home = () => {
                   if (words.length <= 10) return candidate.about;
                   return words.slice(0, 10).join(" ") + " ...";
                 })()} */}
-                <div className="location-left">
-                  <img src={homeemail} />
-                  {/* <MdOutlineEmail
-                    style={{ color: "#1783D0", fontSize: "1.6rem" }}
-                  /> */}
-                  <span>
-                    {" "}
-                    {isLoggedIn ? candidate.email : "********@***.com"}
-                  </span>
-                </div>
-                <div className="location-left">
-                  <img src={homecaller} />
-                  {/* <MdPhoneEnabled
-                    style={{ color: "#1783D0", fontSize: "1.6rem" }}
-                  /> */}
-                  <span>
-                    {isLoggedIn ? candidate.mobileNumber : "+91 *********"}
-                  </span>
-                </div>
-              </p>
-
-              <div className="location-options-exact">
-                <div className="location-option-exact">
                   <div className="location-left">
-                    <img src={homelocation} />
-                    {/* <MdOutlineLocationOn
-                      style={{ color: "#1783D0", fontSize: "1.6rem" }}
-                    /> */}
+                    <img src={homeemail} />
+                    {/* <MdOutlineEmail
+                    style={{ color: "#1783D0", fontSize: "1.6rem" }}
+                  /> */}
                     <span>
-                      {candidate.location},{candidate.state}
+                      {" "}
+                      {isLoggedIn ? candidate.email : "********@***.com"}
                     </span>
                   </div>
+                  <div className="location-left">
+                    <img src={homecaller} />
+                    {/* <MdPhoneEnabled
+                    style={{ color: "#1783D0", fontSize: "1.6rem" }}
+                  /> */}
+                    <span>
+                      {isLoggedIn ? candidate.mobileNumber : "+91 *********"}
+                    </span>
+                  </div>
+                </p>
 
-                  <div className="notice-right">
-                    <img src={homenotice} />
-                    {/* <IoMdTime
+                <div className="location-options-exact">
+                  <div className="location-option-exact">
+                    <div className="location-left">
+                      <img src={homelocation} />
+                      {/* <MdOutlineLocationOn
                       style={{ color: "#1783D0", fontSize: "1.6rem" }}
                     /> */}
-                    <span>
-                      {`${ExperiencedLabel(candidate.experienceInStack)}`}
-                    </span>
+                      <span>
+                        {candidate.location},{candidate.state}
+                      </span>
+                    </div>
+
+                    <div className="notice-right">
+                      <img src={homenotice} />
+                      {/* <IoMdTime
+                      style={{ color: "#1783D0", fontSize: "1.6rem" }}
+                    /> */}
+                      <span>
+                        {`${ExperiencedLabel(candidate.experienceInStack)}`}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <button
-                className="view-profile-btn-exact"
-                onClick={() => navigate(`/employee-profile/${candidate._id}`)}
-              >
-                View Profile
-              </button>
-            </div>
-          ))}
+                <button
+                  className="view-profile-btn-exact"
+                  onClick={() => navigate(`/employee-profile/${candidate._id}`)}
+                >
+                  View Profile
+                </button>
+              </div>
+            )
+          }
+          )}
         </div>
 
         <button

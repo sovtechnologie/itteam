@@ -45,3 +45,13 @@
     color: #2563eb;
     font-weight: 500;
   }
+
+  .error-text {
+  color: red;
+  font-size: 0.85em;
+  margin-top: 4px;
+}
+.input-error {
+  border: 1px solid red;
+  background-color: #ffe6e6;
+}

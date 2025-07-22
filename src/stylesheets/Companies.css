@@ -76,7 +76,7 @@
 
 .Employee-Profile-Card {
   width: 90%; /* Reduce width from 100% */
-  margin: 100px auto 0 auto;
+  margin: 0px auto 0 auto;
   display: flex;
   justify-content: center;
 }
@@ -91,6 +91,7 @@
   color: #fff;
   border-radius: 30px;
   padding: 40px;
+  margin-top: 15rem;
 }
 
 .Profile-head {
