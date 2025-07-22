@@ -121,7 +121,7 @@ const EmpProfPage = () => {
   const [modalErrors, setModalErrors] = useState([]);
   const [success, setSuccess] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [resumeFile, setResumeFile] = useState(null); 
+  const [resumeFile, setResumeFile] = useState(null);
   const [resumeURL, setResumeURL] = useState(""); // for full backend resume URL
   const [newResume, setNewResume] = useState(null); // File for new upload
 
@@ -334,6 +334,7 @@ const EmpProfPage = () => {
     setIsExperienceModalOpen(true);
   };
 
+
   const saveEmployment = async (userId, jobData, isEdit) => {
     const url = isEdit
       ? `${baseUrl}/api/editWorkExprience`
@@ -364,125 +365,64 @@ const EmpProfPage = () => {
       alert("Network error: " + error.message);
       return null;
     }
-    
+
   };
-  
 
-  // const handleSave = async () => {
-  //   const { company_Name, title, JoiningDate, endDate, location, description } = newJob;
 
-  //   setModalErrors([]);
-  //   // Validate inputs
-  //   const errs = [];
-  //   if (!company_Name?.trim()) errs.push({ field: "company_Name", message: "Company Name is required." });
-  //   if (!title?.trim()) errs.push({ field: "title", message: "Position is required." });
-  //   if (!JoiningDate) errs.push({ field: "JoiningDate", message: "Start Date is required." });
-  //   if (!endDate) errs.push({ field: "endDate", message: "End Date is required." });
-  //   if (new Date(endDate) < new Date(JoiningDate))
-  //     errs.push({ field: "endDate", message: "End date cannot be earlier than start date." });
-  //   if (!location?.trim()) errs.push({ field: "location", message: "Location is required." });
-  //   if (!description?.trim()) errs.push({ field: "description", message: "Description is required." });
+  const handleSave = async () => {
+    const { company_Name, title, JoiningDate, endDate, location, description } = newJob;
 
-  //   if (errs.length) {
-  //     setModalErrors(errs);
-  //     return;
-  //   }
+    setModalErrors([]);
+    // Validate inputs
+    const errs = [];
+    if (!company_Name?.trim()) errs.push({ field: "company_Name", message: "Company Name is required." });
+    if (!title?.trim()) errs.push({ field: "title", message: "Position is required." });
+    if (!JoiningDate) errs.push({ field: "JoiningDate", message: "Start Date is required." });
+    if (!endDate) errs.push({ field: "endDate", message: "End Date is required." });
+    if (new Date(endDate) < new Date(JoiningDate))
+      errs.push({ field: "endDate", message: "End date cannot be earlier than start date." });
+    if (!location?.trim()) errs.push({ field: "location", message: "Location is required." });
+    if (!description?.trim()) errs.push({ field: "description", message: "Description is required." });
 
-  //   const updatedList = [...employmentList];
-
-  //   if (editingIndex !== null) {
-  //     updatedList[editingIndex] = newJob;
-  //   } else {
-  //     updatedList.push(newJob);
-  //   }
-
-  //   // Optimistically update local state first
-  //   const response = await saveEmployment(
-  //     userId,
-  //     newJob,
-  //     editingIndex !== null
-  //   );
-
-  //   if (response && response.data && response.data.status === 200) {
-  //     const savedExperience = response.data.result;
-  //     let updatedList;
-  //     if (editingIndex !== null) {
-  //       updatedList = [...employmentList];
-  //       updatedList[editingIndex] = savedExperience;
-  //     } else {
-  //       updatedList = [...employmentList, savedExperience];
-  //     }
-  //     setEmploymentList(updatedList);
-  //   }
-  //   setModalErrors([{ field: "general", message: "Failed to save experience." }]);
-  //   setIsExperienceModalOpen(false);
-  //   setEditingIndex(null);
-  // };
-
-const handleSave = async () => {
-  const {
-    company_Name,
-    title,
-    JoiningDate,
-    endDate,
-    location,
-    description
-  } = newJob;
-
-  // reset errors
-  setModalErrors([]);
-
-  // Validate inputs
-  const errs = [];
-  if (!company_Name?.trim())
-    errs.push({ field: "company_Name", message: "Company Name is required." });
-  if (!title?.trim())
-    errs.push({ field: "title", message: "Position is required." });
-  if (!JoiningDate)
-    errs.push({ field: "JoiningDate", message: "Start Date is required." });
-  if (!endDate)
-    errs.push({ field: "endDate", message: "End Date is required." });
-  if (JoiningDate && endDate && new Date(endDate) < new Date(JoiningDate))
-    errs.push({ field: "endDate", message: "End date cannot be earlier than start date." });
-  if (!location?.trim())
-    errs.push({ field: "location", message: "Location is required." });
-  if (!description?.trim())
-    errs.push({ field: "description", message: "Description is required." });
-
-  if (errs.length) {
-    setModalErrors(errs);
-    return; // early return to prevent API call
-  }
-
-  try {
-    // Submit to backend
-    const response = await saveEmployment(userId, newJob, editingIndex !== null);
-
-    if (response?.data?.status === 200) {
-      const saved = response.data.result;
-
-      setEmploymentList(prev => {
-        if (editingIndex !== null) {
-          return prev.map((item, idx) =>
-            idx === editingIndex ? saved : item
-          );
-        }
-        return [...prev, saved];
-      });
-
-      // Clear modal errors, close modal, reset edit index
-      setModalErrors([]);
-      setIsExperienceModalOpen(false);
-      setEditingIndex(null);
-    } else {
-      setModalErrors([{ field: "general", message: response.data.message || "Failed to save experience." }]);
+    if (errs.length) {
+      setModalErrors(errs);
+      return;
     }
-  } catch (e) {
-    setModalErrors([{ field: "general", message: e.message || "Failed to save experience." }]);
-  }
-};
 
+    const updatedList = [...employmentList];
 
+    if (editingIndex !== null) {
+      updatedList[editingIndex] = newJob;
+    } else {
+      updatedList.push(newJob);
+      employmentList.push(newJob)
+    }
+
+    // Optimistically update local state first
+    const response = await saveEmployment(
+      userId,
+      newJob,
+      editingIndex !== null
+    );
+
+    if (response && response.data && response.data.status === 200) {
+      const savedExperience = response.data.result;
+      let updatedList;
+      if (editingIndex !== null) {
+        updatedList = [...employmentList];
+        updatedList[editingIndex] = savedExperience;
+      } else {
+        updatedList = [...employmentList];
+      }
+      setEmploymentList(updatedList);
+    }
+
+    setModalErrors([{ field: "general", message: "Failed to save experience." }]);
+    setIsExperienceModalOpen(false);
+    setEditingIndex(null);
+  };
+
+ 
   const handleDeleteExperience = async (job_id) => {
     try {
       const response = await axios.post(
@@ -516,6 +456,7 @@ const handleSave = async () => {
   const [isEduModalOpen, setIsEduModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
+  const [modalErrorsEdu , setModalErrorsEdu] = useState([]);
   const [newEducation, setNewEducation] = useState({
     college: "",
     degree: "",
@@ -526,6 +467,7 @@ const handleSave = async () => {
   });
 
   const addEducation = async (education) => {
+
     const formData = new FormData();
 
     for (let key in education) {
@@ -573,13 +515,6 @@ const handleSave = async () => {
     }
   };
 
-  const handleLogoChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setNewEducation((prev) => ({ ...prev, logo: file }));
-    }
-  };
-
   const handleDeleteEducation = async (id) => {
     try {
       const res = await axios.post(
@@ -616,6 +551,7 @@ const handleSave = async () => {
   const [projects, setProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
+  const [modalErrorsProj,setModalErrorsProj] = useState([]);
   const [formProjectData, setFormProjectData] = useState({
     title: "",
     startDate: "",
@@ -650,6 +586,23 @@ const handleSave = async () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setModalErrorsProj([]);
+
+    const { title, startDate, endDate, associated, projectDescription } = formProjectData;
+    const errs = [];
+
+    if (!title?.trim()) errs.push({ field: "title", message: "Title is required." });
+    if (!startDate) errs.push({ field: "startDate", message: "Start date is required." });
+    if (!endDate) errs.push({ field: "endDate", message: "End date is required." });
+    else if (new Date(endDate) < new Date(startDate))
+      errs.push({ field: "endDate", message: "End date cannot be before start date." });
+    if (!associated?.trim()) errs.push({ field: "associated", message: "Associated field is required." });
+    if (!projectDescription?.trim()) errs.push({ field: "projectDescription", message: "Description is required." });
+
+    if (errs.length > 0) {
+      setModalErrorsProj(errs);
+      return;
+    }
     try {
       const projectPayload = { ...formProjectData };
       if (editIndex !== null) {
@@ -749,9 +702,9 @@ const handleSave = async () => {
   };
 
   const [certifications, setCertifications] = useState([]);
-
   const [showLicensesModal, setShowLicensesModal] = useState(false);
   const [editIndexLicenses, setEditIndexLicenses] = useState(null);
+  const [modalErrorsLic, setModalErrorsLic] = useState([]);
   const [formLicensesData, setFormLicensesData] = useState({
     title: "",
     issuer: "",
@@ -785,19 +738,25 @@ const handleSave = async () => {
     setShowLicensesModal(true);
   };
 
-  // const handleFormLicensesSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (editIndexLicenses !== null) {
-  //     const updated = [...certifications];
-  //     updated[editIndexLicenses] = formLicensesData;
-  //     setCertifications(updated);
-  //   } else {
-  //     setCertifications([...certifications, formLicensesData]);
-  //   }
-  //   setShowLicensesModal(false);
-  // };
+
   const handleFormLicensesSubmit = async (e) => {
     e.preventDefault();
+    setModalErrorsLic([]);
+
+    const { title, issuer, issuedDate, credentialUrl } = formLicensesData;
+    const errs = [];
+    if (!title?.trim()) errs.push({ field: "title", message: "Title is required." });
+    if (!issuer?.trim()) errs.push({ field: "issuer", message: "Issuer is required." });
+    if (!issuedDate) errs.push({ field: "issuedDate", message: "Issued date is required." });
+    if (credentialUrl && !/^https?:\/\/.+\..+/.test(credentialUrl)) {
+      errs.push({ field: "credentialUrl", message: "Enter a valid URL." });
+    }
+
+    if (errs.length) {
+      setModalErrorsLic(errs);
+      return;
+    }
+
 
     try {
       let response;
@@ -881,7 +840,7 @@ const handleSave = async () => {
     }
   };
 
-  
+
 
   useEffect(() => {
     if (!authToken || !userId) {
@@ -931,7 +890,7 @@ const handleSave = async () => {
     };
 
     fetchUserData();
-  }, [authToken, userId, navigate,employmentList]);
+  }, [authToken, userId]);
 
   const [selectedState, setSelectedState] = useState("");
   const [selectedStateCode, setSelectedStateCode] = useState("");
@@ -991,7 +950,7 @@ const handleSave = async () => {
         experience: userData.experienceInStack
           ? String(userData.experienceInStack)
           : "",
-        salary: userData.salary ? `${userData.salary} /-Year` : "",
+        salary: userData.salary ? `${userData.salary}` : "",
         notice: userData.noticePeriod ? String(userData.noticePeriod) : "",
         phone: userData.mobileNumber ? `+91 ${userData.mobileNumber}` : "",
         email: userData.email,
@@ -1137,7 +1096,7 @@ const handleSave = async () => {
     }
   };
 
- 
+
   return (
     <>
       <div className="empprofile-card">
@@ -1158,9 +1117,6 @@ const handleSave = async () => {
                     <button className="action-btn" onClick={handleEditToggle}>
                       <MdOutlineEdit size={30} />
                     </button>
-                    {/* <button className="action-btn">
-                      <FiShare2 size={30} />
-                    </button> */}
                   </div>
                 </div>
 
@@ -1319,12 +1275,12 @@ const handleSave = async () => {
                     <div className="signUpform-group">
                       <select
                         name="location"
-                        value={formData.location}
+                        value={formData.location||""}
                         onChange={handleInputChange}
                         className="form-select"
                         disabled={!selectedState}
                       >
-                        <option value="">Select City</option>
+                        <option value="">{formData.location||""}</option>
                         {citiesList.map((city) => (
                           <option
                             key={city._id || city.id || city.name || city}
@@ -1336,12 +1292,6 @@ const handleSave = async () => {
                       </select>
                     </div>
 
-                    {/* <input
-                      name="location"
-                      placeholder="Location"
-                      value={formData.location}
-                      onChange={handleInputChange}
-                    /> */}
                     <select
                       name="experience"
                       value={formData.experience}
@@ -1359,12 +1309,7 @@ const handleSave = async () => {
                       value={formData.salary}
                       onChange={handleInputChange}
                     />
-                    {/* <input
-                      name="notice"
-                      placeholder="Notice Period"
-                      value={formData.notice}
-                      onChange={handleInputChange}
-                    /> */}
+                    
                     <select
                       name="notice"
                       value={formData.notice}
@@ -1395,9 +1340,6 @@ const handleSave = async () => {
                     <button onClick={handleSaveProfileWithImage}>
                       Save & Close
                     </button>
-                    {/* <button type="button" onClick={handleClose}>
-                      Cancel
-                    </button> */}
                   </div>
                 </div>
               </div>
@@ -1805,17 +1747,9 @@ const handleSave = async () => {
                                     >
                                       <MdOutlineEdit size={25} />
                                     </button>
-                                    {/* <button
-                                className="employee-deleteBtn"
-                                onClick={() => handleDelete(index)}
-                              >
-                                <FiX size={20} />
-                              </button> */}
                                   </div>
                                 </div>
                               </div>
-                              {/* <p className="company-name">{job?.company_Name}</p>
-                            <p className="company-add">{job?.location}</p> */}
                               <p className="company-name">
                                 {job?.company_Name} | {job?.location}
                               </p>
@@ -1832,12 +1766,7 @@ const handleSave = async () => {
                   {isExperienceModalOpen && (
                     <div className="modal-overlay">
                       <div className="modal-box">
-                        {/* <h3>
-                        {editingIndex !== null
-                          ? "Edit Employment"
-                          : "Add New Employment"}
-                      </h3> */}
-
+                        
                         <div className="modal-header">
                           <div
                             style={{
@@ -1856,35 +1785,18 @@ const handleSave = async () => {
                           </div>
                         </div>
 
-                        {/* {newJob.companyLogo && (
-                      <img src={newJob.companyLogo} alt="Preview" style={{ width: "10%", height: "auto", borderRadius: "8px", marginTop: "10px" }} />
-                    )} */}
-                        {/* <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files[0];
-                        if (file) {
-                          const reader = new FileReader();
-                          reader.onloadend = () => {
-                            setNewJob({ ...newJob, companyLogo: reader.result });
-                          };
-                          reader.readAsDataURL(file);
-                        }
-                      }}
-                    /> */}
                         <div>
                           <label className="company-label">Company Name</label>
                           <input
                             type="text"
                             placeholder="Company Name"
                             value={newJob?.company_Name}
-                            onChange={(e) =>{
+                            onChange={(e) => {
                               setNewJob({
                                 ...newJob,
                                 company_Name: e.target.value,
                               })
-                             setModalErrors(prev => prev.filter(err => err.field !== "company_Name" ));
+                              setModalErrors(prev => prev.filter(err => err.field !== "company_Name"));
                             }
                             }
                             required
@@ -1900,9 +1812,9 @@ const handleSave = async () => {
                             type="text"
                             placeholder="Position"
                             value={newJob?.title}
-                            onChange={(e) =>
-                              {setNewJob({ ...newJob, title: e.target.value })
-                               setModalErrors(prev => prev.filter(err => err.field !== "title" ));
+                            onChange={(e) => {
+                              setNewJob({ ...newJob, title: e.target.value })
+                              setModalErrors(prev => prev.filter(err => err.field !== "title"));
                             }
                             }
                             required
@@ -1922,12 +1834,12 @@ const handleSave = async () => {
                               type="date"
                               placeholder="Enter a Start Date"
                               value={newJob?.JoiningDate}
-                              onChange={(e) =>{
+                              onChange={(e) => {
                                 setNewJob({
                                   ...newJob,
                                   JoiningDate: e.target.value,
                                 })
-                                 setModalErrors(prev => prev.filter(err => err.field !== "JoiningDate" ));
+                                setModalErrors(prev => prev.filter(err => err.field !== "JoiningDate"));
                               }
                               }
                               required
@@ -1945,12 +1857,12 @@ const handleSave = async () => {
                               type="date"
                               placeholder="Enter a End Date"
                               value={newJob?.endDate}
-                              onChange={(e) =>{
+                              onChange={(e) => {
                                 setNewJob({
                                   ...newJob,
                                   endDate: e.target.value,
                                 })
-                                 setModalErrors(prev => prev.filter(err => err.field !== "endDate" ));
+                                setModalErrors(prev => prev.filter(err => err.field !== "endDate"));
                               }
                               }
                               required
@@ -1967,12 +1879,12 @@ const handleSave = async () => {
                             type="text"
                             placeholder="Location"
                             value={newJob?.location}
-                            onChange={(e) =>{
+                            onChange={(e) => {
                               setNewJob({
                                 ...newJob,
                                 location: e.target.value,
                               })
-                              setModalErrors(prev => prev.filter(err => err.field !== "location" ));
+                              setModalErrors(prev => prev.filter(err => err.field !== "location"));
                             }
                             }
                           />
@@ -1988,12 +1900,12 @@ const handleSave = async () => {
                             placeholder="Description"
                             rows={3}
                             value={newJob?.description}
-                            onChange={(e) =>{
+                            onChange={(e) => {
                               setNewJob({
                                 ...newJob,
                                 description: e.target.value,
                               })
-                              setModalErrors(prev => prev.filter(err => err.field !== "description" ));
+                              setModalErrors(prev => prev.filter(err => err.field !== "description"));
                             }
                             }
                           />
@@ -2003,12 +1915,6 @@ const handleSave = async () => {
                         </div>
 
                         <div className="modal-buttons">
-                          {/* <button
-                            className="update-add"
-                            onClick={() => setIsExperienceModalOpen(false)}
-                          >
-                            Cancel
-                          </button> */}
                           {editingIndex !== null && (
                             <div
                               type="button"
@@ -2103,18 +2009,23 @@ const handleSave = async () => {
                         </div>
 
                         <div>
-                          <label className="company-label">Description</label>
+                          <label className="company-label">College Name</label>
                           <input
                             type="text"
                             placeholder="College Name"
                             value={newEducation.college}
-                            onChange={(e) =>
+                            onChange={(e) => {
                               setNewEducation({
                                 ...newEducation,
                                 college: e.target.value,
                               })
+                              setModalErrorsEdu((prev) => prev.filter(err => err.field !== "college"));
+                            }
                             }
                           />
+                          {modalErrorsEdu.find(e => e.field === 'college') && (
+                            <p className="error-text">{modalErrorsEdu.find(e => e.field === 'college').message}</p>
+                          )}
                         </div>
                         <div>
                           <label className="company-label">Degree</label>
@@ -2122,13 +2033,18 @@ const handleSave = async () => {
                             type="text"
                             placeholder="Degree"
                             value={newEducation.degree}
-                            onChange={(e) =>
+                            onChange={(e) => {
                               setNewEducation({
                                 ...newEducation,
                                 degree: e.target.value,
                               })
+                              setModalErrorsEdu((prev) => prev.filter(err => err.field !== "degree"));
+                            }
                             }
                           />
+                          {modalErrorsEdu.find(e => e.field === 'degree') && (
+                            <p className="error-text">{modalErrorsEdu.find(e => e.field === 'degree').message}</p>
+                          )}
                         </div>
                         <div>
                           <label className="company-label"> Location</label>
@@ -2136,13 +2052,18 @@ const handleSave = async () => {
                             type="text"
                             placeholder="Location"
                             value={newEducation.location}
-                            onChange={(e) =>
+                            onChange={(e) => {
                               setNewEducation({
                                 ...newEducation,
                                 location: e.target.value,
                               })
+                              setModalErrorsEdu((prev) => prev.filter(err => err.field !== "location"));
+                            }
                             }
                           />
+                          {modalErrorsEdu.find(e => e.field === 'location') && (
+                            <p className="error-text">{modalErrorsEdu.find(e => e.field === 'location').message}</p>
+                          )}
                         </div>
 
                         <div className="start-end-date">
@@ -2155,13 +2076,18 @@ const handleSave = async () => {
                               type="date"
                               placeholder="Start Date"
                               value={newEducation.startDate}
-                              onChange={(e) =>
+                              onChange={(e) => {
                                 setNewEducation({
                                   ...newEducation,
                                   startDate: e.target.value,
                                 })
+                                setModalErrorsEdu((prev) => prev.filter(err => err.field !== "startDate"));
+                              }
                               }
                             />
+                            {modalErrorsEdu.find(e => e.field === 'startDate') && (
+                              <p className="error-text">{modalErrorsEdu.find(e => e.field === 'startDate').message}</p>
+                            )}
                           </div>
 
                           <div className="end-date">
@@ -2173,13 +2099,18 @@ const handleSave = async () => {
                               type="date"
                               placeholder="End Date"
                               value={newEducation.endDate}
-                              onChange={(e) =>
+                              onChange={(e) => {
                                 setNewEducation({
                                   ...newEducation,
                                   endDate: e.target.value,
                                 })
+                               setModalErrorsEdu((prev) => prev.filter(err => err.field !== "endDate"));
+                              }
                               }
                             />
+                            {modalErrorsEdu.find(e => e.field === 'endDate') && (
+                              <p className="error-text">{modalErrorsEdu.find(e => e.field === 'endDate').message}</p>
+                            )}
                           </div>
                         </div>
 
@@ -2188,24 +2119,20 @@ const handleSave = async () => {
                           type="text"
                           placeholder="Grade"
                           value={newEducation.grade}
-                          onChange={(e) =>
+                          onChange={(e) => {
                             setNewEducation({
                               ...newEducation,
                               grade: e.target.value,
                             })
+                            setModalErrorsEdu((prev) => prev.filter(err => err.field !== "grade"));
+                          }
                           }
                         />
+                        {modalErrorsEdu.find(e => e.field === 'grade') && (
+                          <p className="error-text">{modalErrorsEdu.find(e => e.field === 'grade').message}</p>
+                        )}
 
-                        {/* <label>Upload College Logo</label>
-                    <input type="file" accept="image/*" onChange={handleLogoChange} />
 
-                    {newEducation.logo && typeof newEducation.logo !== 'string' && (
-                      <img
-                        src={URL.createObjectURL(newEducation.logo)}
-                        alt="Logo Preview"
-                        className="logo-preview"
-                      />
-                    )} */}
 
                         <div className="modal-actions">
                           {isEditing && (
@@ -2226,10 +2153,26 @@ const handleSave = async () => {
                           )}
                           <button
                             onClick={async () => {
+                              const { college, degree, location, startDate, endDate, grade } = newEducation;
+                              const errs = [];
+
+                              if (!college.trim()) errs.push({ field: "college", message: "College is required." });
+                              if (!degree.trim()) errs.push({ field: "degree", message: "Degree is required." });
+                              if (!location.trim()) errs.push({ field: "location", message: "Location is required." });
+                              if (!startDate) errs.push({ field: "startDate", message: "Start Date is required." });
+                              if (!endDate) errs.push({ field: "endDate", message: "End Date is required." });
+                              else if (new Date(endDate) < new Date(startDate))
+                                errs.push({ field: "endDate", message: "End Date can't be before Start Date." });
+                              if (!grade.trim()) errs.push({ field: "grade", message: "Grade is required." });
+
+                              if (errs.length) {
+                                setModalErrorsEdu(errs);
+                                return;
+                              }
                               const educationData = {
                                 ...newEducation,
                               };
-                              console.log("Education Data:", educationData);
+
                               try {
                                 if (isEditing) {
                                   const res = await updateEducation(
@@ -2277,8 +2220,7 @@ const handleSave = async () => {
                                 setEditId(null);
                                 setIsEduModalOpen(false);
                               } catch (err) {
-                                console.error("Education save failed:", err);
-                                alert("Error saving education.");
+                                setModalErrorsEdu([{ field: "general", message: err.message || "Failed to save education." }]);
                               }
                             }}
                           >
@@ -2386,14 +2328,19 @@ const handleSave = async () => {
                             type="text"
                             placeholder="Title"
                             value={formProjectData.title}
-                            onChange={(e) =>
+                            onChange={(e) => {
                               setFormProjectData({
                                 ...formProjectData,
                                 title: e.target.value,
                               })
+                              setModalErrorsProj(prev => prev.filter(err => err.field !== "title"));
                             }
-                            required
+                            }
+
                           />
+                          {modalErrorsProj.find(e => e.field === "title") && (
+                            <p className="error-text">{modalErrorsProj.find(e => e.field === "title").message}</p>
+                          )}
                         </div>
 
                         <div className="start-end-date">
@@ -2406,13 +2353,18 @@ const handleSave = async () => {
                               type="date"
                               placeholder="startDate"
                               value={formProjectData.startDate}
-                              onChange={(e) =>
+                              onChange={(e) => {
                                 setFormProjectData({
                                   ...formProjectData,
                                   startDate: e.target.value,
                                 })
+                                setModalErrorsProj(prev => prev.filter(err => err.field !== "startDate"));
+                              }
                               }
                             />
+                            {modalErrorsProj.find(e => e.field === "startDate") && (
+                              <p className="error-text">{modalErrorsProj.find(e => e.field === "startDate").message}</p>
+                            )}
                           </div>
 
                           <div className="end-date">
@@ -2424,13 +2376,18 @@ const handleSave = async () => {
                               type="date"
                               placeholder="EndDate"
                               value={formProjectData.endDate}
-                              onChange={(e) =>
+                              onChange={(e) => {
                                 setFormProjectData({
                                   ...formProjectData,
                                   endDate: e.target.value,
                                 })
+                                setModalErrorsProj(prev => prev.filter(err => err.field !== "endDate"));
+                              }
                               }
                             />
+                            {modalErrorsProj.find(e => e.field === "endDate") && (
+                              <p className="error-text">{modalErrorsProj.find(e => e.field === "endDate").message}</p>
+                            )}
                           </div>
                         </div>
 
@@ -2442,14 +2399,19 @@ const handleSave = async () => {
                             type="text"
                             placeholder="Associated With"
                             value={formProjectData.associated}
-                            onChange={(e) =>
+                            onChange={(e) => {
                               setFormProjectData({
                                 ...formProjectData,
                                 associated: e.target.value,
                               })
+                              setModalErrorsProj(prev => prev.filter(err => err.field !== "associated"));
                             }
-                            required
+                            }
+
                           />
+                          {modalErrorsProj.find(e => e.field === "associated") && (
+                            <p className="error-text">{modalErrorsProj.find(e => e.field === "associated").message}</p>
+                          )}
                         </div>
 
                         <div>
@@ -2457,42 +2419,27 @@ const handleSave = async () => {
                           <textarea
                             placeholder="Description"
                             value={formProjectData.projectDescription}
-                            onChange={(e) =>
+                            onChange={(e) => {
                               setFormProjectData({
                                 ...formProjectData,
                                 projectDescription: e.target.value,
                               })
+                              setModalErrorsProj(prev => prev.filter(err => err.field !== "projectDescription"));
                             }
-                            required
+                            }
+
                           />
+                          {modalErrorsProj.find(e => e.field === "projectDescription") && (
+                            <p className="error-text">{modalErrorsProj.find(e => e.field === "projectDescription").message}</p>
+                          )}
                         </div>
-                        {/* <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          const file = e.target.files[0];
-                          if (file) {
-                            const imageUrl = URL.createObjectURL(file);
-                            setFormProjectData({ ...formProjectData, image: imageUrl, file: file });
-                          }
-                        }}
-                      />
-                      {formProjectData.image && (
-                        <img
-                          src={formProjectData.image}
-                          alt="Preview"
-                          style={{ width: "10%", height: "auto", borderRadius: "8px", marginTop: "10px" }}
-                        />
-                      )} */}
+
 
                         <div className="modal-buttons">
                           {editIndex !== null && formProjectData._id && (
                             <div
                               type="button"
-                              // style={{
-                              //   backgroundColor: "red",
-                              //   color: "white",
-                              // }}
+                              
                               onClick={() =>
                                 handleDeleteProject(formProjectData._id)
                               }
@@ -2503,12 +2450,7 @@ const handleSave = async () => {
                           <button type="submit">
                             {editIndex !== null ? "Update" : "Add"}
                           </button>
-                          {/* <button
-                            type="button"
-                            onClick={() => setShowModal(false)}
-                          >
-                            Cancel
-                          </button> */}
+                          
                         </div>
                       </form>
                     </div>
@@ -2600,84 +2542,58 @@ const handleSave = async () => {
                           type="text"
                           placeholder="Certification Title"
                           value={formLicensesData.title}
-                          onChange={(e) =>
-                            setFormLicensesData({
-                              ...formLicensesData,
-                              title: e.target.value,
-                            })
-                          }
-                          required
+                          onChange={(e) => {
+                            setFormLicensesData(prev => ({ ...prev, title: e.target.value }));
+                            setModalErrorsLic(prev => prev.filter(err => err.field !== "title"));
+                          }}
+                          
                         />
+                        {modalErrorsLic.find(e => e.field === "title") && (
+                          <p className="error-text">{modalErrorsLic.find(e => e.field === "title").message}</p>
+                        )}
                         <input
                           type="text"
                           placeholder="Issuer"
                           value={formLicensesData.issuer}
-                          onChange={(e) =>
-                            setFormLicensesData({
-                              ...formLicensesData,
-                              issuer: e.target.value,
-                            })
-                          }
-                          required
+                          onChange={(e) => {
+                            setFormLicensesData(prev => ({ ...prev, issuer: e.target.value }));
+                            setModalErrorsLic(prev => prev.filter(err => err.field !== "issuer"));
+                          }}
+                          
                         />
+                        {modalErrorsLic.find(e => e.field === "issuer") && (
+                          <p className="error-text">{modalErrorsLic.find(e => e.field === "issuer").message}</p>
+                        )}
                         <input
                           type="date"
                           placeholder="Issued Date"
                           value={formLicensesData.issuedDate}
-                          onChange={(e) =>
-                            setFormLicensesData({
-                              ...formLicensesData,
-                              issuedDate: e.target.value,
-                            })
-                          }
+                          onChange={(e) => {
+                            setFormLicensesData(prev => ({ ...prev, issuedDate: e.target.value }));
+                            setModalErrorsLic(prev => prev.filter(err => err.field !== "issuedDate"));
+                          }}
                           required
                         />
-                        {/* <input
-                        type="date"
-                        placeholder="Issued Date"
-                        value={formLicensesData.issuedDate}
-                        onChange={(e) => setFormLicensesData({ ...formLicensesData, issuedDate: e.target.value })}
-                        required
-                      /> */}
+                        {modalErrorsLic.find(e => e.field === "issuedDate") && (
+                          <p className="error-text">{modalErrorsLic.find(e => e.field === "issuedDate").message}</p>
+                        )}
                         <input
                           type="url"
                           placeholder="Credential Link"
                           value={formLicensesData.credentialUrl}
-                          onChange={(e) =>
-                            setFormLicensesData({
-                              ...formLicensesData,
-                              credentialUrl: e.target.value,
-                            })
-                          }
+                          onChange={(e) => {
+                            setFormLicensesData(prev => ({ ...prev, credentialUrl: e.target.value }));
+                            setModalErrorsLic(prev => prev.filter(err => err.field !== "credentialUrl"));
+                          }}
                         />
+                        {modalErrorsLic.find(e => e.field === "credentialUrl") && (
+                          <p className="error-text">{modalErrorsLic.find(e => e.field === "credentialUrl").message}</p>
+                        )}
 
-                        {/* <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          const file = e.target.files[0];
-                          if (file) {
-                            const reader = new FileReader();
-                            reader.onloadend = () => {
-                              setFormLicensesData({ ...formLicensesData, image: reader.result });
-                            };
-                            reader.readAsDataURL(file);
-                          }
-                        }}
-                      />
-                      {formLicensesData.image && (
-                        <img src={formLicensesData.image} alt="Preview" style={{ width: "10%", height: "auto", borderRadius: "8px", marginTop: "10px" }} />
-                      )} */}
                         <div className="modal-buttons">
                           <button type="submit">
                             {editIndexLicenses !== null ? "Update" : "Add"}
                           </button>
-                          {/* <button
-                            type="button"
-                            onClick={() => setShowLicensesModal(false)}
-                          >
-                            Cancel
-                          </button> */}
                           {editIndexLicenses !== null &&
                             formLicensesData._id && (
                               <button
@@ -2708,212 +2624,3 @@ const handleSave = async () => {
 };
 
 export default EmpProfPage;
-
-// import React, { useEffect, useState } from "react";
-// import Cookies from "js-cookie";
-// import { useNavigate } from "react-router-dom";
-// import "../../stylesheets/CandiProfile.css";
-// import "../../stylesheets/EmpProfile.css";
-// import { FaLocationDot } from "react-icons/fa6";
-// import { FaLaptopCode } from "react-icons/fa";
-// import { MdOutlineCurrencyRupee } from "react-icons/md";
-// import { FaBusinessTime } from "react-icons/fa6";
-// import { IoCallSharp } from "react-icons/io5";
-// import { IoIosMail } from "react-icons/io";
-// import { FiDownload } from "react-icons/fi";
-// import { IoEyeOutline } from "react-icons/io5";
-// import { FaPlus } from "react-icons/fa6";
-// import { RiEditBoxLine } from "react-icons/ri";
-// import ProfAbout from "../cards/ProfAbout";
-// import ProfExperience from "../cards/ProfExperience";
-// import ProfProject from "../cards/ProfProject";
-// import ProfSkills from "../cards/ProfSkills";
-// import ProfEducation from "../cards/ProfEducation";
-// import ProfCertiCard from "../cards/ProfCertiCard";
-// import ProfAwardCard from "../cards/ProfAwardCard";
-// import AboutMe from "../profileCards/AboutMe";
-// import Experience from "../profileCards/Experience";
-// import Projects from "../profileCards/Projects";
-// import Skills from "../profileCards/Skills";
-// import Education from "../profileCards/Education";
-// import LicensCertificates from "../profileCards/LicensCertficates";
-// import Awads from "../profileCards/Awads";
-
-// const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
-
-// const EmpProfPage = () => {
-//   const [userData, setUserData] = useState(null);
-//   const [error, setError] = useState(null);
-//   const authToken = Cookies.get("authToken"); // Get token from cookies
-//   const userId = Cookies.get("userId"); // Get user ID from cookieshe
-//   const navigate = useNavigate();
-
-//   const [showAboutMe, setShowAboutMe] = useState(false);
-//   const [showExperience, setShowExperience] = useState(false);
-//   const [showProjects, setShowProjects] = useState(false);
-//   const [showSkills, setShowSkills] = useState(false);
-//   const [showEducation, setShowEducation] = useState(false);
-//   const [showLicensCertificates, setShowLicensCertificates] = useState(false);
-//   const [showAwads, setShowAwads] = useState(false);
-//   const [isHovered, setIsHovered] = useState(false);
-
-//   const toggleAboutMePopup = () => setShowAboutMe(!showAboutMe);
-//   const toggleExperiencePopup = () => setShowExperience(!showExperience);
-//   const toggleProjectsPopup = () => setShowProjects(!showProjects);
-//   const toggleSkillsPopup = () => setShowSkills(!showSkills);
-//   const toggleEducationPopup = () => setShowEducation(!showEducation);
-//   const toggleLicensCertificatesPopup = () =>
-//     setShowLicensCertificates(!showLicensCertificates);
-//   const toggleAwadsPopup = () => setShowAwads(!showAwads);
-
-// useEffect(() => {
-//   if (!authToken || !userId) {
-//     navigate("/signin");
-//     return;
-//   }
-
-//   const fetchUserData = async () => {
-//     try {
-//       const response = await fetch(`${baseUrl}/api/getAllUserDetails`, {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//           Authorization: `Bearer ${authToken}`,
-//         },
-//         body: JSON.stringify({ userId: userId }),
-//       });
-
-//       const data = await response.json();
-
-//       if (data.status === 200) {
-//         setUserData(data.result[0]);
-//       } else {
-//         setError(data.message);
-//       }
-//     } catch (error) {
-//       setError("Error fetching data");
-//     }
-//   };
-
-//   fetchUserData();
-// }, [authToken, userId, navigate]);
-
-//   const handleLogout = () => {
-//     Cookies.remove("authToken");
-//     Cookies.remove("userId");
-//     navigate("/signin");
-//   };
-
-//   if (!authToken || !userId) {
-//     return <p>Please log in to view your profile.</p>;
-//   }
-
-//   return (
-//     <div>
-//       <div>
-//         {error && <p style={{ color: "red" }}>{error}</p>}
-//         {userData ? (
-//           <div className="empprofile-card">
-//             <div className="profileCard-box">
-//               <div className="profile-secOne">
-//                 <div className="profileCardHead">
-//                   <img src={userData.image} alt="" />
-//                   <div className="cadidate-basicInfo">
-//                     <h3>{userData.name}</h3>
-//                     <p>{userData.currentPosition}</p>
-//                     <p>Arnnima Solution</p>
-//                     <div className="colOneInfoTwo">
-//                       <div className="candi-personalInfo">
-//                         <div className="personalInfo-colOne">
-//                           <div className="colOne-details">
-//                             <FaLocationDot size={20} />
-//                             <p>{userData.location}</p>
-//                           </div>
-//                           <div className="colOne-details">
-//                             <FaLaptopCode size={20} />
-//                             <p>{userData.experienceInStack} Year Exp</p>
-//                           </div>
-//                           <div className="colOne-details">
-//                             <MdOutlineCurrencyRupee size={20} />
-//                             <p>{userData.salary} /-Year</p>
-//                           </div>
-//                         </div>
-//                         <div className="personalInfo-colTwo">
-//                           <div className="colTwo-details">
-//                             <FaBusinessTime size={20} />
-//                             <p>{userData.noticePeriod} Days (Notice period)</p>
-//                           </div>
-//                           <div className="colTwo-details">
-//                             <IoCallSharp size={20} />
-//                             <p>+91 {userData.mobileNumber}</p>
-//                           </div>
-//                           <div className="colTwo-details">
-//                             <IoIosMail size={20} />
-//                             <p>{userData.email}</p>
-//                           </div>
-//                         </div>
-//                       </div>
-//                       <div className="dropdown-container">
-//                         <button className="dropdown-button">Rusume</button>
-//                         <div className="dropdown-menu">
-//                           <ul>
-//                             <li className="resume-action-btn">
-//                               <FiDownload />
-//                               Download
-//                             </li>
-//                             <li className="resume-action-btn">
-//                               <IoEyeOutline />
-//                               View
-//                             </li>
-//                           </ul>
-//                         </div>
-//                       </div>
-//                     </div>
-//                   </div>
-//                   <div className="editIconEmpTop">
-//                     <button>
-//                       <RiEditBoxLine size={20} />
-//                     </button>
-//                   </div>
-//                 </div>
-//               </div>
-
-//               <div className="profile-secTwo">
-//                 <div className="profile-contentBox">
-
-//                   <div className="content-boxes">
-//                     <div className="content-boxes-head">
-//                       <h2>About Me</h2>
-//                       <button onClick={toggleAboutMePopup}>
-//                         <FaPlus size={20} className="aboutAddBtn" />
-//                       </button>
-//                     </div>
-//                     {showAboutMe && <AboutMe onClose={toggleAboutMePopup} />}
-//                     <div className="about-card-box-details">
-//                       <div>
-//                         <div>
-//                           {userData && userData.about ? (
-//                             <div className="profabout-box">
-//                               <p>{userData.about}</p>
-//                             </div>
-//                           ) : (
-//                             <p></p>
-//                           )}
-//                         </div>
-//                       </div>
-//                     </div>
-//                   </div>
-
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         ) : (
-//           <p>Loading...</p>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default EmpProfPage;

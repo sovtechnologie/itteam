@@ -21,7 +21,7 @@ export const fetchTechStacks = async () => {
 };
 
 
-export const fetchEmployment = async ({ authToken }) => {
+export const fetchEmployment = async ( authToken ) => {
   try {
     const response = await axios.get(
       `${BASE_URL}/api/getAllExperience`, {
