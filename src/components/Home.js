@@ -158,7 +158,17 @@ const Home = () => {
 
   const maskedName = (name) => {
     return name ? `${name[0]}${"*".repeat(name.length - 1)}` : "";
-  };
+  }; 
+
+  // const handleDownloadResume = (resumeUrl) => {
+  //   // create a temporary <a> element
+  //   const link = document.createElement("a");
+  //   link.href = resumeUrl;
+  //   // optional: set a default file name
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   return (
     <>
@@ -326,7 +336,7 @@ const Home = () => {
                     </p>
                   </div>
                   <div>
-                    <BsDownload style={{ width: "25px", height: "25px", marginTop: "-25px", color: "#1783D0" }} />
+                    {isLoggedIn ? <BsDownload style={{ width: "25px", height: "25px", marginTop: "-25px", color: "#1783D0" }} /> : ''}
                   </div>
                 </div>
 
