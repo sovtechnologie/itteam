@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "../../stylesheets/CandiProfile.css";
-// import "../../stylesheets/EmpProfile.css";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaLaptopCode } from "react-icons/fa";
 import { MdOutlineCurrencyRupee } from "react-icons/md";
@@ -302,6 +301,19 @@ const EmpProfPage = () => {
     }
   };
 
+  // Fetch employment list from backend
+const fetchEmploymentList = async () => {
+  try {
+    const response = await fetchEmployment(authToken);
+    if (response ) {
+      setEmploymentList(response || []);
+      console.log("Employment list fetched successfully:", response);
+    }
+  } catch (error) {
+    console.error("Error fetching employment list:", error);
+  }
+};
+
   const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
 
@@ -395,7 +407,7 @@ const EmpProfPage = () => {
       updatedList[editingIndex] = newJob;
     } else {
       updatedList.push(newJob);
-      employmentList.push(newJob)
+      // employmentList.push(newJob); // Ensure the new job is added to the original list
     }
 
     // Optimistically update local state first
@@ -415,11 +427,12 @@ const EmpProfPage = () => {
         updatedList = [...employmentList];
       }
       setEmploymentList(updatedList);
+      await fetchEmploymentList();
+      setIsExperienceModalOpen(false);
+      setEditingIndex(null);
+    } else {
+      setModalErrors([{ field: "general", message: "Failed to save experience." }]);
     }
-
-    setModalErrors([{ field: "general", message: "Failed to save experience." }]);
-    setIsExperienceModalOpen(false);
-    setEditingIndex(null);
   };
 
  
@@ -1285,7 +1298,7 @@ const EmpProfPage = () => {
                           <option
                             key={city._id || city.id || city.name || city}
                             value={city.name || city}
-                          >
+                          >s
                             {city.name || city}
                           </option>
                         ))}

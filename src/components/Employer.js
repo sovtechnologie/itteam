@@ -16,7 +16,6 @@ import { FiShare2 } from "react-icons/fi";
 import { FaBusinessTime, FaLaptopCode, FaLocationDot } from "react-icons/fa6";
 import { IoCallSharp } from "react-icons/io5";
 import { IoIosMail } from "react-icons/io";
-// import { Bookmark } from 'lucide-react';
 import CompanyLogo from "../images/CompanyProfilelogo.png";
 import vector from "../images/Vector.png";
 import coin from "../images/coins.png";
@@ -48,6 +47,7 @@ export default function Employer() {
     industry: data.industry || [],
     companySize: data.company_SizeMin?.toString() || "",
     founded: data.founded || "",
+    state: data.state || "",
     location: Array.isArray(data.location)
       ? data.location[0]
       : data.location || "",
@@ -120,6 +120,7 @@ export default function Employer() {
         contactName: companyData.contactName || "",
         designation: companyData.designation || "",
         location: companyData.location || "",
+        state: companyData.state || "",
         phone: companyData.contactNumber || "",
         companySize: companyData.companySize || "",
         email: companyData.email || "",
@@ -152,48 +153,6 @@ export default function Employer() {
     }
   };
 
-  // ...existing code...
-
-  // 1. Add this function inside your Companies component
-  // const handleProfileSave = async () => {
-  //   try {
-  //     const payload = {
-  //       _id: companyData._id,
-  //       name: formData.contactName,
-  //       companyName: formData.companyName,
-  //       designationName: formData.designation,
-  //       location: formData.location,
-  //       company_SizeMin: formData.companySize,
-  //       contactNumber: formData.contact,
-  //       email: formData.email,
-  //       description: formData.description,
-  //       logo: formData.profileImg,
-  //     };
-
-  //     const authToken = Cookies.get("authToken");
-  //     const response = await axios.put(
-  //       `${baseUrl}/employer/editEmployer`,
-  //       { id: companyData._id, ...payload },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${authToken}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     )
-
-  //     if (response.data.status === 200) {
-  //       alert(response.data.message || "Profile updated successfully.");
-  //       setIsEditOpen(false);
-  //       fetchUserData();
-  //     } else {
-  //       alert(response.data.message || "Failed to update profile.");
-  //     }
-  //   } catch (error) {
-  //     alert(error.response?.data?.message || "Error updating profile.");
-  //     setIsEditOpen(false);
-  //   }
-  // };
 
   const handleProfileSave = async () => {
     try {
@@ -226,11 +185,10 @@ export default function Employer() {
       );
 
       if (response.data.status === 200) {
-        alert(response.data.message || "Profile updated successfully.");
         setIsEditOpen(false);
         fetchUserData();
       } else {
-        alert(response.data.message || "Failed to update profile.");
+        console.error("Update error:", response.data.message);
       }
     } catch (error) {
       alert(error.response?.data?.message || "Error updating profile.");
@@ -241,6 +199,7 @@ export default function Employer() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newIndustry, setNewIndustry] = useState("");
   const [formState, setFormState] = useState(companyData);
+  const [modalErrors, setModalErrors] = useState([]);
 
   const handleEditClick = () => {
     setFormState(companyData);
@@ -250,17 +209,29 @@ export default function Employer() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormState((prev) => ({ ...prev, [name]: value }));
+    setModalErrors(prev => prev.filter(err => err.field !== name));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const errs = [];
+    if (!formState.description.trim()) errs.push({ field: 'description', message: 'Description is required.' });
+    if (!formState.website.trim()) errs.push({ field: 'website', message: 'Website is required.' });
+    if (formState.website && !/^https?:\/\//.test(formState.website))
+      errs.push({ field: 'website', message: 'Website must start with http:// or https://' });
+    if (!formState.contact.trim()) errs.push({ field: 'contact', message: 'Contact is required.' });
+    if (!formState.address.trim()) errs.push({ field: 'address', message: 'Address is required.' });
+    if (!formState.founded.trim()) errs.push({ field: 'founded', message: 'Founded date is required.' });
+    if (formState.industry.length === 0) errs.push({ field: 'industry', message: 'Add at least one industry.' });
+
+    if (errs.length) {
+      setModalErrors(errs);
+      return;
+    }
     try {
       // Prepare payload (adjust field names as your backend expects)
       const payload = {
         _id: companyData._id,
-        // name: formState.contactName,
-        // companyName: formState.companyName,
-        // designationName: formState.designation,
         location: formState.location,
         company_SizeMin: formState.companySize,
         contactNumber: formState.contactNumber,
@@ -316,7 +287,7 @@ export default function Employer() {
                   <div className="Profile-buttons">
                     <button className="icon-btn">
                       <MdOutlineEdit size={30} onClick={handleEditToggle} />
-                      
+
                     </button>
                     {/* <button className="icon-btn">
                       <FiShare2 size={30} />
@@ -328,24 +299,23 @@ export default function Employer() {
                   <div className="Profile-personal-info">
                     <div className="Profile-personal-info-One">
                       <div className="Column-One-Details">
-                        {/* <FaMapMarkerAlt size={25} /> */}
+
                         <img src={empprofile1} />
                         <p>{formData?.location}</p>
                       </div>
                       <div className="Column-One-Details">
-                        {/* <FaPhoneAlt size={25} /> */}
+
                         <img src={empprofile5} />
-                         <p>{formData?.phone}</p>
+                        <p>{formData?.phone}</p>
                       </div>
                     </div>
                     <div className="Profile-personal-info-Two">
                       <div className="Column-Two-Details">
-                        {/* <FaBuilding size={25} /> */}
+
                         <img src={empprofile7} />
                         <p> Company Size : {formData?.companySize} </p>
                       </div>
                       <div className="Column-Two-Details">
-                        {/* <IoIosMail size={30} /> */}
                         <img src={empprofile6} />
                         <p>{formData?.email}</p>
                       </div>
@@ -448,12 +418,12 @@ export default function Employer() {
                       >
                         Designation
                       </label>
-                    <input
-                      name="designation"
-                      placeholder="Designation"
-                      value={formData.designation}
-                      onChange={handleInput}
-                    /></div>
+                      <input
+                        name="designation"
+                        placeholder="Designation"
+                        value={formData.designation}
+                        onChange={handleInput}
+                      /></div>
 
                     <div>
                       <label
@@ -465,14 +435,14 @@ export default function Employer() {
                           width: "100%",
                         }}
                       >
-                       Company Name
+                        Company Name
                       </label>
-                    <input
-                      name="companyName"
-                      placeholder="Company"
-                      value={formData.companyName}
-                      onChange={handleInput}
-                    /></div>
+                      <input
+                        name="companyName"
+                        placeholder="Company"
+                        value={formData.companyName}
+                        onChange={handleInput}
+                      /></div>
 
                     <div>
                       <label
@@ -486,12 +456,12 @@ export default function Employer() {
                       >
                         Location
                       </label>
-                    <input
-                      name="location"
-                      placeholder="Location"
-                      value={formData.location}
-                      onChange={handleInput}
-                    /></div>
+                      <input
+                        name="location"
+                        placeholder="Location"
+                        value={formData.location}
+                        onChange={handleInput}
+                      /></div>
 
                     <div>
                       <label
@@ -503,14 +473,14 @@ export default function Employer() {
                           width: "100%",
                         }}
                       >
-                       Company Size
+                        Company Size
                       </label>
-                    <input
-                      name="companySize"
-                      placeholder="size like 0-13 Employee"
-                      value={formData.companySize}
-                      onChange={handleInput}
-                    /></div>
+                      <input
+                        name="companySize"
+                        placeholder="size like 0-13 Employee"
+                        value={formData.companySize}
+                        onChange={handleInput}
+                      /></div>
 
                     <div>
                       <label
@@ -522,14 +492,14 @@ export default function Employer() {
                           width: "100%",
                         }}
                       >
-                       HR Phone
+                        HR Phone
                       </label>
-                    <input
-                      name="phone"
-                      placeholder="Phone"
-                      value={formData.phone}
-                      onChange={handleInput}
-                    /></div>
+                      <input
+                        name="phone"
+                        placeholder="Phone"
+                        value={formData.phone}
+                        onChange={handleInput}
+                      /></div>
 
 
                     <div>
@@ -544,12 +514,12 @@ export default function Employer() {
                       >
                         Email id
                       </label>
-                    <input
-                      name="email"
-                      placeholder="Email"
-                      value={formData.email}
-                      onChange={handleInput}
-                    /></div>
+                      <input
+                        name="email"
+                        placeholder="Email"
+                        value={formData.email}
+                        onChange={handleInput}
+                      /></div>
 
                     <div>
                       <label
@@ -563,17 +533,15 @@ export default function Employer() {
                       >
                         Profile Image
                       </label>
-                    <input
-                      type="file"
-                      name="profileImg"
-                      onChange={handleInput}
-                    />
-                  </div></div>
+                      <input
+                        type="file"
+                        name="profileImg"
+                        onChange={handleInput}
+                      />
+                    </div></div>
                   <div className="modal-buttons">
                     <button onClick={handleProfileSave}>Save </button>
-                    {/* <button type="button" onClick={handleClose}>
-                      Cancel
-                    </button> */}
+                    
                   </div>
                 </div>
               </div>
@@ -617,10 +585,10 @@ export default function Employer() {
                 <p>
                   {companyData?.contactNumber
                     ? `+91 ${companyData.contactNumber.replace(
-                        /^(\+91|91)?/,
-                        ""
-                      )}`
-                    : "No contact number provided"}
+                      /^(\+91|91)?/,
+                      ""
+                    )}`
+                    : ""}
                 </p>{" "}
               </div>
               <div>
@@ -661,8 +629,13 @@ export default function Employer() {
                       onChange={handleInputChange}
                       rows={5}
                       placeholder="Company Description"
-                      required
+
                     />
+                    {modalErrors.some(e => e.field === 'description') &&
+                      <p className="error-text">
+                        {modalErrors.find(e => e.field === 'description').message}
+                      </p>
+                    }
                   </div>
 
                   <div style={{ display: "flex", gap: "28px" }}>
@@ -678,8 +651,13 @@ export default function Employer() {
                         value={formState.website}
                         onChange={handleInputChange}
                         placeholder="Website"
-                        required
+
                       />
+                      {modalErrors.some(e => e.field === 'website') &&
+                        <p className="error-text">
+                          {modalErrors.find(e => e.field === 'website').message}
+                        </p>
+                      }
                     </div>
                     <div
                       style={{
@@ -693,8 +671,13 @@ export default function Employer() {
                         value={formState.contact}
                         onChange={handleInputChange}
                         placeholder="Contact"
-                        required
+
                       />
+                      {modalErrors.some(e => e.field === 'contact') &&
+                        <p className="error-text">
+                          {modalErrors.find(e => e.field === 'contact').message}
+                        </p>
+                      }
                     </div>
                   </div>
                   <div>
@@ -705,55 +688,15 @@ export default function Employer() {
                       value={formState.address}
                       onChange={handleInputChange}
                       placeholder="Address"
-                      required
+
                     />
+                    {modalErrors.some(e => e.field === 'address') &&
+                      <p className="error-text">
+                        {modalErrors.find(e => e.field === 'address').message}
+                      </p>
+                    }
                   </div>
-                  {/* <div>
-                    <label>Industries</label>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "10px",
-                        flexWrap: "wrap",
-                        marginTop: "5px",
-                      }}
-                    >
-                      {formState.industry.map((item, idx) => (
-                        <span
-                          key={idx}
-                          style={{
-                            background: "#f0f0f0",
-                            padding: "5px 10px",
-                            borderRadius: "20px",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "8px",
-                          }}
-                        >
-                          {item}
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setFormState((prev) => ({
-                                ...prev,
-                                industry: prev.industry.filter(
-                                  (_, i) => i !== idx
-                                ),
-                              }))
-                            }
-                            style={{
-                              background: "none",
-                              border: "20px",
-                              fontWeight: "bold",
-                              cursor: "pointer",
-                            }}
-                          >
-                            ×
-                          </button>
-                        </span>
-                      ))}
-                    </div>
-                  </div> */}
+
                   <div>
                     <label className="company-info">Add Industry</label>
                     <div
@@ -851,6 +794,11 @@ export default function Employer() {
                         </span>
                       ))}
                     </div>
+                    {modalErrors.some(e => e.field === 'industry') &&
+                      <p className="error-text">
+                        {modalErrors.find(e => e.field === 'industry').message}
+                      </p>
+                    }
                   </div>
 
                   <div>
@@ -861,14 +809,16 @@ export default function Employer() {
                       value={formState.founded}
                       onChange={handleInputChange}
                       placeholder="Founded"
-                      required
+
                     />
+                    {modalErrors.some(e => e.field === 'founded') &&
+                      <p className="error-text">
+                        {modalErrors.find(e => e.field === 'founded').message}
+                      </p>
+                    }
                   </div>
                   <div className="modal-buttons">
                     <button type="submit">Save</button>
-                    {/* <button type="button" onClick={() => setIsModalOpen(false)}>
-                      Cancel
-                    </button> */}
                   </div>
                 </form>
               </div>
@@ -924,169 +874,3 @@ export default function Employer() {
     </>
   );
 }
-
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import Cookies from "js-cookie";
-// import "../stylesheets/Employer.css";
-// import empImg from "../images/cProfileImg.png";
-// import { IoCallSharp } from "react-icons/io5";
-// import { IoIosMail } from "react-icons/io";
-// import { IoShare } from "react-icons/io5";
-// import { FaPlus } from "react-icons/fa6";
-// import EmployerPopupCard from "../components/profileCards/EmployerPopupCard";
-// import { useNavigate, useParams } from "react-router-dom";
-// import { useAuth } from "../components/AuthContext";
-
-// const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
-
-// const Employer = () => {
-//   const [userData, setUserData] = useState(null);
-//   const navigate = useNavigate();
-//   const { token } = useParams();
-//   const { login } = useAuth();
-
-//   useEffect(() => {
-//     fetchUserData();
-//   }, []);
-
-//   const fetchUserData = async () => {
-//     let authToken = token || Cookies.get("authToken");
-
-//     if (!authToken) {
-//       alert("Session expired! Please login again.");
-//       navigate("/signin");
-//       return;
-//     }
-
-//     try {
-//       const response = await axios.get(
-//         `${baseUrl}/employer/getEmployerAllDetails`,
-//         {
-//           headers: { Authorization: `Bearer ${authToken}` },
-//         }
-//       );
-//       setUserData(response.data.res);
-//       login(response.data.res);
-//     } catch (error) {
-//       console.error("Error fetching user data:", error);
-//       if (error.response?.status === 401) {
-//         await refreshToken();
-//       }
-//     }
-//   };
-
-//   const refreshToken = async () => {
-//     try {
-//       const response = await axios.post(`${baseUrl}/api/v1/token/refreshToken`);
-//       Cookies.set("authToken", response.data.token, { expires: 1 }); // 1 din tak valid
-//       fetchUserData();
-//     } catch (error) {
-//       console.error("Error refreshing token:", error);
-//       logout();
-//     }
-//   };
-
-//   const logout = () => {
-//     Cookies.remove("authToken");
-//     navigate("/signin");
-//   };
-
-//   const [showEmployerPopupCard, setEmployerPopupCard] = useState(false);
-
-//   const toggleEmployerPopupCardPopup = () =>
-//     setEmployerPopupCard(!showEmployerPopupCard);
-
-//   return (
-//     <>
-//       <div className="employer-box">
-//         {userData ? (
-//           <div className="emp-container">
-//             <div className="empyr-boxtop">
-//               <div className="prof-sectionOne">
-//                 <div className="empyr-profImg">
-//                   <img src={empImg} alt="" />
-//                 </div>
-//                 <div className="emp-details">
-//                   <h2>{userData.companyName}</h2>
-//                   <h4>{userData.name} | {userData.designationName}</h4>
-//                   <div className="comp-call">
-//                     <IoCallSharp size={20} />
-//                     +91 {userData.contactNumber}
-//                   </div>
-//                   <div className="comp-mail">
-//                     <IoIosMail size={20} />
-//                     {userData.email}
-//                   </div>
-//                   <p>{userData.location}</p>
-//                   <button>
-//                     <a href="https://arnnima.com/">
-//                       Visit Website <IoShare />
-//                     </a>
-//                   </button>
-//                 </div>
-//                 <div className="empyr-btns">
-//                   <div className="empyr-add-btn">
-//                     <button onClick={toggleEmployerPopupCardPopup}>
-//                       <FaPlus size={20} />
-//                     </button>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//             <div className="prof-sectionTwo">
-//               <h2>About the Company</h2>
-//               <p>
-//                 {userData.description}
-//               </p>
-//               <div className="company-site emp-subheading">
-//                 <h5>Website:</h5>
-//                 <a href="https://sovtechnologies.com">
-//                   {userData.website}
-//                 </a>
-//               </div>
-//               <div className="company-industry emp-subheading">
-//                 <h5>Industry:</h5>
-//                 <p>{userData.industry}</p>
-//               </div>
-//               <div className="company-found emp-subheading">
-//                 <h5>Company size:</h5>
-//                 <p>{userData.company_SizeMin} employees</p>
-//               </div>
-//               <div className="company-contact emp-subheading">
-//                 <h5>Contact:</h5>
-//                 <p>+91 {userData.contactNumber}</p>
-//               </div>
-//               <div className="company-address emp-subheading">
-//                 <h5>Address:</h5>
-//                 <p>{userData.companyFullAddress}</p>
-//               </div>
-//               <div className="company-found emp-subheading">
-//                 <h5>Founded:</h5>
-//                 <p>{userData.founded}</p>
-//               </div>
-//             </div>
-//           </div>
-//         ) : (
-//           <p></p>
-//         )}
-//       </div>
-
-//       {showEmployerPopupCard && (
-//         <div className="popup-overlay">
-//           <div className="popup-card">
-//             <button
-//               className="popup-close-btn"
-//               onClick={toggleEmployerPopupCardPopup}
-//             >
-//               X
-//             </button>
-//             <EmployerPopupCard fetchUserData={fetchUserData} />
-//           </div>
-//         </div>
-//       )}
-//     </>
-//   );
-// };
-
-// export default Employer;

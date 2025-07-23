@@ -111,7 +111,7 @@ const EmprSignIn = () => {
           otp: formData.otp,
         }
       );
-      const data = await response.json();
+      const data =  response.data;
       console.log("mu data",data)
 
       if (data?.status === 200) {
@@ -139,6 +139,7 @@ const EmprSignIn = () => {
             message: data.message || "OTP verification failed",
           },
         ]);
+        setIsOtpSent(false);
       }
     } catch (error) {
       if(error.status === 400){
@@ -148,6 +149,7 @@ const EmprSignIn = () => {
           message: "Otp Not Matched",
         },
       ]);
+      setIsOtpSent(false);
       }else{
           setErrors([
         {
@@ -155,6 +157,7 @@ const EmprSignIn = () => {
           message: error.message || "Something went wrong.",
         },
       ]);
+      setIsOtpSent(false);
       }
      
     } finally {

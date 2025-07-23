@@ -31,8 +31,7 @@ const Header = ({ isHomePage }) => {
   const authToken = Cookies.get("authToken");
   const userId = Cookies.get("userId");
   const role = Cookies.get("role"); // 'candidate' or 'company'
-  console.log("userId in header", userId);
-  console.log("user Role in header", role);
+ 
 
   const handleMouseEnter = () => setMenuOpen(true);
   const handleMouseLeave = () => setMenuOpen(false);
