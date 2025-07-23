@@ -225,7 +225,7 @@ const EmpFilter = () => {
   const totalPages = Math.ceil(filteredProfile.length / profilesPerPage);
 
   const paginationRange = useMemo(() => {
-    const startPages = [1, 2, 3];
+    const startPages = [1];
     const endPages = [totalPages - 2, totalPages - 1, totalPages];
     const pagination = [...startPages];
 
@@ -233,7 +233,7 @@ const EmpFilter = () => {
       pagination.push("...");
       pagination.push(...endPages);
     } else {
-      for (let i = 4; i <= totalPages; i++) pagination.push(i);
+      for (let i = 2; i <= totalPages; i++) pagination.push(i);
     }
     return pagination;
   }, [totalPages]);
