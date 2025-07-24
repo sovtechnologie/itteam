@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import "../stylesheets/Companies.css";
@@ -136,6 +136,11 @@ export default function Employer() {
   console.log("formData", formData);
   const handleEditToggle = () => setIsEditOpen(true);
   const handleClose = () => setIsEditOpen(false);
+  const fileInputRef = useRef(null);
+
+  const handleImageClick = () => {
+    fileInputRef.current?.click();
+  };
 
   const handleInput = (e) => {
     const { name, value, files } = e.target;
@@ -187,6 +192,7 @@ export default function Employer() {
       if (response.data.status === 200) {
         setIsEditOpen(false);
         fetchUserData();
+        window.dispatchEvent(new Event("profile-updated"))
       } else {
         console.error("Update error:", response.data.message);
       }
@@ -289,9 +295,6 @@ export default function Employer() {
                       <MdOutlineEdit size={30} onClick={handleEditToggle} />
 
                     </button>
-                    {/* <button className="icon-btn">
-                      <FiShare2 size={30} />
-                    </button> */}
                   </div>
                 </div>
 
@@ -363,6 +366,7 @@ export default function Employer() {
                           maxWidth: "100%",
                           textAlign: "center",
                         }}
+                        onClick={handleImageClick}
                       >
                         <img
                           src={formData.profileImg}
@@ -533,15 +537,23 @@ export default function Employer() {
                       >
                         Profile Image
                       </label>
-                      <input
+                      {/* <input
                         type="file"
                         name="profileImg"
+                        onChange={handleInput}
+                      /> */}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        name="profileImg"
+                        ref={fileInputRef}
+                        style={{ display: "none" }}
                         onChange={handleInput}
                       />
                     </div></div>
                   <div className="modal-buttons">
                     <button onClick={handleProfileSave}>Save </button>
-                    
+
                   </div>
                 </div>
               </div>

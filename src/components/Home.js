@@ -33,6 +33,7 @@ import { fetchtopskillandlocation } from "../services/apiService";
 import { BsDownload } from "react-icons/bs";
 import femaleAvator from "../images/female.png";
 import MaleAvator from "../images/male.png";
+import downloadResume from "../utils/download";
 
 
 
@@ -156,19 +157,21 @@ const Home = () => {
     }
   };
 
-  const maskedName = (name) => {
-    return name ? `${name[0]}${"*".repeat(name.length - 1)}` : "";
-  }; 
+ 
 
-  // const handleDownloadResume = (resumeUrl) => {
-  //   // create a temporary <a> element
-  //   const link = document.createElement("a");
-  //   link.href = resumeUrl;
-  //   // optional: set a default file name
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   document.body.removeChild(link);
-  // };
+
+// const downloadResume = (resumeUrl) => {
+//   const link = document.createElement("a");
+//   link.href = resumeUrl;
+//   link.download = resumeUrl.split("/").pop(); // sets the default file name
+//   link.target = "_blank"; // optional: opens in new tab before download
+//   document.body.appendChild(link);
+//   link.click();
+//   document.body.removeChild(link);
+// };
+
+
+
 
   return (
     <>
@@ -326,7 +329,7 @@ const Home = () => {
                   />
                   <div className="candidate-details-exact">
                     <h3 className="candidate-name-exact">
-                      {isLoggedIn ? candidate.name : maskedName(candidate.name)}
+                      {isLoggedIn ? candidate.name : "*******"}
                     </h3>
                     <p className="candidate-position-exact">
                       {candidate.currentPosition}
@@ -336,24 +339,19 @@ const Home = () => {
                     </p>
                   </div>
                   <div>
-                    {isLoggedIn ? <BsDownload style={{ width: "25px", height: "25px", marginTop: "-25px", color: "#1783D0" }} /> : ''}
+                    {isLoggedIn ?
+                      <div
+                        onClick={() => downloadResume(candidate.resume)}
+                        style={{ cursor: "pointer" }}>
+                        <BsDownload style={{ width: "25px", height: "25px", marginTop: "-25px", color: "#1783D0" }} /></div> : ''}
                   </div>
                 </div>
 
                 <p className="job-description-exact">
-                  {/* {" "}
-                {(() => {
-                  const words = candidate.about
-                    ? candidate.about.split(" ")
-                    : [];
-                  if (words.length <= 10) return candidate.about;
-                  return words.slice(0, 10).join(" ") + " ...";
-                })()} */}
+
                   <div className="location-left">
                     <img src={homeemail} />
-                    {/* <MdOutlineEmail
-                    style={{ color: "#1783D0", fontSize: "1.6rem" }}
-                  /> */}
+
                     <span>
                       {" "}
                       {isLoggedIn ? candidate.email : "********@***.com"}

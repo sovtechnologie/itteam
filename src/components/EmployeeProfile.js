@@ -4,6 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import "../stylesheets/CandiProfile.css";
 import "../stylesheets/EmpProfile.css";
+import downloadResume from "../utils/download";
 
 import resumelogo from "../images/resumelogo.png";
 import companyLogo from "../images/company profile.png";
@@ -131,6 +132,7 @@ const EmployeeProfile = () => {
       setFormData({
         name: userData.name,
         designation: userData.currentPosition,
+        resume: userData.resume,
         company: userData.company_Name,
         location: userData.location,
         state: userData.state,
@@ -184,9 +186,7 @@ const EmployeeProfile = () => {
       month: "short",
     });
   };
-  const maskedName = formData.name
-    ? `${formData.name[0]}${"*".repeat(formData.name.length - 1)}`
-    : "";
+
 
   const getProfileSrc = () => {
     if (formData.profileImg) return formData.profileImg;
@@ -219,7 +219,7 @@ const EmployeeProfile = () => {
               <div className="cadidate-basicInfo">
                 <div className="profile-header-top">
                   <div>
-                    <h3>{isLoggedIn ? formData.name : maskedName}</h3>
+                    <h3>{isLoggedIn ? formData.name : "*******"}</h3>
                     <p>{formData.designation}</p>
                     <p>{formData.company}</p>
                   </div>
@@ -269,13 +269,20 @@ const EmployeeProfile = () => {
                 </div>
               </div>
               <div>
-                {isLoggedIn ? <BsDownload
-                  style={{
-                    width: "25px",
-                    height: "25px",
-                    color: "#ffffff"
-                  }}
-                /> : ''}
+                {isLoggedIn ?
+                  <div
+                    onClick={() => downloadResume(formData.resume)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <BsDownload
+                      style={{
+                        width: "25px",
+                        height: "25px",
+                        color: "#ffffff"
+                      }}
+                    />
+                  </div>
+                  : ''}
 
               </div>
             </div>
@@ -343,7 +350,7 @@ const EmployeeProfile = () => {
                     <h2>Upload Resume</h2>
                   </div>
 
-                  <div className="resume-card-box-details">                 
+                  <div className="resume-card-box-details">
                     {!resumeFile ? (
                       <div>
                         <img src={resumelogo} className="upload-icon" />
@@ -367,7 +374,7 @@ const EmployeeProfile = () => {
                       <div className="resume-info">
                         <p>
                           <strong>Uploaded:</strong> {resumeFile}
-                        </p>    
+                        </p>
                       </div>
                     )}
                   </div>

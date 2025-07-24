@@ -11,6 +11,7 @@ import homenotice from "../../images/HomeIcons/homenotice.svg";
 import { BsDownload } from "react-icons/bs";
 import femaleAvator from "../../images/female.png";
 import MaleAvator from "../../images/male.png";
+import downloadResume from "../../utils/download";
 
 const EmpFilter = () => {
   const isLoggedIn = !!Cookies.get("authToken");
@@ -476,7 +477,7 @@ const EmpFilter = () => {
                     />
                     <div>
                       <h3>
-                        {isLoggedIn ? profile.name : maskedName(profile.name)}
+                        {isLoggedIn ? profile.name : "*******"}
                       </h3>
                       {/* <p>{profile.currentPosition}</p> */}
                       <p className="companyname">
@@ -484,14 +485,18 @@ const EmpFilter = () => {
                       </p>
                     </div>
                     <div>
-                      {isLoggedIn ? <BsDownload
-                        style={{
-                          width: "25px",
-                          height: "25px",
-                          marginTop: "-25px",
-                          color: "#1782D0"
-                        }}
-                      /> : ''}
+                      {isLoggedIn ?
+                        <div
+                          onClick={() => downloadResume(profile.resume)}
+                          style={{ cursor: "pointer" }}> <BsDownload
+                            style={{
+                              width: "25px",
+                              height: "25px",
+                              marginTop: "-25px",
+                              color: "#1782D0"
+                            }}
+                          />
+                        </div> : ''}
 
                     </div>
                   </div>

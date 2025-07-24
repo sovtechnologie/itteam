@@ -60,19 +60,7 @@ const EmpProfPage = () => {
  const handleImageClick = () => {
   fileInputRef.current?.click();
 };
-  // const handleImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setFormData((prev) => ({
-  //         ...prev,
-  //         profileImg: reader.result,
-  //       }));
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
+  
 
   const handleSaveProfileWithImage = async () => {
     const form = new FormData();
@@ -1518,16 +1506,7 @@ const EmpProfPage = () => {
                             >
                               {loading ? "Saving..." : "Save"}
                             </button>
-                            {/* <button
-                                style={{
-                                  backgroundColor: "#f44336",
-                                  color: "white",
-                                }}
-                                onClick={() => setIsAboutEditOpen(false)}
-                                disabled={loading}
-                              >
-                                Cancel
-                              </button> */}
+                            
                           </div>
                         </div>
                       </div>
@@ -1605,12 +1584,7 @@ const EmpProfPage = () => {
                           }}
                         >
                           <button onClick={handleUpload}>Upload</button>
-                          {/* <button
-                            type="button"
-                            onClick={() => setIsModalOpen(false)}
-                          >
-                            Cancel
-                          </button> */}
+                          
                         </div>
                       </div>
                     </div>

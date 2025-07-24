@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "../stylesheets/Companies.css";
-import { FaMapMarkerAlt, FaPhoneAlt, FaBuilding } from "react-icons/fa";
-
-import { IoIosMail } from "react-icons/io";
-
 import CompanyLogo from "../images/CompanyProfilelogo.png";
 
 import { useParams } from "react-router-dom";
