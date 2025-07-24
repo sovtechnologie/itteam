@@ -26,12 +26,12 @@ const Header = ({ isHomePage }) => {
   const [userImage, setUserImage] = useState(null);
   const navigate = useNavigate();
   const [userGender, setUserGender] = useState(null);
- 
+
 
   const authToken = Cookies.get("authToken");
   const userId = Cookies.get("userId");
   const role = Cookies.get("role"); // 'candidate' or 'company'
- 
+
 
   const handleMouseEnter = () => setMenuOpen(true);
   const handleMouseLeave = () => setMenuOpen(false);
@@ -108,6 +108,17 @@ const Header = ({ isHomePage }) => {
     };
 
     fetchUserDetails();
+    // 👇 Add event listener to refetch on custom event
+    const handleRefetch = () => {
+      fetchUserDetails();
+    };
+
+    window.addEventListener("profile-updated", handleRefetch);
+    // Cleanup
+    return () => {
+      window.removeEventListener("profile-updated", handleRefetch);
+    };
+
   }, [authToken, userId, role]);
 
   useEffect(() => {
@@ -123,22 +134,22 @@ const Header = ({ isHomePage }) => {
 
 
   const getAvatarSrc = () => {
-  if (userImage) return userImage;
+    if (userImage) return userImage;
 
-  const gender = userGender || Cookies.get("gender") || "neutral";
-  switch (gender.toLowerCase()) {
-    case "female": return femaleAvator;
-    case "male": return MaleAvator;
-    default: return defaultLogo;
-  }
-};
+    const gender = userGender || Cookies.get("gender") || "neutral";
+    switch (gender.toLowerCase()) {
+      case "female": return femaleAvator;
+      case "male": return MaleAvator;
+      default: return defaultLogo;
+    }
+  };
   const [avatarSrc, setAvatarSrc] = useState(getAvatarSrc());
 
-useEffect(() => {
-  setAvatarSrc(getAvatarSrc());
-}, [userImage, userGender]);
+  useEffect(() => {
+    setAvatarSrc(getAvatarSrc());
+  }, [userImage, userGender]);
 
-// {`header main-header ${isHomePage ? "home-header" : ""}`}
+  // {`header main-header ${isHomePage ? "home-header" : ""}`}
   return (
     <header className="header main-header home-header ">
       <div id="left">
@@ -191,7 +202,7 @@ useEffect(() => {
                 onMouseLeave={handleMouseLeave}
               >
                 <img
-                  src={avatarSrc|| defaultLogo}
+                  src={avatarSrc || defaultLogo}
                   alt="profile"
                   height={50}
                   width={50}
@@ -213,11 +224,10 @@ useEffect(() => {
               <div className="header-buttons">
                 <Link to="/signin?role=candidate">
                   <button
-                    className={`sign-btn ${
-                      currentPath === "/signin" && roleParam === "candidate"
+                    className={`sign-btn ${currentPath === "/signin" && roleParam === "candidate"
                         ? "active"
                         : ""
-                    }`}
+                      }`}
                   >
                     Join as Jobseeker
                   </button>
@@ -225,11 +235,10 @@ useEffect(() => {
 
                 <Link to="/signin?role=company">
                   <button
-                    className={`signup-btn ${
-                      currentPath === "/signin" && roleParam === "company"
+                    className={`signup-btn ${currentPath === "/signin" && roleParam === "company"
                         ? "active"
                         : ""
-                    }`}
+                      }`}
                   >
                     Join as Company
                   </button>

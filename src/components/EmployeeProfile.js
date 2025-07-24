@@ -343,27 +343,7 @@ const EmployeeProfile = () => {
                     <h2>Upload Resume</h2>
                   </div>
 
-                  <div className="resume-card-box-details">
-                    {/* {!resumeFile ? (
-                    <div>
-                      <img src={resumelogo} className="upload-icon" />
-                      <p>Upload your Resume here</p>
-                    </div>
-                  ) : (
-                    <div className="resume-info">
-                      <p>
-                        <strong>Uploaded:</strong> {resumeFile}
-                      </p>
-                      <a
-                        href={resumeURL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="resume-link"
-                      >
-                        View / Download Resume
-                      </a>
-                    </div>
-                  )} */}
+                  <div className="resume-card-box-details">                 
                     {!resumeFile ? (
                       <div>
                         <img src={resumelogo} className="upload-icon" />
@@ -387,8 +367,7 @@ const EmployeeProfile = () => {
                       <div className="resume-info">
                         <p>
                           <strong>Uploaded:</strong> {resumeFile}
-                        </p>
-                        <p>Login to view resume</p>
+                        </p>    
                       </div>
                     )}
                   </div>
@@ -595,3 +574,25 @@ const EmployeeProfile = () => {
 };
 
 export default EmployeeProfile;
+
+
+{/* {!resumeFile ? (
+                    <div>
+                      <img src={resumelogo} className="upload-icon" />
+                      <p>Upload your Resume here</p>
+                    </div>
+                  ) : (
+                    <div className="resume-info">
+                      <p>
+                        <strong>Uploaded:</strong> {resumeFile}
+                      </p>
+                      <a
+                        href={resumeURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="resume-link"
+                      >
+                        View / Download Resume
+                      </a>
+                    </div>
+                  )} */}

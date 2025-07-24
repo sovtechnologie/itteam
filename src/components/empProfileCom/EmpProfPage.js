@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -55,6 +55,25 @@ const EmpProfPage = () => {
 
   const handleEditToggle = () => setIsEditOpen(true);
   const handleClose = () => setIsEditOpen(false);
+  const fileInputRef = useRef(null);
+
+ const handleImageClick = () => {
+  fileInputRef.current?.click();
+};
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setFormData((prev) => ({
+  //         ...prev,
+  //         profileImg: reader.result,
+  //       }));
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
   const handleSaveProfileWithImage = async () => {
     const form = new FormData();
     form.append("userId", userId);
@@ -86,6 +105,7 @@ const EmpProfPage = () => {
 
       if (response.data.status === 200) {
         setSuccess("Profile updated successfully.");
+         window.dispatchEvent(new Event("profile-updated"))
         setIsEditOpen(false);
       } else {
         setError(response.data.message || "Failed to update profile.");
@@ -302,17 +322,17 @@ const EmpProfPage = () => {
   };
 
   // Fetch employment list from backend
-const fetchEmploymentList = async () => {
-  try {
-    const response = await fetchEmployment(authToken);
-    if (response ) {
-      setEmploymentList(response || []);
-      console.log("Employment list fetched successfully:", response);
+  const fetchEmploymentList = async () => {
+    try {
+      const response = await fetchEmployment(authToken);
+      if (response) {
+        setEmploymentList(response || []);
+        console.log("Employment list fetched successfully:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching employment list:", error);
     }
-  } catch (error) {
-    console.error("Error fetching employment list:", error);
-  }
-};
+  };
 
   const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
@@ -435,7 +455,7 @@ const fetchEmploymentList = async () => {
     }
   };
 
- 
+
   const handleDeleteExperience = async (job_id) => {
     try {
       const response = await axios.post(
@@ -469,7 +489,7 @@ const fetchEmploymentList = async () => {
   const [isEduModalOpen, setIsEduModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
-  const [modalErrorsEdu , setModalErrorsEdu] = useState([]);
+  const [modalErrorsEdu, setModalErrorsEdu] = useState([]);
   const [newEducation, setNewEducation] = useState({
     college: "",
     degree: "",
@@ -564,7 +584,7 @@ const fetchEmploymentList = async () => {
   const [projects, setProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
-  const [modalErrorsProj,setModalErrorsProj] = useState([]);
+  const [modalErrorsProj, setModalErrorsProj] = useState([]);
   const [formProjectData, setFormProjectData] = useState({
     title: "",
     startDate: "",
@@ -1205,6 +1225,7 @@ const fetchEmploymentList = async () => {
                         justifyContent: "center",
                         marginTop: "15px",
                       }}
+
                     >
                       <div
                         style={{
@@ -1214,6 +1235,7 @@ const fetchEmploymentList = async () => {
                           maxWidth: "100%",
                           textAlign: "center",
                         }}
+                        onClick={handleImageClick}
                       >
                         <img
                           src={formData.profileImg}
@@ -1288,12 +1310,12 @@ const fetchEmploymentList = async () => {
                     <div className="signUpform-group">
                       <select
                         name="location"
-                        value={formData.location||""}
+                        value={formData.location || ""}
                         onChange={handleInputChange}
                         className="form-select"
                         disabled={!selectedState}
                       >
-                        <option value="">{formData.location||""}</option>
+                        <option value="">{formData.location || ""}</option>
                         {citiesList.map((city) => (
                           <option
                             key={city._id || city.id || city.name || city}
@@ -1322,7 +1344,7 @@ const fetchEmploymentList = async () => {
                       value={formData.salary}
                       onChange={handleInputChange}
                     />
-                    
+
                     <select
                       name="notice"
                       value={formData.notice}
@@ -1343,9 +1365,17 @@ const fetchEmploymentList = async () => {
                       disabled="true"
                     />
 
-                    <input
+                    {/* <input
                       type="file"
                       name="profileImg"
+                      onChange={handleInputChange}
+                    /> */}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      name="profileImg"
+                      ref={fileInputRef}
+                      style={{ display: "none" }}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -1779,7 +1809,7 @@ const fetchEmploymentList = async () => {
                   {isExperienceModalOpen && (
                     <div className="modal-overlay">
                       <div className="modal-box">
-                        
+
                         <div className="modal-header">
                           <div
                             style={{
@@ -2117,7 +2147,7 @@ const fetchEmploymentList = async () => {
                                   ...newEducation,
                                   endDate: e.target.value,
                                 })
-                               setModalErrorsEdu((prev) => prev.filter(err => err.field !== "endDate"));
+                                setModalErrorsEdu((prev) => prev.filter(err => err.field !== "endDate"));
                               }
                               }
                             />
@@ -2452,7 +2482,7 @@ const fetchEmploymentList = async () => {
                           {editIndex !== null && formProjectData._id && (
                             <div
                               type="button"
-                              
+
                               onClick={() =>
                                 handleDeleteProject(formProjectData._id)
                               }
@@ -2463,7 +2493,7 @@ const fetchEmploymentList = async () => {
                           <button type="submit">
                             {editIndex !== null ? "Update" : "Add"}
                           </button>
-                          
+
                         </div>
                       </form>
                     </div>
@@ -2559,7 +2589,7 @@ const fetchEmploymentList = async () => {
                             setFormLicensesData(prev => ({ ...prev, title: e.target.value }));
                             setModalErrorsLic(prev => prev.filter(err => err.field !== "title"));
                           }}
-                          
+
                         />
                         {modalErrorsLic.find(e => e.field === "title") && (
                           <p className="error-text">{modalErrorsLic.find(e => e.field === "title").message}</p>
@@ -2572,7 +2602,7 @@ const fetchEmploymentList = async () => {
                             setFormLicensesData(prev => ({ ...prev, issuer: e.target.value }));
                             setModalErrorsLic(prev => prev.filter(err => err.field !== "issuer"));
                           }}
-                          
+
                         />
                         {modalErrorsLic.find(e => e.field === "issuer") && (
                           <p className="error-text">{modalErrorsLic.find(e => e.field === "issuer").message}</p>
