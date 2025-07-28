@@ -36,7 +36,7 @@ const SignIn = () => {
               </div>
             ) : (
               <>
-                <div className="new-to-it">
+                <div className="benefits-section">
                   <h1>New to IT Team?</h1>
                   <ul style={{ marginTop: "20px" }}>
                     <li>
@@ -45,7 +45,7 @@ const SignIn = () => {
                         alt="" ○ 
                         style={{ height: "30px", width: "30px" }}
                       /> */}
-                      ⚪ Register your self with easy step.
+                     Register your self with easy step.
                     </li>
                     <li>
                       {/* <img
@@ -53,7 +53,7 @@ const SignIn = () => {
                         alt=""
                         style={{ height: "30px", width: "30px" }}
                       /> */}
-                    ⚪ Highlight you resume on IT Team for better reach.
+                     Highlight you resume on IT Team for better reach.
                     </li>
                     <li>
                       {/* <img
@@ -61,7 +61,7 @@ const SignIn = () => {
                         alt=""
                         style={{ height: "30px", width: "30px" }}
                       /> */}
-                    ⚪ Showcase profile to top companies and consultants.
+                    Showcase profile to top companies and consultants.
                     </li>
                     <li>
                       {/* <img
@@ -69,7 +69,7 @@ const SignIn = () => {
                         alt=""
                         style={{ height: "30px", width: "30px" }}
                       /> */}
-                   ⚪  Let HR call you directly for the current opening.
+                   Let HR call you directly for the current opening.
                     </li>
                   </ul>
                 </div>

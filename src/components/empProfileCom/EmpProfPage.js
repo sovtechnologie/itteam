@@ -57,10 +57,9 @@ const EmpProfPage = () => {
   const handleClose = () => setIsEditOpen(false);
   const fileInputRef = useRef(null);
 
- const handleImageClick = () => {
-  fileInputRef.current?.click();
-};
-  
+  const handleImageClick = () => {
+    fileInputRef.current?.click();
+  };
 
   const handleSaveProfileWithImage = async () => {
     const form = new FormData();
@@ -93,7 +92,7 @@ const EmpProfPage = () => {
 
       if (response.data.status === 200) {
         setSuccess("Profile updated successfully.");
-         window.dispatchEvent(new Event("profile-updated"))
+        window.dispatchEvent(new Event("profile-updated"));
         setIsEditOpen(false);
       } else {
         setError(response.data.message || "Failed to update profile.");
@@ -263,7 +262,7 @@ const EmpProfPage = () => {
     } catch (error) {
       setError(
         error.response?.data?.message ||
-        "Something went wrong while adding skill."
+          "Something went wrong while adding skill."
       );
     }
   };
@@ -304,7 +303,7 @@ const EmpProfPage = () => {
     } catch (error) {
       setError(
         error.response?.data?.message ||
-        "Something went wrong while removing the skill."
+          "Something went wrong while removing the skill."
       );
     }
   };
@@ -354,7 +353,6 @@ const EmpProfPage = () => {
     setIsExperienceModalOpen(true);
   };
 
-
   const saveEmployment = async (userId, jobData, isEdit) => {
     const url = isEdit
       ? `${baseUrl}/api/editWorkExprience`
@@ -367,9 +365,9 @@ const EmpProfPage = () => {
           userId,
           ...(isEdit
             ? {
-              _id: jobData._id,
-              ...jobData,
-            }
+                _id: jobData._id,
+                ...jobData,
+              }
             : { ...jobData }),
         },
         {
@@ -385,24 +383,35 @@ const EmpProfPage = () => {
       alert("Network error: " + error.message);
       return null;
     }
-
   };
 
-
   const handleSave = async () => {
-    const { company_Name, title, JoiningDate, endDate, location, description } = newJob;
+    const { company_Name, title, JoiningDate, endDate, location, description } =
+      newJob;
 
     setModalErrors([]);
     // Validate inputs
     const errs = [];
-    if (!company_Name?.trim()) errs.push({ field: "company_Name", message: "Company Name is required." });
-    if (!title?.trim()) errs.push({ field: "title", message: "Position is required." });
-    if (!JoiningDate) errs.push({ field: "JoiningDate", message: "Start Date is required." });
-    if (!endDate) errs.push({ field: "endDate", message: "End Date is required." });
+    if (!company_Name?.trim())
+      errs.push({
+        field: "company_Name",
+        message: "Company Name is required.",
+      });
+    if (!title?.trim())
+      errs.push({ field: "title", message: "Position is required." });
+    if (!JoiningDate)
+      errs.push({ field: "JoiningDate", message: "Start Date is required." });
+    if (!endDate)
+      errs.push({ field: "endDate", message: "End Date is required." });
     if (new Date(endDate) < new Date(JoiningDate))
-      errs.push({ field: "endDate", message: "End date cannot be earlier than start date." });
-    if (!location?.trim()) errs.push({ field: "location", message: "Location is required." });
-    if (!description?.trim()) errs.push({ field: "description", message: "Description is required." });
+      errs.push({
+        field: "endDate",
+        message: "End date cannot be earlier than start date.",
+      });
+    if (!location?.trim())
+      errs.push({ field: "location", message: "Location is required." });
+    if (!description?.trim())
+      errs.push({ field: "description", message: "Description is required." });
 
     if (errs.length) {
       setModalErrors(errs);
@@ -439,10 +448,11 @@ const EmpProfPage = () => {
       setIsExperienceModalOpen(false);
       setEditingIndex(null);
     } else {
-      setModalErrors([{ field: "general", message: "Failed to save experience." }]);
+      setModalErrors([
+        { field: "general", message: "Failed to save experience." },
+      ]);
     }
   };
-
 
   const handleDeleteExperience = async (job_id) => {
     try {
@@ -488,7 +498,6 @@ const EmpProfPage = () => {
   });
 
   const addEducation = async (education) => {
-
     const formData = new FormData();
 
     for (let key in education) {
@@ -609,16 +618,31 @@ const EmpProfPage = () => {
     e.preventDefault();
     setModalErrorsProj([]);
 
-    const { title, startDate, endDate, associated, projectDescription } = formProjectData;
+    const { title, startDate, endDate, associated, projectDescription } =
+      formProjectData;
     const errs = [];
 
-    if (!title?.trim()) errs.push({ field: "title", message: "Title is required." });
-    if (!startDate) errs.push({ field: "startDate", message: "Start date is required." });
-    if (!endDate) errs.push({ field: "endDate", message: "End date is required." });
+    if (!title?.trim())
+      errs.push({ field: "title", message: "Title is required." });
+    if (!startDate)
+      errs.push({ field: "startDate", message: "Start date is required." });
+    if (!endDate)
+      errs.push({ field: "endDate", message: "End date is required." });
     else if (new Date(endDate) < new Date(startDate))
-      errs.push({ field: "endDate", message: "End date cannot be before start date." });
-    if (!associated?.trim()) errs.push({ field: "associated", message: "Associated field is required." });
-    if (!projectDescription?.trim()) errs.push({ field: "projectDescription", message: "Description is required." });
+      errs.push({
+        field: "endDate",
+        message: "End date cannot be before start date.",
+      });
+    if (!associated?.trim())
+      errs.push({
+        field: "associated",
+        message: "Associated field is required.",
+      });
+    if (!projectDescription?.trim())
+      errs.push({
+        field: "projectDescription",
+        message: "Description is required.",
+      });
 
     if (errs.length > 0) {
       setModalErrorsProj(errs);
@@ -759,16 +783,18 @@ const EmpProfPage = () => {
     setShowLicensesModal(true);
   };
 
-
   const handleFormLicensesSubmit = async (e) => {
     e.preventDefault();
     setModalErrorsLic([]);
 
     const { title, issuer, issuedDate, credentialUrl } = formLicensesData;
     const errs = [];
-    if (!title?.trim()) errs.push({ field: "title", message: "Title is required." });
-    if (!issuer?.trim()) errs.push({ field: "issuer", message: "Issuer is required." });
-    if (!issuedDate) errs.push({ field: "issuedDate", message: "Issued date is required." });
+    if (!title?.trim())
+      errs.push({ field: "title", message: "Title is required." });
+    if (!issuer?.trim())
+      errs.push({ field: "issuer", message: "Issuer is required." });
+    if (!issuedDate)
+      errs.push({ field: "issuedDate", message: "Issued date is required." });
     if (credentialUrl && !/^https?:\/\/.+\..+/.test(credentialUrl)) {
       errs.push({ field: "credentialUrl", message: "Enter a valid URL." });
     }
@@ -777,7 +803,6 @@ const EmpProfPage = () => {
       setModalErrorsLic(errs);
       return;
     }
-
 
     try {
       let response;
@@ -860,8 +885,6 @@ const EmpProfPage = () => {
       alert(error.response?.data?.message || "Error deleting certification.");
     }
   };
-
-
 
   useEffect(() => {
     if (!authToken || !userId) {
@@ -1117,7 +1140,6 @@ const EmpProfPage = () => {
     }
   };
 
-
   return (
     <>
       <div className="empprofile-card">
@@ -1213,7 +1235,6 @@ const EmpProfPage = () => {
                         justifyContent: "center",
                         marginTop: "15px",
                       }}
-
                     >
                       <div
                         style={{
@@ -1248,141 +1269,159 @@ const EmpProfPage = () => {
 
                   <div className="form-grid">
                     <div>
-                     <label className="company-label">Enter Your Full Name</label>
-                    <input
-                      name="name"
-                      placeholder="Full Name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                    /></div>
-                     <div>
-                     <label className="company-label">Enter Your Designation  </label>
-                    <input
-                      name="designation"
-                      placeholder="Designation"
-                      value={formData.designation}
-                      onChange={handleInputChange}
-                    /></div>
-                     <div>
-                     <label className="company-label">Enter Your Email Id</label>
-                    <input
-                      name="email"
-                      placeholder="Email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                    />
-                    </div>
-                     <div>
-                     <label className="company-label">Select State</label>
-                    <div className="signUpform-group">
-                      <select
-                        name="state"
-                        value={formData.state || ""}
-                        onChange={(e) => {
-                          const selected = statesList.find(
-                            (state) => (state.name || state) === e.target.value
-                          );
-                          setFormData((prev) => ({
-                            ...prev,
-                            state: e.target.value,
-                          }));
-                          setSelectedState(e.target.value);
-                          setSelectedStateCode(selected?.isoCode || ""); // if you want to use for city dropdown
-                        }}
-                        className="form-select"
-                      >
-                        <option value="">Select State</option>
-                        {statesList.map((state) => (
-                          <option
-                            key={state._id || state.id || state}
-                            value={state.name || state}
-                          >
-                            {state.name || state}
-                          </option>
-                        ))}
-                      </select>
-                    </div></div>
-                   
-
-
-                       <div>
-                     <label className="company-label">Select city</label>
-                    <div className="signUpform-group">
-                    
-                      <select
-                        name="location"
-                        value={formData.location || ""}
+                      <label className="company-label">
+                        Enter Your Full Name
+                      </label>
+                      <input
+                        name="name"
+                        placeholder="Full Name"
+                        value={formData.name}
                         onChange={handleInputChange}
-                        className="form-select"
-                        disabled={!selectedState}
+                      />
+                    </div>
+                    <div>
+                      <label className="company-label">
+                        Enter Your Designation{" "}
+                      </label>
+                      <input
+                        name="designation"
+                        placeholder="Designation"
+                        value={formData.designation}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div>
+                      <label className="company-label">
+                        Enter Your Email Id
+                      </label>
+                      <input
+                        name="email"
+                        placeholder="Email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div>
+                      <label className="company-label">Select State</label>
+                      <div className="signUpform-group">
+                        <select
+                          name="state"
+                          value={formData.state || ""}
+                          onChange={(e) => {
+                            const selected = statesList.find(
+                              (state) =>
+                                (state.name || state) === e.target.value
+                            );
+                            setFormData((prev) => ({
+                              ...prev,
+                              state: e.target.value,
+                            }));
+                            setSelectedState(e.target.value);
+                            setSelectedStateCode(selected?.isoCode || ""); // if you want to use for city dropdown
+                          }}
+                          className="form-select"
+                        >
+                          <option value="">Select State</option>
+                          {statesList.map((state) => (
+                            <option
+                              key={state._id || state.id || state}
+                              value={state.name || state}
+                            >
+                              {state.name || state}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="company-label">Select city</label>
+                      <div className="signUpform-group">
+                        <select
+                          name="location"
+                          value={formData.location || ""}
+                          onChange={handleInputChange}
+                          className="form-select"
+                          disabled={!selectedState}
+                        >
+                          <option value="">{formData.location || ""}</option>
+                          {citiesList.map((city) => (
+                            <option
+                              key={city._id || city.id || city.name || city}
+                              value={city.name || city}
+                            >
+                              s{city.name || city}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="company-label">
+                        Enter Experience Level
+                      </label>
+                      <select
+                        name="experience"
+                        value={formData.experience}
+                        onChange={handleInputChange}
+                        style={{ width: "100%" }}
                       >
-                        <option value="">{formData.location || ""}</option>
-                        {citiesList.map((city) => (
-                          <option
-                            key={city._id || city.id || city.name || city}
-                            value={city.name || city}
-                          >s
-                            {city.name || city}
-                          </option>
-                        ))}
+                        <option value="">Select Experience Level</option>
+                        <option value="1">Fresher</option>
+                        <option value="2">Junior</option>
+                        <option value="3">Mid-Level</option>
+                        <option value="4">Senior</option>
                       </select>
-                    </div></div>
-                    
-                        <div>
-                     <label className="company-label">Enter Experience Level</label>
-                    <select
-                      name="experience"
-                      value={formData.experience}
-                      onChange={handleInputChange}
-                      style={{width:"100%"}}
-                    >
-                      <option value="">Select Experience Level</option>
-                      <option value="1">Fresher</option>
-                      <option value="2">Junior</option>
-                      <option value="3">Mid-Level</option>
-                      <option value="4">Senior</option>
-                    </select></div>
+                    </div>
 
-                      <div>
-                     <label className="company-label">Enter Salary</label>
-                    <input
-                      name="salary"
-                      placeholder="Salary"
-                      value={formData.salary}
-                      onChange={handleInputChange}
-                    /></div>
-                     
-                      <div>
-                     <label className="company-label">Select Notice Period</label>
-                    <select
-                      name="notice"
-                      value={formData.notice}
-                      onChange={handleInputChange}
-                    >
-                      <option value="">Select Notice Period</option>
-                      <option value="1">Immediate</option>
-                      <option value="2">Within 7 Days</option>
-                      <option value="3">Within 15 Days</option>
-                      <option value="4">Within 30 Days</option>
-                      <option value="5">Within 45 Days</option>
-                    </select></div>
+                    <div>
+                      <label className="company-label">Enter Salary</label>
+                      <input
+                        name="salary"
+                        placeholder="Salary"
+                        value={formData.salary}
+                        onChange={handleInputChange}
+                      />
+                    </div>
 
-                     <div>
-                     <label className="company-label">Enter Your Phone Number</label>
-                    <input
-                      name="phone"
-                      placeholder="Phone"
-                      value={formData.phone}
-                      // onChange={handleInputChange}
-                      disabled="true"
-                    /></div>
+                    <div>
+                      <label className="company-label">
+                        Select Notice Period
+                      </label>
+                      <select
+                        name="notice"
+                        value={formData.notice}
+                        onChange={handleInputChange}
+                      >
+                        <option value="">Select Notice Period</option>
+                        <option value="1">Immediate</option>
+                        <option value="2">Within 7 Days</option>
+                        <option value="3">Within 15 Days</option>
+                        <option value="4">Within 30 Days</option>
+                        <option value="5">Within 45 Days</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="company-label">
+                        Enter Your Phone Number
+                      </label>
+                      <input
+                        name="phone"
+                        placeholder="Phone"
+                        value={formData.phone}
+                        // onChange={handleInputChange}
+                        disabled="true"
+                      />
+                    </div>
 
                     {/* <input
                       type="file"
                       name="profileImg"
                       onChange={handleInputChange}
                     /> */}
-                    
+
                     <input
                       type="file"
                       accept="image/*"
@@ -1392,10 +1431,8 @@ const EmpProfPage = () => {
                       onChange={handleInputChange}
                     />
                   </div>
-                  <div className="modal-buttons" style={{marginTop:"10px"}}>
-                    <button onClick={handleSaveProfileWithImage}>
-                      Save 
-                    </button>
+                  <div className="modal-buttons" style={{ marginTop: "10px" }}>
+                    <button onClick={handleSaveProfileWithImage}>Save</button>
                   </div>
                 </div>
               </div>
@@ -1463,9 +1500,7 @@ const EmpProfPage = () => {
                     <div className="about-card-box-details" id="about">
                       <div>
                         <div>
-                          <p>
-                            {aboutText}
-                          </p>
+                          <p>{aboutText}</p>
                         </div>
                       </div>
                     </div>
@@ -1531,7 +1566,6 @@ const EmpProfPage = () => {
                             >
                               {loading ? "Saving..." : "Save"}
                             </button>
-                            
                           </div>
                         </div>
                       </div>
@@ -1605,11 +1639,10 @@ const EmpProfPage = () => {
                           className="modal-buttons"
                           style={{
                             display: "flex",
-                            justifyContent: "end",
+                            // justifyContent: "end",
                           }}
                         >
                           <button onClick={handleUpload}>Upload</button>
-                          
                         </div>
                       </div>
                     </div>
@@ -1732,7 +1765,7 @@ const EmpProfPage = () => {
                           className="modal-buttons"
                           style={{
                             display: "flex",
-                            justifyContent: "end",
+                            // justifyContent: "end",
                           }}
                         >
                           <button onClick={() => setIsSkillModalOpen(false)}>
@@ -1808,7 +1841,6 @@ const EmpProfPage = () => {
                   {isExperienceModalOpen && (
                     <div className="modal-overlay">
                       <div className="modal-box">
-
                         <div className="modal-header">
                           <div
                             style={{
@@ -1837,14 +1869,25 @@ const EmpProfPage = () => {
                               setNewJob({
                                 ...newJob,
                                 company_Name: e.target.value,
-                              })
-                              setModalErrors(prev => prev.filter(err => err.field !== "company_Name"));
-                            }
-                            }
+                              });
+                              setModalErrors((prev) =>
+                                prev.filter(
+                                  (err) => err.field !== "company_Name"
+                                )
+                              );
+                            }}
                             required
                           />
-                          {modalErrors.find(e => e.field === "company_Name") && (
-                            <p className="error-text">{modalErrors.find(e => e.field === "company_Name").message}</p>
+                          {modalErrors.find(
+                            (e) => e.field === "company_Name"
+                          ) && (
+                            <p className="error-text">
+                              {
+                                modalErrors.find(
+                                  (e) => e.field === "company_Name"
+                                ).message
+                              }
+                            </p>
                           )}
                         </div>
 
@@ -1855,14 +1898,20 @@ const EmpProfPage = () => {
                             placeholder="Position"
                             value={newJob?.title}
                             onChange={(e) => {
-                              setNewJob({ ...newJob, title: e.target.value })
-                              setModalErrors(prev => prev.filter(err => err.field !== "title"));
-                            }
-                            }
+                              setNewJob({ ...newJob, title: e.target.value });
+                              setModalErrors((prev) =>
+                                prev.filter((err) => err.field !== "title")
+                              );
+                            }}
                             required
                           />
-                          {modalErrors.find(e => e.field === "title") && (
-                            <p className="error-text">{modalErrors.find(e => e.field === "title").message}</p>
+                          {modalErrors.find((e) => e.field === "title") && (
+                            <p className="error-text">
+                              {
+                                modalErrors.find((e) => e.field === "title")
+                                  .message
+                              }
+                            </p>
                           )}
                         </div>
 
@@ -1880,14 +1929,25 @@ const EmpProfPage = () => {
                                 setNewJob({
                                   ...newJob,
                                   JoiningDate: e.target.value,
-                                })
-                                setModalErrors(prev => prev.filter(err => err.field !== "JoiningDate"));
-                              }
-                              }
+                                });
+                                setModalErrors((prev) =>
+                                  prev.filter(
+                                    (err) => err.field !== "JoiningDate"
+                                  )
+                                );
+                              }}
                               required
                             />
-                            {modalErrors.find(e => e.field === "JoiningDate") && (
-                              <p className="error-text">{modalErrors.find(e => e.field === "JoiningDate").message}</p>
+                            {modalErrors.find(
+                              (e) => e.field === "JoiningDate"
+                            ) && (
+                              <p className="error-text">
+                                {
+                                  modalErrors.find(
+                                    (e) => e.field === "JoiningDate"
+                                  ).message
+                                }
+                              </p>
                             )}
                           </div>
                           <div className="end-date">
@@ -1903,14 +1963,20 @@ const EmpProfPage = () => {
                                 setNewJob({
                                   ...newJob,
                                   endDate: e.target.value,
-                                })
-                                setModalErrors(prev => prev.filter(err => err.field !== "endDate"));
-                              }
-                              }
+                                });
+                                setModalErrors((prev) =>
+                                  prev.filter((err) => err.field !== "endDate")
+                                );
+                              }}
                               required
                             />
-                            {modalErrors.find(e => e.field === "endDate") && (
-                              <p className="error-text">{modalErrors.find(e => e.field === "endDate").message}</p>
+                            {modalErrors.find((e) => e.field === "endDate") && (
+                              <p className="error-text">
+                                {
+                                  modalErrors.find((e) => e.field === "endDate")
+                                    .message
+                                }
+                              </p>
                             )}
                           </div>
                         </div>
@@ -1925,13 +1991,19 @@ const EmpProfPage = () => {
                               setNewJob({
                                 ...newJob,
                                 location: e.target.value,
-                              })
-                              setModalErrors(prev => prev.filter(err => err.field !== "location"));
-                            }
-                            }
+                              });
+                              setModalErrors((prev) =>
+                                prev.filter((err) => err.field !== "location")
+                              );
+                            }}
                           />
-                          {modalErrors.find(e => e.field === "location") && (
-                            <p className="error-text">{modalErrors.find(e => e.field === "location").message}</p>
+                          {modalErrors.find((e) => e.field === "location") && (
+                            <p className="error-text">
+                              {
+                                modalErrors.find((e) => e.field === "location")
+                                  .message
+                              }
+                            </p>
                           )}
                         </div>
 
@@ -1946,13 +2018,24 @@ const EmpProfPage = () => {
                               setNewJob({
                                 ...newJob,
                                 description: e.target.value,
-                              })
-                              setModalErrors(prev => prev.filter(err => err.field !== "description"));
-                            }
-                            }
+                              });
+                              setModalErrors((prev) =>
+                                prev.filter(
+                                  (err) => err.field !== "description"
+                                )
+                              );
+                            }}
                           />
-                          {modalErrors.find(e => e.field === "description") && (
-                            <p className="error-text">{modalErrors.find(e => e.field === "description").message}</p>
+                          {modalErrors.find(
+                            (e) => e.field === "description"
+                          ) && (
+                            <p className="error-text">
+                              {
+                                modalErrors.find(
+                                  (e) => e.field === "description"
+                                ).message
+                              }
+                            </p>
                           )}
                         </div>
 
@@ -1966,7 +2049,7 @@ const EmpProfPage = () => {
                             </div>
                           )}
                           <button onClick={handleSave}>
-                            {editingIndex !== null ? "Save" : "Add"}
+                            {editingIndex !== null ? "Save" : "Save"}
                           </button>
                         </div>
                       </div>
@@ -2060,13 +2143,22 @@ const EmpProfPage = () => {
                               setNewEducation({
                                 ...newEducation,
                                 college: e.target.value,
-                              })
-                              setModalErrorsEdu((prev) => prev.filter(err => err.field !== "college"));
-                            }
-                            }
+                              });
+                              setModalErrorsEdu((prev) =>
+                                prev.filter((err) => err.field !== "college")
+                              );
+                            }}
                           />
-                          {modalErrorsEdu.find(e => e.field === 'college') && (
-                            <p className="error-text">{modalErrorsEdu.find(e => e.field === 'college').message}</p>
+                          {modalErrorsEdu.find(
+                            (e) => e.field === "college"
+                          ) && (
+                            <p className="error-text">
+                              {
+                                modalErrorsEdu.find(
+                                  (e) => e.field === "college"
+                                ).message
+                              }
+                            </p>
                           )}
                         </div>
                         <div>
@@ -2079,13 +2171,19 @@ const EmpProfPage = () => {
                               setNewEducation({
                                 ...newEducation,
                                 degree: e.target.value,
-                              })
-                              setModalErrorsEdu((prev) => prev.filter(err => err.field !== "degree"));
-                            }
-                            }
+                              });
+                              setModalErrorsEdu((prev) =>
+                                prev.filter((err) => err.field !== "degree")
+                              );
+                            }}
                           />
-                          {modalErrorsEdu.find(e => e.field === 'degree') && (
-                            <p className="error-text">{modalErrorsEdu.find(e => e.field === 'degree').message}</p>
+                          {modalErrorsEdu.find((e) => e.field === "degree") && (
+                            <p className="error-text">
+                              {
+                                modalErrorsEdu.find((e) => e.field === "degree")
+                                  .message
+                              }
+                            </p>
                           )}
                         </div>
                         <div>
@@ -2098,13 +2196,22 @@ const EmpProfPage = () => {
                               setNewEducation({
                                 ...newEducation,
                                 location: e.target.value,
-                              })
-                              setModalErrorsEdu((prev) => prev.filter(err => err.field !== "location"));
-                            }
-                            }
+                              });
+                              setModalErrorsEdu((prev) =>
+                                prev.filter((err) => err.field !== "location")
+                              );
+                            }}
                           />
-                          {modalErrorsEdu.find(e => e.field === 'location') && (
-                            <p className="error-text">{modalErrorsEdu.find(e => e.field === 'location').message}</p>
+                          {modalErrorsEdu.find(
+                            (e) => e.field === "location"
+                          ) && (
+                            <p className="error-text">
+                              {
+                                modalErrorsEdu.find(
+                                  (e) => e.field === "location"
+                                ).message
+                              }
+                            </p>
                           )}
                         </div>
 
@@ -2122,13 +2229,24 @@ const EmpProfPage = () => {
                                 setNewEducation({
                                   ...newEducation,
                                   startDate: e.target.value,
-                                })
-                                setModalErrorsEdu((prev) => prev.filter(err => err.field !== "startDate"));
-                              }
-                              }
+                                });
+                                setModalErrorsEdu((prev) =>
+                                  prev.filter(
+                                    (err) => err.field !== "startDate"
+                                  )
+                                );
+                              }}
                             />
-                            {modalErrorsEdu.find(e => e.field === 'startDate') && (
-                              <p className="error-text">{modalErrorsEdu.find(e => e.field === 'startDate').message}</p>
+                            {modalErrorsEdu.find(
+                              (e) => e.field === "startDate"
+                            ) && (
+                              <p className="error-text">
+                                {
+                                  modalErrorsEdu.find(
+                                    (e) => e.field === "startDate"
+                                  ).message
+                                }
+                              </p>
                             )}
                           </div>
 
@@ -2145,13 +2263,22 @@ const EmpProfPage = () => {
                                 setNewEducation({
                                   ...newEducation,
                                   endDate: e.target.value,
-                                })
-                                setModalErrorsEdu((prev) => prev.filter(err => err.field !== "endDate"));
-                              }
-                              }
+                                });
+                                setModalErrorsEdu((prev) =>
+                                  prev.filter((err) => err.field !== "endDate")
+                                );
+                              }}
                             />
-                            {modalErrorsEdu.find(e => e.field === 'endDate') && (
-                              <p className="error-text">{modalErrorsEdu.find(e => e.field === 'endDate').message}</p>
+                            {modalErrorsEdu.find(
+                              (e) => e.field === "endDate"
+                            ) && (
+                              <p className="error-text">
+                                {
+                                  modalErrorsEdu.find(
+                                    (e) => e.field === "endDate"
+                                  ).message
+                                }
+                              </p>
                             )}
                           </div>
                         </div>
@@ -2165,16 +2292,20 @@ const EmpProfPage = () => {
                             setNewEducation({
                               ...newEducation,
                               grade: e.target.value,
-                            })
-                            setModalErrorsEdu((prev) => prev.filter(err => err.field !== "grade"));
-                          }
-                          }
+                            });
+                            setModalErrorsEdu((prev) =>
+                              prev.filter((err) => err.field !== "grade")
+                            );
+                          }}
                         />
-                        {modalErrorsEdu.find(e => e.field === 'grade') && (
-                          <p className="error-text">{modalErrorsEdu.find(e => e.field === 'grade').message}</p>
+                        {modalErrorsEdu.find((e) => e.field === "grade") && (
+                          <p className="error-text">
+                            {
+                              modalErrorsEdu.find((e) => e.field === "grade")
+                                .message
+                            }
+                          </p>
                         )}
-
-
 
                         <div className="modal-actions">
                           {isEditing && (
@@ -2195,17 +2326,52 @@ const EmpProfPage = () => {
                           )}
                           <button
                             onClick={async () => {
-                              const { college, degree, location, startDate, endDate, grade } = newEducation;
+                              const {
+                                college,
+                                degree,
+                                location,
+                                startDate,
+                                endDate,
+                                grade,
+                              } = newEducation;
                               const errs = [];
 
-                              if (!college.trim()) errs.push({ field: "college", message: "College is required." });
-                              if (!degree.trim()) errs.push({ field: "degree", message: "Degree is required." });
-                              if (!location.trim()) errs.push({ field: "location", message: "Location is required." });
-                              if (!startDate) errs.push({ field: "startDate", message: "Start Date is required." });
-                              if (!endDate) errs.push({ field: "endDate", message: "End Date is required." });
+                              if (!college.trim())
+                                errs.push({
+                                  field: "college",
+                                  message: "College Name is required.",
+                                });
+                              if (!degree.trim())
+                                errs.push({
+                                  field: "degree",
+                                  message: "Degree is required.",
+                                });
+                              if (!location.trim())
+                                errs.push({
+                                  field: "location",
+                                  message: "Location is required.",
+                                });
+                              if (!startDate)
+                                errs.push({
+                                  field: "startDate",
+                                  message: "Start Date is required.",
+                                });
+                              if (!endDate)
+                                errs.push({
+                                  field: "endDate",
+                                  message: "End Date is required.",
+                                });
                               else if (new Date(endDate) < new Date(startDate))
-                                errs.push({ field: "endDate", message: "End Date can't be before Start Date." });
-                              if (!grade.trim()) errs.push({ field: "grade", message: "Grade is required." });
+                                errs.push({
+                                  field: "endDate",
+                                  message:
+                                    "End Date can't be before Start Date.",
+                                });
+                              if (!grade.trim())
+                                errs.push({
+                                  field: "grade",
+                                  message: "Grade is required.",
+                                });
 
                               if (errs.length) {
                                 setModalErrorsEdu(errs);
@@ -2262,7 +2428,14 @@ const EmpProfPage = () => {
                                 setEditId(null);
                                 setIsEduModalOpen(false);
                               } catch (err) {
-                                setModalErrorsEdu([{ field: "general", message: err.message || "Failed to save education." }]);
+                                setModalErrorsEdu([
+                                  {
+                                    field: "general",
+                                    message:
+                                      err.message ||
+                                      "Failed to save education.",
+                                  },
+                                ]);
                               }
                             }}
                           >
@@ -2374,14 +2547,19 @@ const EmpProfPage = () => {
                               setFormProjectData({
                                 ...formProjectData,
                                 title: e.target.value,
-                              })
-                              setModalErrorsProj(prev => prev.filter(err => err.field !== "title"));
-                            }
-                            }
-
+                              });
+                              setModalErrorsProj((prev) =>
+                                prev.filter((err) => err.field !== "title")
+                              );
+                            }}
                           />
-                          {modalErrorsProj.find(e => e.field === "title") && (
-                            <p className="error-text">{modalErrorsProj.find(e => e.field === "title").message}</p>
+                          {modalErrorsProj.find((e) => e.field === "title") && (
+                            <p className="error-text">
+                              {
+                                modalErrorsProj.find((e) => e.field === "title")
+                                  .message
+                              }
+                            </p>
                           )}
                         </div>
 
@@ -2399,13 +2577,24 @@ const EmpProfPage = () => {
                                 setFormProjectData({
                                   ...formProjectData,
                                   startDate: e.target.value,
-                                })
-                                setModalErrorsProj(prev => prev.filter(err => err.field !== "startDate"));
-                              }
-                              }
+                                });
+                                setModalErrorsProj((prev) =>
+                                  prev.filter(
+                                    (err) => err.field !== "startDate"
+                                  )
+                                );
+                              }}
                             />
-                            {modalErrorsProj.find(e => e.field === "startDate") && (
-                              <p className="error-text">{modalErrorsProj.find(e => e.field === "startDate").message}</p>
+                            {modalErrorsProj.find(
+                              (e) => e.field === "startDate"
+                            ) && (
+                              <p className="error-text">
+                                {
+                                  modalErrorsProj.find(
+                                    (e) => e.field === "startDate"
+                                  ).message
+                                }
+                              </p>
                             )}
                           </div>
 
@@ -2422,13 +2611,22 @@ const EmpProfPage = () => {
                                 setFormProjectData({
                                   ...formProjectData,
                                   endDate: e.target.value,
-                                })
-                                setModalErrorsProj(prev => prev.filter(err => err.field !== "endDate"));
-                              }
-                              }
+                                });
+                                setModalErrorsProj((prev) =>
+                                  prev.filter((err) => err.field !== "endDate")
+                                );
+                              }}
                             />
-                            {modalErrorsProj.find(e => e.field === "endDate") && (
-                              <p className="error-text">{modalErrorsProj.find(e => e.field === "endDate").message}</p>
+                            {modalErrorsProj.find(
+                              (e) => e.field === "endDate"
+                            ) && (
+                              <p className="error-text">
+                                {
+                                  modalErrorsProj.find(
+                                    (e) => e.field === "endDate"
+                                  ).message
+                                }
+                              </p>
                             )}
                           </div>
                         </div>
@@ -2445,14 +2643,22 @@ const EmpProfPage = () => {
                               setFormProjectData({
                                 ...formProjectData,
                                 associated: e.target.value,
-                              })
-                              setModalErrorsProj(prev => prev.filter(err => err.field !== "associated"));
-                            }
-                            }
-
+                              });
+                              setModalErrorsProj((prev) =>
+                                prev.filter((err) => err.field !== "associated")
+                              );
+                            }}
                           />
-                          {modalErrorsProj.find(e => e.field === "associated") && (
-                            <p className="error-text">{modalErrorsProj.find(e => e.field === "associated").message}</p>
+                          {modalErrorsProj.find(
+                            (e) => e.field === "associated"
+                          ) && (
+                            <p className="error-text">
+                              {
+                                modalErrorsProj.find(
+                                  (e) => e.field === "associated"
+                                ).message
+                              }
+                            </p>
                           )}
                         </div>
 
@@ -2465,23 +2671,31 @@ const EmpProfPage = () => {
                               setFormProjectData({
                                 ...formProjectData,
                                 projectDescription: e.target.value,
-                              })
-                              setModalErrorsProj(prev => prev.filter(err => err.field !== "projectDescription"));
-                            }
-                            }
-
+                              });
+                              setModalErrorsProj((prev) =>
+                                prev.filter(
+                                  (err) => err.field !== "projectDescription"
+                                )
+                              );
+                            }}
                           />
-                          {modalErrorsProj.find(e => e.field === "projectDescription") && (
-                            <p className="error-text">{modalErrorsProj.find(e => e.field === "projectDescription").message}</p>
+                          {modalErrorsProj.find(
+                            (e) => e.field === "projectDescription"
+                          ) && (
+                            <p className="error-text">
+                              {
+                                modalErrorsProj.find(
+                                  (e) => e.field === "projectDescription"
+                                ).message
+                              }
+                            </p>
                           )}
                         </div>
-
 
                         <div className="modal-buttons">
                           {editIndex !== null && formProjectData._id && (
                             <div
                               type="button"
-
                               onClick={() =>
                                 handleDeleteProject(formProjectData._id)
                               }
@@ -2490,9 +2704,8 @@ const EmpProfPage = () => {
                             </div>
                           )}
                           <button type="submit">
-                            {editIndex !== null ? "Update" : "Add"}
+                            {editIndex !== null ? "Update" : "Save"}
                           </button>
-
                         </div>
                       </form>
                     </div>
@@ -2580,61 +2793,122 @@ const EmpProfPage = () => {
                           </div>
                         </div>
 
-                        <input
-                          type="text"
-                          placeholder="Certification Title"
-                          value={formLicensesData.title}
-                          onChange={(e) => {
-                            setFormLicensesData(prev => ({ ...prev, title: e.target.value }));
-                            setModalErrorsLic(prev => prev.filter(err => err.field !== "title"));
-                          }}
+                        <div>
+                          <label className="company-label">Certification Title</label>
+                          <input
+                            type="text"
+                            placeholder="Certification Title"
+                            value={formLicensesData.title}
+                            onChange={(e) => {
+                              setFormLicensesData((prev) => ({
+                                ...prev,
+                                title: e.target.value,
+                              }));
+                              setModalErrorsLic((prev) =>
+                                prev.filter((err) => err.field !== "title")
+                              );
+                            }}
+                          />
+                          {modalErrorsLic.find((e) => e.field === "title") && (
+                            <p className="error-text">
+                              {
+                                modalErrorsLic.find((e) => e.field === "title")
+                                  .message
+                              }
+                            </p>
+                          )}
+                        </div>
 
-                        />
-                        {modalErrorsLic.find(e => e.field === "title") && (
-                          <p className="error-text">{modalErrorsLic.find(e => e.field === "title").message}</p>
-                        )}
-                        <input
-                          type="text"
-                          placeholder="Issuer"
-                          value={formLicensesData.issuer}
-                          onChange={(e) => {
-                            setFormLicensesData(prev => ({ ...prev, issuer: e.target.value }));
-                            setModalErrorsLic(prev => prev.filter(err => err.field !== "issuer"));
-                          }}
+                        <div>
+                          <label className="company-label">Issuer</label>
+                          <input
+                            type="text"
+                            placeholder="Issuer"
+                            value={formLicensesData.issuer}
+                            onChange={(e) => {
+                              setFormLicensesData((prev) => ({
+                                ...prev,
+                                issuer: e.target.value,
+                              }));
+                              setModalErrorsLic((prev) =>
+                                prev.filter((err) => err.field !== "issuer")
+                              );
+                            }}
+                          />
+                          {modalErrorsLic.find((e) => e.field === "issuer") && (
+                            <p className="error-text">
+                              {
+                                modalErrorsLic.find((e) => e.field === "issuer")
+                                  .message
+                              }
+                            </p>
+                          )}
+                        </div>
 
-                        />
-                        {modalErrorsLic.find(e => e.field === "issuer") && (
-                          <p className="error-text">{modalErrorsLic.find(e => e.field === "issuer").message}</p>
-                        )}
-                        <input
-                          type="date"
-                          placeholder="Issued Date"
-                          value={formLicensesData.issuedDate}
-                          onChange={(e) => {
-                            setFormLicensesData(prev => ({ ...prev, issuedDate: e.target.value }));
-                            setModalErrorsLic(prev => prev.filter(err => err.field !== "issuedDate"));
-                          }}
-                          required
-                        />
-                        {modalErrorsLic.find(e => e.field === "issuedDate") && (
-                          <p className="error-text">{modalErrorsLic.find(e => e.field === "issuedDate").message}</p>
-                        )}
-                        <input
-                          type="url"
-                          placeholder="Credential Link"
-                          value={formLicensesData.credentialUrl}
-                          onChange={(e) => {
-                            setFormLicensesData(prev => ({ ...prev, credentialUrl: e.target.value }));
-                            setModalErrorsLic(prev => prev.filter(err => err.field !== "credentialUrl"));
-                          }}
-                        />
-                        {modalErrorsLic.find(e => e.field === "credentialUrl") && (
-                          <p className="error-text">{modalErrorsLic.find(e => e.field === "credentialUrl").message}</p>
-                        )}
+                        <div>
+                          <label className="company-label">Issued Date</label>
+                          <input
+                            type="date"
+                            placeholder="Issued Date"
+                            value={formLicensesData.issuedDate}
+                            onChange={(e) => {
+                              setFormLicensesData((prev) => ({
+                                ...prev,
+                                issuedDate: e.target.value,
+                              }));
+                              setModalErrorsLic((prev) =>
+                                prev.filter((err) => err.field !== "issuedDate")
+                              );
+                            }}
+                            required
+                          />
+                          {modalErrorsLic.find(
+                            (e) => e.field === "issuedDate"
+                          ) && (
+                            <p className="error-text">
+                              {
+                                modalErrorsLic.find(
+                                  (e) => e.field === "issuedDate"
+                                ).message
+                              }
+                            </p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label className="company-label">Credential Link</label>
+                          <input
+                            type="url"
+                            placeholder="Credential Link"
+                            value={formLicensesData.credentialUrl}
+                            onChange={(e) => {
+                              setFormLicensesData((prev) => ({
+                                ...prev,
+                                credentialUrl: e.target.value,
+                              }));
+                              setModalErrorsLic((prev) =>
+                                prev.filter(
+                                  (err) => err.field !== "credentialUrl"
+                                )
+                              );
+                            }}
+                          />
+                          {modalErrorsLic.find(
+                            (e) => e.field === "credentialUrl"
+                          ) && (
+                            <p className="error-text">
+                              {
+                                modalErrorsLic.find(
+                                  (e) => e.field === "credentialUrl"
+                                ).message
+                              }
+                            </p>
+                          )}
+                        </div>
 
                         <div className="modal-buttons">
                           <button type="submit">
-                            {editIndexLicenses !== null ? "Update" : "Add"}
+                            {editIndexLicenses !== null ? "Update" : "Save"}
                           </button>
                           {editIndexLicenses !== null &&
                             formLicensesData._id && (

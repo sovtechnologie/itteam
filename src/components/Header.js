@@ -151,7 +151,7 @@ const Header = ({ isHomePage }) => {
 
   // {`header main-header ${isHomePage ? "home-header" : ""}`}
   return (
-    <div style={{ maxWidth:"1440px", margin:"0 auto"}}>
+    <div style={{ maxWidth:"1240px", margin:"0 auto"}}>
     <header className="header main-header home-header ">
       <div id="left">
         <Link to="/" className="header-logo">

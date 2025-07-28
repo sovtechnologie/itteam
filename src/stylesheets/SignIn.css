@@ -287,6 +287,7 @@
   cursor: pointer;
   border-radius: 10px;
   transition: all 0.3s ease;
+  font-weight: 400;
 }
 
 .input-otp button:hover {
@@ -347,9 +348,16 @@
   color: red;
   font-size: 0.85em;
   margin-top: 4px;
+  justify-content: left !important;
+  text-transform: capitalize;
+  text-align: left !important;
+
+
 }
 .success-text {
   color: green;
   font-size: 0.85em;
   margin-top: 4px;
+   justify-content: left;
+
 }

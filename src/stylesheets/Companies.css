@@ -91,19 +91,23 @@
   color: #fff;
   border-radius: 30px;
   padding: 40px;
+  max-width: 1440px;
+  margin: 0 auto;
   margin-top: 15rem;
+
 }
 
 .Profile-head {
   display: flex;
   justify-content: space-evenly;
+  width: 1160px;
 }
 
 .Profile-Wrapper {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 100%;
+  /* width: 100%; */
   margin: 0 75px;
 
   /* background-color: greenyellow; */
@@ -236,7 +240,7 @@
   margin: 30px auto;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   font-family: "Segoe UI", sans-serif;
-  max-width: 96%;
+  max-width: 1230px;
 }
 
 .company-heading {

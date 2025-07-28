@@ -134,7 +134,7 @@ const handleChange = (e) => {
       }
     } catch (error) {
       if(error.status === 400){
-        setErrors([{ field:"otp",message:"Otp Not Matched"}])
+        setErrors([{ field:"otp",message:"OTP Not Matched"}])
         setIsOtpSent(false);
       }
       else{
@@ -296,7 +296,7 @@ const validateRegister = () => {
     errs.push({ field:"mobileNumber", message: "mobile Number is required" });
   }
    if (!formData.otp) {
-    errs.push({ field:"otp", message: "otp is required" });
+    errs.push({ field:"otp", message: "OTP is required" });
   }
   if(!formData.state){
      errs.push({ field: "state", message: "State is required" });

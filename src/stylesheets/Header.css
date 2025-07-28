@@ -18,7 +18,7 @@ body::before {
   margin-top: 37px;
   z-index: 1000;
   width: calc(100% - 200px);
-  margin-left: 100px;
+  /* margin-left: 100px; */
   position: fixed;
   display: flex;
   align-items: center;
