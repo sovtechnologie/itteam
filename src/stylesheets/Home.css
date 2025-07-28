@@ -629,6 +629,8 @@
   color: white;
   text-align: center;
   padding-top: 100px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .hero-title {

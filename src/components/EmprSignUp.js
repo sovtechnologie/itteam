@@ -400,7 +400,7 @@ const EmprSignUp = () => {
                     type="password"
                     id="verify-otp"
                     name="otp"
-                    placeholder="Enter OTP"
+                    placeholder="OTP"
                     value={formData.otp}
                     onChange={handleChange}
                     maxLength={6}
@@ -537,7 +537,7 @@ export default EmprSignUp;
 //                   <input
 //                     type="password"
 //                     id="verify-otp"
-//                     placeholder="Enter OTP"
+//                     placeholder="OTP"
 //                   />
 //                   <button>Verify OTP</button>
 //                 </div>

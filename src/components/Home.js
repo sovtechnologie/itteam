@@ -191,11 +191,11 @@ const Home = () => {
               <IoIosSearch className="search-icon" />
               <input
                 type="text"
-                placeholder="Job title"
+                placeholder="Search by Tech Stack"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
               />
-              <button type="submit">Find Now</button>
+              <button type="submit">Search</button>
             </div>
           </form>
 
@@ -237,13 +237,12 @@ const Home = () => {
       <div className="job-search-container">
         <h6>How is it work</h6>
         <label className="job-search-title oswald">
-          Making Your <span>Job Search Easy</span>
+          Making Your <span>Candidate Search Easy</span>
         </label>
 
         <p className="job-search-description">
-          Quick Apply shows you recommended jobs based off your most recent
-          search <br />
-          and allows you to apply to 25+ jobs in a seconds
+          Quick find your recommended candidate based on your most recent opening <br />
+         and connect with them in second
         </p>
 
         <div className="steps-container">
@@ -252,7 +251,7 @@ const Home = () => {
             <div className="step-content">
               <h3 className="step-title">Login or Register</h3>
               <p className="step-description">
-                Login with email and sign up with email/facebook and linkedin.
+                Login and Register with your mobile number.
               </p>
             </div>
           </div>
@@ -343,7 +342,7 @@ const Home = () => {
                       <div
                         onClick={() => downloadResume(candidate.resume)}
                         style={{ cursor: "pointer" }}>
-                        <BsDownload style={{ width: "25px", height: "25px", marginTop: "-25px", color: "#1783D0" }} /></div> : ''}
+                        <BsDownload style={{ width: "20px", height: "20px", marginTop: "-25px", color: "#1783D0" }} /></div> : ''}
                   </div>
                 </div>
 
@@ -483,9 +482,7 @@ const Home = () => {
             <span className="highlight">Job Portal</span>
           </h1>
           <p className="description">
-            Find your dream job from thousands daily updated job vacancies. Find
-            the best jobs around the world or apply directly on a business
-            website. Search and find jobs today!
+           Find your dream candidate from thousands candidates. Find the best candidate around the world or call directly on a email and mobile number after registering to our portal!
           </p>
           <div className="hero-buttons">
             <button
@@ -545,9 +542,8 @@ const Home = () => {
             Why We are <span className="highlight oswald">Most Popular</span>
           </h1>
           <p>
-            Looking for a job is hard enough. That’s why we don’t charge any
-            fees—no hidden costs, no paid registrations, and no premium
-            upgrades.
+            Finding the right candidate can be challenging and expensive.
+             That's why we don't charge any fees, no hidden costs, no paid registrations, and no premium upgrades.
           </p>
 
           <div className="popular-grid">

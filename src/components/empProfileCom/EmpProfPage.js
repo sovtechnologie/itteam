@@ -1247,25 +1247,33 @@ const EmpProfPage = () => {
                   )}
 
                   <div className="form-grid">
+                    <div>
+                     <label className="company-label">Enter Your Full Name</label>
                     <input
                       name="name"
                       placeholder="Full Name"
                       value={formData.name}
                       onChange={handleInputChange}
-                    />
+                    /></div>
+                     <div>
+                     <label className="company-label">Enter Your Designation  </label>
                     <input
                       name="designation"
                       placeholder="Designation"
                       value={formData.designation}
                       onChange={handleInputChange}
-                    />
+                    /></div>
+                     <div>
+                     <label className="company-label">Enter Your Email Id</label>
                     <input
                       name="email"
                       placeholder="Email"
                       value={formData.email}
                       onChange={handleInputChange}
                     />
-
+                    </div>
+                     <div>
+                     <label className="company-label">Select State</label>
                     <div className="signUpform-group">
                       <select
                         name="state"
@@ -1293,9 +1301,14 @@ const EmpProfPage = () => {
                           </option>
                         ))}
                       </select>
-                    </div>
+                    </div></div>
+                   
 
+
+                       <div>
+                     <label className="company-label">Select city</label>
                     <div className="signUpform-group">
+                    
                       <select
                         name="location"
                         value={formData.location || ""}
@@ -1313,26 +1326,34 @@ const EmpProfPage = () => {
                           </option>
                         ))}
                       </select>
-                    </div>
-
+                    </div></div>
+                    
+                        <div>
+                     <label className="company-label">Enter Experience Level</label>
                     <select
                       name="experience"
                       value={formData.experience}
                       onChange={handleInputChange}
+                      style={{width:"100%"}}
                     >
                       <option value="">Select Experience Level</option>
                       <option value="1">Fresher</option>
                       <option value="2">Junior</option>
                       <option value="3">Mid-Level</option>
                       <option value="4">Senior</option>
-                    </select>
+                    </select></div>
+
+                      <div>
+                     <label className="company-label">Enter Salary</label>
                     <input
                       name="salary"
                       placeholder="Salary"
                       value={formData.salary}
                       onChange={handleInputChange}
-                    />
-
+                    /></div>
+                     
+                      <div>
+                     <label className="company-label">Select Notice Period</label>
                     <select
                       name="notice"
                       value={formData.notice}
@@ -1344,20 +1365,24 @@ const EmpProfPage = () => {
                       <option value="3">Within 15 Days</option>
                       <option value="4">Within 30 Days</option>
                       <option value="5">Within 45 Days</option>
-                    </select>
+                    </select></div>
+
+                     <div>
+                     <label className="company-label">Enter Your Phone Number</label>
                     <input
                       name="phone"
                       placeholder="Phone"
                       value={formData.phone}
                       // onChange={handleInputChange}
                       disabled="true"
-                    />
+                    /></div>
 
                     {/* <input
                       type="file"
                       name="profileImg"
                       onChange={handleInputChange}
                     /> */}
+                    
                     <input
                       type="file"
                       accept="image/*"
@@ -1367,9 +1392,9 @@ const EmpProfPage = () => {
                       onChange={handleInputChange}
                     />
                   </div>
-                  <div className="modal-buttons">
+                  <div className="modal-buttons" style={{marginTop:"10px"}}>
                     <button onClick={handleSaveProfileWithImage}>
-                      Save & Close
+                      Save 
                     </button>
                   </div>
                 </div>

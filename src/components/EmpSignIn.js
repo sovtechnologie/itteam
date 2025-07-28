@@ -185,7 +185,7 @@ const EmpSignIn = () => {
         <label htmlFor="otp">OTP</label>
         <input
           type="password"
-          placeholder="Enter OTP"
+          placeholder="OTP"
           maxLength={8}
           value={formData.otp}
           onChange={handleChange}

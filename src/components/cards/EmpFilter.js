@@ -490,8 +490,8 @@ const EmpFilter = () => {
                           onClick={() => downloadResume(profile.resume)}
                           style={{ cursor: "pointer" }}> <BsDownload
                             style={{
-                              width: "25px",
-                              height: "25px",
+                              width: "20px",
+                              height: "20px",
                               marginTop: "-25px",
                               color: "#1782D0"
                             }}

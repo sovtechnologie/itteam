@@ -103,7 +103,7 @@
 //                   <input
 //                     className="exp-inp-fileds"
 //                     type="text"
-//                     placeholder="Job Title"
+//                     placeholder="Search by Tech Stack"
 //                     value={jobTitle}
 //                     onChange={handleJobTitleChange}
 //                   />
@@ -366,7 +366,7 @@
 //                   <input
 //                     className="exp-inp-fileds"
 //                     type="text"
-//                     placeholder="Job Title"
+//                     placeholder="Search by Tech Stack"
 //                     value={jobTitle}
 //                     onChange={handleJobTitleChange}
 //                   />
@@ -651,7 +651,7 @@ const Experience = ({ onClose, experienceToEdit, isEditing }) => {
                   <input
                     className="exp-inp-fileds"
                     type="text"
-                    placeholder="Job Title"
+                    placeholder="Search by Tech Stack"
                     value={jobTitle}
                     onChange={handleJobTitleChange}
                   />

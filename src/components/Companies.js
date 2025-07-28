@@ -161,8 +161,8 @@ export default function Companies() {
             <div>
               <BsDownload
                 style={{
-                  width: "25px",
-                  height: "25px",
+                  width: "20px",
+                  height: "20px",
                   color:"#1782D0"
                 }}
               />

@@ -506,7 +506,7 @@ const getError = (field) => errors.find((e) => e.field === field)?.message;
                   <input
                   type="password"
                     name="otp"
-                    placeholder="Enter OTP"
+                    placeholder="OTP"
                     onChange={handleChange}
                     disabled={isOtpReceive}
                     maxLength={6}

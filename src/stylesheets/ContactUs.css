@@ -5,6 +5,8 @@
   display: flex;
   align-items: center;
   padding-left: 100px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .contact-us::before {
@@ -81,6 +83,8 @@
   background-color: #fff;
   gap: 40px;
   flex-wrap: wrap;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .left-side {

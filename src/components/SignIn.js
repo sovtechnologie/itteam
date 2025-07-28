@@ -40,36 +40,36 @@ const SignIn = () => {
                   <h1>New to IT Team?</h1>
                   <ul style={{ marginTop: "20px" }}>
                     <li>
-                      <img
+                      {/* <img
                         src={topcompanies1}
-                        alt=""
+                        alt="" ○ 
                         style={{ height: "30px", width: "30px" }}
-                      />
-                      One click apply using naukri profile.
+                      /> */}
+                      ⚪ Register your self with easy step.
                     </li>
                     <li>
-                      <img
+                      {/* <img
                         src={topcompanies1}
                         alt=""
                         style={{ height: "30px", width: "30px" }}
-                      />
-                      Get relevant job recommendations.
+                      /> */}
+                    ⚪ Highlight you resume on IT Team for better reach.
                     </li>
                     <li>
-                      <img
+                      {/* <img
                         src={topcompanies1}
                         alt=""
                         style={{ height: "30px", width: "30px" }}
-                      />
-                      Showcase profile to top companies and consultants.
+                      /> */}
+                    ⚪ Showcase profile to top companies and consultants.
                     </li>
                     <li>
-                      <img
+                      {/* <img
                         src={topcompanies1}
                         alt=""
                         style={{ height: "30px", width: "30px" }}
-                      />
-                      Know application status on applied jobs.
+                      /> */}
+                   ⚪  Let HR call you directly for the current opening.
                     </li>
                   </ul>
                 </div>
@@ -130,13 +130,12 @@ const SignIn = () => {
       <div className="job-search-container">
         <h6>How is it work</h6>
         <label className="job-search-title oswald">
-          Making Your <span>Job Search Easy</span>
+          Making Your <span>Candidate Search Easy</span>
         </label>
 
         <p className="job-search-description">
-          Quick Apply shows you recommended jobs based off your most recent
-          search <br />
-          and allows you to apply to 25+ jobs in a seconds
+          Quick find your recommended candidate based on your most recent opening  <br />
+         and connect with them in second
         </p>
 
         <div className="steps-container">
@@ -145,7 +144,7 @@ const SignIn = () => {
             <div className="step-content">
               <h3 className="step-title">Login or Register</h3>
               <p className="step-description">
-                Login with email and sign up with email/facebook and linkedin.
+                Login and Register with your mobile number.
               </p>
             </div>
           </div>
@@ -195,9 +194,7 @@ const SignIn = () => {
             <span className="highlight">Job Portal</span>
           </h1>
           <p className="description">
-            Find your dream job from thousands daily updated job vacancies. Find
-            the best jobs around the world or apply directly on a business
-            website. Search and find jobs today!
+           Find your dream candidate from thousands candidates. Find the best candidate around the world or call directly on a email and mobile number after registering to our portal!
           </p>
           <div className="hero-buttons">
             <button
@@ -221,9 +218,8 @@ const SignIn = () => {
             Why We are <span className="highlight oswald">Most Popular</span>
           </h1>
           <p>
-            Looking for a job is hard enough. That’s why we don’t charge any
-            fees—no hidden costs, no paid registrations, and no premium
-            upgrades.
+            Finding the right candidate can be challenging and expensive.
+             That's why we don't charge any fees, no hidden costs, no paid registrations, and no premium upgrades.
           </p>
 
           <div className="popular-grid">

@@ -15,6 +15,8 @@
   color: white;
   text-align: center;
   padding-top: 100px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 
@@ -233,6 +235,8 @@
   align-items: center;
   padding: 60px 80px;
   flex-wrap: wrap;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .company-text {
@@ -295,6 +299,8 @@
   flex-wrap: wrap;
   height: 450px;
   margin-bottom: 30px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .text-logos {

@@ -100,14 +100,14 @@
   color: white;
 }
 
-.benefits-section li:before {
+/* .benefits-section li:before {
   content: "✅";
   color: #00e61f;
   font-size: 20px;
   position: absolute;
   left: -28px;
   font-weight: bold;
-}
+} */
 
 .signup-left img {
   width: 75%;

@@ -22,7 +22,7 @@
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 10px;
 }
 
 .form-grid input {
@@ -31,6 +31,7 @@
   border-radius: 14px;
   outline: none;
   width: 95%;
+  margin-top: 4px;
 }
 
 .form-grid input[type="text"],
@@ -479,7 +480,7 @@
   color: #fff;
   border-radius: 20px;
   padding: 40px;
-  max-width: 1240px;
+  /* max-width: 1240px; */
   margin-top: 15rem;
 }
 
@@ -493,7 +494,9 @@
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  margin: 0 75px;
+  /* margin: 0 75px; */
+      max-width: 1440px;
+    margin: 0 auto;
 }
 
 .profileCardHead > img {

@@ -340,6 +340,7 @@ export default function Employer() {
                         alignItems: "center",
                       }}
                     >
+                      
                       <h2 className="edit-about">Edit Profile</h2>
                       <button
                         className="fancy-close"

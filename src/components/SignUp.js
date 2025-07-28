@@ -47,11 +47,11 @@ const SignUp = () => {
                 <ul>
                   <li>Build your profile and let recruiters find you</li>
                   <li>Get job postings delivered right to your email</li>
-                  <li>Find a job and grow your career</li>
+                  <li>Let HR find you for the Jobs</li>
                 </ul>
                 <h1>Let Job Find You</h1>
                 <p className="subtitle">
-                  you will never know everything But you will{" "}
+                  You will never know everything But you will{" "}
                   <strong>Know more.</strong>
                 </p>
               </div>
@@ -132,13 +132,12 @@ const SignUp = () => {
       <div className="job-search-container">
         <h6>How is it work</h6>
         <label className="job-search-title oswald">
-          Making Your <span>Job Search Easy</span>
+          Making Your <span>Candidate Search Easy</span>
         </label>
 
         <p className="job-search-description">
-          Quick Apply shows you recommended jobs based off your most recent
-          search <br />
-          and allows you to apply to 25+ jobs in a seconds
+          Quick find your recommended candidate based on your most recent opening <br />
+         and connect with them in second
         </p>
 
         <div className="steps-container">
@@ -147,7 +146,7 @@ const SignUp = () => {
             <div className="step-content">
               <h3 className="step-title">Login or Register</h3>
               <p className="step-description">
-                Login with email and sign up with email/facebook and linkedin.
+                Login and Register with your mobile number.
               </p>
             </div>
           </div>
@@ -197,9 +196,7 @@ const SignUp = () => {
             <span className="highlight">Job Portal</span>
           </h1>
           <p className="description">
-            Find your dream job from thousands daily updated job vacancies. Find
-            the best jobs around the world or apply directly on a business
-            website. Search and find jobs today!
+           Find your dream candidate from thousands candidates. Find the best candidate around the world or call directly on a email and mobile number after registering to our portal!
           </p>
           <div className="hero-buttons">
             <button
@@ -223,9 +220,8 @@ const SignUp = () => {
             Why We are <span className="highlight oswald">Most Popular</span>
           </h1>
           <p>
-            Looking for a job is hard enough. That’s why we don’t charge any
-            fees—no hidden costs, no paid registrations, and no premium
-            upgrades.
+            Finding the right candidate can be challenging and expensive.
+             That's why we don't charge any fees, no hidden costs, no paid registrations, and no premium upgrades.
           </p>
 
           <div className="popular-grid">

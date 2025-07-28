@@ -10,6 +10,8 @@
 
   color: white;
   position: relative;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .overlay {
@@ -74,6 +76,8 @@
   padding: 60px 80px;
   font-family: "Poppins";
   margin-bottom: 120px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .founder-left,
@@ -89,6 +93,8 @@
 }
 .section-title-team {
   margin: 50px 80px 20px 80px;
+  max-width: 1440px;
+  margin: 50px auto; 
 }
 
 .section-title {
