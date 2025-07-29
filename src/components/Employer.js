@@ -222,12 +222,12 @@ export default function Employer() {
     e.preventDefault();
     const errs = [];
     if (!formState.description.trim()) errs.push({ field: 'description', message: 'Description is required.' });
-    if (!formState.website.trim()) errs.push({ field: 'website', message: 'Website is required.' });
+    if (!formState.website.trim()) errs.push({ field: 'website', message: 'Company Website is required.' });
     if (formState.website && !/^https?:\/\//.test(formState.website))
       errs.push({ field: 'website', message: 'Website must start with http:// or https://' });
-    if (!formState.contact.trim()) errs.push({ field: 'contact', message: 'Contact is required.' });
-    if (!formState.address.trim()) errs.push({ field: 'address', message: 'Address is required.' });
-    if (!formState.founded.trim()) errs.push({ field: 'founded', message: 'Founded date is required.' });
+    if (!formState.contact.trim()) errs.push({ field: 'contact', message: 'HR Contact is required.' });
+    if (!formState.address.trim()) errs.push({ field: 'address', message: 'Company Address is required.' });
+    if (!formState.founded.trim()) errs.push({ field: 'founded', message: 'Company Founded date is required.' });
     if (formState.industry.length === 0) errs.push({ field: 'industry', message: 'Add at least one industry.' });
 
     if (errs.length) {
@@ -536,7 +536,7 @@ export default function Employer() {
                           width: "100%",
                         }}
                       >
-                        Profile Image
+                     
                       </label>
                       {/* <input
                         type="file"

@@ -100,7 +100,7 @@
 .section-title {
   font-size: 64px;
   font-weight: 600;
-  /* margin: 50px 80px 20px 80px; */
+  margin: 50px 80px 20px 80px;
   /* Top Right Bottom Left */
   line-height: 1.2;
   font-family: "Oswald";

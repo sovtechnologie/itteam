@@ -9,6 +9,8 @@
   /* background-color: #d6dea4; */
   display: flex;
   gap: 45px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .signup-container {
@@ -341,6 +343,11 @@
   transition: all 0.3s ease;
 }
 
+
+.send-otp button:hover {
+  background-color: #1783d0;
+  color: #fff;
+}
 .send-otp button:hover {
   button:hover {
     background-color: white; /* Same as the default background color */

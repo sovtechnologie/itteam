@@ -250,7 +250,7 @@ const EmprSignUp = () => {
       errs.push({ field: "mobileNumber", message: "mobile Number is required" });
     }
     if (!formData.otp) {
-      errs.push({ field: "otp", message: "otp is required" });
+      errs.push({ field: "otp", message: "OTP is required" });
     }
     if (!formData.state) {
       errs.push({ field: "state", message: "State is required" });
@@ -262,10 +262,10 @@ const EmprSignUp = () => {
     //   errs.push({ field: "city", message: "City is required" });
     // }
     if (!formData.companyName) {
-      errs.push({ field: "companyName", message: "companyName is required" });
+      errs.push({ field: "companyName", message: "company Name is required" });
     }
     if (!formData.currentRole) {
-      errs.push({ field: "currentRole", message: "currentRole is required" });
+      errs.push({ field: "currentRole", message: "current Role is required" });
     }
     if (!formData.termsAccepted) {
       errs.push({ field: "termsAccepted", message: "You must accept terms" });

@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
     padding-left: 100px;
-    max-width: 1440px;
+    max-width: 1340px;
     margin: 0 auto;
 }
 
@@ -99,7 +99,7 @@
 .privacy-content,
 .terms-content {
     padding: 40px 90px 40px 90px;
-    max-width: 1440px;
+    max-width: 1260px;
     margin: 0 auto;
 }
 

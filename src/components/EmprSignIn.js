@@ -146,7 +146,7 @@ const EmprSignIn = () => {
       setErrors([
         {
           field: "otp",
-          message: "Otp Not Matched",
+          message: "OTP Not Matched",
         },
       ]);
       setIsOtpSent(false);
@@ -199,11 +199,11 @@ const EmprSignIn = () => {
               onClick={sendOtp}
               disabled={isOtpSent}
             >
-              <strong>{loadingSendOtp ? "Sending..." : "Send OTP"}</strong>
+         {loadingSendOtp ? "Sending..." : "Send OTP"}
             </button>
           </div>
           {getError("mobileNumber") && (
-            <p className="error-text" style={{ color: "red" }}>{getError("mobileNumber")}</p>
+            <p className="error-text" style={{ color: "red"  }}>{getError("mobileNumber")}</p>
           )}
           {!getError('mobileNumber') && getSuccess('mobileNumber') && (
             <p className="success-text">{getSuccess('mobileNumber')}</p>

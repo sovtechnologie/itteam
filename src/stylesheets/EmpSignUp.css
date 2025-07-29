@@ -50,6 +50,9 @@
   color: red;
   font-size: 0.85em;
   margin-top: 4px;
+  justify-content: left !important;
+  text-transform: capitalize;
+  text-align: left !important;
 }
 .input-error {
   border: 1px solid red;
