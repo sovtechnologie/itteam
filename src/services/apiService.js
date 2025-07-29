@@ -158,6 +158,43 @@ export const fetchtopskillandlocation = async () => {
   }
 }
 
+export const fetchStateList = async () => {
+  try {
+    const response  = await axios.get (
+     `${BASE_URL}/withOutLogin/get-state-list`, {
+        params: { countryCode: "IN" },
+      }
+    )
+      if (response.data && response.data.data) {
+      return response.data.data;
+    } else {
+      console.error("Invalid response format:", response);
+      return []; // return empty array on unexpected response
+    }
+    
+  } catch (error) {
+     throw error.response?.data || " Failed to fetch State list";
+  }
+}
+export const fetchCityList = async(selectedStateCode)=>{
+  try {
+    const response  = await axios.post (
+    `${BASE_URL}/withoutLogin/getCityList`, {
+          stateName: selectedStateCode, // Use selectedState directly if it's the state name
+          countryCode: "IN",
+        }
+    )
+      if (response.data) {
+      return response.data.result;
+    } else {
+      console.error("Invalid response format:", response);
+    }
+  } catch (error) {
+     throw error.response?.data || " Failed to fetch City list";
+  }
+}
+
+
 // export const fetchActiveJoiners = async () => {
 //   try {
 //     const response = await axios.get(`${BASE_URL}/withOutLogin/active-limited-joiner`);

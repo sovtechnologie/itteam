@@ -7,6 +7,7 @@ import defaultLogo from "../images/defaultImg.png";
 import { useLocation } from "react-router-dom";
 import femaleAvator from "../images/female.png";
 import MaleAvator from "../images/male.png";
+import CompanyLogo from "../images/CompanyProfilelogo.png";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
@@ -140,7 +141,7 @@ const Header = ({ isHomePage }) => {
     switch (gender.toLowerCase()) {
       case "female": return femaleAvator;
       case "male": return MaleAvator;
-      default: return defaultLogo;
+      default: return CompanyLogo;
     }
   };
   const [avatarSrc, setAvatarSrc] = useState(getAvatarSrc());

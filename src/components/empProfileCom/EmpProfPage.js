@@ -208,7 +208,6 @@ const EmpProfPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [techstacklist, setTechstacklist] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState([]);
-  // Add state to manage errors (already exists)
   const [skillError, setSkillError] = useState("");
 
   useEffect(() => {
@@ -472,7 +471,7 @@ const EmpProfPage = () => {
       updatedList[editingIndex] = newJob;
     } else {
       updatedList.push(newJob);
-      // employmentList.push(newJob); // Ensure the new job is added to the original list
+
     }
 
     // Optimistically update local state first
@@ -984,7 +983,6 @@ const EmpProfPage = () => {
 
   const [selectedState, setSelectedState] = useState("");
   const [selectedStateCode, setSelectedStateCode] = useState("");
-  const [selectedCity, setSelectedCity] = useState("");
   const [statesList, setStatesList] = useState([]);
   const [citiesList, setCitiesList] = useState([]);
 
@@ -1415,7 +1413,7 @@ const EmpProfPage = () => {
                             <option
                               key={city._id || city.id || city.name || city}
                               value={city.name || city}
-                            >s
+                            >
                               {city.name || city}
                             </option>
                           ))}
@@ -1627,9 +1625,7 @@ const EmpProfPage = () => {
                           </small>
 
                           {aboutError && <p style={{ color: "red" }}>{aboutError}</p>}
-                          {/* {success && (
-                            <p style={{ color: "green" }}>{success}</p>
-                          )} */}
+                         
                           <div className="modal-actions">
                             <button
                               onClick={handleEditAbout}
@@ -1715,7 +1711,7 @@ const EmpProfPage = () => {
                           className="modal-buttons"
                           style={{
                             display: "flex",
-                            // justifyContent: "end",
+                            justifyContent: "end",
                           }}
                         >
                           <button onClick={handleUpload}>Upload</button>

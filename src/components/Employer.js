@@ -2,34 +2,25 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import "../stylesheets/Companies.css";
-import {
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-  FaBuilding,
-  FaEnvelope,
-  FaEdit,
-  FaShareAlt,
-} from "react-icons/fa";
-import { MdOutlineCurrencyRupee, MdOutlineEdit } from "react-icons/md";
-import { FiPlus, FiUpload, FiX } from "react-icons/fi";
-import { FiShare2 } from "react-icons/fi";
-import { FaBusinessTime, FaLaptopCode, FaLocationDot } from "react-icons/fa6";
-import { IoCallSharp } from "react-icons/io5";
-import { IoIosMail } from "react-icons/io";
+import { MdOutlineEdit } from "react-icons/md";
+import { FiPlus } from "react-icons/fi";
 import CompanyLogo from "../images/CompanyProfilelogo.png";
-import vector from "../images/Vector.png";
-import coin from "../images/coins.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../components/AuthContext";
 import empprofile1 from "../images/HomeIcons/FaLocationDot.svg";
 import empprofile7 from "../images/HomeIcons/empprofile7.svg";
 import empprofile5 from "../images/HomeIcons/IoCallSharp.svg";
 import empprofile6 from "../images/HomeIcons/IoIosMail.svg";
+import { fetchCityList, fetchStateList } from "../services/apiService";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
 export default function Employer() {
   const [companyData, setCompanyData] = useState(null);
+  const [statesList, setStatesList] = useState([]);
+  const [citiesList, setCitiesList] = useState([]);
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedStateCode, setSelectedStateCode] = useState("");
   const navigate = useNavigate();
   const { token } = useParams();
   const { login } = useAuth();
@@ -48,6 +39,7 @@ export default function Employer() {
     companySize: data.company_SizeMin?.toString() || "",
     founded: data.founded || "",
     state: data.state || "",
+    city: data.city || "",
     location: Array.isArray(data.location)
       ? data.location[0]
       : data.location || "",
@@ -112,6 +104,7 @@ export default function Employer() {
   };
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [formData, setFormData] = useState(companyData);
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     if (companyData) {
@@ -120,6 +113,7 @@ export default function Employer() {
         contactName: companyData.contactName || "",
         designation: companyData.designation || "",
         location: companyData.location || "",
+        city: companyData.city || "",
         state: companyData.state || "",
         phone: companyData.contactNumber || "",
         companySize: companyData.companySize || "",
@@ -141,6 +135,21 @@ export default function Employer() {
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
+  const validateForm = () => {
+    const newErrors = [];
+    if (!formData.profileImg) newErrors.push({ field: 'profileImg', message: 'Profile is required' })
+    if (!formData.contactName) newErrors.push({ field: 'contactName', message: 'Name is required.' });
+    if (!formData.companyName) newErrors.push({ field: 'companyName', message: 'companyName is required.' });
+    if (!formData.designation) newErrors.push({ field: 'designation', message: 'designation is required.' });
+    if (!formData.city) newErrors.push({ field: 'city', message: 'city is required.' });
+    if (!formData.companySize) newErrors.push({ field: 'companySize', message: 'companySize is required.' });
+    if (!formData.phone && !formData.contact) newErrors.push({ field: 'phone', message: 'Phone number is required.' });
+    if (!formData.email) newErrors.push({ field: 'email', message: 'Email is required.' });
+    if (!formData.state) newErrors.push({ field: 'state', message: "State is required" });
+
+    setErrors(newErrors);
+    return newErrors.length === 0;
+  };
 
   const handleInput = (e) => {
     const { name, value, files } = e.target;
@@ -150,23 +159,28 @@ export default function Employer() {
         [name]: URL.createObjectURL(files[0]), // for preview
         [`${name}File`]: files[0], // store the actual file
       }));
+      setErrors((prevErrors) => prevErrors.filter((err) => err.field !== name));
     } else {
       setFormData((prev) => ({
         ...prev,
         [name]: value,
       }));
+      setErrors((prevErrors) => prevErrors.filter((err) => err.field !== name));
     }
   };
 
 
   const handleProfileSave = async () => {
+    if (!validateForm()) return;
+
     try {
       const form = new FormData();
       form.append("_id", companyData._id);
       form.append("name", formData.contactName);
       form.append("companyName", formData.companyName);
       form.append("designationName", formData.designation);
-      form.append("location", formData.location);
+      form.append("city", formData.city);
+      form.append("state", formData.state)
       form.append("company_SizeMin", formData.companySize);
       form.append("contactNumber", formData.phone || formData.contact);
       form.append("email", formData.email);
@@ -176,7 +190,6 @@ export default function Employer() {
       if (formData.profileImgFile) {
         form.append("logo", formData.profileImgFile);
       }
-
       const authToken = Cookies.get("authToken");
       const response = await axios.put(
         `${baseUrl}/employer/editEmployer`,
@@ -273,6 +286,40 @@ export default function Employer() {
     }
   };
 
+
+  useEffect(() => {
+    const getStates = async () => {
+      try {
+        const response = await fetchStateList();
+        setStatesList(response);
+      } catch (err) {
+        console.error("Failed to load states:", err);
+      }
+    };
+    getStates();
+  }, []);
+
+ useEffect(() => {
+    const getCity = async () => {
+      try {
+        const response = await fetchCityList(selectedStateCode);
+        setCitiesList(response);
+      } catch (error) {
+        console.error("Failed to fetch cities", error);
+      }
+    };
+
+    if (selectedStateCode) {
+      getCity();
+    }
+  }, [selectedStateCode]);
+
+  console.log("my city",statesList);
+  console.log("my selected state",selectedState);
+  console.log("slected statecode",selectedStateCode);
+  console.log("my city",citiesList)
+ 
+
   return (
     <>
       <div className="Employee-Profile-Card">
@@ -304,7 +351,7 @@ export default function Employer() {
                       <div className="Column-One-Details">
 
                         <img src={empprofile1} />
-                        <p>{formData?.location}</p>
+                        <p>{formData?.city},{formData?.state}</p>
                       </div>
                       <div className="Column-One-Details">
 
@@ -340,7 +387,7 @@ export default function Employer() {
                         alignItems: "center",
                       }}
                     >
-                      
+
                       <h2 className="edit-about">Edit Profile</h2>
                       <button
                         className="fancy-close"
@@ -409,6 +456,11 @@ export default function Employer() {
                         value={formData.contactName}
                         onChange={handleInput}
                       />
+                      {errors.some(e => e.field === 'contactName') &&
+                        <p className="error-text">
+                          {errors.find(e => e.field === 'contactName').message}
+                        </p>
+                      }
                     </div>
 
                     <div>
@@ -428,7 +480,104 @@ export default function Employer() {
                         placeholder="Designation"
                         value={formData.designation}
                         onChange={handleInput}
-                      /></div>
+                      />
+                      {errors.some(e => e.field === 'designation') &&
+                        <p className="error-text">
+                          {errors.find(e => e.field === 'designation').message}
+                        </p>
+                      }
+                    </div>
+
+                    <div>
+                      <label
+                        style={{
+                          color: "black",
+                          marginBottom: "5px",
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                        }}
+                      >
+                        State
+                      </label>
+                      {/* <input
+                        name="state"
+                        placeholder="State"
+                        value={formData.state}
+                        onChange={handleInput}
+                      /> */}
+                      <select
+                          name="state"
+                          value={formData.state}
+                          onChange={(e) => {
+                            const selected = statesList.find(
+                              (state) => (state.name || state) === e.target.value
+                            );
+                            handleInput(e);
+                            setSelectedState(e.target.value);
+                            setSelectedStateCode(selected?.isoCode || ""); // if you want to use for city dropdown
+                          }}
+                          className="form-select"
+                        >
+                          <option value="">Select State</option>
+                          {statesList.map((state) => (
+                            <option
+                              key={state._id || state.id || state}
+                              value={state.name || state}
+                            >
+                              {state.name || state}
+                            </option>
+                          ))}
+                        </select>
+                      {errors.some(e => e.field === 'state') &&
+                        <p className="error-text">
+                          {errors.find(e => e.field === 'state').message}
+                        </p>
+                      }
+                    </div>
+
+                    <div>
+                      <label
+                        style={{
+                          color: "black",
+                          marginBottom: "5px",
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                        }}
+                      >
+                        City
+                      </label>
+                      {/* <input
+                        name="city"
+                        placeholder="City"
+                        value={formData.city}
+                        onChange={handleInput}
+                      /> */}
+
+                      <select
+                          name="city"
+                          value={formData.city || ""}
+                          onChange={handleInput}
+                          className="form-select"
+                          disabled={!selectedState}
+                        >
+                          <option value="">{formData.city || ""}</option>
+                          {citiesList.map((city) => (
+                            <option
+                              key={city._id || city.id || city.name || city}
+                              value={city.name || city}
+                            >
+                              {city.name || city}
+                            </option>
+                          ))}
+                        </select>
+                      {errors.some(e => e.field === 'city') &&
+                        <p className="error-text">
+                          {errors.find(e => e.field === 'city').message}
+                        </p>
+                      }
+                    </div>
 
                     <div>
                       <label
@@ -447,26 +596,15 @@ export default function Employer() {
                         placeholder="Company"
                         value={formData.companyName}
                         onChange={handleInput}
-                      /></div>
+                      />
+                      {errors.some(e => e.field === 'companyName') &&
+                        <p className="error-text">
+                          {errors.find(e => e.field === 'companyName').message}
+                        </p>
+                      }
+                    </div>
 
-                    <div>
-                      <label
-                        style={{
-                          color: "black",
-                          marginBottom: "5px",
-                          display: "flex",
-                          flexDirection: "column",
-                          width: "100%",
-                        }}
-                      >
-                        Location
-                      </label>
-                      <input
-                        name="location"
-                        placeholder="Location"
-                        value={formData.location}
-                        onChange={handleInput}
-                      /></div>
+
 
                     <div>
                       <label
@@ -485,7 +623,13 @@ export default function Employer() {
                         placeholder="size like 0-13 Employee"
                         value={formData.companySize}
                         onChange={handleInput}
-                      /></div>
+                      />
+                      {errors.some(e => e.field === 'companySize') &&
+                        <p className="error-text">
+                          {errors.find(e => e.field === 'companySize').message}
+                        </p>
+                      }
+                    </div>
 
                     <div>
                       <label
@@ -503,8 +647,14 @@ export default function Employer() {
                         name="phone"
                         placeholder="Phone"
                         value={formData.phone}
-                        onChange={handleInput}
-                      /></div>
+                      // onChange={handleInput}
+                      />
+                      {errors.some(e => e.field === 'phone') &&
+                        <p className="error-text">
+                          {errors.find(e => e.field === 'phone').message}
+                        </p>
+                      }
+                    </div>
 
 
                     <div>
@@ -524,7 +674,13 @@ export default function Employer() {
                         placeholder="Email"
                         value={formData.email}
                         onChange={handleInput}
-                      /></div>
+                      />
+                      {errors.some(e => e.field === 'email') &&
+                        <p className="error-text">
+                          {errors.find(e => e.field === 'email').message}
+                        </p>
+                      }
+                    </div>
 
                     <div>
                       <label
@@ -536,7 +692,7 @@ export default function Employer() {
                           width: "100%",
                         }}
                       >
-                     
+
                       </label>
                       {/* <input
                         type="file"
@@ -560,6 +716,8 @@ export default function Employer() {
               </div>
             )}
           </div>
+
+
 
           <div className="company-card">
             <div
