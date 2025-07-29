@@ -488,10 +488,11 @@ const EmpFilter = () => {
                       {isLoggedIn ?
                         <div
                           onClick={() => downloadResume(profile.resume)}
-                          style={{ cursor: "pointer" }}> <BsDownload
+                          style={{ cursor: "pointer" }}>
+                             <BsDownload
                             style={{
-                              width: "20px",
-                              height: "20px",
+                              width: "25px",
+                              height: "25px",
                               marginTop: "-25px",
                               color: "#1782D0"
                             }}

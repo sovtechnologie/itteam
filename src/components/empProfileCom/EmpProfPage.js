@@ -22,7 +22,7 @@ import MaleAvator from "../../images/male.png";
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
 const MAX_WORDS = 200;
-const MIN_WORDS = 100;
+const MIN_WORDS = 200;
 
 const countWords = (text) => {
   return text
@@ -39,6 +39,7 @@ const EmpProfPage = () => {
   const navigate = useNavigate();
   const [employmentList, setEmploymentList] = useState([]);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
   const [formData, setFormData] = useState({
     name: "",
     designation: "",
@@ -57,12 +58,32 @@ const EmpProfPage = () => {
   const handleClose = () => setIsEditOpen(false);
   const fileInputRef = useRef(null);
 
- const handleImageClick = () => {
-  fileInputRef.current?.click();
-};
-  
+  const handleImageClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const validateForm = () => {
+    const errors = {};
+
+    if (!formData.name.trim()) errors.name = "Full name is required.";
+    if (!formData.designation.trim()) errors.designation = "Designation is required.";
+    if (!formData.email.trim()) errors.email = "Email is required.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errors.email = "Invalid email format.";
+
+    if (!formData.state.trim()) errors.state = "State is required.";
+    if (!formData.location.trim()) errors.location = "City is required.";
+
+    if (!formData.experience) errors.experience = "Experience level is required.";
+    if (!formData.salary.trim()) errors.salary = "Salary is required.";
+    if (!formData.notice) errors.notice = "Notice period is required.";
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSaveProfileWithImage = async () => {
+    if (!validateForm()) return;
+
     const form = new FormData();
     form.append("userId", userId);
     form.append("name", formData.name);
@@ -93,7 +114,7 @@ const EmpProfPage = () => {
 
       if (response.data.status === 200) {
         setSuccess("Profile updated successfully.");
-         window.dispatchEvent(new Event("profile-updated"))
+        window.dispatchEvent(new Event("profile-updated"))
         setIsEditOpen(false);
       } else {
         setError(response.data.message || "Failed to update profile.");
@@ -112,17 +133,26 @@ const EmpProfPage = () => {
         profileImg: URL.createObjectURL(files[0]), // for preview
         profileImgFile: files[0], // actual file
       }));
+      setFormErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
     } else {
       setFormData((prev) => ({
         ...prev,
         [name]: value,
       }));
+       setFormErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
     }
   };
 
   const [isAboutEditOpen, setIsAboutEditOpen] = useState(false);
   const [aboutText, setAboutText] = useState(userData?.about || "");
   const [aboutInput, setAboutInput] = useState(aboutText);
+  const [aboutError, setAboutError] = useState("");
   const [minWordsReached, setMinWordsReached] = useState(false);
   const [error, setError] = useState("");
   const [modalErrors, setModalErrors] = useState([]);
@@ -131,6 +161,7 @@ const EmpProfPage = () => {
   const [resumeFile, setResumeFile] = useState(null);
   const [resumeURL, setResumeURL] = useState(""); // for full backend resume URL
   const [newResume, setNewResume] = useState(null); // File for new upload
+  const [resumeError, setResumeError] = useState("");
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -138,12 +169,13 @@ const EmpProfPage = () => {
       setNewResume(file);
       setResumeFile(file.name); // Show new name immediately
       setResumeURL(URL.createObjectURL(file)); // Temporary preview
+      setResumeError(""); // Clear any previous error
     }
   };
 
   // HANDLE upload to backend
   const handleUpload = async () => {
-    if (!newResume) return alert("Please select a resume to upload.");
+    if (!newResume) return setResumeError("Please select a resume to upload.");
 
     const formData = new FormData();
     formData.append("resume", newResume);
@@ -162,12 +194,13 @@ const EmpProfPage = () => {
       if (res.data.status === 200) {
         // setResumeURL(data.result.resume); // Update backend link
         setIsModalOpen(false);
+        setResumeError('');
       } else {
-        setError(error.response?.data?.message || "Error uploading resume.");
+        setResumeError(error.response?.data?.message || "Error uploading resume.");
       }
       setIsModalOpen(false);
     } catch (err) {
-      setError(error.response?.data?.message || "Error uploading resume.");
+      setResumeError(error.response?.data?.message || "Error uploading resume.");
     }
   };
 
@@ -175,6 +208,8 @@ const EmpProfPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [techstacklist, setTechstacklist] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState([]);
+  // Add state to manage errors (already exists)
+  const [skillError, setSkillError] = useState("");
 
   useEffect(() => {
     const fetchTechStacks = async () => {
@@ -207,6 +242,14 @@ const EmpProfPage = () => {
       setError("Authentication failed. Please login again.");
       return;
     }
+    setSkillError(""); // Clear old errors
+
+    // Prevent empty or malformed skills
+    if (!skill || !skill.tecStackName) {
+      setSkillError("Invalid skill selected.");
+      return;
+    }
+
 
     // Prevent duplicates
     const alreadyExists = selectedSkills.some(
@@ -217,12 +260,15 @@ const EmpProfPage = () => {
         ((s.id && skill.id && s.id === skill.id) ||
           (s._id && skill._id && s._id === skill._id))
     );
-    if (alreadyExists) return;
+    if (alreadyExists) {
+      setSkillError("Skill already added.");
+      return;
+    }
 
     // Use _id if available, else id
     const techStackId = skill._id || skill.id;
     if (!techStackId) {
-      setError("Skill ID missing. Cannot add this skill.");
+      setSkillError("Skill ID missing. Cannot add this skill.");
       return;
     }
 
@@ -256,12 +302,13 @@ const EmpProfPage = () => {
         };
 
         setSelectedSkills((prev) => [...prev, newSkill]);
+        setSkillError("");
         setSuccess("Skill added successfully!");
       } else {
-        setError(response.data.message || "Failed to add skill.");
+        setSkillError(response.data.message || "Failed to add skill.");
       }
     } catch (error) {
-      setError(
+      setSkillError(
         error.response?.data?.message ||
         "Something went wrong while adding skill."
       );
@@ -769,6 +816,7 @@ const EmpProfPage = () => {
     if (!title?.trim()) errs.push({ field: "title", message: "Title is required." });
     if (!issuer?.trim()) errs.push({ field: "issuer", message: "Issuer is required." });
     if (!issuedDate) errs.push({ field: "issuedDate", message: "Issued date is required." });
+    if (!credentialUrl?.trim()) errs.push({ field: "credentialUrl", message: "Credential URL is required." });
     if (credentialUrl && !/^https?:\/\/.+\..+/.test(credentialUrl)) {
       errs.push({ field: "credentialUrl", message: "Enter a valid URL." });
     }
@@ -1034,14 +1082,22 @@ const EmpProfPage = () => {
     }
   }, [isAboutEditOpen, aboutText]);
 
+
   const handleEditAbout = async () => {
+    setAboutError('')
     if (!authToken) {
-      setError("Session expired! Please login again.");
+      setAboutError("Session expired! Please login again.");
+      return;
+    }
+    const words = aboutInput.trim().split(/\s+/);
+    if (words.length < MIN_WORDS) {
+      setAboutError(`About me must be at least ${MIN_WORDS} words long.`);
       return;
     }
 
+
     setLoading(true);
-    setError("");
+    // setError(""); 
     setSuccess("");
 
     try {
@@ -1063,11 +1119,12 @@ const EmpProfPage = () => {
         setSuccess("About me updated successfully!");
         setAboutText(aboutInput);
         setIsAboutEditOpen(false);
+        setAboutError('')
       } else {
-        setError(response.data.msg || "Failed to update about me.");
+        setAboutError(response.data.msg || "Failed to update about me.");
       }
     } catch (error) {
-      setError(
+      setAboutError(
         error.response?.data?.message || "Something went wrong while updating."
       );
     } finally {
@@ -1205,7 +1262,7 @@ const EmpProfPage = () => {
                     </div>
                   </div>
 
-                  {formData.profileImg && (
+                  {/* {formData.profileImg && ( */}
                     <div
                       style={{
                         display: "flex",
@@ -1226,7 +1283,7 @@ const EmpProfPage = () => {
                         onClick={handleImageClick}
                       >
                         <img
-                          src={formData.profileImg}
+                          src={formData.profileImg || getProfileSrc()}
                           alt="Preview"
                           style={{
                             width: "100px",
@@ -1242,147 +1299,176 @@ const EmpProfPage = () => {
                             (e.currentTarget.style.transform = "scale(1)")
                           }
                         />
+                         {formErrors.profileImg && (
+                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.profileImg}</p>
+                      )}
                       </div>
                     </div>
-                  )}
+                  {/* )} */}
 
                   <div className="form-grid">
                     <div>
-                     <label className="company-label">Enter Your Full Name</label>
-                    <input
-                      name="name"
-                      placeholder="Full Name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                    /></div>
-                     <div>
-                     <label className="company-label">Enter Your Designation  </label>
-                    <input
-                      name="designation"
-                      placeholder="Designation"
-                      value={formData.designation}
-                      onChange={handleInputChange}
-                    /></div>
-                     <div>
-                     <label className="company-label">Enter Your Email Id</label>
-                    <input
-                      name="email"
-                      placeholder="Email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                    />
-                    </div>
-                     <div>
-                     <label className="company-label">Select State</label>
-                    <div className="signUpform-group">
-                      <select
-                        name="state"
-                        value={formData.state || ""}
-                        onChange={(e) => {
-                          const selected = statesList.find(
-                            (state) => (state.name || state) === e.target.value
-                          );
-                          setFormData((prev) => ({
-                            ...prev,
-                            state: e.target.value,
-                          }));
-                          setSelectedState(e.target.value);
-                          setSelectedStateCode(selected?.isoCode || ""); // if you want to use for city dropdown
-                        }}
-                        className="form-select"
-                      >
-                        <option value="">Select State</option>
-                        {statesList.map((state) => (
-                          <option
-                            key={state._id || state.id || state}
-                            value={state.name || state}
-                          >
-                            {state.name || state}
-                          </option>
-                        ))}
-                      </select>
-                    </div></div>
-                   
-
-
-                       <div>
-                     <label className="company-label">Select city</label>
-                    <div className="signUpform-group">
-                    
-                      <select
-                        name="location"
-                        value={formData.location || ""}
+                      <label className="company-label">Enter Your Full Name</label>
+                      <input
+                        name="name"
+                        placeholder="Full Name"
+                        value={formData.name}
                         onChange={handleInputChange}
-                        className="form-select"
-                        disabled={!selectedState}
+                      />
+                      {formErrors.name && (
+                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.name}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label className="company-label">Enter Your Designation  </label>
+                      <input
+                        name="designation"
+                        placeholder="Designation"
+                        value={formData.designation}
+                        onChange={handleInputChange}
+                      />
+                      {formErrors.designation && (
+                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.designation}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label className="company-label">Enter Your Email Id</label>
+                      <input
+                        name="email"
+                        placeholder="Email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                      />
+                      {formErrors.email && (
+                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.email}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label className="company-label">Select State</label>
+                      <div className="signUpform-group">
+                        <select
+                          name="state"
+                          value={formData.state || ""}
+                          onChange={(e) => {
+                            const selected = statesList.find(
+                              (state) => (state.name || state) === e.target.value
+                            );
+                            setFormData((prev) => ({
+                              ...prev,
+                              state: e.target.value,
+                            }));
+                            setSelectedState(e.target.value);
+                            setSelectedStateCode(selected?.isoCode || ""); // if you want to use for city dropdown
+                          }}
+                          className="form-select"
+                        >
+                          <option value="">Select State</option>
+                          {statesList.map((state) => (
+                            <option
+                              key={state._id || state.id || state}
+                              value={state.name || state}
+                            >
+                              {state.name || state}
+                            </option>
+                          ))}
+                        </select>
+                        {formErrors.state && (
+                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.state}</p>
+                      )}
+                      </div></div>
+
+
+
+                    <div>
+                      <label className="company-label">Select city</label>
+                      <div className="signUpform-group">
+
+                        <select
+                          name="location"
+                          value={formData.location || ""}
+                          onChange={handleInputChange}
+                          className="form-select"
+                          disabled={!selectedState}
+                        >
+                          <option value="">{formData.location || ""}</option>
+                          {citiesList.map((city) => (
+                            <option
+                              key={city._id || city.id || city.name || city}
+                              value={city.name || city}
+                            >s
+                              {city.name || city}
+                            </option>
+                          ))}
+                        </select>
+                        {formErrors.location && (
+                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.location}</p>
+                      )}
+                      </div></div>
+
+                    <div>
+                      <label className="company-label">Enter Experience Level</label>
+                      <select
+                        name="experience"
+                        value={formData.experience}
+                        onChange={handleInputChange}
+                        style={{ width: "100%" }}
                       >
-                        <option value="">{formData.location || ""}</option>
-                        {citiesList.map((city) => (
-                          <option
-                            key={city._id || city.id || city.name || city}
-                            value={city.name || city}
-                          >s
-                            {city.name || city}
-                          </option>
-                        ))}
+                        <option value="">Select Experience Level</option>
+                        <option value="1">Fresher</option>
+                        <option value="2">Junior</option>
+                        <option value="3">Mid-Level</option>
+                        <option value="4">Senior</option>
                       </select>
-                    </div></div>
-                    
-                        <div>
-                     <label className="company-label">Enter Experience Level</label>
-                    <select
-                      name="experience"
-                      value={formData.experience}
-                      onChange={handleInputChange}
-                      style={{width:"100%"}}
-                    >
-                      <option value="">Select Experience Level</option>
-                      <option value="1">Fresher</option>
-                      <option value="2">Junior</option>
-                      <option value="3">Mid-Level</option>
-                      <option value="4">Senior</option>
-                    </select></div>
+                      {formErrors.experience && (
+                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.experience}</p>
+                      )}
+                      </div>
 
-                      <div>
-                     <label className="company-label">Enter Salary</label>
-                    <input
-                      name="salary"
-                      placeholder="Salary"
-                      value={formData.salary}
-                      onChange={handleInputChange}
-                    /></div>
-                     
-                      <div>
-                     <label className="company-label">Select Notice Period</label>
-                    <select
-                      name="notice"
-                      value={formData.notice}
-                      onChange={handleInputChange}
-                    >
-                      <option value="">Select Notice Period</option>
-                      <option value="1">Immediate</option>
-                      <option value="2">Within 7 Days</option>
-                      <option value="3">Within 15 Days</option>
-                      <option value="4">Within 30 Days</option>
-                      <option value="5">Within 45 Days</option>
-                    </select></div>
+                    <div>
+                      <label className="company-label">Enter Salary</label>
+                      <input
+                        name="salary"
+                        placeholder="Salary"
+                        value={formData.salary}
+                        onChange={handleInputChange}
+                      />
+                      {formErrors.salary && (
+                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.salary}</p>
+                      )}
+                      </div>
 
-                     <div>
-                     <label className="company-label">Enter Your Phone Number</label>
-                    <input
-                      name="phone"
-                      placeholder="Phone"
-                      value={formData.phone}
-                      // onChange={handleInputChange}
-                      disabled="true"
-                    /></div>
+                    <div>
+                      <label className="company-label">Select Notice Period</label>
+                      <select
+                        name="notice"
+                        value={formData.notice}
+                        onChange={handleInputChange}
+                      >
+                        <option value="">Select Notice Period</option>
+                        <option value="1">Immediate</option>
+                        <option value="2">Within 7 Days</option>
+                        <option value="3">Within 15 Days</option>
+                        <option value="4">Within 30 Days</option>
+                        <option value="5">Within 45 Days</option>
+                      </select>
+                      {formErrors.notice && (
+                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.notice}</p>
+                      )}
+                      </div>
 
-                    {/* <input
-                      type="file"
-                      name="profileImg"
-                      onChange={handleInputChange}
-                    /> */}
-                    
+                    <div>
+                      <label className="company-label">Enter Your Phone Number</label>
+                      <input
+                        name="phone"
+                        placeholder="Phone"
+                        value={formData.phone}
+                        disabled="true"
+                      />
+                      {formErrors.phone && (
+                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.phone}</p>
+                      )}
+                      </div>
+
                     <input
                       type="file"
                       accept="image/*"
@@ -1392,9 +1478,9 @@ const EmpProfPage = () => {
                       onChange={handleInputChange}
                     />
                   </div>
-                  <div className="modal-buttons" style={{marginTop:"10px"}}>
+                  <div className="modal-buttons" style={{ marginTop: "10px" }}>
                     <button onClick={handleSaveProfileWithImage}>
-                      Save 
+                      Save
                     </button>
                   </div>
                 </div>
@@ -1506,8 +1592,10 @@ const EmpProfPage = () => {
                                   .slice(0, MAX_WORDS)
                                   .join(" ");
                                 setAboutInput(trimmed + " ");
+                                setAboutError('')
                               } else {
                                 setAboutInput(text);
+                                setAboutError('')
                               }
 
                               // update minWordsReached flag
@@ -1520,18 +1608,18 @@ const EmpProfPage = () => {
                             {MIN_WORDS})
                           </small>
 
-                          {error && <p style={{ color: "red" }}>{error}</p>}
-                          {success && (
+                          {aboutError && <p style={{ color: "red" }}>{aboutError}</p>}
+                          {/* {success && (
                             <p style={{ color: "green" }}>{success}</p>
-                          )}
+                          )} */}
                           <div className="modal-actions">
                             <button
                               onClick={handleEditAbout}
-                              disabled={loading || !minWordsReached}
+                            // disabled={loading || !minWordsReached}
                             >
                               {loading ? "Saving..." : "Save"}
                             </button>
-                            
+
                           </div>
                         </div>
                       </div>
@@ -1601,6 +1689,11 @@ const EmpProfPage = () => {
                           accept=".pdf,.doc,.docx"
                           onChange={handleFileChange}
                         />
+                        {resumeError && (
+                          <p style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>
+                            {resumeError}
+                          </p>
+                        )}
                         <div
                           className="modal-buttons"
                           style={{
@@ -1609,9 +1702,10 @@ const EmpProfPage = () => {
                           }}
                         >
                           <button onClick={handleUpload}>Upload</button>
-                          
+
                         </div>
                       </div>
+
                     </div>
                   )}
                 </div>
@@ -1647,6 +1741,7 @@ const EmpProfPage = () => {
                         </div>
                       ))}
                     </div>
+
                   </div>
                   {/* Modal for Skill editing */}
                   {isSkillModalOpen && (
@@ -1738,16 +1833,17 @@ const EmpProfPage = () => {
                           <button onClick={() => setIsSkillModalOpen(false)}>
                             Save
                           </button>
-                          {/* <button
-                            type="button"
-                            onClick={() => setIsSkillModalOpen(false)}
-                          >
-                            Cancel
-                          </button> */}
                         </div>
+                        {skillError && (
+                          <p style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>
+                            {skillError}
+                          </p>
+                        )
+                        }
                       </div>
                     </div>
                   )}
+
                 </div>
 
                 {/* Experience section */}
@@ -2268,17 +2364,6 @@ const EmpProfPage = () => {
                           >
                             {isEditing ? "Save" : "Save"}
                           </button>
-
-                          {/* <button
-                            style={{ backgroundColor: "red", color: "white" }}
-                            onClick={() => {
-                              setIsEduModalOpen(false);
-                              setIsEditing(false);
-                              setEditId(null);
-                            }}
-                          >
-                            Cancel
-                          </button> */}
                         </div>
                       </div>
                     </div>
@@ -2546,7 +2631,6 @@ const EmpProfPage = () => {
                           >
                             <MdOutlineEdit size={25} />
                           </button>
-                          {/* <button onClick={() => handleLicensesDelete(index)}>Delete</button> */}
                         </div>
                       </div>
                     ))}
@@ -2557,11 +2641,7 @@ const EmpProfPage = () => {
                         className="modal-form"
                         onSubmit={handleFormLicensesSubmit}
                       >
-                        {/* <h3>
-                        {editIndex !== null
-                          ? "Edit Certification"
-                          : "Add Certification"}
-                      </h3> */}
+
                         <div className="modal-header">
                           <div
                             style={{
@@ -2614,11 +2694,12 @@ const EmpProfPage = () => {
                             setFormLicensesData(prev => ({ ...prev, issuedDate: e.target.value }));
                             setModalErrorsLic(prev => prev.filter(err => err.field !== "issuedDate"));
                           }}
-                          required
+
                         />
                         {modalErrorsLic.find(e => e.field === "issuedDate") && (
                           <p className="error-text">{modalErrorsLic.find(e => e.field === "issuedDate").message}</p>
                         )}
+
                         <input
                           type="url"
                           placeholder="Credential Link"
