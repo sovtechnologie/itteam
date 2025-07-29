@@ -134,18 +134,18 @@ const EmpProfPage = () => {
         profileImgFile: files[0], // actual file
       }));
       setFormErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: "",
-    }));
+        ...prevErrors,
+        [name]: "",
+      }));
     } else {
       setFormData((prev) => ({
         ...prev,
         [name]: value,
       }));
-       setFormErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: "",
-    }));
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "",
+      }));
     }
   };
 
@@ -245,7 +245,7 @@ const EmpProfPage = () => {
 
     // Prevent empty or malformed skills
     if (!skill || !skill.tecStackName) {
-      setSkillError("Invalid skill selected.");
+      setSkillError("Skill is required.");
       return;
     }
 
@@ -309,10 +309,15 @@ const EmpProfPage = () => {
     } catch (error) {
       setSkillError(
         error.response?.data?.message ||
-          "Something went wrong while adding skill."
+        "Something went wrong while adding skill."
       );
     }
   };
+
+const handleSkillSave = async () => {
+    setIsSkillModalOpen(false);
+};
+
 
   const handleRemoveSkill = async (tecStackName, _id) => {
     if (!authToken || !userId) {
@@ -350,7 +355,7 @@ const EmpProfPage = () => {
     } catch (error) {
       setError(
         error.response?.data?.message ||
-          "Something went wrong while removing the skill."
+        "Something went wrong while removing the skill."
       );
     }
   };
@@ -412,9 +417,9 @@ const EmpProfPage = () => {
           userId,
           ...(isEdit
             ? {
-                _id: jobData._id,
-                ...jobData,
-              }
+              _id: jobData._id,
+              ...jobData,
+            }
             : { ...jobData }),
         },
         {
@@ -1281,46 +1286,46 @@ const EmpProfPage = () => {
                   </div>
 
                   {/* {formData.profileImg && ( */}
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginTop: "15px",
+                    }}
+                  >
                     <div
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        marginTop: "15px",
+                        borderRadius: "12px",
+                        padding: "10px",
+                        backgroundColor: "#fff",
+                        maxWidth: "100%",
+                        textAlign: "center",
                       }}
+                      onClick={handleImageClick}
                     >
-                      <div
+                      <img
+                        src={formData.profileImg || getProfileSrc()}
+                        alt="Preview"
                         style={{
-                          borderRadius: "12px",
-                          padding: "10px",
-                          backgroundColor: "#fff",
-                          maxWidth: "100%",
-                          textAlign: "center",
+                          width: "100px",
+                          height: "100px",
+                          borderRadius: "50%",
+                          objectFit: "cover",
+                          transition: "transform 0.3s ease",
                         }}
-                        onClick={handleImageClick}
-                      >
-                        <img
-                          src={formData.profileImg || getProfileSrc()}
-                          alt="Preview"
-                          style={{
-                            width: "100px",
-                            height: "100px",
-                            borderRadius: "50%",
-                            objectFit: "cover",
-                            transition: "transform 0.3s ease",
-                          }}
-                          onMouseOver={(e) =>
-                            (e.currentTarget.style.transform = "scale(1.05)")
-                          }
-                          onMouseOut={(e) =>
-                            (e.currentTarget.style.transform = "scale(1)")
-                          }
-                        />
-                         {formErrors.profileImg && (
+                        onMouseOver={(e) =>
+                          (e.currentTarget.style.transform = "scale(1.05)")
+                        }
+                        onMouseOut={(e) =>
+                          (e.currentTarget.style.transform = "scale(1)")
+                        }
+                      />
+                      {formErrors.profileImg && (
                         <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.profileImg}</p>
                       )}
-                      </div>
                     </div>
+                  </div>
                   {/* )} */}
 
                   <div className="form-grid">
@@ -1392,8 +1397,8 @@ const EmpProfPage = () => {
                           ))}
                         </select>
                         {formErrors.state && (
-                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.state}</p>
-                      )}
+                          <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.state}</p>
+                        )}
                       </div></div>
 
 
@@ -1419,8 +1424,8 @@ const EmpProfPage = () => {
                           ))}
                         </select>
                         {formErrors.location && (
-                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.location}</p>
-                      )}
+                          <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.location}</p>
+                        )}
                       </div></div>
 
                     <div>
@@ -1440,7 +1445,7 @@ const EmpProfPage = () => {
                       {formErrors.experience && (
                         <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.experience}</p>
                       )}
-                      </div>
+                    </div>
 
                     <div>
                       <label className="company-label">Enter Salary</label>
@@ -1453,7 +1458,7 @@ const EmpProfPage = () => {
                       {formErrors.salary && (
                         <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.salary}</p>
                       )}
-                      </div>
+                    </div>
 
                     <div>
                       <label className="company-label">Select Notice Period</label>
@@ -1472,7 +1477,7 @@ const EmpProfPage = () => {
                       {formErrors.notice && (
                         <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.notice}</p>
                       )}
-                      </div>
+                    </div>
 
                     <div>
                       <label className="company-label">Enter Your Phone Number</label>
@@ -1485,7 +1490,7 @@ const EmpProfPage = () => {
                       {formErrors.phone && (
                         <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.phone}</p>
                       )}
-                      </div>
+                    </div>
 
                     <input
                       type="file"
@@ -1547,9 +1552,10 @@ const EmpProfPage = () => {
                 </div>
               </div>
 
-              {/* AboutMe Section */}
+              {/* Right Section */}
               <div className="right-aside">
                 <div>
+                  {/* AboutMe Section */}
                   <div className="content-boxes">
                     <div className="content-boxes-head">
                       <h2>About Me</h2>
@@ -1625,7 +1631,7 @@ const EmpProfPage = () => {
                           </small>
 
                           {aboutError && <p style={{ color: "red" }}>{aboutError}</p>}
-                         
+
                           <div className="modal-actions">
                             <button
                               onClick={handleEditAbout}
@@ -1835,17 +1841,17 @@ const EmpProfPage = () => {
                           ))}
                         </div>
 
-                        <div
+                        {/* <div
                           className="modal-buttons"
                           style={{
                             display: "flex",
-                            // justifyContent: "end",
+                            justifyContent: "end",
                           }}
                         >
-                          <button onClick={() => setIsSkillModalOpen(false)}>
+                          <button onClick={handleSkillSave}>
                             Save
                           </button>
-                        </div>
+                        </div> */}
                         {skillError && (
                           <p style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>
                             {skillError}
@@ -1956,14 +1962,14 @@ const EmpProfPage = () => {
                           {modalErrors.find(
                             (e) => e.field === "company_Name"
                           ) && (
-                            <p className="error-text">
-                              {
-                                modalErrors.find(
-                                  (e) => e.field === "company_Name"
-                                ).message
-                              }
-                            </p>
-                          )}
+                              <p className="error-text">
+                                {
+                                  modalErrors.find(
+                                    (e) => e.field === "company_Name"
+                                  ).message
+                                }
+                              </p>
+                            )}
                         </div>
 
                         <div>
@@ -2016,14 +2022,14 @@ const EmpProfPage = () => {
                             {modalErrors.find(
                               (e) => e.field === "JoiningDate"
                             ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrors.find(
-                                    (e) => e.field === "JoiningDate"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                                <p className="error-text">
+                                  {
+                                    modalErrors.find(
+                                      (e) => e.field === "JoiningDate"
+                                    ).message
+                                  }
+                                </p>
+                              )}
                           </div>
                           <div className="end-date">
                             <label className="company-label">
@@ -2104,14 +2110,14 @@ const EmpProfPage = () => {
                           {modalErrors.find(
                             (e) => e.field === "description"
                           ) && (
-                            <p className="error-text">
-                              {
-                                modalErrors.find(
-                                  (e) => e.field === "description"
-                                ).message
-                              }
-                            </p>
-                          )}
+                              <p className="error-text">
+                                {
+                                  modalErrors.find(
+                                    (e) => e.field === "description"
+                                  ).message
+                                }
+                              </p>
+                            )}
                         </div>
 
                         <div className="modal-buttons">
@@ -2227,14 +2233,14 @@ const EmpProfPage = () => {
                           {modalErrorsEdu.find(
                             (e) => e.field === "college"
                           ) && (
-                            <p className="error-text">
-                              {
-                                modalErrorsEdu.find(
-                                  (e) => e.field === "college"
-                                ).message
-                              }
-                            </p>
-                          )}
+                              <p className="error-text">
+                                {
+                                  modalErrorsEdu.find(
+                                    (e) => e.field === "college"
+                                  ).message
+                                }
+                              </p>
+                            )}
                         </div>
                         <div>
                           <label className="company-label">Degree</label>
@@ -2280,14 +2286,14 @@ const EmpProfPage = () => {
                           {modalErrorsEdu.find(
                             (e) => e.field === "location"
                           ) && (
-                            <p className="error-text">
-                              {
-                                modalErrorsEdu.find(
-                                  (e) => e.field === "location"
-                                ).message
-                              }
-                            </p>
-                          )}
+                              <p className="error-text">
+                                {
+                                  modalErrorsEdu.find(
+                                    (e) => e.field === "location"
+                                  ).message
+                                }
+                              </p>
+                            )}
                         </div>
 
                         <div className="start-end-date">
@@ -2315,14 +2321,14 @@ const EmpProfPage = () => {
                             {modalErrorsEdu.find(
                               (e) => e.field === "startDate"
                             ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrorsEdu.find(
-                                    (e) => e.field === "startDate"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                                <p className="error-text">
+                                  {
+                                    modalErrorsEdu.find(
+                                      (e) => e.field === "startDate"
+                                    ).message
+                                  }
+                                </p>
+                              )}
                           </div>
 
                           <div className="end-date">
@@ -2347,14 +2353,14 @@ const EmpProfPage = () => {
                             {modalErrorsEdu.find(
                               (e) => e.field === "endDate"
                             ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrorsEdu.find(
-                                    (e) => e.field === "endDate"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                                <p className="error-text">
+                                  {
+                                    modalErrorsEdu.find(
+                                      (e) => e.field === "endDate"
+                                    ).message
+                                  }
+                                </p>
+                              )}
                           </div>
                         </div>
 
@@ -2652,14 +2658,14 @@ const EmpProfPage = () => {
                             {modalErrorsProj.find(
                               (e) => e.field === "startDate"
                             ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrorsProj.find(
-                                    (e) => e.field === "startDate"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                                <p className="error-text">
+                                  {
+                                    modalErrorsProj.find(
+                                      (e) => e.field === "startDate"
+                                    ).message
+                                  }
+                                </p>
+                              )}
                           </div>
 
                           <div className="end-date">
@@ -2684,14 +2690,14 @@ const EmpProfPage = () => {
                             {modalErrorsProj.find(
                               (e) => e.field === "endDate"
                             ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrorsProj.find(
-                                    (e) => e.field === "endDate"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                                <p className="error-text">
+                                  {
+                                    modalErrorsProj.find(
+                                      (e) => e.field === "endDate"
+                                    ).message
+                                  }
+                                </p>
+                              )}
                           </div>
                         </div>
 
@@ -2716,14 +2722,14 @@ const EmpProfPage = () => {
                           {modalErrorsProj.find(
                             (e) => e.field === "associated"
                           ) && (
-                            <p className="error-text">
-                              {
-                                modalErrorsProj.find(
-                                  (e) => e.field === "associated"
-                                ).message
-                              }
-                            </p>
-                          )}
+                              <p className="error-text">
+                                {
+                                  modalErrorsProj.find(
+                                    (e) => e.field === "associated"
+                                  ).message
+                                }
+                              </p>
+                            )}
                         </div>
 
                         <div>
@@ -2746,14 +2752,14 @@ const EmpProfPage = () => {
                           {modalErrorsProj.find(
                             (e) => e.field === "projectDescription"
                           ) && (
-                            <p className="error-text">
-                              {
-                                modalErrorsProj.find(
-                                  (e) => e.field === "projectDescription"
-                                ).message
-                              }
-                            </p>
-                          )}
+                              <p className="error-text">
+                                {
+                                  modalErrorsProj.find(
+                                    (e) => e.field === "projectDescription"
+                                  ).message
+                                }
+                              </p>
+                            )}
                         </div>
 
                         <div className="modal-buttons">
@@ -2904,7 +2910,7 @@ const EmpProfPage = () => {
                           )}
                         </div>
 
-                        
+
                         {modalErrorsLic.find(e => e.field === "issuer") && (
                           <p className="error-text">{modalErrorsLic.find(e => e.field === "issuer").message}</p>
                         )}
