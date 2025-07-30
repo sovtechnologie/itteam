@@ -16,7 +16,7 @@ body::before {
   height: 99px;
   border-radius: 10px;
   margin-top: 37px;
-  z-index: 100;
+  z-index: 1000;
   width: calc(100% - 200px);
   /* margin-left: 100px; */
   position: fixed;
