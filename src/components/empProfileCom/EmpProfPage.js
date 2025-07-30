@@ -66,14 +66,17 @@ const EmpProfPage = () => {
     const errors = {};
 
     if (!formData.name.trim()) errors.name = "Full name is required.";
-    if (!formData.designation.trim()) errors.designation = "Designation is required.";
+    if (!formData.designation.trim())
+      errors.designation = "Designation is required.";
     if (!formData.email.trim()) errors.email = "Email is required.";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errors.email = "Invalid email format.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
+      errors.email = "Invalid email format.";
 
     if (!formData.state.trim()) errors.state = "State is required.";
     if (!formData.location.trim()) errors.location = "City is required.";
 
-    if (!formData.experience) errors.experience = "Experience level is required.";
+    if (!formData.experience)
+      errors.experience = "Experience level is required.";
     if (!formData.salary.trim()) errors.salary = "Salary is required.";
     if (!formData.notice) errors.notice = "Notice period is required.";
 
@@ -114,7 +117,7 @@ const EmpProfPage = () => {
 
       if (response.data.status === 200) {
         setSuccess("Profile updated successfully.");
-        window.dispatchEvent(new Event("profile-updated"))
+        window.dispatchEvent(new Event("profile-updated"));
         setIsEditOpen(false);
       } else {
         setError(response.data.message || "Failed to update profile.");
@@ -194,13 +197,17 @@ const EmpProfPage = () => {
       if (res.data.status === 200) {
         // setResumeURL(data.result.resume); // Update backend link
         setIsModalOpen(false);
-        setResumeError('');
+        setResumeError("");
       } else {
-        setResumeError(error.response?.data?.message || "Error uploading resume.");
+        setResumeError(
+          error.response?.data?.message || "Error uploading resume."
+        );
       }
       setIsModalOpen(false);
     } catch (err) {
-      setResumeError(error.response?.data?.message || "Error uploading resume.");
+      setResumeError(
+        error.response?.data?.message || "Error uploading resume."
+      );
     }
   };
 
@@ -248,7 +255,6 @@ const EmpProfPage = () => {
       setSkillError("Skill is required.");
       return;
     }
-
 
     // Prevent duplicates
     const alreadyExists = selectedSkills.some(
@@ -309,15 +315,14 @@ const EmpProfPage = () => {
     } catch (error) {
       setSkillError(
         error.response?.data?.message ||
-        "Something went wrong while adding skill."
+          "Something went wrong while adding skill."
       );
     }
   };
 
-const handleSkillSave = async () => {
+  const handleSkillSave = async () => {
     setIsSkillModalOpen(false);
-};
-
+  };
 
   const handleRemoveSkill = async (tecStackName, _id) => {
     if (!authToken || !userId) {
@@ -355,7 +360,7 @@ const handleSkillSave = async () => {
     } catch (error) {
       setError(
         error.response?.data?.message ||
-        "Something went wrong while removing the skill."
+          "Something went wrong while removing the skill."
       );
     }
   };
@@ -417,9 +422,9 @@ const handleSkillSave = async () => {
           userId,
           ...(isEdit
             ? {
-              _id: jobData._id,
-              ...jobData,
-            }
+                _id: jobData._id,
+                ...jobData,
+              }
             : { ...jobData }),
         },
         {
@@ -476,7 +481,6 @@ const handleSkillSave = async () => {
       updatedList[editingIndex] = newJob;
     } else {
       updatedList.push(newJob);
-
     }
 
     // Optimistically update local state first
@@ -841,10 +845,17 @@ const handleSkillSave = async () => {
 
     const { title, issuer, issuedDate, credentialUrl } = formLicensesData;
     const errs = [];
-    if (!title?.trim()) errs.push({ field: "title", message: "Title is required." });
-    if (!issuer?.trim()) errs.push({ field: "issuer", message: "Issuer is required." });
-    if (!issuedDate) errs.push({ field: "issuedDate", message: "Issued date is required." });
-    if (!credentialUrl?.trim()) errs.push({ field: "credentialUrl", message: "Credential URL is required." });
+    if (!title?.trim())
+      errs.push({ field: "title", message: "Title is required." });
+    if (!issuer?.trim())
+      errs.push({ field: "issuer", message: "Issuer is required." });
+    if (!issuedDate)
+      errs.push({ field: "issuedDate", message: "Issued date is required." });
+    if (!credentialUrl?.trim())
+      errs.push({
+        field: "credentialUrl",
+        message: "Credential URL is required.",
+      });
     if (credentialUrl && !/^https?:\/\/.+\..+/.test(credentialUrl)) {
       errs.push({ field: "credentialUrl", message: "Enter a valid URL." });
     }
@@ -1106,9 +1117,8 @@ const handleSkillSave = async () => {
     }
   }, [isAboutEditOpen, aboutText]);
 
-
   const handleEditAbout = async () => {
-    setAboutError('')
+    setAboutError("");
     if (!authToken) {
       setAboutError("Session expired! Please login again.");
       return;
@@ -1119,9 +1129,8 @@ const handleSkillSave = async () => {
       return;
     }
 
-
     setLoading(true);
-    // setError(""); 
+    // setError("");
     setSuccess("");
 
     try {
@@ -1143,7 +1152,7 @@ const handleSkillSave = async () => {
         setSuccess("About me updated successfully!");
         setAboutText(aboutInput);
         setIsAboutEditOpen(false);
-        setAboutError('')
+        setAboutError("");
       } else {
         setAboutError(response.data.msg || "Failed to update about me.");
       }
@@ -1322,7 +1331,9 @@ const handleSkillSave = async () => {
                         }
                       />
                       {formErrors.profileImg && (
-                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.profileImg}</p>
+                        <p style={{ color: "red", marginTop: "5px" }}>
+                          {formErrors.profileImg}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -1340,11 +1351,15 @@ const handleSkillSave = async () => {
                         onChange={handleInputChange}
                       />
                       {formErrors.name && (
-                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.name}</p>
+                        <p style={{ color: "red", marginTop: "5px" }}>
+                          {formErrors.name}
+                        </p>
                       )}
                     </div>
                     <div>
-                      <label className="company-label">Enter Your Designation  </label>
+                      <label className="company-label">
+                        Enter Your Designation{" "}
+                      </label>
                       <input
                         name="designation"
                         placeholder="Designation"
@@ -1352,11 +1367,15 @@ const handleSkillSave = async () => {
                         onChange={handleInputChange}
                       />
                       {formErrors.designation && (
-                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.designation}</p>
+                        <p style={{ color: "red", marginTop: "5px" }}>
+                          {formErrors.designation}
+                        </p>
                       )}
                     </div>
                     <div>
-                      <label className="company-label">Enter Your Email Id</label>
+                      <label className="company-label">
+                        Enter Your Email Id
+                      </label>
                       <input
                         name="email"
                         placeholder="Email"
@@ -1364,7 +1383,9 @@ const handleSkillSave = async () => {
                         onChange={handleInputChange}
                       />
                       {formErrors.email && (
-                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.email}</p>
+                        <p style={{ color: "red", marginTop: "5px" }}>
+                          {formErrors.email}
+                        </p>
                       )}
                     </div>
                     <div>
@@ -1375,7 +1396,8 @@ const handleSkillSave = async () => {
                           value={formData.state || ""}
                           onChange={(e) => {
                             const selected = statesList.find(
-                              (state) => (state.name || state) === e.target.value
+                              (state) =>
+                                (state.name || state) === e.target.value
                             );
                             setFormData((prev) => ({
                               ...prev,
@@ -1397,11 +1419,12 @@ const handleSkillSave = async () => {
                           ))}
                         </select>
                         {formErrors.state && (
-                          <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.state}</p>
+                          <p style={{ color: "red", marginTop: "5px" }}>
+                            {formErrors.state}
+                          </p>
                         )}
-                      </div></div>
-
-
+                      </div>
+                    </div>
 
                     <div>
                       <label className="company-label">Select city</label>
@@ -1424,12 +1447,17 @@ const handleSkillSave = async () => {
                           ))}
                         </select>
                         {formErrors.location && (
-                          <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.location}</p>
+                          <p style={{ color: "red", marginTop: "5px" }}>
+                            {formErrors.location}
+                          </p>
                         )}
-                      </div></div>
+                      </div>
+                    </div>
 
                     <div>
-                      <label className="company-label">Enter Experience Level</label>
+                      <label className="company-label">
+                        Enter Experience Level
+                      </label>
                       <select
                         name="experience"
                         value={formData.experience}
@@ -1443,7 +1471,9 @@ const handleSkillSave = async () => {
                         <option value="4">Senior</option>
                       </select>
                       {formErrors.experience && (
-                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.experience}</p>
+                        <p style={{ color: "red", marginTop: "5px" }}>
+                          {formErrors.experience}
+                        </p>
                       )}
                     </div>
 
@@ -1456,12 +1486,16 @@ const handleSkillSave = async () => {
                         onChange={handleInputChange}
                       />
                       {formErrors.salary && (
-                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.salary}</p>
+                        <p style={{ color: "red", marginTop: "5px" }}>
+                          {formErrors.salary}
+                        </p>
                       )}
                     </div>
 
                     <div>
-                      <label className="company-label">Select Notice Period</label>
+                      <label className="company-label">
+                        Select Notice Period
+                      </label>
                       <select
                         name="notice"
                         value={formData.notice}
@@ -1475,12 +1509,16 @@ const handleSkillSave = async () => {
                         <option value="5">Within 45 Days</option>
                       </select>
                       {formErrors.notice && (
-                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.notice}</p>
+                        <p style={{ color: "red", marginTop: "5px" }}>
+                          {formErrors.notice}
+                        </p>
                       )}
                     </div>
 
                     <div>
-                      <label className="company-label">Enter Your Phone Number</label>
+                      <label className="company-label">
+                        Enter Your Phone Number
+                      </label>
                       <input
                         name="phone"
                         placeholder="Phone"
@@ -1488,7 +1526,9 @@ const handleSkillSave = async () => {
                         disabled="true"
                       />
                       {formErrors.phone && (
-                        <p style={{ color: 'red', marginTop: '5px' }}>{formErrors.phone}</p>
+                        <p style={{ color: "red", marginTop: "5px" }}>
+                          {formErrors.phone}
+                        </p>
                       )}
                     </div>
 
@@ -1502,9 +1542,7 @@ const handleSkillSave = async () => {
                     />
                   </div>
                   <div className="modal-buttons" style={{ marginTop: "10px" }}>
-                    <button onClick={handleSaveProfileWithImage}>
-                      Save
-                    </button>
+                    <button onClick={handleSaveProfileWithImage}>Save</button>
                   </div>
                 </div>
               </div>
@@ -1614,10 +1652,10 @@ const handleSkillSave = async () => {
                                   .slice(0, MAX_WORDS)
                                   .join(" ");
                                 setAboutInput(trimmed + " ");
-                                setAboutError('')
+                                setAboutError("");
                               } else {
                                 setAboutInput(text);
-                                setAboutError('')
+                                setAboutError("");
                               }
 
                               // update minWordsReached flag
@@ -1630,12 +1668,14 @@ const handleSkillSave = async () => {
                             {MIN_WORDS})
                           </small>
 
-                          {aboutError && <p style={{ color: "red" }}>{aboutError}</p>}
+                          {aboutError && (
+                            <p style={{ color: "red" }}>{aboutError}</p>
+                          )}
 
                           <div className="modal-actions">
                             <button
                               onClick={handleEditAbout}
-                            // disabled={loading || !minWordsReached}
+                              // disabled={loading || !minWordsReached}
                             >
                               {loading ? "Saving..." : "Save"}
                             </button>
@@ -1709,7 +1749,13 @@ const handleSkillSave = async () => {
                           onChange={handleFileChange}
                         />
                         {resumeError && (
-                          <p style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>
+                          <p
+                            style={{
+                              color: "red",
+                              marginTop: "10px",
+                              textAlign: "center",
+                            }}
+                          >
                             {resumeError}
                           </p>
                         )}
@@ -1717,13 +1763,11 @@ const handleSkillSave = async () => {
                           className="modal-buttons"
                           style={{
                             display: "flex",
-                            justifyContent: "end",
                           }}
                         >
                           <button onClick={handleUpload}>Upload</button>
                         </div>
                       </div>
-
                     </div>
                   )}
                 </div>
@@ -1759,7 +1803,6 @@ const handleSkillSave = async () => {
                         </div>
                       ))}
                     </div>
-
                   </div>
                   {/* Modal for Skill editing */}
                   {isSkillModalOpen && (
@@ -1853,15 +1896,19 @@ const handleSkillSave = async () => {
                           </button>
                         </div> */}
                         {skillError && (
-                          <p style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>
+                          <p
+                            style={{
+                              color: "red",
+                              marginTop: "10px",
+                              textAlign: "center",
+                            }}
+                          >
                             {skillError}
                           </p>
-                        )
-                        }
+                        )}
                       </div>
                     </div>
                   )}
-
                 </div>
 
                 {/* Experience section */}
@@ -1962,14 +2009,14 @@ const handleSkillSave = async () => {
                           {modalErrors.find(
                             (e) => e.field === "company_Name"
                           ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrors.find(
-                                    (e) => e.field === "company_Name"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                            <p className="error-text">
+                              {
+                                modalErrors.find(
+                                  (e) => e.field === "company_Name"
+                                ).message
+                              }
+                            </p>
+                          )}
                         </div>
 
                         <div>
@@ -2022,14 +2069,14 @@ const handleSkillSave = async () => {
                             {modalErrors.find(
                               (e) => e.field === "JoiningDate"
                             ) && (
-                                <p className="error-text">
-                                  {
-                                    modalErrors.find(
-                                      (e) => e.field === "JoiningDate"
-                                    ).message
-                                  }
-                                </p>
-                              )}
+                              <p className="error-text">
+                                {
+                                  modalErrors.find(
+                                    (e) => e.field === "JoiningDate"
+                                  ).message
+                                }
+                              </p>
+                            )}
                           </div>
                           <div className="end-date">
                             <label className="company-label">
@@ -2110,14 +2157,14 @@ const handleSkillSave = async () => {
                           {modalErrors.find(
                             (e) => e.field === "description"
                           ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrors.find(
-                                    (e) => e.field === "description"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                            <p className="error-text">
+                              {
+                                modalErrors.find(
+                                  (e) => e.field === "description"
+                                ).message
+                              }
+                            </p>
+                          )}
                         </div>
 
                         <div className="modal-buttons">
@@ -2233,14 +2280,14 @@ const handleSkillSave = async () => {
                           {modalErrorsEdu.find(
                             (e) => e.field === "college"
                           ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrorsEdu.find(
-                                    (e) => e.field === "college"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                            <p className="error-text">
+                              {
+                                modalErrorsEdu.find(
+                                  (e) => e.field === "college"
+                                ).message
+                              }
+                            </p>
+                          )}
                         </div>
                         <div>
                           <label className="company-label">Degree</label>
@@ -2286,14 +2333,14 @@ const handleSkillSave = async () => {
                           {modalErrorsEdu.find(
                             (e) => e.field === "location"
                           ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrorsEdu.find(
-                                    (e) => e.field === "location"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                            <p className="error-text">
+                              {
+                                modalErrorsEdu.find(
+                                  (e) => e.field === "location"
+                                ).message
+                              }
+                            </p>
+                          )}
                         </div>
 
                         <div className="start-end-date">
@@ -2321,14 +2368,14 @@ const handleSkillSave = async () => {
                             {modalErrorsEdu.find(
                               (e) => e.field === "startDate"
                             ) && (
-                                <p className="error-text">
-                                  {
-                                    modalErrorsEdu.find(
-                                      (e) => e.field === "startDate"
-                                    ).message
-                                  }
-                                </p>
-                              )}
+                              <p className="error-text">
+                                {
+                                  modalErrorsEdu.find(
+                                    (e) => e.field === "startDate"
+                                  ).message
+                                }
+                              </p>
+                            )}
                           </div>
 
                           <div className="end-date">
@@ -2353,14 +2400,14 @@ const handleSkillSave = async () => {
                             {modalErrorsEdu.find(
                               (e) => e.field === "endDate"
                             ) && (
-                                <p className="error-text">
-                                  {
-                                    modalErrorsEdu.find(
-                                      (e) => e.field === "endDate"
-                                    ).message
-                                  }
-                                </p>
-                              )}
+                              <p className="error-text">
+                                {
+                                  modalErrorsEdu.find(
+                                    (e) => e.field === "endDate"
+                                  ).message
+                                }
+                              </p>
+                            )}
                           </div>
                         </div>
 
@@ -2658,14 +2705,14 @@ const handleSkillSave = async () => {
                             {modalErrorsProj.find(
                               (e) => e.field === "startDate"
                             ) && (
-                                <p className="error-text">
-                                  {
-                                    modalErrorsProj.find(
-                                      (e) => e.field === "startDate"
-                                    ).message
-                                  }
-                                </p>
-                              )}
+                              <p className="error-text">
+                                {
+                                  modalErrorsProj.find(
+                                    (e) => e.field === "startDate"
+                                  ).message
+                                }
+                              </p>
+                            )}
                           </div>
 
                           <div className="end-date">
@@ -2690,14 +2737,14 @@ const handleSkillSave = async () => {
                             {modalErrorsProj.find(
                               (e) => e.field === "endDate"
                             ) && (
-                                <p className="error-text">
-                                  {
-                                    modalErrorsProj.find(
-                                      (e) => e.field === "endDate"
-                                    ).message
-                                  }
-                                </p>
-                              )}
+                              <p className="error-text">
+                                {
+                                  modalErrorsProj.find(
+                                    (e) => e.field === "endDate"
+                                  ).message
+                                }
+                              </p>
+                            )}
                           </div>
                         </div>
 
@@ -2722,14 +2769,14 @@ const handleSkillSave = async () => {
                           {modalErrorsProj.find(
                             (e) => e.field === "associated"
                           ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrorsProj.find(
-                                    (e) => e.field === "associated"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                            <p className="error-text">
+                              {
+                                modalErrorsProj.find(
+                                  (e) => e.field === "associated"
+                                ).message
+                              }
+                            </p>
+                          )}
                         </div>
 
                         <div>
@@ -2752,14 +2799,14 @@ const handleSkillSave = async () => {
                           {modalErrorsProj.find(
                             (e) => e.field === "projectDescription"
                           ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrorsProj.find(
-                                    (e) => e.field === "projectDescription"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                            <p className="error-text">
+                              {
+                                modalErrorsProj.find(
+                                  (e) => e.field === "projectDescription"
+                                ).message
+                              }
+                            </p>
+                          )}
                         </div>
 
                         <div className="modal-buttons">
@@ -2839,7 +2886,6 @@ const handleSkillSave = async () => {
                         className="modal-form"
                         onSubmit={handleFormLicensesSubmit}
                       >
-
                         <div className="modal-header">
                           <div
                             style={{
@@ -2859,7 +2905,9 @@ const handleSkillSave = async () => {
                         </div>
 
                         <div>
-                          <label className="company-label">Certification Title</label>
+                          <label className="company-label">
+                            Certification Title
+                          </label>
                           <input
                             type="text"
                             placeholder="Certification Title"
@@ -2910,36 +2958,67 @@ const handleSkillSave = async () => {
                           )}
                         </div>
 
+                        <div>
+                          <label className="company-label">Issued Date</label>
+                          <input
+                            type="date"
+                            placeholder="Issued Date"
+                            value={formLicensesData.issuedDate}
+                            onChange={(e) => {
+                              setFormLicensesData((prev) => ({
+                                ...prev,
+                                issuedDate: e.target.value,
+                              }));
+                              setModalErrorsLic((prev) =>
+                                prev.filter((err) => err.field !== "issuedDate")
+                              );
+                            }}
+                          />
+                          {modalErrorsLic.find(
+                            (e) => e.field === "issuedDate"
+                          ) && (
+                            <p className="error-text">
+                              {
+                                modalErrorsLic.find(
+                                  (e) => e.field === "issuedDate"
+                                ).message
+                              }
+                            </p>
+                          )}
+                        </div>
 
-                        {modalErrorsLic.find(e => e.field === "issuer") && (
-                          <p className="error-text">{modalErrorsLic.find(e => e.field === "issuer").message}</p>
-                        )}
-                        <input
-                          type="date"
-                          placeholder="Issued Date"
-                          value={formLicensesData.issuedDate}
-                          onChange={(e) => {
-                            setFormLicensesData(prev => ({ ...prev, issuedDate: e.target.value }));
-                            setModalErrorsLic(prev => prev.filter(err => err.field !== "issuedDate"));
-                          }}
-
-                        />
-                        {modalErrorsLic.find(e => e.field === "issuedDate") && (
-                          <p className="error-text">{modalErrorsLic.find(e => e.field === "issuedDate").message}</p>
-                        )}
-
-                        <input
-                          type="url"
-                          placeholder="Credential Link"
-                          value={formLicensesData.credentialUrl}
-                          onChange={(e) => {
-                            setFormLicensesData(prev => ({ ...prev, credentialUrl: e.target.value }));
-                            setModalErrorsLic(prev => prev.filter(err => err.field !== "credentialUrl"));
-                          }}
-                        />
-                        {modalErrorsLic.find(e => e.field === "credentialUrl") && (
-                          <p className="error-text">{modalErrorsLic.find(e => e.field === "credentialUrl").message}</p>
-                        )}
+                        <div>
+                          <label className="company-label">
+                            Credential Link
+                          </label>
+                          <input
+                            type="url"
+                            placeholder="Credential Link"
+                            value={formLicensesData.credentialUrl}
+                            onChange={(e) => {
+                              setFormLicensesData((prev) => ({
+                                ...prev,
+                                credentialUrl: e.target.value,
+                              }));
+                              setModalErrorsLic((prev) =>
+                                prev.filter(
+                                  (err) => err.field !== "credentialUrl"
+                                )
+                              );
+                            }}
+                          />
+                          {modalErrorsLic.find(
+                            (e) => e.field === "credentialUrl"
+                          ) && (
+                            <p className="error-text">
+                              {
+                                modalErrorsLic.find(
+                                  (e) => e.field === "credentialUrl"
+                                ).message
+                              }
+                            </p>
+                          )}
+                        </div>
 
                         <div className="modal-buttons">
                           <button type="submit">
