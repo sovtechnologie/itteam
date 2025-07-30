@@ -191,7 +191,9 @@
   /* gap: 45px; */
   margin-top: 150px;
   padding: 20px;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
 }
 
 /* .right-form-head {

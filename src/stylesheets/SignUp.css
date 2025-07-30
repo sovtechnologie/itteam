@@ -8,9 +8,10 @@
 
   /* background-color: #d6dea4; */
   display: flex;
-  gap: 45px;
+  /* gap: 45px; */
   max-width: 1440px;
   margin: 0 auto;
+  background-color: #1783d0;
 }
 
 .signup-container {
@@ -46,6 +47,10 @@
 } */
 .rightForm{
   margin-top: 150px !important;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: white;
+  padding: 20px;
 }
 /* .signup-left { */
 /* width: 100%; */
