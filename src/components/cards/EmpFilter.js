@@ -40,7 +40,7 @@ const EmpFilter = () => {
     expertTecStack: "",
     skillName: [],
     noticePeriod: [],
-    salary: [0, 2000000],
+    salary: [0, 9000000],
   });
 
   const handleCheckboxChange = (category, value) => {
@@ -69,7 +69,7 @@ const EmpFilter = () => {
       currentPosition: event.target.value,
     }));
   };
-  console.log("Filters:", filters);
+  
 
   const handleResetFilters = () => {
     setFilters({
@@ -169,17 +169,7 @@ const EmpFilter = () => {
       .catch((err) => console.error("API Error:", err));
   }, []);
 
-  // useEffect(() => {
-  //   axios.get(`${BASE_URL}/withOutLogin/get-state-list`, {
-  //     params: { countryCode: "IN" },
-  //   }).then((response) => {
-  //     if (response.data && response.data.data) {
-  //       setLocations(response.data.data);
-  //     }
-  //   }).catch((error) => console.error("Error fetching locations:", error));
-  // }, []);
-
-  // Fetch states on mount
+ 
 
   // Fetch cities when state changes
   useEffect(() => {
@@ -214,7 +204,6 @@ const EmpFilter = () => {
       return true;
     });
   }, [users, filters]);
-  console.log("Filtered Profiles:", filteredProfile);
 
   const indexOfLastProfile = currentPage * profilesPerPage;
   const indexOfFirstProfile = indexOfLastProfile - profilesPerPage;
@@ -222,6 +211,7 @@ const EmpFilter = () => {
     indexOfFirstProfile,
     indexOfLastProfile
   );
+  console.log("my Userlist",filteredProfile);
 
   const totalPages = Math.ceil(filteredProfile.length / profilesPerPage);
 
@@ -243,27 +233,7 @@ const EmpFilter = () => {
     if (currentPage > totalPages) setCurrentPage(1);
   }, [totalPages, currentPage]);
 
-  const noticePeriodLabel = (value) => {
-    switch (value) {
-      case "1":
-      case 1:
-        return "Immediate";
-      case "2":
-      case 2:
-        return "7 days N.P";
-      case "3":
-      case 3:
-        return "15 days N.P";
-      case "4":
-      case 4:
-        return "30 days N.P";
-      case "5":
-      case 5:
-        return "45 days N.P";
-      default:
-        return "Not specified";
-    }
-  };
+
   const ExperiencedLabel = (value) => {
     switch (value) {
       case "1":
@@ -299,28 +269,10 @@ const EmpFilter = () => {
     }
   };
 
-  const maskedName = (name) => {
-    return name ? `${name[0]}${"*".repeat(name.length - 1)}` : "";
-  };
 
   return (
     <>
-      {/* <div className="job-search-bar">
-        <div className="search-fields">
-          {" "}
-         
-          <input
-            type="text"
-            className="search-input"
-            placeholder="Search"
-            value={filters.expertTecStack}
-            onChange={handleStackChange}
-          />
-          
-        </div>
-
-        <button className="search-button">Search</button>
-      </div> */}
+     
       <div className="candidate-filter-container">
 
         <div className="job-listing-container">
@@ -374,7 +326,6 @@ const EmpFilter = () => {
                     ))
                   )}
                 </select>
-                {/* <span className="dropdown-icon">▼</span> */}
               </div>
             </div>
 
@@ -523,21 +474,16 @@ const EmpFilter = () => {
                     <span className="job">
                       {" "}
                       <img src={homelocation} />
-                      {/* <MdOutlineLocationOn color="#3399ff" size={25} /> */}{" "}
+                      {" "}
                       {profile.location},{profile.state}
                     </span>
                     <span className="job">
                       <img src={homenotice} />
-                      {/* <IoMdTime color="#3399ff" size={25} /> */}{" "}
+                     {" "}
                       {ExperiencedLabel(profile.experienceInStack)}
                     </span>
                   </div>
 
-                  {/* <div className="skills">
-                {profile.skillName.slice(0, 3).map((skill, index) => (
-                  <span key={index}>{skill}</span>
-                ))}
-              </div> */}
 
                   <button
                     className="view-profile-btn"
