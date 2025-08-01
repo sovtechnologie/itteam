@@ -211,7 +211,7 @@ const EmpFilter = () => {
     indexOfFirstProfile,
     indexOfLastProfile
   );
-  console.log("my Userlist",filteredProfile);
+
 
   const totalPages = Math.ceil(filteredProfile.length / profilesPerPage);
 
