@@ -82,7 +82,7 @@ const EmpFilter = () => {
       expertTecStack: "",
       skillName: [],
       noticePeriod: [],
-      salary: [0, 200000],
+      salary: [0, 9000000],
     });
   };
 
