@@ -69,7 +69,7 @@ const EmpFilter = () => {
       currentPosition: event.target.value,
     }));
   };
-  
+
 
   const handleResetFilters = () => {
     setFilters({
@@ -169,7 +169,7 @@ const EmpFilter = () => {
       .catch((err) => console.error("API Error:", err));
   }, []);
 
- 
+
 
   // Fetch cities when state changes
   useEffect(() => {
@@ -268,11 +268,17 @@ const EmpFilter = () => {
         return "Not specified";
     }
   };
-
+  useEffect(() => {
+    const location = window.location;
+    if (location.search) {
+      const cleanUrl = location.origin + location.pathname;
+      window.history.replaceState({}, '', cleanUrl);
+    }
+  }, []);
 
   return (
     <>
-     
+
       <div className="candidate-filter-container">
 
         <div className="job-listing-container">
@@ -440,7 +446,7 @@ const EmpFilter = () => {
                         <div
                           onClick={() => downloadResume(profile.resume)}
                           style={{ cursor: "pointer" }}>
-                             <BsDownload
+                          <BsDownload
                             style={{
                               width: "25px",
                               height: "25px",
@@ -479,7 +485,7 @@ const EmpFilter = () => {
                     </span>
                     <span className="job">
                       <img src={homenotice} />
-                     {" "}
+                      {" "}
                       {ExperiencedLabel(profile.experienceInStack)}
                     </span>
                   </div>
