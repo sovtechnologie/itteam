@@ -131,7 +131,7 @@ const EmprSignIn = () => {
         };
         login(userData);
 
-        navigate("/employer");
+        navigate("/employer",{ replace: true });
       } else {
         setErrors([
           {

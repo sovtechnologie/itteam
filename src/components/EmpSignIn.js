@@ -116,7 +116,7 @@ const EmpSignIn = () => {
           setOtpVerified(true);
           setIsOtpSent(false);
           setMessages([{ field: 'otp', message: 'OTP verified!' }]);
-          navigate("/employee-page");
+          navigate("/employee-page",{ replace: true });
         }
       } else {
         setErrors([
