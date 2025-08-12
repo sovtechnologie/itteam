@@ -315,7 +315,7 @@ const EmpProfPage = () => {
     } catch (error) {
       setSkillError(
         error.response?.data?.message ||
-          "Something went wrong while adding skill."
+        "Something went wrong while adding skill."
       );
     }
   };
@@ -360,7 +360,7 @@ const EmpProfPage = () => {
     } catch (error) {
       setError(
         error.response?.data?.message ||
-          "Something went wrong while removing the skill."
+        "Something went wrong while removing the skill."
       );
     }
   };
@@ -422,9 +422,9 @@ const EmpProfPage = () => {
           userId,
           ...(isEdit
             ? {
-                _id: jobData._id,
-                ...jobData,
-              }
+              _id: jobData._id,
+              ...jobData,
+            }
             : { ...jobData }),
         },
         {
@@ -1480,6 +1480,9 @@ const EmpProfPage = () => {
                     <div>
                       <label className="company-label">Enter Salary</label>
                       <input
+                        type="number"
+                         min={"0"}
+                         max={"10000000"}
                         name="salary"
                         placeholder="Salary"
                         value={formData.salary}
@@ -1675,7 +1678,7 @@ const EmpProfPage = () => {
                           <div className="modal-actions">
                             <button
                               onClick={handleEditAbout}
-                              // disabled={loading || !minWordsReached}
+                            // disabled={loading || !minWordsReached}
                             >
                               {loading ? "Saving..." : "Save"}
                             </button>
@@ -2009,14 +2012,14 @@ const EmpProfPage = () => {
                           {modalErrors.find(
                             (e) => e.field === "company_Name"
                           ) && (
-                            <p className="error-text">
-                              {
-                                modalErrors.find(
-                                  (e) => e.field === "company_Name"
-                                ).message
-                              }
-                            </p>
-                          )}
+                              <p className="error-text">
+                                {
+                                  modalErrors.find(
+                                    (e) => e.field === "company_Name"
+                                  ).message
+                                }
+                              </p>
+                            )}
                         </div>
 
                         <div>
@@ -2069,14 +2072,14 @@ const EmpProfPage = () => {
                             {modalErrors.find(
                               (e) => e.field === "JoiningDate"
                             ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrors.find(
-                                    (e) => e.field === "JoiningDate"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                                <p className="error-text">
+                                  {
+                                    modalErrors.find(
+                                      (e) => e.field === "JoiningDate"
+                                    ).message
+                                  }
+                                </p>
+                              )}
                           </div>
                           <div className="end-date">
                             <label className="company-label">
@@ -2157,14 +2160,14 @@ const EmpProfPage = () => {
                           {modalErrors.find(
                             (e) => e.field === "description"
                           ) && (
-                            <p className="error-text">
-                              {
-                                modalErrors.find(
-                                  (e) => e.field === "description"
-                                ).message
-                              }
-                            </p>
-                          )}
+                              <p className="error-text">
+                                {
+                                  modalErrors.find(
+                                    (e) => e.field === "description"
+                                  ).message
+                                }
+                              </p>
+                            )}
                         </div>
 
                         <div className="modal-buttons">
@@ -2280,14 +2283,14 @@ const EmpProfPage = () => {
                           {modalErrorsEdu.find(
                             (e) => e.field === "college"
                           ) && (
-                            <p className="error-text">
-                              {
-                                modalErrorsEdu.find(
-                                  (e) => e.field === "college"
-                                ).message
-                              }
-                            </p>
-                          )}
+                              <p className="error-text">
+                                {
+                                  modalErrorsEdu.find(
+                                    (e) => e.field === "college"
+                                  ).message
+                                }
+                              </p>
+                            )}
                         </div>
                         <div>
                           <label className="company-label">Degree</label>
@@ -2333,14 +2336,14 @@ const EmpProfPage = () => {
                           {modalErrorsEdu.find(
                             (e) => e.field === "location"
                           ) && (
-                            <p className="error-text">
-                              {
-                                modalErrorsEdu.find(
-                                  (e) => e.field === "location"
-                                ).message
-                              }
-                            </p>
-                          )}
+                              <p className="error-text">
+                                {
+                                  modalErrorsEdu.find(
+                                    (e) => e.field === "location"
+                                  ).message
+                                }
+                              </p>
+                            )}
                         </div>
 
                         <div className="start-end-date">
@@ -2368,14 +2371,14 @@ const EmpProfPage = () => {
                             {modalErrorsEdu.find(
                               (e) => e.field === "startDate"
                             ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrorsEdu.find(
-                                    (e) => e.field === "startDate"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                                <p className="error-text">
+                                  {
+                                    modalErrorsEdu.find(
+                                      (e) => e.field === "startDate"
+                                    ).message
+                                  }
+                                </p>
+                              )}
                           </div>
 
                           <div className="end-date">
@@ -2400,14 +2403,14 @@ const EmpProfPage = () => {
                             {modalErrorsEdu.find(
                               (e) => e.field === "endDate"
                             ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrorsEdu.find(
-                                    (e) => e.field === "endDate"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                                <p className="error-text">
+                                  {
+                                    modalErrorsEdu.find(
+                                      (e) => e.field === "endDate"
+                                    ).message
+                                  }
+                                </p>
+                              )}
                           </div>
                         </div>
 
@@ -2705,14 +2708,14 @@ const EmpProfPage = () => {
                             {modalErrorsProj.find(
                               (e) => e.field === "startDate"
                             ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrorsProj.find(
-                                    (e) => e.field === "startDate"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                                <p className="error-text">
+                                  {
+                                    modalErrorsProj.find(
+                                      (e) => e.field === "startDate"
+                                    ).message
+                                  }
+                                </p>
+                              )}
                           </div>
 
                           <div className="end-date">
@@ -2737,14 +2740,14 @@ const EmpProfPage = () => {
                             {modalErrorsProj.find(
                               (e) => e.field === "endDate"
                             ) && (
-                              <p className="error-text">
-                                {
-                                  modalErrorsProj.find(
-                                    (e) => e.field === "endDate"
-                                  ).message
-                                }
-                              </p>
-                            )}
+                                <p className="error-text">
+                                  {
+                                    modalErrorsProj.find(
+                                      (e) => e.field === "endDate"
+                                    ).message
+                                  }
+                                </p>
+                              )}
                           </div>
                         </div>
 
@@ -2769,14 +2772,14 @@ const EmpProfPage = () => {
                           {modalErrorsProj.find(
                             (e) => e.field === "associated"
                           ) && (
-                            <p className="error-text">
-                              {
-                                modalErrorsProj.find(
-                                  (e) => e.field === "associated"
-                                ).message
-                              }
-                            </p>
-                          )}
+                              <p className="error-text">
+                                {
+                                  modalErrorsProj.find(
+                                    (e) => e.field === "associated"
+                                  ).message
+                                }
+                              </p>
+                            )}
                         </div>
 
                         <div>
@@ -2799,14 +2802,14 @@ const EmpProfPage = () => {
                           {modalErrorsProj.find(
                             (e) => e.field === "projectDescription"
                           ) && (
-                            <p className="error-text">
-                              {
-                                modalErrorsProj.find(
-                                  (e) => e.field === "projectDescription"
-                                ).message
-                              }
-                            </p>
-                          )}
+                              <p className="error-text">
+                                {
+                                  modalErrorsProj.find(
+                                    (e) => e.field === "projectDescription"
+                                  ).message
+                                }
+                              </p>
+                            )}
                         </div>
 
                         <div className="modal-buttons">
@@ -2977,14 +2980,14 @@ const EmpProfPage = () => {
                           {modalErrorsLic.find(
                             (e) => e.field === "issuedDate"
                           ) && (
-                            <p className="error-text">
-                              {
-                                modalErrorsLic.find(
-                                  (e) => e.field === "issuedDate"
-                                ).message
-                              }
-                            </p>
-                          )}
+                              <p className="error-text">
+                                {
+                                  modalErrorsLic.find(
+                                    (e) => e.field === "issuedDate"
+                                  ).message
+                                }
+                              </p>
+                            )}
                         </div>
 
                         <div>
@@ -3010,14 +3013,14 @@ const EmpProfPage = () => {
                           {modalErrorsLic.find(
                             (e) => e.field === "credentialUrl"
                           ) && (
-                            <p className="error-text">
-                              {
-                                modalErrorsLic.find(
-                                  (e) => e.field === "credentialUrl"
-                                ).message
-                              }
-                            </p>
-                          )}
+                              <p className="error-text">
+                                {
+                                  modalErrorsLic.find(
+                                    (e) => e.field === "credentialUrl"
+                                  ).message
+                                }
+                              </p>
+                            )}
                         </div>
 
                         <div className="modal-buttons">

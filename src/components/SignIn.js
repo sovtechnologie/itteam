@@ -7,7 +7,7 @@ import k5Img from "../images/Group 2.png";
 import mostpopular from "../images/mostpopular.png";
 import trustpopular from "../images/trustpopular.png";
 import topcompanies from "../images/No fake Job.svg";
-import topcompanies1 from "../images/checked (2) 2.svg";
+
 
 const SignIn = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -118,10 +118,6 @@ const SignIn = () => {
                   Register
                 </button>
               </div>
-              {/* <h1 style={{color: "#1783D0" }}>
-                Login As{" "}
-                {userRole === "company" ? "Company" : "Job Seeker"}
-              </h1> */}
               {userRole === "company" ? <EmprSignIn /> : <EmpSignIn />}
             </div>
           </div>

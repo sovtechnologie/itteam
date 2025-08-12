@@ -185,14 +185,14 @@ const Header = ({ isHomePage }) => {
                   Our Team
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to="/pricing"
                   className={currentPath === "/pricing" ? "active" : ""}
                 >
                   Pricing
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 
