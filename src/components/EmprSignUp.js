@@ -29,6 +29,7 @@ const EmprSignUp = () => {
   const [loadingRegister, setLoadingRegister] = useState(false);
   const [errors, setErrors] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [errorMessage,setErrorMessage] = useState('');
 
   const [statesList, setStatesList] = useState([]);
   const [citiesList, setCitiesList] = useState([]);
@@ -90,7 +91,7 @@ const EmprSignUp = () => {
       setErrors([
         {
           field: "mobileNumber",
-          message: error.message || "Something went wrong.",
+          message: error.response.data.message || "Something went wrong.",
         },
       ]);
     } finally {
@@ -147,6 +148,9 @@ const EmprSignUp = () => {
 
     if (!formData.otpVerified) {
       setLoadingRegister(false);
+       setErrors([{
+         field: "otp", message: "OTP is required" 
+       }])
       return;
     }
 
@@ -173,15 +177,22 @@ const EmprSignUp = () => {
       });
 
       if (response.data.status === 200) {
-        alert("User registered successfully!");
-        console.log(response.data.result);
+         alert("User registered successfully!");
+         console.log(response?.data?.message)
+         
 
         navigate("/signin?role=company");
       } else {
-        console.log(response.data.message);
+        console.log(response?.data?.message);
       }
     } catch (error) {
-      console.log("error")
+      console.log("error",error)
+      setErrors([
+        {
+          field: "email",
+          message: error?.response?.data?.message || "Something went wrong.",
+        },
+      ]);
     } finally {
       setLoadingRegister(false);
     }
@@ -391,6 +402,7 @@ const EmprSignUp = () => {
                   onChange={handleChange}
                 />
                 {getError("email") && <p className="error-text">{getError("email")}</p>}
+                {errorMessage && <p className="error-text">{errorMessage}</p>}
               </div>
 
               <div className="signUpform-group">
