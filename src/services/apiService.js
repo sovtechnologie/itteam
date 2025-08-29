@@ -213,8 +213,8 @@ export const getAllJobs = async () => {
     const response = await api.get("/withoutLogin/getAllLatestJobs");
     return response?.data;
   } catch (error) {
-    console.error("Error fetching job ",error);
-    throw error.response?.data||"Failed to fetch jobs"
+    console.error("Error fetching job ", error);
+    throw error.response?.data || "Failed to fetch jobs"
   }
 }
 
@@ -230,7 +230,7 @@ export const fetchJobPosts = async () => {
 
 export const EditJobPost = async (updatedJobData) => {
   try {
-    const response = await api.put(`employer/updateJob`, updatedJobData);
+    const response = await api.put('employer/editJobs', updatedJobData);
     return response.data;
   } catch (error) {
     console.error("Error updating job post:", error);
@@ -238,9 +238,9 @@ export const EditJobPost = async (updatedJobData) => {
   }
 };
 
-export const deleteJobPost = async (jobId) => {
+export const deleteJobPost = async (userId) => {
   try {
-    const response = await api.delete(`employer/deleteJob/${jobId}`);
+    const response = await api.post('employer/deleteJobs', { userId });
     return response.data;
   } catch (error) {
     console.error("Error deleting job post:", error);
@@ -248,6 +248,16 @@ export const deleteJobPost = async (jobId) => {
   }
 };
 
+
+export const getSingleJob = async (jobId) => {
+  try {
+    const response = await api.post('withoutLogin/getSingleJobs', { jobId });
+    return response?.data;
+  } catch (error) {
+    console.error("Error get details job post:", error);
+    throw error.response?.data || "Failed to get details job post";
+  }
+}
 
 
 

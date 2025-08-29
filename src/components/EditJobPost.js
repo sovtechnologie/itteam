@@ -1,26 +1,36 @@
 import React from "react";
 import "../stylesheets/JobPost.css";
-import { Formik, Form, Field, ErrorMessage} from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useAddJobPost } from "../hook/JobPost/useAddJobPost";
+import { useUpdateSingleJob } from "../hook/JobPost/useUpdateSingleJob";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetSingleJob } from "../hook/JobPost/useGetSInglejob";
+import { useDeleteJob } from "../hook/JobPost/useDeletejob";
 
 const EditJobPost = () => {
-    const addJobMutation = useAddJobPost();
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const addJobMutation = useUpdateSingleJob();
+    const deleteJobMutation = useDeleteJob();
+    const { data, isLoading } = useGetSingleJob(id);
+
+    // Prepare initialValues based on fetched data or default empty
+    const jobData = data?.result?.[0];
     const initialValues = {
-        JobProfile: "",
-        experience: "",
-        salary: "",
-        Job_type: "",
-        Shift: "",
-        qualifications: "",
-        jobDescription: "",
-        location: "",
-        skillInput: "",
-        skill: [],
-        days: "",
-        state: "",
-        contractDurations: "",
-        mode: "",
+        JobProfile: jobData?.JobProfile || "",
+        experience: jobData?.experience || "",
+        salary: jobData?.salary ? String(jobData.salary) : "",
+        Job_type: jobData?.Job_type || "",
+        Shift: jobData?.Shift || "",
+        qualifications: jobData?.qualifications || "",
+        jobDescription: jobData?.jobDescription || "",
+        location: jobData?.location || "",
+        skillInput: jobData?.skill?.join(", ") || "",
+        skill: jobData?.skill || [],
+        days: jobData?.days || "",
+        state: jobData?.state || "",
+        contractDurations: jobData?.contractDurations || "",
+        mode: jobData?.mode || "",
     };
 
     const validationSchema = Yup.object({
@@ -48,15 +58,14 @@ const EditJobPost = () => {
             .split(",")
             .map(s => s.trim())
             .filter(s => s.length > 0);
-        const dataToSubmit = { ...values, skill: skillArray };
+        const dataToSubmit = { ...values, skill: skillArray, userId: id };
 
         addJobMutation.mutate(dataToSubmit, {
             onSuccess: (data) => {
-                alert("Job posted successfully!");
-                resetForm();
+                console.log("Job posted successfully!");
             },
             onError: (error) => {
-                alert(error || "Failed to post job");
+                console.log(error || "Failed to post job");
             },
             onSettled: () => {
                 setSubmitting(false);
@@ -64,9 +73,26 @@ const EditJobPost = () => {
         });
     };
 
+
+    const handleDelete = () => {
+        if (window.confirm("Are you sure you want to delete this job?")) {
+            deleteJobMutation.mutate(id, {
+                onSuccess: () => {
+
+                    // Redirect or update UI after deletion
+                    // For example, navigate to jobs list page:
+                    navigate('/employer');
+                },
+                onError: (error) => {
+                    alert(error || "Failed to delete job");
+                },
+            });
+        }
+    };
+
     return (
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-            {({ isSubmitting ,setFieldValue, values }) => (
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit} enableReinitialize={true}>
+            {({ isSubmitting, setFieldValue, values }) => (
                 <Form className="jobpost-form">
                     <div className="form-row">
                         <div className="form-col">
@@ -204,7 +230,11 @@ const EditJobPost = () => {
                     <div className="form-row">
                         <div className="form-col-full" >
                             <button type="submit" className="jobpost-submit-btn" disabled={isSubmitting}>
-                                {isSubmitting ? "Posting..." : "Post Job"}</button>
+                                {isSubmitting ? "Posting..." : "Update Job"}</button>
+                        </div>
+                        <div className="form-col-full" >
+                            <button className="jobpost-submit-btn" onClick={handleDelete}>
+                                Delete</button>
                         </div>
                     </div>
                 </Form>

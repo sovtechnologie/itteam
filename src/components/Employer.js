@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import "../stylesheets/Companies.css";
 import { MdOutlineEdit } from "react-icons/md";
 import { FiPlus } from "react-icons/fi";
+import vector from "../images/Vector.png"
 import coin from "../images/coins.png"
 import CompanyLogo from "../images/CompanyProfilelogo.png";
 import { useNavigate, useParams } from "react-router-dom";
@@ -14,6 +15,7 @@ import empprofile5 from "../images/HomeIcons/IoCallSharp.svg";
 import empprofile6 from "../images/HomeIcons/IoIosMail.svg";
 import { fetchCityList, fetchStateList } from "../services/apiService";
 import { useFetchAllJob } from "../hook/JobPost/useFetchAllJob";
+
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
@@ -1080,6 +1082,10 @@ export default function Employer() {
                   <div key={index} className="jobs">
                     <div className="card-heading">
                       <div className="Company-logo">SOV</div>
+                      {/* <a href={`/jobPost/${job._id}`}>
+                        <img src={vector} style={{ marginTop: "-40px" }} alt="Job Vector" />
+                      </a> */}
+
                       {/* <img src={vector} style={{ marginTop: "-40px" }} /> */}
                     </div>
                     <div className='Company-details'>

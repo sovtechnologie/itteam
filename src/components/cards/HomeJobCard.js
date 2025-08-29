@@ -31,7 +31,7 @@ export const HomeJobCard = ({
     <div className="homejobcard">
       <div className="homecard-header">
         <img
-          src={logo || "https://via.placeholder.com/100"}
+          src={job?.employers?.logo || logo}
           alt={job?.companyName || "logo"}
           className="homecompany-logo"
         />

@@ -52,11 +52,11 @@ const JobPost = () => {
 
         addJobMutation.mutate(dataToSubmit, {
             onSuccess: (data) => {
-                alert("Job posted successfully!");
+                console.log("Job posted successfully!");
                 resetForm();
             },
             onError: (error) => {
-                alert(error || "Failed to post job");
+                console.log(error || "Failed to post job");
             },
             onSettled: () => {
                 setSubmitting(false);
