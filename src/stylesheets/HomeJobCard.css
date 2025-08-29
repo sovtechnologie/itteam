@@ -1,0 +1,115 @@
+.homejobcard {
+    background-color: #f8fafc;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+    padding: 20px;
+    max-width: 420px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: box-shadow 0.3s ease;
+}
+
+.homejobcard:hover {
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.15);
+    cursor: pointer;
+}
+
+.homecard-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.homecompany-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    object-fit: contain;
+    border: 1.5px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+.homejob-info {
+    flex: 1;
+}
+
+.homecompany-name {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.homejob-title {
+    margin: 6px 0 4px 0;
+    font-size: 1rem;
+    color: #555;
+    font-weight: 500;
+}
+
+.homejob-location {
+    font-size: 0.9rem;
+    color: #888;
+    font-style: italic;
+}
+
+.homejob-tags {
+    margin: 12px 0;
+    /* Example styling if you add tags */
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.homejob-skill {
+    color: #555;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.homeapply-button {
+    align-self: flex-start;
+    background-color: #0073b1;
+    /* LinkedIn blue */
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 4px 8px rgb(0 115 177 / 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    user-select: none;
+}
+
+.homeapply-button:hover,
+.homeapply-button:focus {
+    background-color: #005582;
+    box-shadow: 0 6px 14px rgb(0 88 128 / 0.4);
+    outline: none;
+}
+
+@media (max-width: 480px) {
+    .homejobcard {
+        max-width: 100%;
+        padding: 16px;
+    }
+
+    .homecompany-logo {
+        width: 56px;
+        height: 56px;
+    }
+
+    .homecompany-name {
+        font-size: 1.1rem;
+    }
+
+    .homeapply-button {
+        padding: 8px 20px;
+        font-size: 0.95rem;
+    }
+}

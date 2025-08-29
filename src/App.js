@@ -26,6 +26,8 @@ import EmpProfPage from "./components/empProfileCom/EmpProfPage";
 import Companies from "./components/Companies";
 import OurTeam from "./components/OurTeam";
 import CompanyFilter from "./components/cards/CompanyFilter";
+import JobPost from "./components/JobPost"
+import EditJobPost from "./components/EditJobPost"
 
 const App = () => {
   return (
@@ -82,6 +84,8 @@ const AppContent = () => {
         <Route path="/employer-profile/:id" element={<EmployerProfile />} />
         <Route path="/employee-profile" element={<EmployeeProfile />} />
         <Route path="/companies/:id" element={<Companies />} />
+        <Route path= "/JobPost" element={<JobPost/>}/>
+        <Route path="/JobPost/:id" element={<EditJobPost />} />
         <Route
           path="/active-joiner-profile/:id"
           element={<EmployeeProfile />}

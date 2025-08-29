@@ -1,4 +1,5 @@
 import axios from "axios";
+import api from "./api";
 
 // const BASE_URL = process.env.REACT_APP_BASE_URL || "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
 
@@ -21,7 +22,7 @@ export const fetchTechStacks = async () => {
 };
 
 
-export const fetchEmployment = async ( authToken ) => {
+export const fetchEmployment = async (authToken) => {
   try {
     const response = await axios.get(
       `${BASE_URL}/api/getAllExperience`, {
@@ -160,39 +161,94 @@ export const fetchtopskillandlocation = async () => {
 
 export const fetchStateList = async () => {
   try {
-    const response  = await axios.get (
-     `${BASE_URL}/withOutLogin/get-state-list`, {
-        params: { countryCode: "IN" },
-      }
+    const response = await axios.get(
+      `${BASE_URL}/withOutLogin/get-state-list`, {
+      params: { countryCode: "IN" },
+    }
     )
-      if (response.data && response.data.data) {
+    if (response.data && response.data.data) {
       return response.data.data;
     } else {
       console.error("Invalid response format:", response);
       return []; // return empty array on unexpected response
     }
-    
+
   } catch (error) {
-     throw error.response?.data || " Failed to fetch State list";
+    throw error.response?.data || " Failed to fetch State list";
   }
 }
-export const fetchCityList = async(selectedStateCode)=>{
+export const fetchCityList = async (selectedStateCode) => {
   try {
-    const response  = await axios.post (
-    `${BASE_URL}/withoutLogin/getCityList`, {
-          stateName: selectedStateCode, // Use selectedState directly if it's the state name
-          countryCode: "IN",
-        }
+    const response = await axios.post(
+      `${BASE_URL}/withoutLogin/getCityList`, {
+      stateName: selectedStateCode, // Use selectedState directly if it's the state name
+      countryCode: "IN",
+    }
     )
-      if (response.data) {
+    if (response.data) {
       return response.data.result;
     } else {
       console.error("Invalid response format:", response);
     }
   } catch (error) {
-     throw error.response?.data || " Failed to fetch City list";
+    throw error.response?.data || " Failed to fetch City list";
   }
 }
+
+export const postJob = async (jobData) => {
+  try {
+    const response = await api.post(
+      "employer/addJobs",
+      jobData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error posting job:", error);
+    throw error.response?.data || "Failed to post job";
+  }
+};
+
+export const getAllJobs = async () => {
+  try {
+    const response = await api.get("/withoutLogin/getAllLatestJobs");
+    return response?.data;
+  } catch (error) {
+    console.error("Error fetching job ",error);
+    throw error.response?.data||"Failed to fetch jobs"
+  }
+}
+
+export const fetchJobPosts = async () => {
+  try {
+    const response = await api.get("employer/getAllJobs");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching job posts:", error);
+    throw error.response?.data || "Failed to fetch job posts";
+  }
+};
+
+export const EditJobPost = async (updatedJobData) => {
+  try {
+    const response = await api.put(`employer/updateJob`, updatedJobData);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating job post:", error);
+    throw error.response?.data || "Failed to update job post";
+  }
+};
+
+export const deleteJobPost = async (jobId) => {
+  try {
+    const response = await api.delete(`employer/deleteJob/${jobId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting job post:", error);
+    throw error.response?.data || "Failed to delete job post";
+  }
+};
+
+
 
 
 // export const fetchActiveJoiners = async () => {

@@ -34,6 +34,8 @@ import { BsDownload } from "react-icons/bs";
 import femaleAvator from "../images/female.png";
 import MaleAvator from "../images/male.png";
 import downloadResume from "../utils/download";
+import { useHomeJobs } from "../hook/JobPost/useFetchHomeJobs"; 
+import { HomeJobCard } from "./cards/HomeJobCard";
 
 
 
@@ -53,6 +55,10 @@ const Home = () => {
   const [techStacks, setTechStacks] = useState([]);
   const [topSkills, setTopSkills] = useState([]);
   const [topLocation, setTopLocation] = useState([]);
+
+
+  const { data: allJobs, isLoading, isError } = useHomeJobs();
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -97,8 +103,6 @@ const Home = () => {
     api
       .get("/withOutLogin/tech-stack-list")
       .then((res) => {
-        console.log("Tech Stack API Response:", res.data.result);
-
         if (res.data && res.data.result) {
           setTechStacks(res.data.result);
         } else {
@@ -157,18 +161,18 @@ const Home = () => {
     }
   };
 
- 
 
 
-// const downloadResume = (resumeUrl) => {
-//   const link = document.createElement("a");
-//   link.href = resumeUrl;
-//   link.download = resumeUrl.split("/").pop(); // sets the default file name
-//   link.target = "_blank"; // optional: opens in new tab before download
-//   document.body.appendChild(link);
-//   link.click();
-//   document.body.removeChild(link);
-// };
+
+  // const downloadResume = (resumeUrl) => {
+  //   const link = document.createElement("a");
+  //   link.href = resumeUrl;
+  //   link.download = resumeUrl.split("/").pop(); // sets the default file name
+  //   link.target = "_blank"; // optional: opens in new tab before download
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
 
 
@@ -242,7 +246,7 @@ const Home = () => {
 
         <p className="job-search-description">
           Quick find your recommended candidate based on your most recent opening <br />
-         and connect with them in second
+          and connect with them in second
         </p>
 
         <div className="steps-container">
@@ -471,6 +475,40 @@ const Home = () => {
         </button>
       </div>
 
+      <div className="companies-container-exact">
+        <h6>Feature Jobs</h6>
+        <div className="companies-header-exact">
+          <h1>
+            Feature <span>Jobs</span>
+          </h1>
+          <p className="header-description-exact">
+            "Companies are actively hiring across various roles and looking for
+            talented individuals to join our dynamic team. Explore exciting
+            opportunities and take the next step in your career with us today!"
+          </p>
+        </div>
+
+        <div className="company-grid-exact">
+          {allJobs?.length === 0 && <p>No jobs available currently.</p>}
+          {allJobs?.result?.map((job) => (
+            <HomeJobCard
+              key={job._id}
+              logo={linkedin} // Adjust if logo exists on job or company level
+              job={job}
+            />
+          ))}
+        </div>
+
+        <button
+          className="view-all-btn-exact"
+        // onClick={() => {
+        //   window.location.href = "/Compfilter";
+        // }}
+        >
+          View all Jobs
+        </button>
+      </div>
+
       <section className="hero-sections">
         <div className="hero-left">
           <img src={trustpopular} alt="Team" className="team-image" />
@@ -482,7 +520,7 @@ const Home = () => {
             <span className="highlight">Job Portal</span>
           </h1>
           <p className="description">
-           Find your dream candidate from thousands candidates. Find the best candidate around the world or call directly on a email and mobile number after registering to our portal!
+            Find your dream candidate from thousands candidates. Find the best candidate around the world or call directly on a email and mobile number after registering to our portal!
           </p>
           <div className="hero-buttons">
             <button
@@ -543,7 +581,7 @@ const Home = () => {
           </h1>
           <p>
             Finding the right candidate can be challenging and expensive.
-             That's why we don't charge any fees, no hidden costs, no paid registrations, and no premium upgrades.
+            That's why we don't charge any fees, no hidden costs, no paid registrations, and no premium upgrades.
           </p>
 
           <div className="popular-grid">

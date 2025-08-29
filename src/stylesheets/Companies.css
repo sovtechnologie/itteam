@@ -18,7 +18,8 @@
   cursor: pointer;
   color: #1783d0;
 }
-.modal-overlay{
+
+.modal-overlay {
   position: fixed;
   top: 50px;
   left: 0;
@@ -83,7 +84,8 @@
 }
 
 .Employee-Profile-Card {
-  width: 90%; /* Reduce width from 100% */
+  width: 90%;
+  /* Reduce width from 100% */
   margin: 0px auto 0 auto;
   display: flex;
   justify-content: center;
@@ -121,7 +123,7 @@
   /* background-color: greenyellow; */
 }
 
-.Profile-head > img {
+.Profile-head>img {
   height: 180px;
   width: 180px;
   background-color: #fff;
@@ -129,6 +131,7 @@
   /* margin-top: 10px; */
   object-fit: cover;
 }
+
 .edit-button {
   background-color: #ffffff;
   color: #1783d0;
@@ -208,6 +211,7 @@
 .Column-One-Details p {
   margin-left: 15px;
 }
+
 .Column-Two-Details p {
   margin-left: 15px;
 }
@@ -278,9 +282,12 @@
   flex-direction: column;
   gap: 5px;
   margin-bottom: 16px;
-  width: 1450px; /* Set your desired width */
-  max-width: 100%; /* Prevent overflow on small screens */
-  margin-left: auto; /* Center horizontally */
+  width: 1450px;
+  /* Set your desired width */
+  max-width: 100%;
+  /* Prevent overflow on small screens */
+  margin-left: auto;
+  /* Center horizontally */
   margin-right: auto;
 }
 
@@ -334,6 +341,7 @@
   background-color: #ccfbf1;
   color: #065f46;
 }
+
 .announcement-section {
   padding: 40px 2px;
   width: 100%;
@@ -366,6 +374,10 @@
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  /* 3 cards × card width (~300px each) */
+  margin: auto;
 }
 
 .Card-Container {
@@ -410,14 +422,28 @@
   right: -20px;
   color: #1783d0;
 }
+.Card-Container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  width: 100%;
+  gap: 16px;
+  padding: 10px 0;
+  scrollbar-width: none; /* For Firefox */
+}
 
 .Card-Container::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+/* .Card-Container::-webkit-scrollbar {
   display: none;
 }
+
 .Card-Container {
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
+} */
 
 .card-heading {
   display: flex;

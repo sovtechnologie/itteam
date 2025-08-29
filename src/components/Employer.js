@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import "../stylesheets/Companies.css";
 import { MdOutlineEdit } from "react-icons/md";
 import { FiPlus } from "react-icons/fi";
+import coin from "../images/coins.png"
 import CompanyLogo from "../images/CompanyProfilelogo.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../components/AuthContext";
@@ -12,8 +13,71 @@ import empprofile7 from "../images/HomeIcons/empprofile7.svg";
 import empprofile5 from "../images/HomeIcons/IoCallSharp.svg";
 import empprofile6 from "../images/HomeIcons/IoIosMail.svg";
 import { fetchCityList, fetchStateList } from "../services/apiService";
+import { useFetchAllJob } from "../hook/JobPost/useFetchAllJob";
 
 const baseUrl = "https://qi0vvbzcmg.execute-api.ap-south-1.amazonaws.com";
+
+
+const getExperienceLabel = (value) => {
+  switch (value) {
+    case 1:
+      return "Fresher";
+    case 2:
+      return "Mid-Level";
+    case 3:
+      return "Senior";
+    case 4:
+      return "director";
+    default:
+      return "Not specified";
+  }
+};
+
+const getModeLable = (value) => {
+  switch (value) {
+    case 1:
+      return "onsite";
+    case 2:
+      return "remote";
+    case 3:
+      return "hybrid";
+    default:
+      return "Not specified";
+  }
+}
+
+const getShiftLable = (value) => {
+  switch (value) {
+    case "1":
+      return "General";
+    case "2":
+      return "US";
+    case "3":
+      return "UK";
+    default:
+      return "Not specified";
+  }
+}
+
+const getjobTypeLabel = (value) => {
+  switch (value) {
+    case 1:
+      return "FullTime";
+    case 2:
+      return "PartTime";
+    case 3:
+      return "Remote";
+    case 4:
+      return "Intership";
+    case 5:
+      return "Hybrid";
+    case 6:
+      return "Contract";
+    default:
+      return "Not specified";
+  }
+};
+
 
 export default function Employer() {
   const [companyData, setCompanyData] = useState(null);
@@ -24,6 +88,10 @@ export default function Employer() {
   const navigate = useNavigate();
   const { token } = useParams();
   const { login } = useAuth();
+
+  const { data: allJobs, isLoading, isError } = useFetchAllJob();
+
+  const allJobModels = allJobs?.result?.flatMap(company => company.jobsmodels || []) || [];
 
   const normalizeCompanyData = (data) => ({
     _id: data._id,
@@ -299,7 +367,7 @@ export default function Employer() {
     getStates();
   }, []);
 
- useEffect(() => {
+  useEffect(() => {
     const getCity = async () => {
       try {
         const response = await fetchCityList(selectedStateCode);
@@ -314,11 +382,11 @@ export default function Employer() {
     }
   }, [selectedStateCode]);
 
-  console.log("my city",statesList);
-  console.log("my selected state",selectedState);
-  console.log("slected statecode",selectedStateCode);
-  console.log("my city",citiesList)
- 
+  console.log("my city", statesList);
+  console.log("my selected state", selectedState);
+  console.log("slected statecode", selectedStateCode);
+  console.log("my city", citiesList)
+
 
   return (
     <>
@@ -507,28 +575,28 @@ export default function Employer() {
                         onChange={handleInput}
                       /> */}
                       <select
-                          name="state"
-                          value={formData.state}
-                          onChange={(e) => {
-                            const selected = statesList.find(
-                              (state) => (state.name || state) === e.target.value
-                            );
-                            handleInput(e);
-                            setSelectedState(e.target.value);
-                            setSelectedStateCode(selected?.isoCode || ""); // if you want to use for city dropdown
-                          }}
-                          className="form-select"
-                        >
-                          <option value="">Select State</option>
-                          {statesList.map((state) => (
-                            <option
-                              key={state._id || state.id || state}
-                              value={state.name || state}
-                            >
-                              {state.name || state}
-                            </option>
-                          ))}
-                        </select>
+                        name="state"
+                        value={formData.state}
+                        onChange={(e) => {
+                          const selected = statesList.find(
+                            (state) => (state.name || state) === e.target.value
+                          );
+                          handleInput(e);
+                          setSelectedState(e.target.value);
+                          setSelectedStateCode(selected?.isoCode || ""); // if you want to use for city dropdown
+                        }}
+                        className="form-select"
+                      >
+                        <option value="">Select State</option>
+                        {statesList.map((state) => (
+                          <option
+                            key={state._id || state.id || state}
+                            value={state.name || state}
+                          >
+                            {state.name || state}
+                          </option>
+                        ))}
+                      </select>
                       {errors.some(e => e.field === 'state') &&
                         <p className="error-text">
                           {errors.find(e => e.field === 'state').message}
@@ -556,22 +624,22 @@ export default function Employer() {
                       /> */}
 
                       <select
-                          name="city"
-                          value={formData.city || ""}
-                          onChange={handleInput}
-                          className="form-select"
-                          disabled={!selectedState}
-                        >
-                          <option value="">{formData.city || ""}</option>
-                          {citiesList.map((city) => (
-                            <option
-                              key={city._id || city.id || city.name || city}
-                              value={city.name || city}
-                            >
-                              {city.name || city}
-                            </option>
-                          ))}
-                        </select>
+                        name="city"
+                        value={formData.city || ""}
+                        onChange={handleInput}
+                        className="form-select"
+                        disabled={!selectedState}
+                      >
+                        <option value="">{formData.city || ""}</option>
+                        {citiesList.map((city) => (
+                          <option
+                            key={city._id || city.id || city.name || city}
+                            value={city.name || city}
+                          >
+                            {city.name || city}
+                          </option>
+                        ))}
+                      </select>
                       {errors.some(e => e.field === 'city') &&
                         <p className="error-text">
                           {errors.find(e => e.field === 'city').message}
@@ -996,7 +1064,7 @@ export default function Employer() {
             )}
           </div>
 
-          {/* <div className="announcement-section">
+          <div className="announcement-section">
             <div className="announcement-header">
               <h2>
                 Recent <span className="highlight">Announcements</span>
@@ -1008,28 +1076,28 @@ export default function Employer() {
               <button className="scroll-btn left" onClick={() => scrollContainer(-300)}>&#8249;</button>
 
               <div className="Card-Container" id="scrollableContainer">
-                {[1, 2, 3, 4, 5].map((_, index) => (
+                {allJobModels.map((job, index) => (
                   <div key={index} className="jobs">
                     <div className="card-heading">
                       <div className="Company-logo">SOV</div>
-                      <img src={vector} style={{ marginTop: "-40px" }} />
+                      {/* <img src={vector} style={{ marginTop: "-40px" }} /> */}
                     </div>
                     <div className='Company-details'>
-                      <p className="companyName">Sov Technologies</p>
-                      <h3 className="jobTitle">UI designer</h3>
-                      <p className="jobLocation">Mumbai, India - Onsite</p>
+                      <p className="companyName">{formData?.companyName}</p>
+                      <h3 className="jobTitle">{job?.JobProfile}</h3>
+                      <p className="jobLocation">{job?.location}, {job?.state} - {getModeLable(job?.mode)}</p>
                       <div className="jobTags">
-                        <span className="jobTag">Remote</span>
-                        <span className="jobTag">Contract</span>
-                        <span className="jobTag">Junior</span>
+                        <span className="jobTag">{getShiftLable(job?.Shift)}</span>
+                        <span className="jobTag">{getjobTypeLabel(job?.Job_type)}</span>
+                        <span className="jobTag">{getExperienceLabel(job?.experience)}</span>
                       </div>
                       <p className="salary">
                         <img src={coin} style={{ width: "20px", height: "20px" }} />
-                        ₹15,000 - ₹25,000
+                        ₹{job?.salary}
                       </p>
                     </div>
                     <div className="card-footer">
-                      <a className="more-details" href="#">View Details</a>
+                      <a className="more-details" href={`/jobPost/${job._id}`}>View Details</a>
                       <span className="posted-time">3 days ago</span>
                     </div>
                   </div>
@@ -1039,7 +1107,7 @@ export default function Employer() {
               <button className="scroll-btn right" onClick={() => scrollContainer(300)}>&#8250;</button>
             </div>
 
-          </div> */}
+          </div>
         </div>
       </div>
     </>

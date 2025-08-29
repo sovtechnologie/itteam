@@ -1,0 +1,122 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f7f9fb;
+    margin: 0;
+    padding: 0;
+}
+
+.jobpost-form {
+    background: #fff;
+    box-shadow: 0 4px 18px rgba(30, 40, 70, 0.11);
+    border-radius: 10px;
+    max-width: 70%;
+    margin: 40px auto;
+    padding: 32px 30px 26px 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-row {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 4px;
+}
+
+.form-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-col-full {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Adjust label and input margins so pairs align */
+.form-col label {
+    margin-top: 0;
+}
+
+/* Ensure spacing below last input in a row */
+.form-col:last-child {
+    margin-right: 0;
+}
+
+
+
+.jobpost-form label {
+    margin-top: 16px;
+    font-size: 1rem;
+    color: #21304b;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+}
+
+.jobpost-form input,
+.jobpost-form select,
+.jobpost-form textarea {
+    margin-top: 4px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 1.3px solid #d5dae2;
+    border-radius: 5px;
+    background: #f8fafc;
+    color: #16213e;
+    transition: border 0.2s, box-shadow 0.2s;
+    margin-bottom: 2px;
+}
+
+.jobpost-form input:focus,
+.jobpost-form select:focus,
+.jobpost-form textarea:focus {
+    outline: none;
+    border: 1.6px solid #4980f6;
+    background: #eef5ff;
+}
+
+.jobpost-form textarea {
+    min-height: 70px;
+    resize: vertical;
+}
+
+.jobpost-submit-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 28px;
+    padding: 13px;
+    background: #4978ed;
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+    max-width: fit-content;
+}
+
+.jobpost-submit-btn:hover {
+    background: #2e5bc7;
+}
+
+.error {
+    color: #c2253b;
+    margin-left: 2px;
+    font-size: 0.96rem;
+    margin-bottom: 3px;
+}
+
+@media (max-width: 650px) {
+    .jobpost-form {
+        max-width: 98vw;
+        padding: 15px 2vw 14px 2vw;
+    }
+
+    .jobpost-form label {
+        margin-top: 13px;
+    }
+}

@@ -152,40 +152,40 @@ const Header = ({ isHomePage }) => {
 
   // {`header main-header ${isHomePage ? "home-header" : ""}`}
   return (
-    <div style={{ maxWidth:"1240px", margin:"0 auto"}}>
-    <header className="header main-header home-header ">
-      <div id="left">
-        <Link to="/" className="header-logo">
-          <img style={{ width: "80px" }} src={HeaderLogo} alt="Logo" />
-        </Link>
-      </div>
+    <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
+      <header className="header main-header home-header ">
+        <div id="left">
+          <Link to="/" className="header-logo">
+            <img style={{ width: "80px" }} src={HeaderLogo} alt="Logo" />
+          </Link>
+        </div>
 
-      <div className="right-container" id="nav-menu">
-        <nav className="nav">
-          <div id="mid">
-            <ul className="nav-links">
-              <li>
-                <Link to="/" className={currentPath === "/" ? "active" : ""}>
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/aboutus"
-                  className={currentPath === "/aboutus" ? "active" : ""}
-                >
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/ourTeam"
-                  className={currentPath === "/ourteam" ? "active" : ""}
-                >
-                  Our Team
-                </Link>
-              </li>
-              {/* <li>
+        <div className="right-container" id="nav-menu">
+          <nav className="nav">
+            <div id="mid">
+              <ul className="nav-links">
+                <li>
+                  <Link to="/" className={currentPath === "/" ? "active" : ""}>
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/aboutus"
+                    className={currentPath === "/aboutus" ? "active" : ""}
+                  >
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/ourTeam"
+                    className={currentPath === "/ourteam" ? "active" : ""}
+                  >
+                    Our Team
+                  </Link>
+                </li>
+                {/* <li>
                 <Link
                   to="/pricing"
                   className={currentPath === "/pricing" ? "active" : ""}
@@ -193,64 +193,71 @@ const Header = ({ isHomePage }) => {
                   Pricing
                 </Link>
               </li> */}
-            </ul>
-          </div>
+              </ul>
+            </div>
 
-          <div className="nav-btn">
-            {authToken ? (
-              <div
-                className="headerLoginProfile"
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-              >
-                <img
-                  src={avatarSrc || defaultLogo}
-                  alt="profile"
-                  height={50}
-                  width={50}
-                />
-                {menuOpen && (
-                  <div className="headerProfDropdown">
-                    <Link
-                      to={role === "company" ? "/employer" : "/employee-page"}
+            <div className="nav-btn">
+              {authToken ? (
+                <div
+                  className="headerLoginProfile"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <img
+                    src={avatarSrc || defaultLogo}
+                    alt="profile"
+                    height={50}
+                    width={50}
+                  />
+                  {menuOpen && (
+                    <div className="headerProfDropdown">
+                      <Link
+                        to={role === "company" ? "/employer" : "/employee-page"}
+                      >
+                        View Profile
+                      </Link>
+                      {
+                        role === "company" ? (
+                          <Link to="/JobPost">Job Post</Link>
+                        ) : (
+                          <></>
+                        )
+                      }
+                      <button onClick={handleLogout} className="emprSignOut-btn">
+                        Log Out
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="header-buttons">
+                  <Link to="/signin?role=candidate">
+                    <button
+                      className={`sign-btn ${currentPath === "/signin" && roleParam === "candidate"
+                        ? "active"
+                        : ""
+                        }`}
                     >
-                      View Profile
-                    </Link>
-                    <button onClick={handleLogout} className="emprSignOut-btn">
-                      Log Out
+                      Join as Jobseeker
                     </button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="header-buttons">
-                <Link to="/signin?role=candidate">
-                  <button
-                    className={`sign-btn ${currentPath === "/signin" && roleParam === "candidate"
-                        ? "active"
-                        : ""
-                      }`}
-                  >
-                    Join as Jobseeker
-                  </button>
-                </Link>
+                  </Link>
 
-                <Link to="/signin?role=company">
-                  <button
-                    className={`signup-btn ${currentPath === "/signin" && roleParam === "company"
+                  <Link to="/signin?role=company">
+                    <button
+                      className={`signup-btn ${currentPath === "/signin" && roleParam === "company"
                         ? "active"
                         : ""
-                      }`}
-                  >
-                    Join as Company
-                  </button>
-                </Link>
-              </div>
-            )}
-          </div>
-        </nav>
-      </div>
-    </header>
+                        }`}
+                    >
+                      Join as Company
+                    </button>
+                  </Link>
+                </div>
+              )}
+            </div>
+          </nav>
+        </div>
+      </header>
     </div>
   );
 };

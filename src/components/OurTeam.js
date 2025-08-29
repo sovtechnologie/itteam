@@ -1,6 +1,5 @@
 import React from "react";
 import "../stylesheets/OurTeam.css";
-import founderImg from "../images/founderImage.png";
 import AvpImage from "../images/AVPImage.png"
 import dotImage from "../images/dotpattern.png";
 
